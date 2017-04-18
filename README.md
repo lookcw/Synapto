@@ -1,0 +1,2 @@
+# synaptech
+EEG analysis git
