@@ -4,10 +4,10 @@
 % all three since there appears to be some difference between AD and HC in
 % the frame these waves exist in.
 
-function latency = lat(ti,tf,wave)
+function latency = lat(filename,ti,tf,wave)
 
 if exist('csv0','var')~=1
-    csv0 = importdata('11,_025_-_2014-04-29.xlsx.csv.1');
+    csv0 = importdata(filename);
     csv0 = csv0(:,1:8);
 end
 
