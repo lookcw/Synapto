@@ -34,7 +34,7 @@ for argument in sys.argv[1:]:
 # if identifier!="0":
 # 	result_writer.writerow([now,identifier])
 
-des_file=open("descriptor.csv",'r')
+des_file=open("test.csv",'r')
 reader=csv.reader(des_file,delimiter=',')
 array=np.array(list(reader))
 print array.shape
