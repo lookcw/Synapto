@@ -1,4 +1,4 @@
-cd ..\AD_csv
+cd ..\HC_csv
  dirs = dir(fullfile('.','*.xlsx'));
     for  direc =dirs'
     delimiterIn = ',';
@@ -37,7 +37,7 @@ cd ..\AD_csv
         descriptor=[descriptor, distP50,distN100,distP3a];
         
     end
-    descriptor=[descriptor,0];
+    descriptor=[descriptor,1];
     dlmwrite('..\test.csv',descriptor,'delimiter',',','-append');
     end
 cd ..\MatLabPrograms
