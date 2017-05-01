@@ -1,4 +1,4 @@
-cd ..\AD_csv
+cd ..\HC_csv
  dirs = dir(fullfile('.','*.xlsx'));
     for  direc =dirs'
     delimiterIn = ',';
