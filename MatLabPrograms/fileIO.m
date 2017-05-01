@@ -1,3 +1,6 @@
+
+
+
 cd ..\AD_csv
  dirs = dir(fullfile('.','*.xlsx'));
     for  direc =dirs'
@@ -11,8 +14,11 @@ cd ..\AD_csv
         stimP50= erp(stimulusTonefile,24,72,'max');
         stimN100=erp(stimulusTonefile,70,130,'min');
         stimP200=erp(stimulusTonefile,180,235,'max');
-%        latN200=lat(stimulusTonefile,
-        descriptor=[stimP50,stimN100,stimP200];
+        stimN200=erp(stimulusTonefile,205,315,'min');
+        stimP3a= erp(stimulusTonefile,325,500,'max');
+        stimP3b= erp(stimulusTonefile,325,580,'max');
+        stimSlow=erp(stimulusTonefile,460,680,'min');
+        descriptor=[stimP50,stimN100,stimP200,stimN200,stimP3a,stimP3b,stimSlow];
     end
         files1 = dir(fullfile(baseFileName,'*csv.1*'));
     for file = files1'
@@ -22,10 +28,11 @@ cd ..\AD_csv
         targN100=erp(targetTonefile,70,130,'min');
         targP200=erp(targetTonefile,180,235,'max');
         targN200=erp(targetTonefile,205,315,'min');
+        targP3a= erp(targetTonefile,325,500,'max');
         targP3b= erp(targetTonefile,325,580,'max');
         targSlow=erp(targetTonefile,460,680,'min');
         %TestAnalysis = importdata(targetToneFile);
-        descriptor=[descriptor, targP50,targN100,targP200,targN200,targP3b,targSlow];
+        descriptor=[descriptor, targP50,targN100,targP200,targN200,targP3a,targP3b,targSlow];
     end
         files2 = dir(fullfile(baseFileName,'*csv.2*'));
     for file = files2'
@@ -33,11 +40,15 @@ cd ..\AD_csv
         distractorTonefile=fullfile(baseFileName,filename)
         distP50= erp(distractorTonefile,24,72,'max');
         distN100=erp(distractorTonefile,70,130,'min');
+        distP200=erp(distractorTonefile,180,235,'max');
+        distN200=erp(distractorTonefile,205,315,'min');
         distP3a= erp(distractorTonefile,325,500,'max');
-        descriptor=[descriptor, distP50,distN100,distP3a];
+        distP3b= erp(distractorTonefile,325,580,'max');
+        distSlow=erp(distractorTonefile,460,680,'min');
+        descriptor=[descriptor, distP50,distN100,distP200,distN200,distP3a,distP3b,distSlow];
         
     end
-    descriptor=[descriptor,0];
+    descriptor=[descriptor,1];
     dlmwrite('..\test.csv',descriptor,'delimiter',',','-append');
     end
 cd ..\MatLabPrograms
