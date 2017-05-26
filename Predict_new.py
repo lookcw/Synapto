@@ -13,6 +13,9 @@ from sklearn.linear_model import LogisticRegression, SGDClassifier
 import datetime
 import csv
 import sys	
+from Tkinter import *
+
+
 
 
 descriptor_dir = '../CorrelationAnalysis/newsdescriptors/'	
@@ -24,39 +27,31 @@ for argument in sys.argv[1:]:
 	if argument == "-iden":
 		identifier = sys.argv[n+1]
 	n+=1
-	
-# if identifier == "default identifier":
-# 	print "error: put in identifier with -iden arg"
-# 	sys.exit(0)
 
-
-# now = datetime.datetime.now()
-# if identifier!="0":
-# 	result_writer.writerow([now,identifier])
-
-des_file=open("descriptor.csv",'r')
+des_file=open("test4.csv",'r')
 reader=csv.reader(des_file,delimiter=',')
 array=np.array(list(reader))
 print array.shape
 #elements=len(featuresets)
 normal_acc=[]
-#calculate indicies to split by for cross validaton
-# for i in range(0,num_folds):
-# 	first_index=int((i*elements/float(num_folds)))
-# 	second_index=int(((i+1)*elements/float(num_folds)))
+
 data=array[:][:,0:-2].astype(np.float) #extract the training data without target
 target=array[:][:,-1].astype(np.float) #extract target
 print target
-#(X_train,X_test,y_train,y_test)=train_test_split(data,target,t.est_size=0.2,random_state=0)
+
 print data.shape
 print target.shape
 print type(target)
-# clf=svm.SVC(kernel='linear'	,decision_function_shape=None) #create svm
-# scores = cross_val_score(clf,data,target,cv=15,scoring='accuracy')#cv its number of folds 
-# predicted=cross_val_predict(clf,data,target,cv=15)
-# if identifier!="0":
-# 	result_writer.writerow([metrics.accuracy_score(target,predicted)])
-# print  "accuracy: "+str(metrics.accuracy_score(target,predicted))
+new_patient_file=open("Dhruv_data.txt","r")
+new_reader=csv.reader(new_patient_file,delimiter=',')
+test_set=np.array(list(new_reader))
+test_set=test_set[0]
+test_set=test_set[0:-2]
+print type(test_set)
+test_set=np.array(test_set)
+test_set=test_set.reshape(1,-1)
+print test_set
+print type(test_set)
 
 
 clf2 = RandomForestClassifier() #Initialize with whatever parameters you want to
@@ -68,9 +63,20 @@ clf5 = BernoulliNB()
 
 eclf1 = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3),('knn',clf4),('mnb',clf5)], voting='soft')
 eclf1 = eclf1.fit(data, target)
-print(eclf1.predict(data))
-# 10-Fold Cross validation
-print np.mean(cross_val_score(eclf1, data, target, cv=15))
 
+
+pred=eclf1.predict(data[4].reshape(1,-1))
+conf=eclf1.predict_proba(data[4].reshape(1,-1))[0][0]
+print conf
+root = Tk()
+T = Text(root, height=5, width=70)
+T.pack()
+if pred ==0:
+	T.insert(END, "We are "+str(round(conf, 2))+"% accurate you do not have Alzheimer's")
+else:
+	T.insert(END, "We are "+str(round(conf, 2))+" % accurate you do have Alzheimer's")
+mainloop()
+
+# 10-Fold Cross validation
 
 
