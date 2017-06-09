@@ -2,7 +2,7 @@
 % vector containing a max/min amplitude value per electrode within time
 % range.
 
-function val = erp(filename,ti,tf,maxmin)
+function val = erpn(filename,ti,tf,maxmin)
 
 if exist('csv0','var')~=1
     csv0 = importdata(filename);
