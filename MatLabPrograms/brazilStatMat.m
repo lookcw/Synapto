@@ -13,15 +13,15 @@ for data = 2:columns
 
 start_of_stimulus = find(n==0); %probably 0
 end_of_erp = find(max(n)); %probably around 900
-maximum = max(csv0(start_of_stimulus:end_of_erp,data));
-minimum = min(csv0(start_of_stimulus:end_of_erp,data));
+maximum = max(mat(start_of_stimulus:end_of_erp,data));
+minimum = min(mat(start_of_stimulus:end_of_erp,data));
 
-average = mean(csv0(start_of_stimulus:end_of_erp,data));
-med = median(csv0(start_of_stimulus:end_of_erp,data));
+average = mean(mat(start_of_stimulus:end_of_erp,data));
+med = median(mat(start_of_stimulus:end_of_erp,data));
 
-standard_deviation = std(csv0(start_of_stimulus:end_of_erp,data));
-Variance = var(csv0(start_of_stimulus:end_of_erp,data));
-Interquartile_Range=iqr(csv0(start_of_stimulus:end_of_erp,data));
+standard_deviation = std(mat(start_of_stimulus:end_of_erp,data));
+Variance = var(mat(start_of_stimulus:end_of_erp,data));
+Interquartile_Range=iqr(mat(start_of_stimulus:end_of_erp,data));
 Coefficient_of_Variance = (standard_deviation./average).*100;
 variance_to_mean_ratio = Variance./average;
 
