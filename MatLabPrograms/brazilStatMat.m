@@ -12,7 +12,8 @@ n=mat(:,1);
 for data = 2:columns
 
 start_of_stimulus = find(n==0); %probably 0
-end_of_erp = find(max(n)); %probably around 900
+end_of_erp = find(n==max(n)); %probably around 900
+
 maximum = max(mat(start_of_stimulus:end_of_erp,data));
 minimum = min(mat(start_of_stimulus:end_of_erp,data));
 
