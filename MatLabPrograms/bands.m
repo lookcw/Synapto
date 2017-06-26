@@ -27,10 +27,10 @@ gamma = zeros(length(csv0(:,1)),7);
 for k = 1:7
     
 %DELTA
-Fstop1 = 0.1;             % First Stopband Frequency
-Fpass1 = 0.7;             % First Passband Frequency
+Fstop1 = 0;             % First Stopband Frequency
+Fpass1 = 1;             % First Passband Frequency
 Fpass2 = 2.8;             % Second Passband Frequency
-Fstop2 = 3.4;             % Second Stopband Frequency
+Fstop2 = 4;             % Second Stopband Frequency
 Dstop1 = 0.01;            % First Stopband Attenuation
 Dpass  = 0.057501127785;  % Passband Ripple
 Dstop2 = 0.01;            % Second Stopband Attenuation
@@ -40,10 +40,10 @@ b  = firpm(N, Fo, Ao, W, {dens});
 delta(:,k) = filter(b,1,csv0(:,k+1));
 
 %THETA
-Fstop1 = 2.6;             % First Stopband Frequency
+Fstop1 = 1.6;             % First Stopband Frequency
 Fpass1 = 3.2;             % First Passband Frequency
 Fpass2 = 7.8;             % Second Passband Frequency
-Fstop2 = 8.4;             % Second Stopband Frequency
+Fstop2 = 9.4;             % Second Stopband Frequency
 Dstop1 = 0.01;            % First Stopband Attenuation
 Dpass  = 0.057501127785;  % Passband Ripple
 Dstop2 = 0.01;            % Second Stopband Attenuation
@@ -53,10 +53,10 @@ b  = firpm(N, Fo, Ao, W, {dens});
 theta(:,k) = filter(b,1,csv0(:,k+1));
 
 %ALPHA
-Fstop1 = 7.6;             % First Stopband Frequency
+Fstop1 = 6.6;             % First Stopband Frequency
 Fpass1 = 8.2;             % First Passband Frequency
 Fpass2 = 11.8;            % Second Passband Frequency
-Fstop2 = 12.4;            % Second Stopband Frequency
+Fstop2 = 13.4;            % Second Stopband Frequency
 Dstop1 = 0.01;            % First Stopband Attenuation
 Dpass  = 0.057501127785;  % Passband Ripple
 Dstop2 = 0.01;            % Second Stopband Attenuation
@@ -66,10 +66,10 @@ b  = firpm(N, Fo, Ao, W, {dens});
 alpha(:,k) = filter(b,1,csv0(:,k+1));
 
 %BETA
-Fstop1 = 11.6;            % First Stopband Frequency
+Fstop1 = 10.6;            % First Stopband Frequency
 Fpass1 = 12.2;            % First Passband Frequency
 Fpass2 = 37.8;            % Second Passband Frequency
-Fstop2 = 38.4;            % Second Stopband Frequency
+Fstop2 = 39.4;            % Second Stopband Frequency
 Dstop1 = 0.01;            % First Stopband Attenuation
 Dpass  = 0.057501127785;  % Passband Ripple
 Dstop2 = 0.01;            % Second Stopband Attenuation
@@ -79,10 +79,10 @@ b  = firpm(N, Fo, Ao, W, {dens});
 beta(:,k) = filter(b,1,csv0(:,k+1));
 
 %GAMMA
-Fstop1 = 37.6;            % First Stopband Frequency
+Fstop1 = 36.6;            % First Stopband Frequency
 Fpass1 = 38.2;            % First Passband Frequency
 Fpass2 = 41.8;            % Second Passband Frequency
-Fstop2 = 42.4;            % Second Stopband Frequency
+Fstop2 = 43.4;            % Second Stopband Frequency
 Dstop1 = 0.01;            % First Stopband Attenuation
 Dpass  = 0.057501127785;  % Passband Ripple
 Dstop2 = 0.01;            % Second Stopband Attenuation
