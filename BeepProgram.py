@@ -10,7 +10,7 @@ Oddball = 1000
 Duration = 10
 
 #a is 200 numbers starting from 6 (starting from 6 because we don't
-#want the first 5 beeps to be oddball. To avoid consecutive number
+#want the first 5 beeps to be oddball). To avoid consecutive number
 #generation, increment range by 2.
 #z gives you 40 random numbers from the range of 200 numbers.
 #numOddballBeeps is greater than the total number of oddball beeps we want to hear
