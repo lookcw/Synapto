@@ -4,10 +4,10 @@ import winsound
 import random
 
 #Baseline is 500 Hz and Oddball is 1000 Hz.
-#Duration (Dur) is the number of milliseconds that the sound is played.
+#Duration is the number of milliseconds that the sound is played.
 Baseline = 500
 Oddball = 1000
-Duration = 10
+Duration = 1000
 
 #a is 200 numbers starting from 6 (starting from 6 because we don't
 #want the first 5 beeps to be oddball). 
