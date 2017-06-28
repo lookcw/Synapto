@@ -16,7 +16,7 @@ import sys
 
 
 descriptor_dir = '../CorrelationAnalysis/newsdescriptors/'	
-results_file=open('Results.csv','a')
+results_file=open('Results.csv','a')	
 result_writer=csv.writer(results_file,delimiter=',')
 n = 1
 identifier="default identifier"
@@ -59,18 +59,17 @@ print type(target)
 # print  "accuracy: "+str(metrics.accuracy_score(target,predicted))
 
 
-clf2 = RandomForestClassifier() #Initialize with whatever parameters you want to
 clf1 = LogisticRegression(random_state=1)
-clf2 = RandomForestClassifier(random_state=1)
+clf2 = RandomForestClassifier(n_estimators=100,max_features=100)
 clf3 = GaussianNB()
 clf4 = KNeighborsClassifier(n_neighbors=2, algorithm='ball_tree')
 clf5 = BernoulliNB()
-
-eclf1 = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3),('knn',clf4),('mnb',clf5)], voting='soft')
-eclf1 = eclf1.fit(data, target)
-print(eclf1.predict(data))
+eclf1 = VotingClassifier(estimators=[ ('rf', clf2)])
+#eclf1 = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2), ('gnb', clf3),('knn',clf4),('mnb',clf5)], voting='soft')
+clf2 = clf2.fit(data, target)
+print(clf2.predict(data))
 # 10-Fold Cross validation
-print np.mean(cross_val_score(eclf1, data, target, cv=15))
+print cross_val_score(clf2, data, target, cv=15)
 
 
 

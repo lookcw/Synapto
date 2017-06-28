@@ -63,27 +63,21 @@ class VoteClassifier(ClassifierI):
 #open prediction and results file to write to
 results_file=open('Results','a')
 result_writer=csv.writer(results_file,delimiter=',')
-<<<<<<< HEAD
 
 
 #predictions_writer=csv.writer(predictions_file,delimiter=',')
 #predictions_writer.writerow(["date","symbol","Pred","Conf"])
-=======
 #files = os.walk(data_dir).next()[2]
 
 # predictions_writer=csv.writer(predictions_file,delimiter=',')
 # predictions_writer.writerow(["date","symbol","Pred","Conf"])
->>>>>>> f1b946d2428f28c0ca8469177cf308d447ace4e5
 #write identifier at start of results file
 # if identifier!="0":
 #   result_writer.writerow([now,identifier])
 predictions=[]
 #perform cross validation
-<<<<<<< HEAD
 data_file="../descriptor.csv"
-=======
 data_file="test.csv"
->>>>>>> f1b946d2428f28c0ca8469177cf308d447ace4e5
 #get descriptor data from files
 descriptor_file=open(data_file,'r')
 descriptor_reader=csv.reader(descriptor_file,delimiter='\t')

@@ -47,16 +47,10 @@ with open('test4.csv', 'rb') as f:
     digits=np.array(digits)
 n = len(digits)
 
-g= open('predictions.csv','w')
-writer = csv.writer(g,delimiter=",")
-
-
 positive_digit = 1
 negative_digit = 0
 HC_idx=[]
 AD_idx=[]
-print digits
-print n
 
 
 for i in range(len(digits)):
@@ -66,11 +60,11 @@ for i in range(len(digits)):
         HC_idx.append(i)
 
 
-print AD_idx
+
 
 # add some noise to the data to make it a little challenging
 
-data=digits[:,0:-1]
+data=digits
 labels = [1] * len(AD_idx) + [0] * len(HC_idx)
 @optunity.cross_validated(x=data, y=labels, num_folds=10)
 def performance(x_train, y_train, x_test, y_test,
@@ -96,16 +90,12 @@ def performance(x_train, y_train, x_test, y_test,
     if algorithm == 'SVM':
         predictions = model.decision_function(x_test)
     else:
-        predictions = model.predict(x_test)
-        print x_test[0]
-        print y_test[0]
-    for i in range(len(x_test)):
-        writer.writerow(np.concatenate((x_test[i],[y_test[i]],[predictions[i]]),axis=0))
-    print predictions
-    print y_test
+        predictions = model.predict_proba(x_test)[:,1]
+    print len(x_test[0])
+    print len(y_test)
     print "__________"
-    return optunity.metrics.accuracy(y_test,predictions)
-    #return optunity.metrics.roc_auc(y_test, predictions, positive=True)
+    #return optunity.metrics.accuracy(y_test,predictions)
+    return optunity.metrics.roc_auc(y_test, predictions, positive=True)
 
 
 

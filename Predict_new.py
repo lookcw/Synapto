@@ -22,10 +22,10 @@ descriptor_dir = '../CorrelationAnalysis/newsdescriptors/'
 results_file=open('Results.csv','a')
 result_writer=csv.writer(results_file,delimiter=',')
 n = 1
-identifier="default identifier"
+data_file=""
 for argument in sys.argv[1:]:
-	if argument == "-iden":
-		identifier = sys.argv[n+1]
+	if argument == "-data":
+		data_file = sys.argv[n+1]
 	n+=1
 
 des_file=open("test4.csv",'r')
@@ -42,7 +42,8 @@ print target
 print data.shape
 print target.shape
 print type(target)
-new_patient_file=open("Dhruv_data.txt","r")
+print data
+new_patient_file=open(data_file,"rb	")
 new_reader=csv.reader(new_patient_file,delimiter=',')
 test_set=np.array(list(new_reader))
 test_set=test_set[0]
@@ -72,9 +73,9 @@ root = Tk()
 T = Text(root, height=5, width=70)
 T.pack()
 if pred ==0:
-	T.insert(END, "We are "+str(round(conf, 2))+"% accurate you do not have Alzheimer's")
+	T.insert(END, "There is a "+str(round(conf, 2))+"% chance you do not have Alzheimer's")
 else:
-	T.insert(END, "We are "+str(round(conf, 2))+" % accurate you do have Alzheimer's")
+	T.insert(END, "There is a "+str(round(conf, 2))+" % chance you do have Alzheimer's")
 mainloop()
 
 # 10-Fold Cross validation
