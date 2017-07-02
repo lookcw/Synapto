@@ -19,9 +19,9 @@ cd ..\HC_csv
         lstimSlow=lat(stimulusTonefile,460,680,'slow');
         lstimP3b= lat(stimulusTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(stimulusTonefile);
-        brazilstatMat_vector=brazilStatMat(bands(stimulusTonefile));
+        bands_vector =brazilStatMat(bands(stimulusTonefile));
 
-        descriptor=[ stimP50,stimN100, stimP200,stimN200,stimP3a,stimP3b,stimSlow,lstimN200,lstimSlow,lstimP3b,brazilstat_vector,brazilstatMat_vector,brazilstatMat_vector];
+        descriptor=[ stimP50,stimN100, stimP200,stimN200,stimP3a,stimP3b,stimSlow,lstimN200,lstimSlow,lstimP3b,brazilstat_vector,bands_vector];
     end
         files1 = dir(fullfile(baseFileName,'*csv.1*'));
     for file = files1'
@@ -38,10 +38,10 @@ cd ..\HC_csv
         ltargSlow=lat(targetTonefile,460,680,'slow');
         ltargP3b= lat(targetTonefile,325,580,'p3b');
          brazilstat_vector=brazilstat(targetTonefile);
-         brazilstatMat_vector=brazilStatMat(bands(targetTonefile));
+        bands_vector =brazilStatMat(bands(targetTonefile));
 
          
-        descriptor=[descriptor,targP50, targN100,targP200,targN200,targP3a,targP3b,targSlow,ltargN200,ltargSlow,ltargP3b,brazilstat_vector,brazilstatMat_vector];
+        descriptor=[descriptor,targP50, targN100,targP200,targN200,targP3a,targP3b,targSlow,ltargN200,ltargSlow,ltargP3b,brazilstat_vector,bands_vector];
       %  descriptor=[descriptor,ltargN200,ltargSlow,ltarglstimp3b,brazilstat_vector];
     end
         files2 = dir(fullfile(baseFileName,'*csv.2*'));
@@ -59,14 +59,14 @@ cd ..\HC_csv
         ldistSlow=lat(distractorTonefile,460,680,'slow');
         ldistP3b= lat(distractorTonefile,325,580,'p3b');
          brazilstat_vector=brazilstat(distractorTonefile);
-         brazilstatMat_vector=brazilStatMat(bands(distractorTonefile));
+        bands_vector =brazilStatMat(bands(distractorTonefile));
 
-       descriptor=[descriptor,distP50, distN100,distP200,distN200,distP3a,distP3b,distSlow,ldistN200,ldistSlow,ldistP3b,brazilstat_vector,brazilstatMat_vector];
+       descriptor=[descriptor,distP50, distN100,distP200,distN200,distP3a,distP3b,distSlow,ldistN200,ldistSlow,ldistP3b,brazilstat_vector,bands_vector];
            %descriptor=[descriptor,ldistN200,ldistSlow,ldistlstimp3b,brazilstat_vector];
         
     end
     descriptor=[descriptor,0];
-    dlmwrite('..\brazil_erp_4.csv',descriptor,'delimiter',',','-append');
+    dlmwrite('..\brazil_erp_7.csv',descriptor,'delimiter',',','-append');
     end
 cd ..\MatLabPrograms
 
@@ -91,9 +91,9 @@ cd ..\AD_csv
         lstimSlow=lat(stimulusTonefile,460,680,'slow');
         lstimP3b= lat(stimulusTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(stimulusTonefile);
-        brazilstatMat_vector=brazilStatMat(bands(stimulusTonefile));
+        bands_vector =brazilStatMat(bands(stimulusTonefile));
 
-         descriptor=[ stimP50,stimN100, stimP200,stimN200,stimP3a,stimP3b,stimSlow,lstimN200,lstimSlow,lstimP3b,brazilstat_vector,brazilstatMat_vector];
+         descriptor=[ stimP50,stimN100, stimP200,stimN200,stimP3a,stimP3b,stimSlow,lstimN200,lstimSlow,lstimP3b,brazilstat_vector,bands_vector];
     end
         files1 = dir(fullfile(baseFileName,'*csv.1*'));
     for file = files1'
@@ -110,9 +110,9 @@ cd ..\AD_csv
         ltargSlow=lat(targetTonefile,460,680,'slow');
         ltargP3b= lat(targetTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(targetTonefile);
-        brazilstatMat_vector=brazilStatMat(bands(targetTonefile));
+        bands_vector =brazilStatMat(bands(targetTonefile));
 
-        descriptor=[descriptor,targP50, targN100,targP200,targN200,targP3a,targP3b,targSlow,ltargN200,ltargSlow,ltargP3b,brazilstat_vector,brazilstatMat_vector];
+        descriptor=[descriptor,targP50, targN100,targP200,targN200,targP3a,targP3b,targSlow,ltargN200,ltargSlow,ltargP3b,brazilstat_vector,bands_vector];
         %descriptor=[descriptor,ltargN200,ltargSlow,ltarglstimp3b,brazilstat_vector];
     end
         files2 = dir(fullfile(baseFileName,'*csv.2*'));
@@ -130,14 +130,14 @@ cd ..\AD_csv
         ldistSlow=lat(distractorTonefile,460,680,'slow');
         ldistP3b= lat(distractorTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(distractorTonefile);
-        brazilstatMat_vector=brazilStatMat(bands(distractorTonefile));
+        bands_vector =brazilStatMat(bands(distractorTonefile));
 
-       descriptor=[descriptor,distP50, distN100,distP200,distN200,distP3a,distP3b,distSlow,ldistN200,ldistSlow,ldistP3b,brazilstat_vector,brazilstatMat_vector];
+       descriptor=[descriptor,distP50, distN100,distP200,distN200,distP3a,distP3b,distSlow,ldistN200,ldistSlow,ldistP3b,brazilstat_vector,bands_vector];
        %descriptor=[descriptor,ldistN200,ldistSlow,ldistlstimp3b,brazilstat_vector];
         
     end
     descriptor=[descriptor,1];
-    dlmwrite('..\brazil_erp_4.csv',descriptor,'delimiter',',','-append');
+    dlmwrite('..\brazil_erp_7.csv',descriptor,'delimiter',',','-append');
     end
 cd ..\MatLabPrograms
 

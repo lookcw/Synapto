@@ -5,19 +5,19 @@ cd ..\HC_csv
     baseFileName=direc.name
     files0 = dir(fullfile(baseFileName,'*csv.0*'));
     descriptor=[];
-    for file = files0'
+    for file = files0' 
         filename = file.name;
         stimulusTonefile=fullfile(baseFileName,filename)
         A= importdata(stimulusTonefile)
         cleanData= artrem(A.');
-        dlmwrite(strcat('../cleaned_data_AD/',stimulusTonefile),cleanData,'delimiter',',','-write');
+        dlmappend(strcat('../cleaned_data_AD/',stimulusTonefile),cleanData,'delimiter',',','-append');
     end
         files1 = dir(fullfile(baseFileName,'*csv.1*'));
     for file = files1'
         filename = file.name;
         targetTonefile=fullfile(baseFileName,filename);
         cleanData = artrem(importdata(targetTonefile));
-        dlmwrite(strcat('../cleaned_data_AD/',targetTonefile),cleanData,'delimiter',',','-write');
+        dlmappend(strcat('../cleaned_data_AD/',targetTonefile),cleanData,'delimiter',',','-append');
         
     end
         files2 = dir(fullfile(baseFileName,'*csv.2*'));
@@ -25,7 +25,7 @@ cd ..\HC_csv
         filename = file.name;
         distractorTonefile=fullfile(baseFileName,filename)
         cleanData = artrem(importdata(distractorTonefile));
-        dlmwrite(strcat('../cleaned_data_AD/',targetTonefile),cleanData,'delimiter',',','-write');
+        dlmappend(strcat('../cleaned_data_AD/',targetTonefile),cleanData,'delimiter',',','-append');
         
     end
     	
@@ -44,21 +44,21 @@ cd ..\HC_csv
         filename = file.name;
         stimulusTonefile=fullfile(baseFileName,filename)
         cleanData= artrem(importdata(stimulusTonefile));
-        dlmwrite(strcat('../cleaned_data_HC/',targetTonefile),cleanData,'delimiter',',','-write');
+        dlmappend(strcat('../cleaned_data_HC/',targetTonefile),cleanData,'delimiter',',','-append');
     end
         files1 = dir(fullfile(baseFileName,'*csv.1*'));
     for file = files1'
         filename = file.name;
         targetTonefile=fullfile(baseFileName,filename);
         cleanData = artrem(importdata(targetTonefile));
-        dlmwrite(strcat('../cleaned_data_HC/',targetTonefile),cleanData,'delimiter',',','-write');
+        dlmappend(strcat('../cleaned_data_HC/',targetTonefile),cleanData,'delimiter',',','-append');
     end
         files2 = dir(fullfile(baseFileName,'*csv.2*'));
     for file = files2'
         filename = file.name;
         distractorTonefile=fullfile(baseFileName,filename)
         cleanData = artrem(importdata(distractorTonefile));
-        dlmwrite(strcat('../cleaned_data_HC/',targetTonefile),cleanData,'delimiter',',','-write');
+        dlmappend(strcat('../cleaned_data_HC/',targetTonefile),cleanData,'delimiter',',','-append');
     end
     end
     cd ..\MatlabPrograms
