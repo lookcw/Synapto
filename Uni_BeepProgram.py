@@ -1,30 +1,13 @@
 #Beep Program
-from __future__ import division
+
+import winsound
 import random
-import math
-from pyaudio import PyAudio # sudo apt-get install python{,3}-pyaudio
-import pyglet
 
-try:
-    from itertools import izip
-except ImportError: # Pytho 3
-    izip = zip
-    xrange = range
-
-def exit_callback(dt):
-    pyglet.app.exit()
-
-pyglet.clock.schedule_once(exit_callback , 1000)
-player = pyglet.media.Player()
-
-
-norm_tone = pyglet.media.load('500.wav',streaming=False)
-oddball = pyglet.media.load('1000.wav',streaming=False)
 #Baseline is 500 Hz and Oddball is 1000 Hz.
 #Duration is the number of milliseconds that the sound is played.
 Baseline = 500
 Oddball = 1000
-Duration = 1
+Duration = 1000
 
 #a is 200 numbers starting from 6 (starting from 6 because we don't
 #want the first 5 beeps to be oddball). 
@@ -42,30 +25,20 @@ normalBeeps = 0
 counter = 0
 oddballCounter = 0
 oddballPlayed = 0
-norm_tone.play()
+
 while counter in range(numBeeps):
     if counter not in list(z):
-        print "print whatever"
-        pyglet.clock.schedule_once(exit_callback , 1)
-        norm_tone.play()
-        pyglet.app.run()
-        print "cry"
-
+        winsound.Beep(Baseline,Duration)
         normalBeeps += 1
         oddballPlayed = 0
     else:
         if(oddballPlayed == 0 and maxOddballBeeps < 24):
-            pyglet.clock.schedule_once(exit_callback , 1)
-            oddball.play()
-            pyglet.app.run()
-            print "oddball played"
+            winsound.Beep(Oddball,Duration)
             maxOddballBeeps += 1
             oddballPlayed = 1
             print(counter)
         else:                       #Makes sure that consecutive beeps aren't played.
-            pyglet.clock.schedule_once(exit_callback , 1)
-            norm_tone.play()
-            pyglet.app.run()
+            winsound.Beep(Baseline,Duration) 
             print("odd ball skipped") 
     counter +=1
     if (normalBeeps + maxOddballBeeps >= 200):
@@ -73,3 +46,18 @@ while counter in range(numBeeps):
     
 print(maxOddballBeeps)
 print(normalBeeps)
+
+
+
+
+    
+
+
+
+
+
+
+
+    
+
+
