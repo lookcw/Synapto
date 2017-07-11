@@ -37,7 +37,7 @@ def play_music(music_file, volume=0.8):
     pg.mixer.music.play()
     while pg.mixer.music.get_busy():
         # check if playback has finished
-        clock.tick(1)
+        clock.tick(.5)
 
 #Baseline is 500 Hz and Oddball is 1000 Hz.
 #Duration is the number of milliseconds that the sound is played.
