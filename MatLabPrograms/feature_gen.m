@@ -22,10 +22,11 @@ cd(direc_name);
         lstimP3b= lat(stimulusTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(stimulusTonefile);
         spec_ent_vec=spec_ent(stimulusTonefile);
+        spec_cent_vec=spec_cent(stimulusTonefile);
         spec_roll_vec=spec_roll(stimulusTonefile,85);
         bands_vector =brazilStatMat(bands(stimulusTonefile));
         zcr=ZCR(stimulusTonefile);
-        descriptor=[ stimP50,stimN100, stimP200,stimN200,stimP3a,stimP3b,stimSlow,lstimN200,lstimSlow,lstimP3b,brazilstat_vector,spec_ent_vec,spec_roll_vec,bands_vector,zcr];
+        descriptor=[ stimP50,stimN100, stimP200,stimN200,stimP3a,stimP3b,stimSlow,lstimN200,lstimSlow,lstimP3b,brazilstat_vector,spec_ent_vec,spec_cent_vec,spec_roll_vec,bands_vector,zcr];
     end
         files1 = dir(fullfile(baseFileName,'*csv.1*'));
     for file = files1'
@@ -43,11 +44,12 @@ cd(direc_name);
         ltargP3b= lat(targetTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(targetTonefile);
         spec_ent_vec=spec_ent(targetTonefile);
+        spec_cent_vec=spec_cent(stimulusTonefile);
         spec_roll_vec=spec_roll(targetTonefile,85); 
         bands_vector =brazilStatMat(bands(targetTonefile));
         zcr=ZCR(stimulusTonefile);
          
-        descriptor=[descriptor,targP50, targN100,targP200,targN200,targP3a,targP3b,targSlow,ltargN200,ltargSlow,ltargP3b,brazilstat_vector,spec_ent_vec,spec_roll_vec,bands_vector,zcr];
+        descriptor=[descriptor,targP50, targN100,targP200,targN200,targP3a,targP3b,targSlow,ltargN200,ltargSlow,ltargP3b,brazilstat_vector,spec_ent_vec,spec_cent_vec,spec_roll_vec,bands_vector,zcr];
       %  descriptor=[descriptor,ltargN200,ltargSlow,ltarglstimp3b,brazilstat_vector];
     end
         files2 = dir(fullfile(baseFileName,'*csv.2*'));
@@ -66,16 +68,17 @@ cd(direc_name);
         ldistP3b= lat(distractorTonefile,325,580,'p3b');
         brazilstat_vector=brazilstat(distractorTonefile);
         spec_ent_vec=spec_ent(distractorTonefile);
-        spec_roll_vec=spec_roll(disctractorTonefile,85);
+        spec_cent_vec=spec_cent(distractorTonefile);
+        spec_roll_vec=spec_roll(distractorTonefile,85);
         bands_vector =brazilStatMat(bands(distractorTonefile));
         zcr=ZCR(stimulusTonefile);
 
-       descriptor=[descriptor,distP50, distN100,distP200,distN200,distP3a,distP3b,distSlow,ldistN200,ldistSlow,ldistP3b,brazilstat_vector,spec_ent_vec,spec_roll_vec,bands_vector,zcr];
+       descriptor=[descriptor,distP50, distN100,distP200,distN200,distP3a,distP3b,distSlow,ldistN200,ldistSlow,ldistP3b,brazilstat_vector,spec_ent_vec,spec_cent_vec,spec_roll_vec,bands_vector,zcr];
            %descriptor=[descriptor,ldistN200,ldistSlow,ldistlstimp3b,brazilstat_vector];
         
     end
     descriptor=[descriptor,class];
-    dlmwrite('..\brazil_erp_9.csv',descriptor,'delimiter',',','-append');
+    dlmwrite('..\brazil_erp_11.csv',descriptor,'delimiter',',','-append');
     end
 cd ..\MatLabPrograms
 end
