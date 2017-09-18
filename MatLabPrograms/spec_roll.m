@@ -1,45 +1,42 @@
 % cutoff is percentage of power to the left of desired frequency
 % (usually ranges from 80-90)
 
-function SR = spec_roll(filename,cutoff)
+function SR = spec_roll(filename,EpochLength,cutoff)
+data = toMat(filename);
+data = data(:,2:22);
 
-if exist('data','var')~=1
-    data = importdata(filename);
-    data = data(:,2:8);
-    %data = data(1:4000,2:8);
-end
-
-rawdata = data';
-E1 = rawdata(1,:);
-E2 = rawdata(2,:);
-E3 = rawdata(3,:);
-E4 = rawdata(4,:);
-E5 = rawdata(5,:);
-E6 = rawdata(6,:);
-E7 = rawdata(7,:);
-%E8 = rawdata(8,:);
-E = [E1;E2;E3;E4;E5;E6;E7];
-siz = size(E);
-
+SR = [];
 Fs = 250;
-N = siz(2);
-
-for n = 1:siz(1)
-xdft = fft(E(n,:));
-xdft = xdft(1:N/2+1);
-psdx = (1/(Fs*N)) * abs(xdft).^2;
-psdx(2:end-1) = 2*psdx(2:end-1);
-freq = 0:Fs/N:Fs/2;
-fftval = 10*log10(psdx);
-
-target = cutoff/100*sum(fftval);
-bool = false;
-for k = 1:length(fftval)
-    tot = sum(fftval(1:k));
-    if tot > target && ~bool
-        bool = true;
-        index = k;
-end
-end
-SR = index/length(fftval)*Fs/2
+[row,col] = size(data);
+rowS = Fs*660; % 11 mins if Fs=250Hz
+newDat = zeros(Fs*EpochLength,col);
+for v = 1:floor(rowS/(Fs*EpochLength))
+    for l = 1:col
+        newDat(1:Fs*EpochLength,l) = data((v-1)*Fs*EpochLength+1:v*Fs*EpochLength,l);
+    end
+    E = newDat;
+    
+    N = size(E,1);
+    SR1 = [];
+    for n = 1:size(E,2)
+        xdft = fft(E(:,n));
+        xdft = xdft(1:N/2+1);
+        psdx = (1/(Fs*N)) * abs(xdft).^2;
+        psdx(2:end-1) = 2*psdx(2:end-1);
+        freq = 0:Fs/N:Fs/2;
+        fftval = psdx; %10*log10(psdx);
+        
+        target = cutoff/100*sum(fftval);
+        bool = false;
+        for k = 1:length(fftval)
+            tot = sum(fftval(1:k));
+            if tot > target && ~bool
+                bool = true;
+                index = k;
+            end
+        end
+        a = index/length(fftval)*Fs/2;
+        SR1 = [SR1,a];
+    end
+    SR = [SR,SR1];
 end
