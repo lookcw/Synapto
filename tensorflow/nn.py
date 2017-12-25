@@ -10,7 +10,7 @@ learning_rate = 0.4
 n_hidden1 = 20 # 1st layer number of neurons
 n_hidden2 = 20 # 2nd layer number of neurons
 n_hidden3 = 20 # 3rd layer number of neurons
-n_input = 1974 # Data input (376 fft values per electrode x 21 electrodes per patient)
+n_input = 1974 # Data input (94 fft-B values per electrode x 21 electrodes per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
 num_folds = 2 #cross validation
 
