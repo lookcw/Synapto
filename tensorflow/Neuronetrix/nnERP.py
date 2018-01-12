@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 learning_rate = 0.01
 n_hidden1 = 4 # 1st layer number of neurons
 n_hidden2 = 4 # 2nd layer number of neurons
-n_input = 189 # Data input (190 total erp values per patient)
+n_input = 189 # Data input (189 total erp values per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
 num_folds = 2 #cross validation
 
@@ -45,24 +45,32 @@ array_Y = []
 basepath = 'data/'
 combined_HC = []
 combined_AD = []
-for filename in os.listdir(basepath):
-    if filename.endswith('.csv'):
-        with open(os.path.join(basepath, filename)) as f:
-            reader = csv.reader(f)
-            array = list(reader)
-            array = np.array(array)
-            #add each patient's erp values (row) to HC or AD vector 
-            for row in range(1,171): #first row is column headers
-                if (row < 96): #rows 1-96 are HC patients
-                    rowvals = (array[row,0:189]) #189 columns
-                    combined_HC.append(rowvals)
-                    #output = 0
-                    array_Y.extend([0])
-                else: #rows 97-171 are AD patients
-                    rowvals = (array[row,0:189]) #189 columns
-                    combined_AD.append(rowvals)
-                    #output = 1
-                    array_Y.extend([1])
+with open(os.path.join(basepath, "erpn_1.csv")) as f:
+        reader = csv.reader(f)
+        array = list(reader)
+        array = np.array(array)
+        #add each patient's erp values (row) to HC or AD vector 
+        for row in range(1,len(array)): #first row is column headers
+            if (row < 96): #rows 2-96 are HC patients
+                rowvals = (array[row,0:189]) #189 columns
+                for i in range(len(rowvals)):
+                    val = float(rowvals[i])
+                    if val > 100:
+                        rowvals[i] = val/100.0
+                combined_HC.append(rowvals)
+                #output = 0
+                #combined_HC.append([0])
+                array_Y.extend([0])
+            else: #rows 97-171 are AD patients
+                rowvals = (array[row,0:189]) #189 columns
+                for i in range(len(rowvals)):
+                    val = float(rowvals[i])
+                    if val > 100:
+                        rowvals[i] = val/100.0
+                combined_HC.append(rowvals)
+                #output = 1
+                #combined_AD.append([1])
+                array_Y.extend([1])
 combined_HC = np.array(combined_HC)
 combined_AD = np.array(combined_AD)
 
