@@ -151,6 +151,9 @@ for i in range(0,num_folds):
         #train with each example
         for j in range(len(train_X)):
             sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
+        train_prediction = tf.equal(tf.argmax(output, axis=1), tf.argmax(Y, axis=1))
+        train_accuracy = tf.reduce_mean(tf.cast(train_prediction, "float"))
+        print("Train Accuracy:", train_accuracy.eval({X: train_X, Y: train_Y}))
         
         if epoch == 999:
             print('Epoch ', epoch)
