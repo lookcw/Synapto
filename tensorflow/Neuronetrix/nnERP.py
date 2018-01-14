@@ -100,8 +100,10 @@ train_Y=[]
 test_X=[]
 test_Y=[]
 total_accuracy = 0
-total_fp = 0
-total_fn = 0
+total_TP = 0
+total_TN = 0
+total_FP = 0
+total_FN = 0
 
 for i in range(0,num_folds):
     Xdata = X_data
@@ -151,30 +153,45 @@ for i in range(0,num_folds):
                 
     #test model
     print('Test Prediction ', sess.run(output, feed_dict={X: test_X, Y: test_Y}))
-    test_prediction = tf.equal(tf.argmax(output, axis=1), tf.argmax(test_Y, axis=1))
     
-    test_accuracy = tf.reduce_mean(tf.cast(test_prediction, "float"))
-    fold_accuracy = test_accuracy.eval({X: test_X, Y: test_Y})
+    #confusion matrix
+    labels = tf.argmax(test_Y, axis=1)
+    predictions = tf.argmax(output.eval({X: test_X}), axis=1)
+    
+    #num_thresholds = 5
+    #auc = sess.run(tf.metrics.auc(labels,predictions,num_thresholds))
+    #tf.local_variables_initializer().run()
+    
+    matrix = sess.run(tf.confusion_matrix(labels,predictions))
+    print(matrix)
+    
+    TN = matrix[0][0]
+    FP = matrix[0][1]
+    FN = matrix[1][0]
+    TP = matrix[1][1]
+    total = TN + FP + FN + TP
+    
+    fold_accuracy = (TP + TN)/total
     print("Test Accuracy:", fold_accuracy)
+    TPrate = TP/total
+    print("True Positive:", TPrate)
+    TNrate = TN/total
+    print("True Negative:", TNrate)
+    FPrate = FP/total
+    print("False Positive:", FPrate)
+    FNrate = FN/total
+    print("False Negative:", FNrate)
     
-    #compute false positive and false negative rates
-    YIndex = tf.argmax(test_Y, axis=1)
-    outputIndex = tf.argmax(output, axis=1)
-    diff = YIndex-outputIndex
-    #false positive: negative diff
-    fp = tf.less(diff,0)
-    fpRate = tf.reduce_mean(tf.cast(fp, "float"))
-    print("False Positive:", fpRate.eval({X: test_X, Y: test_Y}))
-    #false negative: positive diff
-    fn = tf.greater(diff,0)
-    fnRate = tf.reduce_mean(tf.cast(fn, "float"))
-    print("False Negative:", fnRate.eval({X: test_X, Y: test_Y}))
-        
     #compute overall accuracy, false negative, and false positive
     total_accuracy += fold_accuracy*(len(test_X)/len(X_data))
-    total_fp += fnRate.eval({X: test_X, Y: test_Y})*(len(test_X)/len(X_data))
-    total_fn += fpRate.eval({X: test_X, Y: test_Y})*(len(test_X)/len(X_data))
+    total_TP += TPrate
+    total_TN += TNrate
+    total_FP += FPrate
+    total_FN += FNrate
+    
         
 print("Overall Accuracy:", total_accuracy)
-print("Overall False Positive:", total_fp)
-print("Overall False Negative:", total_fn)
+print("Overall True Positive:", total_TP)
+print("Overall True Negative:", total_TN)
+print("Overall False Positive:", total_FP)
+print("Overall False Negative:", total_FN)

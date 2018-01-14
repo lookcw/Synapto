@@ -6,13 +6,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
 #tf.set_random_seed(5)
-learning_rate = 0.1
-n_hidden1 = 100 # 1st layer number of neurons
-n_hidden2 = 100 # 2nd layer number of neurons
-n_hidden3 = 100 # 3rd layer number of neurons
-n_input = 3128 # Data input (3128 raw ERP values per patient)
-n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
-num_folds = 2 #cross validation
+learning_rate = 0.4
+n_hidden1 = 20 # 1st layer number of neurons
+n_hidden2 = 20 # 2nd layer number of neurons
+n_hidden3 = 20 # 3rd layer number of neurons
+n_input = 1208 # Data input (151 fft values per electrode x 8 electrodes per patient)
+n_classes = 3 # 0 - Healthy, 1 - MCI, 2 - AD
+num_folds = 5 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()
@@ -46,30 +46,66 @@ train = optimizer.minimize(loss)
 #training set
 array_Y = []
 
-basepath = 'data/'
+basepath = 'HC_stan_fft'
 combined_HC = []
-combined_AD = []
-with open(os.path.join(basepath, "NeuronetrixData.csv")) as f:
-    reader = csv.reader(f)
-    array = list(reader)
-    array = np.array(array)
-    #add each patient's erp values (row) to HC or AD vector 
-    for row in range(len(array)): #first row is column headers
-        if (row < 95): #rows 1-95 are HC patients
-            rowvals = (array[row,0:-1]) #columns
-            combined_HC.append(rowvals)
+for filename in os.listdir(basepath):
+    if filename.endswith('.csv'):
+        with open(os.path.join(basepath, filename)) as f:
+            reader = csv.reader(f)
+            array = list(reader)
+            array = np.array(array)
+            #concatenate each electrode fft vector into one vector per instance
+            Etotal = []
+            for e in range(len(array.T)):
+                E = (array[:,e])
+                Etotal.extend(E)
+            #add fft values of each instance
+            combined_HC.append(Etotal)
             #output = 0
             array_Y.extend([0])
-        else: #rows 97-171 are AD patients
-            rowvals = (array[row,0:-1]) #columns
-            combined_AD.append(rowvals)
+combined_HC = np.array(combined_HC)
+
+basepath = 'MCI_stan_fft'
+combined_MCI = []
+for filename in os.listdir(basepath):
+    if filename.endswith('.csv'):
+        with open(os.path.join(basepath, filename)) as f:
+            reader = csv.reader(f)
+            array = list(reader)
+            array = np.array(array)
+            #concatenate each electrode fft vector into one vector per instance
+            Etotal = []
+            for e in range(len(array.T)):
+                E = (array[:,e])
+                Etotal.extend(E)
+            #add fft values of each instance
+            combined_MCI.append(Etotal)
             #output = 1
             array_Y.extend([1])
-combined_HC = np.array(combined_HC)
+combined_MCI = np.array(combined_MCI)
+
+basepath = 'AD_stan_fft'
+combined_AD = []
+for filename in os.listdir(basepath):
+    if filename.endswith('.csv'):
+        with open(os.path.join(basepath, filename)) as f:
+            reader = csv.reader(f)
+            array = list(reader)
+            array = np.array(array)
+            #concatenate each electrode fft vector into one vector per instance
+            Etotal = []
+            for e in range(len(array.T)):
+                E = (array[:,e])
+                Etotal.extend(E)
+            #add fft values of each instance
+            combined_AD.append(Etotal)
+            #output = 1
+            array_Y.extend([2])
 combined_AD = np.array(combined_AD)
 
 total = []
 total.extend(combined_HC)
+total.extend(combined_MCI)
 total.extend(combined_AD)
 
 X_data = np.array(total)
@@ -94,10 +130,8 @@ train_Y=[]
 test_X=[]
 test_Y=[]
 total_accuracy = 0
-total_TP = 0
-total_TN = 0
-total_FP = 0
-total_FN = 0
+total_fp = 0
+total_fn = 0
 
 for i in range(0,num_folds):
     Xdata = X_data
@@ -147,45 +181,13 @@ for i in range(0,num_folds):
                 
     #test model
     print('Test Prediction ', sess.run(output, feed_dict={X: test_X, Y: test_Y}))
+    test_prediction = tf.equal(tf.argmax(output, axis=1), tf.argmax(test_Y, axis=1))
     
-    #confusion matrix
-    labels = tf.argmax(test_Y, axis=1)
-    predictions = tf.argmax(output.eval({X: test_X}), axis=1)
-    
-    #num_thresholds = 5
-    #auc = sess.run(tf.metrics.auc(labels,predictions,num_thresholds))
-    #tf.local_variables_initializer().run()
-    
-    matrix = sess.run(tf.confusion_matrix(labels,predictions))
-    print(matrix)
-    
-    TN = matrix[0][0]
-    FP = matrix[0][1]
-    FN = matrix[1][0]
-    TP = matrix[1][1]
-    total = TN + FP + FN + TP
-    
-    fold_accuracy = (TP + TN)/total
+    test_accuracy = tf.reduce_mean(tf.cast(test_prediction, "float"))
+    fold_accuracy = test_accuracy.eval({X: test_X, Y: test_Y})
     print("Test Accuracy:", fold_accuracy)
-    TPrate = TP/total
-    print("True Positive:", TPrate)
-    TNrate = TN/total
-    print("True Negative:", TNrate)
-    FPrate = FP/total
-    print("False Positive:", FPrate)
-    FNrate = FN/total
-    print("False Negative:", FNrate)
-    
-    #compute overall accuracy, false negative, and false positive
+        
+    #compute overall accuracy
     total_accuracy += fold_accuracy*(len(test_X)/len(X_data))
-    total_TP += TPrate
-    total_TN += TNrate
-    total_FP += FPrate
-    total_FN += FNrate
-    
         
 print("Overall Accuracy:", total_accuracy)
-print("Overall True Positive:", total_TP)
-print("Overall True Negative:", total_TN)
-print("Overall False Positive:", total_FP)
-print("Overall False Negative:", total_FN)
