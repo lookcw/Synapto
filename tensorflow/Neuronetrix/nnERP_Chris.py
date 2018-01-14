@@ -4,11 +4,12 @@ import csv
 import os
 import math
 import six
+import sys
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
 #tf.set_random_seed(5)
-learning_rate = 0.1
+learning_rate = 0.4
 n_hidden1 = 20 # 1st layer number of neurons
 n_hidden2 = 20 # 2nd layer number of neurons
 n_hidden3 = 20 # 3rd layer number of neurons
@@ -50,8 +51,7 @@ train = optimizer.minimize(loss)
 array_Y = []
 
 basepath = 'data/'
-combined_HC = []
-combined_AD = []
+total = []
 with open(os.path.join(basepath, "erpn1_shuf_biased1.csv")) as f:
 	reader = csv.reader(f)
 	array = list(reader)
@@ -59,20 +59,15 @@ with open(os.path.join(basepath, "erpn1_shuf_biased1.csv")) as f:
 	#add each patient's erp values (row) to HC or AD vector 
 	for row in array: #first row is column headers
 		if (row[-1] == "-"): #rows 1-96 are HC patients
-			combined_HC.append(row[0:-1])
+			total.append(row[0:-1])
 			#output = 0
 			array_Y.extend([0])
 		else: #rows 97-171 are AD patients
-			combined_AD.append(row[0:-1])
+			total.append(row[0:-1])
 			#output = 1
 			array_Y.extend([1])
-combined_HC = np.array(combined_HC)
-combined_AD = np.array(combined_AD)
-print len(combined_AD)
-print len(combined_HC)
-total = []
-total.extend(combined_HC)
-total.extend(combined_AD)
+total = np.array(total)
+
 
 X_data = np.array(total)
 print(array_Y)
@@ -129,15 +124,15 @@ for i in range(0,num_folds):
 	sess.run(init)
 
 	#cycles of all training set
-	for epoch in range(1500):
+	for epoch in range(1000):
 		#train with each example
 		for j in range(len(train_X)):
 			sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
-		train_prediction = tf.equal(tf.argmax(output, axis=1), tf.argmax(Y, axis=1))
-		train_accuracy = tf.reduce_mean(tf.cast(train_prediction, "float"))
-		print("Train Accuracy:", train_accuracy.eval({X: train_X, Y: train_Y}))
+			#print "x = " + str(train_X[j:j+1]) + "  y = "+str(train_Y[j:j+1])
+		# if epoch == 0:
+		# 	sys.exit(0)
 			
-		if epoch == 1499:
+		if epoch == 999:
 			print('Epoch ', epoch)
 			print('Train Prediction ', sess.run(output, feed_dict={X: train_X, Y: train_Y}))
 			#print('Weight1 ', sess.run(w1))
