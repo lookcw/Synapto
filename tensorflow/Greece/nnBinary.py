@@ -235,23 +235,31 @@ for i in range(0,num_folds):
     
     fold_accuracy = (TP + TN)/total
     print("Test Accuracy:", fold_accuracy)
-    TPrate = TP/actualYES
     if(actualYES == 0):
         TPrate = 0
+    else:
+        TPrate = TP/actualYES
+
     print("Recall:", TPrate)
     #TNrate = TN/actualNO
     #print("True Negative:", TNrate)
-    FPrate = FP/actualNO
     if(actualNO == 0):
         FPrate = 0
+    else:
+        FPrate = FP/actualNO
+
     print("False Positive:", FPrate)
-    FNrate = FN/actualYES
     if(actualYES == 0):
         FNrate = 0
+    else:
+        FNrate = FN/actualYES
+
     print("False Negative:", FNrate)
-    Prec = TP/predYES
     if(predYES == 0):
         Prec = 0
+    else:
+        Prec = TP/predYES
+
     print("Precision:", Prec)
     Fmeasure = (2*Prec*TPrate)/(Prec+TPrate)
     if((Prec+TPrate) == 0):
