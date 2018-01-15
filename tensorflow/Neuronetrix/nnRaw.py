@@ -5,7 +5,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
-tf.set_random_seed(19)
+tf.set_random_seed(88)
 learning_rate = 0.1
 n_hidden1 = 100 # 1st layer number of neurons
 n_hidden2 = 100 # 2nd layer number of neurons

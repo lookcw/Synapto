@@ -5,14 +5,14 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
-tf.set_random_seed(88)
-learning_rate = 0.4
+tf.set_random_seed(5)
+learning_rate = 0.2
 n_hidden1 = 20 # 1st layer number of neurons
 n_hidden2 = 20 # 2nd layer number of neurons
 n_hidden3 = 20 # 3rd layer number of neurons
-n_input = 525 # Data input (151 fft values per electrode x 8 electrodes per patient)
+n_input = 4816 # Data input (301 erp values per electrode x 8 electrodes per patient)
 n_classes = 2 # 0 - Healthy, 1 - AD
-num_folds = 5 #cross validation
+num_folds = 10 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()
@@ -46,43 +46,94 @@ train = optimizer.minimize(loss)
 #training set
 array_Y = []
 
-basepath = 'HCS_fft'
 combined_HC = []
+combined_AD = []
+
+basepath = 'HC_stan'
+combined_HCs = []
 for filename in os.listdir(basepath):
     if filename.endswith('.csv'):
         with open(os.path.join(basepath, filename)) as f:
             reader = csv.reader(f)
             array = list(reader)
             array = np.array(array)
-            #concatenate each electrode fft vector into one vector per instance
+            #concatenate each electrode erp vector into one vector per instance
             Etotal = []
-            for e in range(len(array.T)):
+            for e in range(1,len(array.T)):
                 E = (array[:,e])
                 Etotal.extend(E)
-            #add fft values of each instance
-            combined_HC.append(Etotal)
+            #add erp values of each instance
+            combined_HCs.append(Etotal)
             #output = 0
             array_Y.extend([0])
-combined_HC = np.array(combined_HC)
 
-basepath = 'ADS_fft'
-combined_AD = []
+basepath = 'HC_targ'
+combined_HCt = []
 for filename in os.listdir(basepath):
     if filename.endswith('.csv'):
         with open(os.path.join(basepath, filename)) as f:
             reader = csv.reader(f)
             array = list(reader)
             array = np.array(array)
-            #concatenate each electrode fft vector into one vector per instance
+            #concatenate each electrode erp vector into one vector per instance
             Etotal = []
-            for e in range(len(array.T)):
+            for e in range(1,len(array.T)):
                 E = (array[:,e])
                 Etotal.extend(E)
-            #add fft values of each instance
-            combined_AD.append(Etotal)
+            #add erp values of each instance
+            combined_HCt.append(Etotal)
+            #output = 0
+            array_Y.extend([0])
+
+for i in range(len(combined_HCs)):
+    concat = []
+    concat.extend(combined_HCs[i])
+    concat.extend(combined_HCt[i])
+    combined_HC.append(concat)
+combined_HC = np.array(combined_HC)
+
+basepath = 'AD_stan'
+combined_ADs = []
+for filename in os.listdir(basepath):
+    if filename.endswith('.csv'):
+        with open(os.path.join(basepath, filename)) as f:
+            reader = csv.reader(f)
+            array = list(reader)
+            array = np.array(array)
+            #concatenate each electrode erp vector into one vector per instance
+            Etotal = []
+            for e in range(1,len(array.T)):
+                E = (array[:,e])
+                Etotal.extend(E)
+            #add erp values of each instance
+            combined_ADs.append(Etotal)
             #output = 1
             array_Y.extend([1])
+basepath = 'AD_targ'
+combined_ADt = []
+for filename in os.listdir(basepath):
+    if filename.endswith('.csv'):
+        with open(os.path.join(basepath, filename)) as f:
+            reader = csv.reader(f)
+            array = list(reader)
+            array = np.array(array)
+            #concatenate each electrode erp vector into one vector per instance
+            Etotal = []
+            for e in range(1,len(array.T)):
+                E = (array[:,e])
+                Etotal.extend(E)
+            #add erp values of each instance
+            combined_ADt.append(Etotal)
+            #output = 1
+            array_Y.extend([1])
+
+for i in range(len(combined_ADs)):
+    concat = []
+    concat.extend(combined_ADs[i])
+    concat.extend(combined_ADt[i])
+    combined_AD.append(concat)
 combined_AD = np.array(combined_AD)
+
 
 total = []
 total.extend(combined_HC)
@@ -110,13 +161,8 @@ train_Y=[]
 test_X=[]
 test_Y=[]
 total_accuracy = 0
-total_TP = 0
-#total_TN = 0
-total_FP = 0
-total_FN = 0
-total_Prec = 0
-total_Fmeasure = 0
-total_AUC = 0
+total_fp = 0
+total_fn = 0
 
 for i in range(0,num_folds):
     print("Fold Number:", i+1)
@@ -168,79 +214,13 @@ for i in range(0,num_folds):
                 
     #test model
     print('Test Prediction ', sess.run(output, feed_dict={X: test_X, Y: test_Y}))
+    test_prediction = tf.equal(tf.argmax(output, axis=1), tf.argmax(test_Y, axis=1))
     
-    #confusion matrix
-    labels = tf.argmax(test_Y, axis=1)
-    predictions = tf.argmax(output.eval({X: test_X}), axis=1)
-    
-    matrix = sess.run(tf.confusion_matrix(labels,predictions))
-    print(matrix)
-    
-    if(len(matrix) == 2):
-        TN = matrix[0][0]
-        FP = matrix[0][1]
-        FN = matrix[1][0]
-        TP = matrix[1][1]
-        
-    total = TN + FP + FN + TP
-    actualNO = TN + FP
-    actualYES = FN + TP
-    predYES = FP + TP
-    
-    fold_accuracy = (TP + TN)/total
+    test_accuracy = tf.reduce_mean(tf.cast(test_prediction, "float"))
+    fold_accuracy = test_accuracy.eval({X: test_X, Y: test_Y})
     print("Test Accuracy:", fold_accuracy)
-    TPrate = TP/actualYES
-    if(actualYES == 0):
-        TPrate = 0
-    print("Recall:", TPrate)
-    #TNrate = TN/actualNO
-    #print("True Negative:", TNrate)
-    FPrate = FP/actualNO
-    if(actualNO == 0):
-        FPrate = 0
-    print("False Positive:", FPrate)
-    FNrate = FN/actualYES
-    if(actualYES == 0):
-        FNrate = 0
-    print("False Negative:", FNrate)
-    Prec = TP/predYES
-    if(predYES == 0):
-        Prec = 0
-    print("Precision:", Prec)
-    Fmeasure = (2*Prec*TPrate)/(Prec+TPrate)
-    if((Prec+TPrate) == 0):
-        Fmeasure = 0
-    print("F-measure:", Fmeasure)
-    
-    auc = tf.metrics.auc(labels,
-    predictions,
-    weights=None,
-    num_thresholds=200,
-    metrics_collections=None,
-    updates_collections=None,
-    curve='ROC',
-    name=None)
-    
-    tf.local_variables_initializer().run()
-    AUC = sess.run(auc)
-    print("ROC AUC:", AUC[1])
-    
-    #compute overall accuracy, false negative, and false positive
+        
+    #compute overall accuracy
     total_accuracy += fold_accuracy*(len(test_X)/len(X_data))
-    total_TP += TPrate*(len(test_X)/len(X_data))
-    #total_TN += TNrate*(len(test_X)/len(X_data))
-    total_FP += FPrate*(len(test_X)/len(X_data))
-    total_FN += FNrate*(len(test_X)/len(X_data))
-    total_Prec += Prec*(len(test_X)/len(X_data))
-    total_Fmeasure += Fmeasure*(len(test_X)/len(X_data))
-    total_AUC += AUC[1]*(len(test_X)/len(X_data))
-    
         
 print("Overall Accuracy:", total_accuracy)
-print("Overall False Negative:", total_FN)
-print("Overall False Positive:", total_FP)
-print("Overall Precision:", total_Prec)
-print("Overall Recall:", total_TP)
-print("Overall F-measure:", total_Fmeasure)
-print("Overall ROC AUC:", total_AUC)
-#print("Overall True Negative:", total_TN)
