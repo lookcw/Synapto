@@ -5,7 +5,11 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
+<<<<<<< HEAD
+tf.set_random_seed(345)
+=======
 tf.set_random_seed(88)
+>>>>>>> 49bbbf89fddcaa4849490a901eaf12f79c355f3f
 learning_rate = 0.1
 n_hidden1 = 100 # 1st layer number of neurons
 n_hidden2 = 100 # 2nd layer number of neurons
@@ -160,10 +164,10 @@ for i in range(0,num_folds):
     matrix = sess.run(tf.confusion_matrix(labels,predictions))
     print(matrix)
     
-    TN = matrix[0][0]
-    FP = matrix[0][1]
-    FN = matrix[1][0]
-    TP = matrix[1][1]
+    TN = float(matrix[0][0])
+    FP = float(matrix[0][1])
+    FN = float(matrix[1][0])
+    TP = float(matrix[1][1])
     total = TN + FP + FN + TP
     actualNO = TN + FP
     actualYES = FN + TP
@@ -208,14 +212,14 @@ for i in range(0,num_folds):
     print("ROC AUC:", AUC[1])
     
     #compute overall accuracy, false negative, and false positive
-    total_accuracy += fold_accuracy*(len(test_X)/len(X_data))
-    total_TP += TPrate*(len(test_X)/len(X_data))
+    total_accuracy += fold_accuracy*(float(len(test_X))/len(X_data))
+    total_TP += TPrate*(float(len(test_X))/len(X_data))
     #total_TN += TNrate*(len(test_X)/len(X_data))
-    total_FP += FPrate*(len(test_X)/len(X_data))
-    total_FN += FNrate*(len(test_X)/len(X_data))
-    total_Prec += Prec*(len(test_X)/len(X_data))
-    total_Fmeasure += Fmeasure*(len(test_X)/len(X_data))
-    total_AUC += AUC[1]*(len(test_X)/len(X_data))
+    total_FP += FPrate*(float(len(test_X))/len(X_data))
+    total_FN += FNrate*(float(len(test_X))/len(X_data))
+    total_Prec += Prec*(float(len(test_X))/len(X_data))
+    total_Fmeasure += Fmeasure*(float(len(test_X))/len(X_data))
+    total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
     
         
 print("Overall Accuracy:", total_accuracy)
