@@ -126,6 +126,8 @@ test_Y=[]
 totalDiff = 0
 
 for i in range(0,num_folds):
+    print("Fold Number:", i+1)
+    
     Xdata = X_data
     Ydata = Y_data
     Xdata = np.array(Xdata)

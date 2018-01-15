@@ -5,14 +5,14 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
-#tf.set_random_seed(5)
+tf.set_random_seed(5)
 learning_rate = 0.4
 n_hidden1 = 20 # 1st layer number of neurons
 n_hidden2 = 20 # 2nd layer number of neurons
 n_hidden3 = 20 # 3rd layer number of neurons
 n_input = 1208 # Data input (151 fft values per electrode x 8 electrodes per patient)
 n_classes = 3 # 0 - Healthy, 1 - MCI, 2 - AD
-num_folds = 5 #cross validation
+num_folds = 10 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()
@@ -134,6 +134,8 @@ total_fp = 0
 total_fn = 0
 
 for i in range(0,num_folds):
+    print("Fold Number:", i+1)
+    
     Xdata = X_data
     Ydata = Y_data
     Xdata = np.array(Xdata)

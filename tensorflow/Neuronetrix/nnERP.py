@@ -5,13 +5,13 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
-#tf.set_random_seed(5)
+tf.set_random_seed(20)
 learning_rate = 0.01
 n_hidden1 = 4 # 1st layer number of neurons
 n_hidden2 = 4 # 2nd layer number of neurons
 n_input = 189 # Data input (189 total erp values per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
-num_folds = 2 #cross validation
+num_folds = 10 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()
@@ -101,11 +101,16 @@ test_X=[]
 test_Y=[]
 total_accuracy = 0
 total_TP = 0
-total_TN = 0
+#total_TN = 0
 total_FP = 0
 total_FN = 0
+total_Prec = 0
+total_Fmeasure = 0
+total_AUC = 0
 
 for i in range(0,num_folds):
+    print("Fold Number:", i+1)
+    
     Xdata = X_data
     Ydata = Y_data
     Xdata = np.array(Xdata)
@@ -158,10 +163,6 @@ for i in range(0,num_folds):
     labels = tf.argmax(test_Y, axis=1)
     predictions = tf.argmax(output.eval({X: test_X}), axis=1)
     
-    #num_thresholds = 5
-    #auc = sess.run(tf.metrics.auc(labels,predictions,num_thresholds))
-    #tf.local_variables_initializer().run()
-    
     matrix = sess.run(tf.confusion_matrix(labels,predictions))
     print(matrix)
     
@@ -170,28 +171,64 @@ for i in range(0,num_folds):
     FN = matrix[1][0]
     TP = matrix[1][1]
     total = TN + FP + FN + TP
+    actualNO = TN + FP
+    actualYES = FN + TP
+    predYES = FP + TP
     
     fold_accuracy = (TP + TN)/total
     print("Test Accuracy:", fold_accuracy)
-    TPrate = TP/total
-    print("True Positive:", TPrate)
-    TNrate = TN/total
-    print("True Negative:", TNrate)
-    FPrate = FP/total
+    TPrate = TP/actualYES
+    if(actualYES == 0):
+        TPrate = 0
+    print("Recall:", TPrate)
+    #TNrate = TN/actualNO
+    #print("True Negative:", TNrate)
+    FPrate = FP/actualNO
+    if(actualNO == 0):
+        FPrate = 0
     print("False Positive:", FPrate)
-    FNrate = FN/total
+    FNrate = FN/actualYES
+    if(actualYES == 0):
+        FNrate = 0
     print("False Negative:", FNrate)
+    Prec = TP/predYES
+    if(predYES == 0):
+        Prec = 0
+    print("Precision:", Prec)
+    Fmeasure = (2*Prec*TPrate)/(Prec+TPrate)
+    if((Prec+TPrate) == 0):
+        Fmeasure = 0
+    print("F-measure:", Fmeasure)
+    
+    auc = tf.metrics.auc(labels,
+    predictions,
+    weights=None,
+    num_thresholds=200,
+    metrics_collections=None,
+    updates_collections=None,
+    curve='ROC',
+    name=None)
+    
+    tf.local_variables_initializer().run()
+    AUC = sess.run(auc)
+    print("ROC AUC:", AUC[1])
     
     #compute overall accuracy, false negative, and false positive
     total_accuracy += fold_accuracy*(len(test_X)/len(X_data))
-    total_TP += TPrate
-    total_TN += TNrate
-    total_FP += FPrate
-    total_FN += FNrate
+    total_TP += TPrate*(len(test_X)/len(X_data))
+    #total_TN += TNrate*(len(test_X)/len(X_data))
+    total_FP += FPrate*(len(test_X)/len(X_data))
+    total_FN += FNrate*(len(test_X)/len(X_data))
+    total_Prec += Prec*(len(test_X)/len(X_data))
+    total_Fmeasure += Fmeasure*(len(test_X)/len(X_data))
+    total_AUC += AUC[1]*(len(test_X)/len(X_data))
     
         
 print("Overall Accuracy:", total_accuracy)
-print("Overall True Positive:", total_TP)
-print("Overall True Negative:", total_TN)
-print("Overall False Positive:", total_FP)
 print("Overall False Negative:", total_FN)
+print("Overall False Positive:", total_FP)
+print("Overall Precision:", total_Prec)
+print("Overall Recall:", total_TP)
+print("Overall F-measure:", total_Fmeasure)
+print("Overall ROC AUC:", total_AUC)
+#print("Overall True Negative:", total_TN)

@@ -5,14 +5,14 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
-#tf.set_random_seed(5)
-learning_rate = 0.4
+tf.set_random_seed(200)
+learning_rate = 0.2
 n_hidden1 = 20 # 1st layer number of neurons
 n_hidden2 = 20 # 2nd layer number of neurons
 n_hidden3 = 20 # 3rd layer number of neurons
 n_input = 2408 # Data input (301 erp values per electrode x 8 electrodes per patient)
 n_classes = 3 # 0 - Healthy, 1 - MCI, 2 - AD
-num_folds = 5 #cross validation
+num_folds = 10 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()
@@ -46,7 +46,7 @@ train = optimizer.minimize(loss)
 #training set
 array_Y = []
 
-basepath = 'HC_stan'
+basepath = 'HC_targ'
 combined_HC = []
 for filename in os.listdir(basepath):
     if filename.endswith('.csv'):
@@ -65,7 +65,7 @@ for filename in os.listdir(basepath):
             array_Y.extend([0])
 combined_HC = np.array(combined_HC)
 
-basepath = 'MCI_stan'
+basepath = 'MCI_targ'
 combined_MCI = []
 for filename in os.listdir(basepath):
     if filename.endswith('.csv'):
@@ -84,7 +84,7 @@ for filename in os.listdir(basepath):
             array_Y.extend([1])
 combined_MCI = np.array(combined_MCI)
 
-basepath = 'AD_stan'
+basepath = 'AD_targ'
 combined_AD = []
 for filename in os.listdir(basepath):
     if filename.endswith('.csv'):
@@ -134,6 +134,8 @@ total_fp = 0
 total_fn = 0
 
 for i in range(0,num_folds):
+    print("Fold Number:", i+1)
+    
     Xdata = X_data
     Ydata = Y_data
     Xdata = np.array(Xdata)
