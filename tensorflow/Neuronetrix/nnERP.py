@@ -5,8 +5,8 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
-tf.set_random_seed(20)
-learning_rate = 0.01
+tf.set_random_seed(59)
+learning_rate = 0.05
 n_hidden1 = 4 # 1st layer number of neurons
 n_hidden2 = 4 # 2nd layer number of neurons
 n_input = 189 # Data input (189 total erp values per patient)
