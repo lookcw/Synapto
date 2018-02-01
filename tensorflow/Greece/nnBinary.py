@@ -223,10 +223,10 @@ for i in range(0,num_folds):
     print(matrix)
     
     if(len(matrix) == 2):
-        TN = matrix[0][0]
-        FP = matrix[0][1]
-        FN = matrix[1][0]
-        TP = matrix[1][1]
+        TN = float(matrix[0][0])
+        FP = float(matrix[0][1])
+        FN = float(matrix[1][0])
+        TP = float(matrix[1][1])
         
     total = TN + FP + FN + TP
     actualNO = TN + FP
@@ -235,23 +235,31 @@ for i in range(0,num_folds):
     
     fold_accuracy = (TP + TN)/total
     print("Test Accuracy:", fold_accuracy)
-    TPrate = TP/actualYES
     if(actualYES == 0):
         TPrate = 0
+    else:
+        TPrate = TP/actualYES
+
     print("Recall:", TPrate)
     #TNrate = TN/actualNO
     #print("True Negative:", TNrate)
-    FPrate = FP/actualNO
     if(actualNO == 0):
         FPrate = 0
+    else:
+        FPrate = FP/actualNO
+
     print("False Positive:", FPrate)
-    FNrate = FN/actualYES
     if(actualYES == 0):
         FNrate = 0
+    else:
+        FNrate = FN/actualYES
+
     print("False Negative:", FNrate)
-    Prec = TP/predYES
     if(predYES == 0):
         Prec = 0
+    else:
+        Prec = TP/predYES
+
     print("Precision:", Prec)
     Fmeasure = (2*Prec*TPrate)/(Prec+TPrate)
     if((Prec+TPrate) == 0):
@@ -272,14 +280,14 @@ for i in range(0,num_folds):
     print("ROC AUC:", AUC[1])
     
     #compute overall accuracy, false negative, and false positive
-    total_accuracy += fold_accuracy*(len(test_X)/len(X_data))
-    total_TP += TPrate*(len(test_X)/len(X_data))
+    total_accuracy += fold_accuracy*(float(len(test_X))/len(X_data))
+    total_TP += TPrate*(float(len(test_X))/len(X_data))
     #total_TN += TNrate*(len(test_X)/len(X_data))
-    total_FP += FPrate*(len(test_X)/len(X_data))
-    total_FN += FNrate*(len(test_X)/len(X_data))
-    total_Prec += Prec*(len(test_X)/len(X_data))
-    total_Fmeasure += Fmeasure*(len(test_X)/len(X_data))
-    total_AUC += AUC[1]*(len(test_X)/len(X_data))
+    total_FP += FPrate*(float(len(test_X))/len(X_data))
+    total_FN += FNrate*(float(len(test_X))/len(X_data))
+    total_Prec += Prec*(float(len(test_X))/len(X_data))
+    total_Fmeasure += Fmeasure*(float(len(test_X))/len(X_data))
+    total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
     
         
 print("Overall Accuracy:", total_accuracy)
