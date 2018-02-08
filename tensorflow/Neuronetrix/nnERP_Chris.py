@@ -9,11 +9,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
 #tf.set_random_seed(5)
-learning_rate = 0.4
-n_hidden1 = 20 # 1st layer number of neurons
-n_hidden2 = 20 # 2nd layer number of neurons
-n_hidden3 = 20 # 3rd layer number of neurons
-n_input = 190 # Data input (190 total erp values per patient)
+learning_rate = 0.1
+n_hidden1 = 40 # 1st layer number of neurons
+n_hidden2 = 40 # 2nd layer number of neurons
+n_input =  1575 # Data input (190 total erp values per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
 num_folds = 3 #cross validation
 
@@ -23,24 +22,21 @@ sess = tf.InteractiveSession()
 X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")
 Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")
 
-W1 = tf.Variable(tf.random_normal([n_input, n_hidden1],stddev=math.sqrt(n_input)), name="Weight1")
-W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2],stddev=math.sqrt(n_input)), name="Weight2")
-W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3],stddev=math.sqrt(n_input)), name="Weight3")
-W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes],stddev=math.sqrt(n_input)), name="Weight4")
+W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")
+W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")
+W3 = tf.Variable(tf.random_normal([n_hidden2, n_classes]), name="Weight3")
 
 b1 = tf.Variable(tf.random_normal([n_hidden1],stddev=math.sqrt(n_input)), name="Bias1")
 b2 = tf.Variable(tf.random_normal([n_hidden2],stddev=math.sqrt(n_input)), name="Bias2")
-b3 = tf.Variable(tf.random_normal([n_hidden3],stddev=math.sqrt(n_input)), name="Bias3")
-b4 = tf.Variable(tf.random_normal([n_classes],stddev=math.sqrt(n_input)), name="Bias4")
+b3 = tf.Variable(tf.random_normal([n_classes],stddev=math.sqrt(n_input)), name="Bias3")
 
 #forward-pass
 #hidden layer 
 H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)
 H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)
-H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)
 
 #predicted values
-output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)
+output = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)
 
 #backward-pass
 loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))
@@ -52,8 +48,9 @@ array_Y = []
 
 basepath = 'data/'
 total = []
-with open(os.path.join(basepath, "erpn1_shuf_biased1.csv")) as f:
+with open(os.path.join(basepath, "erpn_1Zscore.csv")) as f:
 	reader = csv.reader(f)
+	#next(reader)
 	array = list(reader)
 	array = np.array(array)
 	#add each patient's erp values (row) to HC or AD vector 
@@ -70,20 +67,18 @@ total = np.array(total)
 
 
 X_data = np.array(total)
-print(array_Y)
 array_Y = np.array(array_Y)
 #convert to one-hot arrays
 array_Y = array_Y.astype(int)
 Y_data = np.eye(n_classes)[array_Y]
 
 #controlled shuffle function
-# def shuffle(input):
-# 	np.random.seed(1)
-# 	return np.random.shuffle(input)
+def shuffle(input):
+	np.random.seed(1)
+	return np.random.shuffle(input)
 
-# shuffle(X_data)
-# shuffle(Y_data)
-
+shuffle(X_data)
+shuffle(Y_data)
 #cross-validation 
 elements = len(X_data)
 train_X=[]
@@ -105,6 +100,7 @@ for i in range(0,num_folds):
 	#print('second index',second_index)
 	
 	#split the sets into training and testing sets
+	print len(test_X)
 	test_X = Xdata[first_index:second_index]
 	test_Y = Ydata[first_index:second_index]
 
@@ -124,7 +120,7 @@ for i in range(0,num_folds):
 	sess.run(init)
 
 	#cycles of all training set
-	for epoch in range(1000):
+	for epoch in range(1500):
 		#train with each example
 		for j in range(len(train_X)):
 			sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
