@@ -13,7 +13,7 @@ for ran in range(1):
     n_hidden3 = 100 # 3rd layer number of neurons
     n_input = 4816 # Data input
     n_classes = 2 # 0 - Healthy, 1 - AD
-    num_folds = 3 #cross validation
+    num_folds = 10 #cross validation
 
     #declare interactive session
     sess = tf.InteractiveSession()

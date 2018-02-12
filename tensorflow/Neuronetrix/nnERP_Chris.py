@@ -6,51 +6,28 @@ import math
 import six
 import sys
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
-
+print "starting"
 # Network Parameters
 #tf.set_random_seed(5)
-learning_rate = 0.1
+learning_rate = 0.3
 n_hidden1 = 40 # 1st layer number of neurons
 n_hidden2 = 40 # 2nd layer number of neurons
-n_input =  1575 # Data input (190 total erp values per patient)
+n_input =  189 # Data input (190 total erp values per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
 num_folds = 3 #cross validation
 
-#declare interactive session
-sess = tf.InteractiveSession()
 
-X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")
-Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")
 
-W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")
-W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")
-W3 = tf.Variable(tf.random_normal([n_hidden2, n_classes]), name="Weight3")
 
-b1 = tf.Variable(tf.random_normal([n_hidden1],stddev=math.sqrt(n_input)), name="Bias1")
-b2 = tf.Variable(tf.random_normal([n_hidden2],stddev=math.sqrt(n_input)), name="Bias2")
-b3 = tf.Variable(tf.random_normal([n_classes],stddev=math.sqrt(n_input)), name="Bias3")
-
-#forward-pass
-#hidden layer 
-H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)
-H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)
-
-#predicted values
-output = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)
-
-#backward-pass
-loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))
-optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-train = optimizer.minimize(loss)
 
 #training set
 array_Y = []
 
 basepath = 'data/'
 total = []
-with open(os.path.join(basepath, "erpn_1Zscore.csv")) as f:
+with open(os.path.join(basepath, "erpn_1_zscore_chris.csv")) as f:
 	reader = csv.reader(f)
-	#next(reader)
+	next(reader)
 	array = list(reader)
 	array = np.array(array)
 	#add each patient's erp values (row) to HC or AD vector 
@@ -64,6 +41,8 @@ with open(os.path.join(basepath, "erpn_1Zscore.csv")) as f:
 			#output = 1
 			array_Y.extend([1])
 total = np.array(total)
+print total
+print array_Y
 
 
 X_data = np.array(total)
@@ -90,6 +69,33 @@ total_fp = 0
 total_fn = 0
 
 for i in range(0,num_folds):
+	#declare interactive session
+	sess = tf.InteractiveSession()
+	X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")
+	Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")
+
+	W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")
+	W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")
+	W3 = tf.Variable(tf.random_normal([n_hidden2, n_classes]), name="Weight3")
+
+	b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")
+	b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")
+	b3 = tf.Variable(tf.random_normal([n_classes]), name="Bias3")
+
+	#forward-pass
+	#hidden layer 
+	H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)
+	H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)
+
+	#predicted values
+	output = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)
+
+	#backward-pass
+	loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))
+	optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+	train = optimizer.minimize(loss)
+
+
 	Xdata = X_data
 	Ydata = Y_data
 	Xdata = np.array(Xdata)
@@ -120,7 +126,7 @@ for i in range(0,num_folds):
 	sess.run(init)
 
 	#cycles of all training set
-	for epoch in range(1500):
+	for epoch in range(1000):
 		#train with each example
 		for j in range(len(train_X)):
 			sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})

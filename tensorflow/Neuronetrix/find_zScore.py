@@ -35,5 +35,7 @@ def zscore_file(in_file,out_file,is_header):
 	writer.writerow(header)
 	for row in ans:
 		writer.writerow(row)
+		
 zscore_file(sys.argv[1],sys.argv[2],True)
+
 #zscore_file("data/erpn_1.csv","data/erpn_1_zscore_chris.csv",True)
