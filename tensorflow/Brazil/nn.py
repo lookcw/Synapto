@@ -12,7 +12,7 @@ n_hidden2 = 20 # 2nd layer number of neurons
 n_hidden3 = 20 # 3rd layer number of neurons
 n_input = 1974 # Data input (94 fft values per electrode x 21 electrodes per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
-num_folds = 3 #cross validation
+num_folds = 2 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()

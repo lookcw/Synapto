@@ -6,12 +6,12 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 
 # Network Parameters
 #tf.set_random_seed(59)
-learning_rate = 0.1
-n_hidden1 = 4 # 1st layer number of neurons
-n_hidden2 = 4 # 2nd layer number of neurons
+learning_rate = 0.3
+n_hidden1 = 40 # 1st layer number of neurons
+n_hidden2 = 40 # 2nd layer number of neurons
 n_input = 189 # Data input (189 total erp values per patient)
 n_classes = 2 # 0 or 1 for Healthy or Alzheimer's
-num_folds = 3 #cross validation
+num_folds = 2 #cross validation
 
 #declare interactive session
 sess = tf.InteractiveSession()
@@ -19,25 +19,6 @@ sess = tf.InteractiveSession()
 X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")
 Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")
 
-W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")
-W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")
-W3 = tf.Variable(tf.random_normal([n_hidden2, n_classes]), name="Weight3")
-
-b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")
-b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")
-b3 = tf.Variable(tf.random_normal([n_classes]), name="Bias3")
-
-#forward-pass
-#hidden layer 
-H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)
-H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)
-#predicted values
-output = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)
-
-#backward-pass
-loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))
-optimizer = tf.train.GradientDescentOptimizer(learning_rate)
-train = optimizer.minimize(loss)
 
 #training set
 array_Y = []
@@ -125,6 +106,28 @@ for i in range(0,num_folds):
     Ydata = np.delete(Ydata,index,axis=0)
     train_X = Xdata
     train_Y = Ydata
+    
+    #initialize weights and biases
+
+    W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")
+    W2 = tf .Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")
+    W3 = tf.Variable(tf.random_normal([n_hidden2, n_classes]), name="Weight3")
+
+    b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")
+    b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")
+    b3 = tf.Variable(tf.random_normal([n_classes]), name="Bias3")
+
+    #forward-pass
+    #hidden layer 
+    H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)
+    H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)
+    #predicted values
+    output = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)
+
+    #backward-pass
+    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))
+    optimizer = tf.train.GradientDescentOptimizer(learning_rate)
+    train = optimizer.minimize(loss)
     
     #train/test model
     init = tf.global_variables_initializer()
