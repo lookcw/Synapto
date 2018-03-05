@@ -92,9 +92,15 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 
 	for i in range(0,n_folds):
+<<<<<<< HEAD
 		W = [0 for i in range(n_hlayers+1)]
 		b = [0 for i in range(n_hlayers+1)]
 		H = [0 for i in range(n_hlayers)]
+=======
+		W = [0 for i in range(n_hlayers)]
+		b = [0 for i in range(n_hlayers)]
+		H = [0 for i in range(n_hlayers-1)]
+>>>>>>> 7bea1581112c705e9d5a65605036ee6a1fb3b0f6
 		#declare interactive session
 		sess = tf.InteractiveSession()
 		X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")
@@ -104,6 +110,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		H[0] = tf.nn.sigmoid(tf.matmul(X, W[0]) + b[0])
 
 		for i in range(1,n_hlayers):
+<<<<<<< HEAD
 			W[i] = tf.Variable(tf.random_normal([neurons[i-1], neurons[i]]), name="Weight" + str(i+1))
 			b[i] = tf.Variable(tf.random_normal([neurons[i]]), name="Bias"+str(i+1))
 
@@ -112,6 +119,16 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 		for i in range(1,n_hlayers):
 			H[i] = tf.nn.sigmoid(tf.matmul(H[i-1], W[i]) + b[i])
+=======
+			W[i] = tf.Variable(tf.random_normal([neurons[i], neurons[i]]), name="Weight" + str(i+1))
+			b[i] = tf.Variable(tf.random_normal([neurons[i]]), name="Bias"+str(i+1))
+
+		W.append(tf.Variable(tf.random_normal([neurons[-1], n_classes]), name="Weight" + str(n_hlayers+1)))
+		b.append(tf.Variable(tf.random_normal([n_classes]), name="Bias"+str(n_hlayers+1)))
+		for i in range(1,n_hlayers-1):
+			H[i] = tf.nn.sigmoid(tf.matmul(H[i], W[i]) + b[i])
+
+>>>>>>> 7bea1581112c705e9d5a65605036ee6a1fb3b0f6
 		output = tf.nn.sigmoid(tf.matmul(H[-1], W[-1]) + b[-1])
 
 		#predicted values
@@ -182,6 +199,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 		matrix = sess.run(tf.confusion_matrix(labels,predictions))
 		print(matrix)
+<<<<<<< HEAD
 		
 		if(len(matrix) == 2):
 			TN = float(matrix[0][0])
@@ -255,6 +273,81 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		total_Fmeasure += Fmeasure*(float(len(test_X))/len(X_data))
 		total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
 		
+=======
+		
+		if(len(matrix) == 2):
+			TN = float(matrix[0][0])
+			FP = float(matrix[0][1])
+			FN = float(matrix[1][0])
+			TP = float(matrix[1][1])
+			
+		total = TN + FP + FN + TP
+		actualNO = TN + FP
+		actualYES = FN + TP
+		predYES = FP + TP
+		
+		fold_accuracy = (TP + TN)/total
+		print("Test Accuracy:", fold_accuracy)
+		if(actualYES == 0):
+			TPrate = 1
+		else:
+			TPrate = TP/actualYES
+
+		print("Recall:", TPrate)
+		if actualNO == 0:
+			TNrate = 1
+		else:
+			TNrate = TN/actualNO
+		print("True Negative:", TNrate)
+		if(actualNO == 0):
+			FPrate = 0
+		else:
+			FPrate = FP/actualNO
+
+		print("False Positive:", FPrate)
+		if(actualYES == 0):
+			FNrate = 0
+		else:
+			FNrate = FN/actualYES
+
+		print("False Negative:", FNrate)
+		if(predYES == 0):
+			Prec = 0
+		else:
+			Prec = TP/predYES
+
+		print("Precision:", Prec)
+		if((Prec+TPrate) == 0):
+			Fmeasure = 0
+		else:
+			Fmeasure = (2*Prec*TPrate)/(Prec+TPrate)
+		
+		print("F-measure:", Fmeasure)
+		
+		auc = tf.metrics.auc(labels,
+		predictions,
+		weights=None,
+		num_thresholds=200,
+		metrics_collections=None,
+		updates_collections=None,
+		curve='ROC',
+		name=None)
+		
+		tf.local_variables_initializer().run()
+		AUC = sess.run(auc)
+		print("ROC AUC:", AUC[1])
+		
+		#compute overall accuracy, false negative, and false positive
+		total_accuracy += fold_accuracy*(float(len(test_X))/len(X_data))
+		total_TP += TPrate*(float(len(test_X))/len(X_data))
+		total_TN += TNrate*(float(len(test_X))/len(X_data))
+		total_FP += FPrate*(float(len(test_X))/len(X_data))
+		total_FN += FNrate*(float(len(test_X))/len(X_data))
+		total_Prec += Prec*(float(len(test_X))/len(X_data))
+		total_Fmeasure += Fmeasure*(float(len(test_X))/len(X_data))
+		total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
+		
+>>>>>>> 7bea1581112c705e9d5a65605036ee6a1fb3b0f6
 			
 	print("Overall Accuracy:", total_accuracy)
 	print("Overall False Negative:", total_FN)
@@ -263,11 +356,16 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	print("Overall Recall:", total_TP)
 	print("Overall F-measure:", total_Fmeasure)
 	print("Overall ROC AUC:", total_AUC)
+<<<<<<< HEAD
 	results = [datetime.datetime.now(),iden,filename,total_accuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes]
 	r_file = open(results_file,'a')
 	writer = csv.writer(r_file,delimiter=',')
 	writer.writerow(results)
 
+=======
+	results = [datetime.datetime.now(),iden,total_accuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC]
+	r_file = open(results_file,'a')
+>>>>>>> 7bea1581112c705e9d5a65605036ee6a1fb3b0f6
 
 
 n=1
@@ -278,4 +376,8 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
+<<<<<<< HEAD
 x_validation(in_file = filename,identifier = iden, n_hlayers = 3, neurons = [20,30,20],learning_rate = 0.2,results_file = "../Results.csv",n_folds = 3,n_classes = 2)
+=======
+x_validation(in_file = filename,identifier = iden,n_hlayers = 2, neurons = [30,30],learning_rate = 0.2,results_file = "../Results.csv",n_folds = 3,n_classes = 2)
+>>>>>>> 7bea1581112c705e9d5a65605036ee6a1fb3b0f6

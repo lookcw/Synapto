@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 time,iden,identifier,filename,acc,FN,FP,TP,TN,Fmeasure,AUC,nlayers,neurons,learning_rate,n_folds,classes
 2018-03-01,16:50:37.677949,test,Feature_Sets/AllFFT_B.csv,0.6,0.12,0.66,0.96,0.42,0.616,0.6899999857,3,"[20, 30, 20]",0.2,3,2
+=======
+time,iden,acc,FN,FP,TP,TN,Fmeasure,AUC
+>>>>>>> 7bea1581112c705e9d5a65605036ee6a1fb3b0f6
