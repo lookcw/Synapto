@@ -9,12 +9,12 @@ import datetime
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
 # Network Parameters
-#tf.set_random_seed(5)
+
 
 
 
 def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" 
-	,identifier = "" ,learning_rate = 0,n_classes = 0):
+	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 0):
 	if in_file == "":
 		print "did not include file name"
 		sys.exit(1)
@@ -33,7 +33,11 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	if learning_rate == 0:
 		print "did not set learning rate"
 		sys.exit(1)
-	#training set
+    if seed == 0:
+        print "did not set seed"
+        sys.exit(1)
+    
+    #training set
 	array_Y = []
 	total = []
 	with open(in_file) as f:
@@ -56,6 +60,8 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	total = np.array(total)
 	print total
 	print array_Y
+    
+    tf.set_random_seed(seed)
 
 
 	X_data = np.array(total)
@@ -266,7 +272,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	print("Overall F-measure:", total_Fmeasure)
 	print("Overall ROC AUC:", total_AUC)
 
-	results = [datetime.datetime.now(),iden,filename,total_accuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes]
+	results = [datetime.datetime.now(),iden,filename,total_accuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes,seed]
 	r_file = open(results_file,'a')
 	writer = csv.writer(r_file,delimiter=',')
 	writer.writerow(results)
@@ -279,5 +285,5 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename,identifier = iden, n_hlayers = 3, neurons = [20,30,20],learning_rate = 0.2,results_file = "../Results.csv",n_folds = 3,n_classes = 2)
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [20,30,20],learning_rate = 0.2,results_file = "../Results.csv",n_folds = 2,n_classes = 2, seed = 5)
 
