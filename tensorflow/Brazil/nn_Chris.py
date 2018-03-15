@@ -14,7 +14,7 @@ print "starting"
 
 
 def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" 
-	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 0):
+	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 5):
 	if in_file == "":
 		print "did not include file name"
 		sys.exit(1)
@@ -36,7 +36,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	if seed == 0:
 		print "did not set seed"
 		sys.exit(1)
-	
+
 	#training set
 	array_Y = []
 	total = []
@@ -49,7 +49,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 	# Data input (190 total erp values per patient)
 		#add each patient's erp values (row) to HC or AD vector 
-		for row in array: #first row is column headers
+		for row in array[1:]: #first row is column headers
 			if (row[-1] == "-"): #rows 1-96 are HC patients
 				total.append(row[0:-1])
 				#output = 0
@@ -74,7 +74,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	#controlled shuffle function
 	def shuffle(input):
 		np.random.seed(3)
-		return np.random.shuffle(input)
+		np.random.shuffle(input)
 
 	shuffle(X_data)
 	shuffle(Y_data)
@@ -95,15 +95,15 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	total_Fmeasure = 0
 	total_AUC = 0
 
-			
 
 
-	for i in range(0,n_folds):
+
+	for fold in range(0,n_folds):
 		W = [0 for i in range(n_hlayers+1)]
 		b = [0 for i in range(n_hlayers+1)]
 		H = [0 for i in range(n_hlayers)]
 		#declare interactive session
-		sess = tf.InteractiveSession()
+
 		X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")
 		Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")
 		W[0] = tf.Variable(tf.random_normal([n_input, neurons[0]]), name="Weight1")
@@ -111,7 +111,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		H[0] = tf.nn.sigmoid(tf.matmul(X, W[0]) + b[0])
 
 		for i in range(1,n_hlayers):
-
 			W[i] = tf.Variable(tf.random_normal([neurons[i-1], neurons[i]]), name="Weight" + str(i+1))
 			b[i] = tf.Variable(tf.random_normal([neurons[i]]), name="Bias"+str(i+1))
 
@@ -123,23 +122,21 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 		output = tf.nn.sigmoid(tf.matmul(H[-1], W[-1]) + b[-1])
 
-		#predicted values
-
-
 		#backward-pass
 		loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))
 		optimizer = tf.train.GradientDescentOptimizer(learning_rate)
 		train = optimizer.minimize(loss)
 
+		sess = tf.InteractiveSession()
+		init = tf.global_variables_initializer()
+		sess.run(init)
 
 		Xdata = X_data
 		Ydata = Y_data
 		Xdata = np.array(Xdata)
 		Ydata = np.array(Ydata)
-		first_index=int((i*elements/float(n_folds)))
-		second_index=int(((i+1)*elements/float(n_folds)))
-		#print('first index',first_index)
-		#print('second index',second_index)
+		first_index=int((fold*elements/float(n_folds)))
+		second_index=int(((fold+1)*elements/float(n_folds)))
 		
 		#split the sets into training and testing sets
 		print len(test_X)
@@ -153,16 +150,14 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		Xdata = np.delete(Xdata,index,axis=0)
 		Ydata = np.delete(Ydata,index,axis=0)
 		print len(test_X)
-		print len(Xdata)
 		train_X = Xdata
 		train_Y = Ydata
 		
 		#train/test model
-		init = tf.global_variables_initializer()
-		sess.run(init)
+
 
 		#cycles of all training set
-		for epoch in range(1000):
+		for epoch in range(2000):
 			#train with each example
 			for j in range(len(train_X)):
 				sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
@@ -181,7 +176,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 				#calculate train accuracy
 				train_accuracy = tf.reduce_mean(tf.cast(train_prediction, "float"))
 				print("Train Accuracy:", train_accuracy.eval({X: train_X, Y: train_Y}))
-					
+		
 					
 		#test model
 		print('Test Prediction ', sess.run(output, feed_dict={X: test_X, Y: test_Y}))
@@ -193,12 +188,12 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		print(matrix)
 		
 		if(len(matrix) == 2):
-			TN = float(matrix[0][0])
-			FP = float(matrix[0][1])
-			FN = float(matrix[1][0])
+  			TN = float(matrix[0][0])
+ 			FP = float(matrix[0][1])
+ 			FN = float(matrix[1][0])
 			TP = float(matrix[1][1])
 			
-		total = TN + FP + FN + TP
+ 		total = TN + FP + FN + TP
 		actualNO = TN + FP
 		actualYES = FN + TP
 		predYES = FP + TP
@@ -246,23 +241,23 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		weights=None,
 		num_thresholds=200,
 		metrics_collections=None,
-		updates_collections=None,
+ 		updates_collections=None,
 		curve='ROC',
 		name=None)
 		
 		tf.local_variables_initializer().run()
 		AUC = sess.run(auc)
 		print("ROC AUC:", AUC[1])
-		
+
 		#compute overall accuracy, false negative, and false positive
 		total_accuracy += fold_accuracy*(float(len(test_X))/len(X_data))
 		total_TP += TPrate*(float(len(test_X))/len(X_data))
 		total_TN += TNrate*(float(len(test_X))/len(X_data))
 		total_FP += FPrate*(float(len(test_X))/len(X_data))
-		total_FN += FNrate*(float(len(test_X))/len(X_data))
-		total_Prec += Prec*(float(len(test_X))/len(X_data))
+ 		total_FN += FNrate*(float(len(test_X))/len(X_data))
+ 		total_Prec += Prec*(float(len(test_X))/len(X_data))
 		total_Fmeasure += Fmeasure*(float(len(test_X))/len(X_data))
-		total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
+ 		total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
 		
 			
 	print("Overall Accuracy:", total_accuracy)
@@ -286,5 +281,5 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [20,30,20],learning_rate = 0.2,results_file = "../Results.csv",n_folds = 2,n_classes = 2, seed = 5)
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.1,results_file = "../Results.csv",n_folds = 25,n_classes = 2, seed = 3)
 
