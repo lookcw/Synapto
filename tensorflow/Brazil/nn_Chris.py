@@ -33,11 +33,11 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	if learning_rate == 0:
 		print "did not set learning rate"
 		sys.exit(1)
-    if seed == 0:
-        print "did not set seed"
-        sys.exit(1)
-    
-    #training set
+	if seed == 0:
+		print "did not set seed"
+		sys.exit(1)
+	
+	#training set
 	array_Y = []
 	total = []
 	with open(in_file) as f:
@@ -46,6 +46,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		array = list(reader)
 		n_input =  len(array[0])-1 
 		array = np.array(array)
+		
 	# Data input (190 total erp values per patient)
 		#add each patient's erp values (row) to HC or AD vector 
 		for row in array: #first row is column headers
@@ -60,8 +61,8 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	total = np.array(total)
 	print total
 	print array_Y
-    
-    tf.set_random_seed(seed)
+	
+	tf.set_random_seed(seed)
 
 
 	X_data = np.array(total)
@@ -167,7 +168,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 				sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
 				#print "x = " + str(train_X[j:j+1]) + "  y = "+str(train_Y[j:j+1])
 			# if epoch == 0:
-			# 	sys.exit(0)
+			#   sys.exit(0)
 				
 			if epoch == 999:
 				print('Epoch ', epoch)

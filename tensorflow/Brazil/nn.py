@@ -54,6 +54,7 @@ for filename in os.listdir(basepath):
             reader = csv.reader(f)
             array = list(reader)
             array = np.array(array)
+            print(array.shape)
             #concatenate each electrode fft vector into one vector per instance
             Etotal = []
             for e in range(len(array.T)):
