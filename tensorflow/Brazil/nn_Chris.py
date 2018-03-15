@@ -205,13 +205,13 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		fold_accuracy = (TP + TN)/total
 		print("Test Accuracy:", fold_accuracy)
 		if(actualYES == 0):
-			TPrate = 1
+			TPrate = 0
 		else:
 			TPrate = TP/actualYES
 
 		print("Recall:", TPrate)
 		if actualNO == 0:
-			TNrate = 1
+			TNrate = 0
 		else:
 			TNrate = TN/actualNO
 		print("True Negative:", TNrate)
