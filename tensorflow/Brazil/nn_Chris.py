@@ -140,9 +140,13 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 		#split the sets into training and testing sets
 		print len(test_X)
+
 		test_X = Xdata[first_index:second_index]
 		test_Y = Ydata[first_index:second_index]
 
+		if(len(test_X) == 0):
+			print "fold number too high or not enough instances to test on."
+			sys.exit(1)
 		index = [];
 		for n in range(first_index,second_index):
 			index.extend([n])
@@ -281,5 +285,5 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.1,results_file = "../Results.csv",n_folds = 25,n_classes = 2, seed = 3)
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.1,results_file = "../Results.csv",n_folds = 24,n_classes = 2, seed = 3)
 
