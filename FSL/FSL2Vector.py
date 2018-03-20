@@ -12,7 +12,7 @@ for dir_name in (os.listdir(data_dir)):
 		print len(mat)
 		for i in range(len(mat)):
 			for j in range(len(mat[0])):
-				if j > i+1: #gets upper triangular matrix 
+				if j > i: #gets upper triangular matrix 
 					vec.append(mat[i][j])
 		writer.writerow(vec)
 
