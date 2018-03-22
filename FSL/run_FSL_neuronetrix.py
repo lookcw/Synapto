@@ -4,9 +4,10 @@ from subprocess import call
 
 
 
-data_dirs = ["../Data/AD/","../Data/HC/"]
+data_dirs = ["../Data/ADF50/","../Data/HCF50/"]
 output_dir = "Brazil_FSL/"
-bands = ["Alpha","Theta","Gamma","Beta","Delta"]
+# bands = ["Alpha","Theta","Gamma","Beta","Delta"]
+bands = [""]
 count = 0
 for data_dir in data_dirs:
 	for band in bands:
