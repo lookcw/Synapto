@@ -68,36 +68,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	X_data = np.array(total)
 	array_Y = np.array(array_Y)
 
-	#creates copy of data set with slight noise and concatenates to end
-	#pass in patient feature set and desired number of augumented copies
-	def augment(Xdata, Ydata, copies):
-		num_patients = len(Xdata)
-		num_features = len(Xdata[0])
-		synthetic_data = np.zeros((num_features,num_patients))
-		appendY = Ydata
-
-		for copy in range(copies):
-
-			for i in range(num_features):
-
-				feature = Xdata[0:num_patients,i]
-				stdv = np.std(feature)
-				noise = np.random.normal(0,stdv,len(feature))
-				synthetic_feature = feature + noise
-				synthetic_data[i] = synthetic_feature
-
-			synthetic_data = np.transpose(synthetic_data)
-			Xdata = np.concatenate((Xdata,synthetic_data))
-
-			synthetic_data = np.zeros((num_features,num_patients))
-
-			Ydata = np.append(Ydata, appendY)
-
-
-	augment(X_data, array_Y, 1)
-
-
-
 
 	#convert to one-hot arrays
 	array_Y = array_Y.astype(int)

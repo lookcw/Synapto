@@ -1,47 +1,82 @@
 import numpy as np
+import csv
 
 
 #creates copy of data set with slight noise and concatenates to end
 #pass in patient feature set and desired number of augumented copies
-def augment(Xdata, Ydata, copies):
-	num_patients = len(Xdata)
-	num_features = len(Xdata[0])
-	synthetic_data = np.zeros((num_features,num_patients))
-	appendY = Ydata
+def augment(in_file, copies):
 
-	for copy in range(copies):
+    array_Y = []
+    total = []
+    countHC = 0
 
-		for i in range(num_features):
+    with open(in_file) as f:
+        reader = csv.reader(f)
+        array = list(reader)
+        array = np.array(array)
+         
+        for row in array[0:]:
+            if (row[-1] == "-"):
+                total.append(row[0:-1])
+                #output = 0
+                array_Y.extend("-")
+                countHC = countHC + 1
+            else:
+                total.append(row[0:-1])
+                #output = 1
+                array_Y.extend("+")
+    total = np.array(total)
 
-			feature = Xdata[0:num_patients,i]
-			stdv = np.std(feature)
-			noise = np.random.normal(0,stdv,len(feature))
-			#implement dynamic stddev in noise data based on feature stddev/zscore
-			#print(noise)
-			synthetic_feature = feature + noise
-			#print(synthetic_feature)
-			synthetic_data[i] = synthetic_feature
-			#print(synthetic_data)
+    Xdata = np.array(total, dtype = float)
+    Ydata = np.array(array_Y)
 
-		synthetic_data = np.transpose(synthetic_data)
-		Xdata = np.concatenate((Xdata,synthetic_data))
+    num_patients = len(Xdata)
+    num_features = len(Xdata[0])
+    synthetic_data = np.zeros((num_features, num_patients))
+    appendY = Ydata
 
-		synthetic_data = np.zeros((num_features,num_patients))
+    for copy in range(copies):
 
-		Ydata = np.append(Ydata, appendY)
+        for i in range(num_features):
 
-	print(Xdata)
-	print(Ydata)
+            feature = Xdata[0:num_patients, i]
+            print Xdata
 
-
-xdata = np.array([[1,1,30,35],
-				 [2,2,31,37],
-				 [2,3,31,34]], dtype = float)
-
-array_Y = np.array([0,0,1])
-
-augment(xdata, array_Y, 2)
+            HCstdv = np.std(feature[:countHC])
+            ADstdv = np.std(feature[countHC:])
+            HCnoise = np.random.normal(0, HCstdv, len(feature[:countHC]))
+            ADnoise = np.random.normal(0, ADstdv, len(feature[countHC:]))
+            feature[:countHC] = feature[:countHC] + HCnoise
+            feature[countHC:] = feature[countHC:] + ADnoise
+            synthetic_feature = feature
+            synthetic_data[i] = synthetic_feature
 
 
+        synthetic_data = np.transpose(synthetic_data)
 
+        Xdata = np.concatenate((Xdata, synthetic_data))
+        #print synthetic_data
+        #print Xdata
+        synthetic_data = np.zeros((num_features, num_patients))
+
+        Ydata = np.append(Ydata, appendY)
+
+
+    data = np.zeros((len(Xdata), num_features + 1))
+
+    # for i in range(len(Xdata)):
+    #     data[i] = np.append(Xdata[i], Ydata[i])
+
+    
+    out_file = open("data_aug.csv","w")
+    
+    for count in range(len(Xdata)):
+        writer = csv.writer(out_file)
+        arr = np.ndarray.tolist(Xdata[count])
+
+        arr.append(Ydata[count])
+        writer.writerow(arr)
+
+
+augment("test.csv", 1)
 
