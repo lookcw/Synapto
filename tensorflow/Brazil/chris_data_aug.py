@@ -42,17 +42,20 @@ def augment(in_file,out_file, copies):
 				synthetic_data_HC[HC_curr_copy + k][j] = HC[k][j] + np.random.normal(0, HC_std)
 		HC_curr_copy += len(HC)
 		AD_curr_copy += len(AD)
-	AD = np.concatenate((AD,synthetic_data_AD),axis = 0).tolist()
-	HC = np.concatenate((HC,synthetic_data_HC),axis = 0).tolist()
-	for i in range(len(AD)):
-		AD[i].append("+")
-	for i in range(len(HC)):
-		HC[i].append("-")
+	AD_arr = np.concatenate((AD,synthetic_data_AD),axis = 0).tolist()
+	HC_arr = np.concatenate((HC,synthetic_data_HC),axis = 0).tolist()
+
+	for i in range(len(AD_arr)):
+		AD_arr[i].append("+")
+	for i in range(len(HC_arr)):
+		HC_arr[i].append("-")
 
 	writer = csv.writer(open(out_file,'w'),delimiter = ',')
-	writer.writerows(AD)
-	writer.writerows(HC)
+	writer.writerows(AD_arr[0:len(AD)])
+	writer.writerows(HC_arr[0:len(HC)])
+	writer.writerows(AD_arr[len(AD):])
+	writer.writerows(HC_arr[len(HC):])
 
 
 
-augment("Feature_Sets/AllFFT_B_z.csv","Feature_Sets/AllFFT_B_z_aug.csv",10)
+augment("Feature_Sets/AllFFT_B_z.csv","Feature_Sets/AllFFT_B_z_aug1.csv",10)
