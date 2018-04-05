@@ -6,21 +6,15 @@ import math
 import six
 import sys
 import datetime
-from chris_data_aug	import augment
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
 # Network Parameters
 
 
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
+
 
 def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" 
-	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 5,copies = 0):
+	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 5):
 	if in_file == "":
 		print "did not include file name"
 		sys.exit(1)
@@ -54,30 +48,19 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		array = np.array(array)
 		
 	# Data input (190 total erp values per patient)
-		#add each patient's erp values (row) to HC or AD vector
-		if not is_number(str(array[0][0])):
-			print "there is a header"
-			for row in array[1:]: #first row is column headers
-				if (row[-1] == "-"): #rows 1-96 are HC patients
-					total.append(row[0:-1])
-					#output = 0
-					array_Y.extend([0])
-				else: #rows 97-171 are AD patients
-					total.append(row[0:-1])
-					#output = 1
-					array_Y.extend([1])
-		else:
-			print "there is no header"
-			for row in array: #first row is column headers
-				if (row[-1] == "-"): #rows 1-96 are HC patients
-					total.append(row[0:-1])
-					#output = 0
-					array_Y.extend([0])
-				else: #rows 97-171 are AD patients
-					total.append(row[0:-1])
-					#output = 1
-					array_Y.extend([1])
+		#add each patient's erp values (row) to HC or AD vector 
+		for row in array[1:]: #first row is column headers
+			if (row[-1] == "-"): #rows 1-96 are HC patients
+				total.append(row[0:-1])
+				#output = 0
+				array_Y.extend([0])
+			else: #rows 97-171 are AD patients
+				total.append(row[0:-1])
+				#output = 1
+				array_Y.extend([1])
 	total = np.array(total)
+	print total
+	print array_Y
 	
 	tf.set_random_seed(seed)
 
@@ -87,6 +70,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	#convert to one-hot arrays
 	array_Y = array_Y.astype(int)
 	Y_data = np.eye(n_classes)[array_Y]
+
 	#controlled shuffle function
 	def shuffle(input):
 		np.random.seed(3)
@@ -94,10 +78,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 	shuffle(X_data)
 	shuffle(Y_data)
-	for x in range(len(X_data)):
-		print X_data[:,0][x]," ",Y_data[:,1][x]
-	print "x: ", X_data[:,1]
-	print "y: ", Y_data[:,1]
 	#cross-validation 
 	elements = len(X_data)
 	train_X=[]
@@ -157,15 +137,13 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		Ydata = np.array(Ydata)
 		first_index=int((fold*elements/float(n_folds)))
 		second_index=int(((fold+1)*elements/float(n_folds)))
-
-
 		
 		#split the sets into training and testing sets
-
+		print len(test_X)
 
 		test_X = Xdata[first_index:second_index]
 		test_Y = Ydata[first_index:second_index]
-		print "test set length: ",len(test_X)
+
 		if(len(test_X) == 0):
 			print "fold number too high or not enough instances to test on."
 			sys.exit(1)
@@ -174,17 +152,10 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 			index.extend([n])
 		
 		Xdata = np.delete(Xdata,index,axis=0)
-		# print "X data: \n",Xdata
-		# print "Y data: \n",Ydata
 		Ydata = np.delete(Ydata,index,axis=0)
-		total = np.concatenate((Xdata,Ydata),axis = 1)
-		# print "total \n",total
-
-
-		aug_train = augment(np.concatenate((Xdata,Ydata),axis = 1),copies)
-		aug_train_X = aug_train[:,0:-2]
-		aug_train_Y = aug_train[:,[-2,-1]]
-		print "aug_train_Y: ",aug_train_Y.shape
+		print len(test_X)
+		train_X = Xdata
+		train_Y = Ydata
 		
 		#train/test model
 
@@ -193,20 +164,22 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		for epoch in range(2000):
 			#train with each example
 			for j in range(len(train_X)):
-				sess.run(train, feed_dict={X: aug_train_X[j:j+1], Y: aug_train_Y[j:j+1]})
+				sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
 				#print "x = " + str(train_X[j:j+1]) + "  y = "+str(train_Y[j:j+1])
+			# if epoch == 0:
+			#   sys.exit(0)
 				
 			if epoch == 999:
 				print('Epoch ', epoch)
-				print('Train Prediction ', sess.run(output, feed_dict={X: aug_train_X, Y: aug_train_Y}))
+				print('Train Prediction ', sess.run(output, feed_dict={X: train_X, Y: train_Y}))
 				#print('Weight1 ', sess.run(w1))
 				#print('Bias1 ', sess.run(b1))
-				print('cost ', sess.run(loss, feed_dict={X: aug_train_X, Y: aug_train_Y}))
+				print('cost ', sess.run(loss, feed_dict={X: train_X, Y: train_Y}))
 				
 				train_prediction = tf.equal(tf.argmax(output, axis=1), tf.argmax(Y, axis=1))
 				#calculate train accuracy
 				train_accuracy = tf.reduce_mean(tf.cast(train_prediction, "float"))
-				print("Train Accuracy:", train_accuracy.eval({X: aug_train_X, Y: aug_train_Y}))
+				print("Train Accuracy:", train_accuracy.eval({X: train_X, Y: train_Y}))
 		
 					
 		#test model
@@ -279,7 +252,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		tf.local_variables_initializer().run()
 		AUC = sess.run(auc)
 		print("ROC AUC:", AUC[1])
-
 		#compute overall accuracy, false negative, and false positive
 		total_accuracy += fold_accuracy*(float(len(test_X))/len(X_data))
 		total_TP += TPrate*(float(len(test_X))/len(X_data))
@@ -304,16 +276,12 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	writer = csv.writer(r_file,delimiter=',')
 	writer.writerow(results)
 
-copies = 0
 n=1
 for argument in sys.argv[1:]:
 	if (argument == "-f"):
 		filename = sys.argv[n+1]
 	if argument == "-i":
 		iden = sys.argv[n+1]
-	if argument == "-c":
-		copies = int(sys.argv[n+1])
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.001,results_file = "../Results.csv00",n_folds = 10,n_classes = 2, seed = 3,copies = copies)
-
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.1,results_file = "../Results.csv",n_folds = 2,n_classes = 2, seed = 3)
