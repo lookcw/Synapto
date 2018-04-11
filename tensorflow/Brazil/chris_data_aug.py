@@ -58,4 +58,4 @@ def augment(in_file,out_file, copies):
 
 
 
-augment("Feature_Sets/AllFFT_B_z.csv","Feature_Sets/AllFFT_B_z_aug1.csv",10)
+augment("Feature_Sets/AllFFT_B.csv","Feature_Sets/AllFFT_B_AUG.csv",10)
