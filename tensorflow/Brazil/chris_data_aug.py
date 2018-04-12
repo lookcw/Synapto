@@ -56,4 +56,5 @@ def augment(array, copies):
 		HC_arr[i] = np.concatenate((HC_arr[i],[1,0]),axis = 0)
 
 
+
 	return np.concatenate((AD_arr,HC_arr),axis = 0)

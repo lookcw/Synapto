@@ -49,7 +49,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 	# Data input (190 total erp values per patient)
 		#add each patient's erp values (row) to HC or AD vector 
-		for row in array[0:]: #first row is column headers
+		for row in array[1:]: #first row is column headers
 			if (row[-1] == "-"): #rows 1-96 are HC patients
 				total.append(row[0:-1])
 				#output = 0
@@ -75,7 +75,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 	#controlled shuffle function
 	def shuffle(input):
-		np.random.seed(3)
+		np.random.seed(5)
 		np.random.shuffle(input)
 
 	shuffle(X_data)

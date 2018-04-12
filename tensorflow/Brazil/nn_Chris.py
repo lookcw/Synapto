@@ -315,5 +315,5 @@ for argument in sys.argv[1:]:
 		copies = int(sys.argv[n+1])
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.001,results_file = "../Results.csv00",n_folds = 10,n_classes = 2, seed = 3,copies = copies)
 
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.001,results_file = "../Results.csv00",n_folds = 10,n_classes = 2, seed = 3,copies = copies)
