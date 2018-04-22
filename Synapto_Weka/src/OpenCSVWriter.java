@@ -1,9 +1,11 @@
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import weka.classifiers.AbstractClassifier;
 import weka.classifiers.Classifier;
@@ -107,9 +109,18 @@ public class OpenCSVWriter {
 		
 		String csv = "Weka_Results2.csv";
 		CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
+		CSVReader reader = new CSVReader(new FileReader("Weka_Results2.csv"));
 		
-		headerWriter(writer);
+		String[] header;
+		/* Make sure that header is only written once */
+		if((header = reader.readNext()) == null) {
+			headerWriter(writer);
+		} 	
+		
 		mainWriter(args[0], Integer.valueOf(args[1]), Integer.valueOf(args[2]), writer);
+		
+		/*mainWriter("../../Synapto/tensorflow/Brazil/Feature_Sets/Fil_higARmin7.csv", 
+				10, 10, writer);*/
 	
 		writer.close();
 	}
