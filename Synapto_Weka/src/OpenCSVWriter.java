@@ -62,7 +62,6 @@ public class OpenCSVWriter {
 		         Classifier clsCopy = AbstractClassifier.makeCopy(rf);
 		         clsCopy.buildClassifier(train);
 		         eval.evaluateModel(clsCopy, test);
-		         eval.evaluateModel(clsCopy, randData);
 		         
 	
 		    }
@@ -109,8 +108,9 @@ public class OpenCSVWriter {
 		
 		/* Specify output filename */
 		String csv = args[0];
+		//String csv = "data2.csv";
 		CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
-		CSVReader reader = new CSVReader(new FileReader(args[0]));
+		CSVReader reader = new CSVReader(new FileReader(csv));
 		
 		String[] header;
 		/* Make sure that header is only written once */
