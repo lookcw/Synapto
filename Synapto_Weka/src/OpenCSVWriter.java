@@ -107,9 +107,9 @@ public class OpenCSVWriter {
 	        
 	public static void main(String[] args) throws Exception {
 		
-		String csv = "Weka_Results2.csv";
+		String csv = args[0];
 		CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
-		CSVReader reader = new CSVReader(new FileReader("Weka_Results2.csv"));
+		CSVReader reader = new CSVReader(new FileReader(args[0]));
 		
 		String[] header;
 		/* Make sure that header is only written once */
@@ -117,7 +117,7 @@ public class OpenCSVWriter {
 			headerWriter(writer);
 		} 	
 		
-		mainWriter(args[0], Integer.valueOf(args[1]), Integer.valueOf(args[2]), writer);
+		mainWriter(args[1], Integer.valueOf(args[2]), Integer.valueOf(args[3]), writer);
 		
 		/*mainWriter("../../Synapto/tensorflow/Brazil/Feature_Sets/Fil_higARmin7.csv", 
 				10, 10, writer);*/
