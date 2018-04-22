@@ -107,6 +107,7 @@ public class OpenCSVWriter {
 	        
 	public static void main(String[] args) throws Exception {
 		
+		/* Specify output filename */
 		String csv = args[0];
 		CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
 		CSVReader reader = new CSVReader(new FileReader(args[0]));
