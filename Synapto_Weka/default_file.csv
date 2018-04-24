@@ -1,2 +1,0 @@
-"Date","Filename","Num Seeds","TP","TN","FP","FN","F-measure","AUC","Classifier","Classifer Parameters"
-"04/22/2018","","10","0.00","0.90","0.10","1.00","0.00","0.01","weka.classifiers.trees.RandomForest","-P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1"
