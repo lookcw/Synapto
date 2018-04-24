@@ -1,0 +1,3 @@
+"Date","Filename","Num Seeds","TP","TN","FP","FN","F-measure","AUC","Classifier","Classifer Parameters"
+"04/22/2018","Fil_higARmin7","10","0.69","0.69","0.31","0.31","0.69","0.66","weka.classifiers.trees.RandomForest","-P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1"
+"04/22/2018","Fil_higARmin7","10","0.69","0.69","0.31","0.31","0.69","0.66","weka.classifiers.trees.RandomForest","-P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1"

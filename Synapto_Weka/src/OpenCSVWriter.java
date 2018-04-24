@@ -86,7 +86,13 @@ public class OpenCSVWriter {
 	   fn /= numSeeds;
 	   fmeasure /= numSeeds;
 	   auc /= numSeeds;
-	  
+	   
+	   System.out.println(filename);
+	   System.out.println(classifier);
+	   System.out.println(classifier_para);
+	   System.out.println("TP: " + tp + " TN: " + tn + 
+			   " FP: " + fp + " FN: " + fn + " Fmeasure " + fmeasure + " AUC: " + auc);
+	   
 	   /* Get today's date */
 	   DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");  
 	   LocalDateTime now = LocalDateTime.now();  
@@ -103,14 +109,41 @@ public class OpenCSVWriter {
 	   writer.writeNext(nums);
 	   	 
 	}
+	
+	public static boolean isInteger(String s) {
+	    try { 
+	        Integer.parseInt(s); 
+	    } catch(NumberFormatException e) { 
+	        return false; 
+	    } catch(NullPointerException e) {
+	        return false;
+	    }
+	    // only got here if we didn't return false
+	    return true;
+	}
 	        
 	public static void main(String[] args) throws Exception {
 		
-		/* Specify output filename */
-		String csv = args[0];
-		//String csv = "data2.csv";
-		CSVWriter writer = new CSVWriter(new FileWriter(csv, true));
-		CSVReader reader = new CSVReader(new FileReader(csv));
+		/* Input path is the file where you are reading from and output filename is the name of the
+		 * file that you want to output results into */
+		String input_path = "", output_filename = "default_file.csv";
+		int numFolds = 10, numSeeds = 10;
+		
+		/* Setting input and output files */
+		if(args[0].equals("-i") && args[2].equals("-o")) {
+			input_path = args[1];
+			output_filename = args[3];
+		} else if(args[0].equals("-o") && args[2].equals("-i")) {
+			input_path = args[3];
+			output_filename = args[1];
+		} else {
+			System.out.println("Did not enter an input filepath and/or output file");
+			return;
+		}
+		
+		
+		CSVWriter writer = new CSVWriter(new FileWriter(output_filename, true));
+		CSVReader reader = new CSVReader(new FileReader(output_filename));
 		
 		String[] header;
 		/* Make sure that header is only written once */
@@ -118,7 +151,7 @@ public class OpenCSVWriter {
 			headerWriter(writer);
 		} 	
 		
-		mainWriter(args[1], Integer.valueOf(args[2]), Integer.valueOf(args[3]), writer);
+		mainWriter(input_path, numFolds, numSeeds, writer);
 		
 		/*mainWriter("../../Synapto/tensorflow/Brazil/Feature_Sets/Fil_higARmin7.csv", 
 				10, 10, writer);*/
