@@ -44,17 +44,28 @@ def augment(array, copies):
 		HC_curr_copy += len(HC)
 
 		AD_curr_copy += len(AD)
+
 	
-	AD_arr = np.concatenate((AD,synthetic_data_AD),axis = 0).tolist()
-	HC_arr = np.concatenate((HC,synthetic_data_HC),axis = 0).tolist()		
+	if len(AD) != 0:
+		AD_arr = np.concatenate((AD,synthetic_data_AD),axis = 0).tolist()
+	else:
+		AD_arr = [] 
+	if len(HC) != 0:
+		HC_arr = np.concatenate((HC,synthetic_data_HC),axis = 0).tolist()		
+	else:
+		HC_arr = [] 
+
 	for i in range(len(AD_arr)):
 		AD_arr[i] = np.concatenate((AD_arr[i],[0,1]),axis = 0)
 
 
-	print "asdf",HC_arr[i]
 	for i in range(len(HC_arr)):
 		HC_arr[i] = np.concatenate((HC_arr[i],[1,0]),axis = 0)
 
 
-
-	return np.concatenate((AD_arr,HC_arr),axis = 0)
+	if len(AD) == 0:
+		return HC_arr
+	elif len(HC) == 0:
+		return AD_arr
+	else:
+		return np.concatenate((AD_arr,HC_arr),axis = 0)

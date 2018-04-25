@@ -9,7 +9,7 @@ import datetime
 from chris_data_aug	import augment
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
-# Network Parameters
+# Network Parametersug
 
 
 def is_number(s):
@@ -182,9 +182,10 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 
 		aug_train = augment(np.concatenate((Xdata,Ydata),axis = 1),copies)
-		aug_train_X = aug_train[:,0:-2]
-		aug_train_Y = aug_train[:,[-2,-1]]
-		print "aug_train_Y: ",aug_train_Y.shape
+		cut = len(aug_train[0])
+		aug_train_X = aug_train[:0:cut]
+		aug_train_Y = aug_train[:-2:-1]
+		print "aug_train_Y: ",aug_train_Y.shape()
 		
 		#train/test model
 
