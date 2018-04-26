@@ -29,4 +29,4 @@ for data_dir in data_dirs:
 					raise
 		#./FSL -l 1 -m 10 -p .049 -s 1 -x 100 -w 410 -i input file -o test.dat
 		if not os.path.exists(file):
-			call(["./FSL","-l", "1", "-m", "10", "-p", "0.049", "-s", "1", "-x", "100", "-w", "410", "-i", os.path.join("../Data/"+ data_dir,filename),"-o",file]) 
+			call(["optirun","./FSL","-l", "1", "-m", "10", "-p", "0.049", "-s", "1", "-x", "100", "-w", "410", "-i", os.path.join("../Data/"+ data_dir,filename),"-o",file]) 
