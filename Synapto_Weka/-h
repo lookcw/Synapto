@@ -1,0 +1,17 @@
+Run:
+java -jar OpenCSVWriter.jar 
+
+followed by system arguments. The one system argument that you must provide is the input file path (The file path for where the input csv file lies). 
+
+-i filepath
+-o output_file.csv
+-f numFolds
+-s numSeeds
+
+MUST be written in this format or it will not work (So the header followed by the argument). If you don’t specify the output file, it will be written to a csv called default.csv. If you don’t specify the number of seeds or the number of folds, they will be set to 10.
+
+Example of what to run:
+
+java -jar OpenCSVWriter.jar -i ../../Synapto/tensorflow/Brazil/Feature_Sets/Fil_higARmin7.csv -o data.csv -s 5
+
+(can be written in any order as long as the header precedes the argument)  
