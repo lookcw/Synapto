@@ -52,8 +52,8 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 	# Data input (190 total erp values per patient)
 		#add each patient's erp values (row) to HC or AD vector 
-		for row in array[1:]: #first row is column headers
-			if (row[-1] == "-"): #rows 1-96 are HC patients
+		for row in array[0:]: #first row is column headers
+			if (row[-1] == '0.0'): #rows 1-96 are HC patients
 				total.append(row[0:-1])
 				#output = 0
 				array_Y.extend([0])
@@ -139,7 +139,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 		#Fit model
 		print "training..."
-		model.fit(train_X, train_Y, epochs = 500, batch_size = 4)
+		model.fit(train_X, train_Y, epochs = 500, batch_size = 500)
 
 		# evaluate the model
 		print "testing..."
@@ -154,15 +154,15 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		print("\n%s: %.2f%%" % ("test acc", test_acc))
 
 
-		compute overall accuracy, false negative, and false positive
+		#compute overall accuracy, false negative, and false positive
 		#total_accuracy += fold_accuracy*(float(len(test_X))/len(X_data))
-		total_TP += TPrate*(float(len(test_X))/len(X_data))
+		#total_TP += TPrate*(float(len(test_X))/len(X_data))
 		#total_TN += TNrate*(float(len(test_X))/len(X_data))
 		#total_FP += FPrate*(float(len(test_X))/len(X_data))
- 		#total_FN += FNrate*(float(len(test_X))/len(X_data))
- 		#total_Prec += Prec*(float(len(test_X))/len(X_data))
+		#total_FN += FNrate*(float(len(test_X))/len(X_data))
+		#total_Prec += Prec*(float(len(test_X))/len(X_data))
 		#total_Fmeasure += Fmeasure*(float(len(test_X))/len(X_data))
- 		#total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
+		#total_AUC += AUC[1]*(float(len(test_X))/len(X_data))
 		
 			
 	#print("Overall Accuracy:", total_accuracy)
@@ -191,5 +191,5 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [6, 10, 4],learning_rate = 0.1,results_file = "../Results.csv",n_folds = 2,n_classes = 2, seed = 5)
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
 
