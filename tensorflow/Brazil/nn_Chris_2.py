@@ -50,6 +50,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	# Data input (190 total erp values per patient)
 		#add each patient's erp values (row) to HC or AD vector 
 		for row in array[1:]: #first row is column headers
+			# print row[-1]
 			if (row[-1] == "-"): #rows 1-96 are HC patients
 				total.append(row[0:-1])
 				#output = 0
@@ -59,7 +60,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 				#output = 1
 				array_Y.extend([1])
 	total = np.array(total)
-	print total
 	print array_Y
 	
 	tf.set_random_seed(seed)
@@ -161,7 +161,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 
 		#cycles of all training set
-		for epoch in range(2000):
+		for epoch in range(1000):
 			#train with each example
 			for j in range(len(train_X)):
 				sess.run(train, feed_dict={X: train_X[j:j+1], Y: train_Y[j:j+1]})
@@ -284,4 +284,4 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [20,20],learning_rate = 0.1,results_file = "../Results.csv",n_folds = 2,n_classes = 2, seed = 3)
+x_validation(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 2, neurons = [70,30],learning_rate = 0.1,results_file = "../Results_C.csv",n_folds = 3,n_classes = 2, seed = 3)

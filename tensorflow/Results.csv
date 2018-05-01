@@ -104,3 +104,8 @@ date,iden,filename,acc,FN,FP,TP,TN,Fmeasure,AUC,,,,,,,Classifier ,Classifier Par
 =======
 >>>>>>> b5baefd5212a3a9aff46ff0d2869c7ac788c0263
 >>>>>>> cdfc7e523485878c879c36c3cfe0a5ace69cec03
+2018-04-26 15:42:27.567686,keras model with 25k,testCreateInstances.csv,92.45999999713896,59.34400000095367,0,0,0,0,0,0,3,"[50, 30, 10]",0.1,2,2,5
+2018-04-26 18:47:41.091223,gpu plz work,testCreateInstances.csv,94.96400000095367,59.74400000190735,0,0,0,0,0,0,3,"[50, 30, 10]",0.1,2,2,5
+2018-04-26 18:59:48.058106,25k,testCreateInstances.csv,98.072,62.05199999856949,0,0,0,0,0,0,2,"[70, 20]",0.2,2,2,5
+2018-04-26 19:12:35.855676,25k,testCreateInstances.csv,98.62,61.76800000095367,0,0,0,0,0,0,3,"[100, 50, 10]",0.2,2,2,5
+2018-04-30 10:42:50.847511,normalized 25k samples,testCreateInstances_norm.csv,99.064,50.45599999952316,0,0,0,0,0,0,3,"[100, 50, 10]",0.2,2,2,5

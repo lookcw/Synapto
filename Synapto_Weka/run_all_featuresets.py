@@ -3,7 +3,8 @@ import sys
 from subprocess import call
 import csv
 
-data_dirs = os.listdir("../Feature_Sets/")
+data_dir = "../Feature_Sets/"
+data_dirs = os.listdir(data_dir)
 output_file = "output.csv"
 
 
@@ -19,7 +20,9 @@ for result in results:
 
 count = 0
 for dir in data_dirs:
-	for filename in os.listdir(os.path.join("../Feature_Sets",dir)):
+	for filename in os.listdir(os.path.join(data_dir,dir)):
 		if filename.split("/")[-1].split(".")[0] not in done_files:
-			print filename
-			call(["java -jar OpenCSVWriter.jar -i ", filename," -o ", output_file]) 
+			infile= os.path.join(data_dir+dir,filename)
+			print infile
+			# print "java -jar OpenCSVWriter.jar -i ", infile," -o ", output_file
+			call(["java", "-jar", "OpenCSVWriter.jar", "-i", infile,"-o", output_file]) 
