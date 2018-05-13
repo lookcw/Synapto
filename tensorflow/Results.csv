@@ -109,3 +109,5 @@ date,iden,filename,acc,FN,FP,TP,TN,Fmeasure,AUC,,,,,,,Classifier ,Classifier Par
 2018-04-26 18:59:48.058106,25k,testCreateInstances.csv,98.072,62.05199999856949,0,0,0,0,0,0,2,"[70, 20]",0.2,2,2,5
 2018-04-26 19:12:35.855676,25k,testCreateInstances.csv,98.62,61.76800000095367,0,0,0,0,0,0,3,"[100, 50, 10]",0.2,2,2,5
 2018-04-30 10:42:50.847511,normalized 25k samples,testCreateInstances_norm.csv,99.064,50.45599999952316,0,0,0,0,0,0,3,"[100, 50, 10]",0.2,2,2,5
+2018-05-02 12:27:24.019685,25k with 30 timestamps per patient,../../Data/testCreateInstances_30.csv,99.5,63.51600000286102,0,0,0,0,0,0,3,"[100, 50, 10]",0.2,2,2,5
+2018-05-02 13:07:25.837058,25k with 30 timestamps per patient normalized,../../Data/testCreateInstances_30_norm.csv,99.99600000000001,50.199999997138974,0,0,0,0,0,0,3,"[100, 50, 10]",0.2,2,2,5
