@@ -1,0 +1,2 @@
+"Date","Filename","Num Features","Num Seeds","Accuracy","TP","TN","FP","FN","F-measure","AUC","Classifier","Classifer Parameters"
+"05/28/2018","Fil_higAR","337","10","69.2","0.69","0.68","0.32","0.31","0.69","0.65","weka.classifiers.trees.RandomForest","-P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1"
