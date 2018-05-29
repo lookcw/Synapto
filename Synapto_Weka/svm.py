@@ -6,10 +6,10 @@ import csv
 import sys
 
 
-def svm_func(in_file):
+def svm_func():
 	
 	# Get file and read with csv reader
-	with open(in_file) as f:
+	with open("../../../Synapto/tensorflow/Brazil/Feature_Sets/Fil_higARmin7.csv") as f:
 		reader = csv.reader(f)
 		next(reader) #skip header 
 		data = [r for r in reader] #Place all data in data array 
@@ -44,55 +44,44 @@ def svm_func(in_file):
 				attributes[row][col] = float(data[row][col])
 			
 
-	# Each entry in data has the features + value 
-	#for d in attributes:
-	#	print(d)
+	X = np.array(attributes)
+	y = np.array(value)
 
-	#for v in value:
-	#	print(v)
-
-	# transpose to get the full column 
-	X = np.array(attributes).transpose()
-	loo = LeaveOneOut()
-
-	# Making 25 splits (bc 25 columns)
-	print(loo.get_n_splits(X))
-
-	errors = []
+	# For leave one out, number of splits is 25 - can change this number if different number of folds is needed
+	kf = KFold(n_splits=25)
 
 	# Radial basis function
 	clf = svm.SVC(kernel = 'rbf', C = 1.0)
 
-	for train, test in loo.split(X):
-		# X_train, X_test = X[train], X[test]
-		# y_train, y_test = value[train], value[test]
-		# print(X_train, X_test, y_train, y_test)
-		clf.fit(X[train], value[train])
-		errors.append(accuracy_score(value[test], clf.predict(X[test])))
+	scores = []
 
+	for train, test in kf.split(X):
+		print("%s %s" % (train, test))
+		X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
+		clf.fit(X[train], y[train])
+		print('Prediction:', clf.predict(X_test))
+		y_pred = clf.predict(X_test)
+		print(accuracy_score(y_test, y_pred))
+		scores.append(accuracy_score(y_test, y_pred))
 
-	
-	# clf.fit(X_train, y_train)
-	# y_pred = clf.predict(X_test)
+	scores = np.array(scores)
+	print("Accuracy: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
 
-	# print(accuracy_score(y_test, y_pred))
-
-
-	#ready to predict after this
-	# print('Prediction:', clf.predict())
 
 if __name__ == '__main__':
 
-	if len(sys.argv) == 1 or len(sys.argv) % 2 == 0:
-		print("Did not enter inputs in correct format. Probably missing a header.")
-		sys.exit()
+	svm_func()
 
-	if str(sys.argv[1]) == "-i":
-		filepath = str(sys.argv[2])
-		svm_func(filepath)
-		print("Worked")
-	else:
-		print("Wrong format. Remember header must precede argument provided.")
+# 	if len(sys.argv) == 1 or len(sys.argv) % 2 == 0:
+# 		print("Did not enter inputs in correct format. Probably missing a header.")
+# 		sys.exit()
+
+# 	if str(sys.argv[1]) == "-i":
+# 		filepath = str(sys.argv[2])
+# 		svm_func(filepath)
+# 		print("Worked")
+# 	else:
+# 		print("Wrong format. Remember header must precede argument provided.")
 
 
 
