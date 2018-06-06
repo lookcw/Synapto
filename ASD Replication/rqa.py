@@ -34,9 +34,12 @@ for row in range(rows):
 		else:
 			attributes[row][col] = float(data[row][col])
 
-time_series = [0.1, 0.5, 0.3, 1.7, 0.8, 2.4, 0.6, 1.2, 1.4, 2.1, 0.8]
+# This gets the first column of the csv file (how do you get all the columns)
+time_series = FileReader.file_as_float_array('../../../Synapto/tensorflow/Brazil/Feature_Sets/Fil_higARmin7.csv',
+	delimiter=',', column = 0, offset = 1)
 
-settings = Settings(attributes[0], embedding_dimension=3,
+# Note: attributes has the rows (where as here time-series has the columns)
+settings = Settings(attributes, embedding_dimension=3,
                         time_delay=1,
                         neighbourhood=FixedRadius(1.0),
                         similarity_measure=EuclideanMetric,
@@ -47,5 +50,21 @@ settings = Settings(attributes[0], embedding_dimension=3,
 
 computation = RQAComputation.create(settings, verbose=False)
 result = computation.run()
-print(result)
+# 7 features: L_entr, L_max, L_mean, RR, DET, LAM, and TT
+print 'L_entr:', result.entropy_diagonal_lines
+print 'L_max:', result.longest_diagonal_line
+print 'L_mean:', result.average_diagonal_line
+print 'RR:', result.recurrence_rate
+print "DET:", result.determinism
+print "LAM:", result.laminarity
+print "TT:", result.trapping_time
+
+with open("features_rqa.csv", 'a') as f:
+		writer = csv.writer(f)
+		writer.writerow(["L_entr", "L_max", "L_mean", "RR", "DET", "LAM", "TT"])
+		writer.writerow([result.entropy_diagonal_lines, result.longest_diagonal_line, 
+			result.average_diagonal_line, result.recurrence_rate,
+			result.determinism, result.laminarity, result.trapping_time])
+
+
 
