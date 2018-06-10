@@ -5,7 +5,7 @@ import os
 #def createInstances():
 
 num_bunches = 1000
-num_timePoints = 30
+num_timePoints = 60
 
 basepath = 'RawData/HCF50'
 combined_HC = np.empty((0,21*num_timePoints+1))

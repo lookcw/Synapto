@@ -69,7 +69,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	X_data = np.array(total)
 	array_Y = np.array(array_Y)
 
-
 	#convert to one-hot arrays
 	array_Y = array_Y.astype(int)
 	Y_data = np.eye(n_classes)[array_Y]
@@ -105,6 +104,10 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, 21))
 	print X_data.shape
 
+	#normalize inputs
+	print X_data.dtype
+	#max = np.amax(X_data)
+	#array_X = array_X/max
 
 
 	for fold in range(0,n_folds):
@@ -112,7 +115,8 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 
 		model.add(LSTM(200, input_shape=(n_timeSteps, 21)))
 		#hidden layer
-		model.add(Dense(30, activation = 'relu'))
+		model.add(Dense(70, activation = 'relu'))
+		model.add(Dense(10, activation = 'relu'))
 		model.add(Dense(n_classes, activation = 'softmax'))
 
 		#Compile model
@@ -156,7 +160,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 		#Fit model
 		print "training..."
-		model.fit(train_X, train_Y, epochs = 12, batch_size = 100)
+		model.fit(train_X, train_Y, epochs = 12, batch_size = 50)
 
 		# evaluate the model
 		print "testing..."
