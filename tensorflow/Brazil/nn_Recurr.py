@@ -17,13 +17,10 @@ print "starting"
 n_timeSteps = 30
 
 
-def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" 
+def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = "" 
 	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 5):
 	if in_file == "":
 		print "did not include file name"
-		sys.exit(1)
-	if n_hlayers == 0:
-		print "did not set n_hlayers to hiddle layers"
 		sys.exit(1)
 	if neurons == 0:
 		print "did not set neurons array"
@@ -113,10 +110,10 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	for fold in range(0,n_folds):
 		model = Sequential()
 
-		model.add(LSTM(200, input_shape=(n_timeSteps, 21)))
+		model.add(LSTM(neurons[0], input_shape=(n_timeSteps, 21)))
 		#hidden layer
-		model.add(Dense(70, activation = 'relu'))
-		model.add(Dense(10, activation = 'relu'))
+		model.add(Dense(neurons[1], activation = 'relu'))
+		model.add(Dense(neurons[2], activation = 'relu'))
 		model.add(Dense(n_classes, activation = 'softmax'))
 
 		#Compile model
@@ -160,7 +157,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 		#Fit model
 		print "training..."
-		model.fit(train_X, train_Y, epochs = 12, batch_size = 50)
+		model.fit(train_X, train_Y, epochs = 1, batch_size = 6250)
 
 		# evaluate the model
 		print "testing..."
@@ -199,7 +196,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	total_testAccuracy = total_testAccuracy/n_folds
 	print "Overall Test Accuracy", total_testAccuracy
 
-	results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes,seed]
+	results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,neurons,learning_rate,n_folds,n_classes,seed]
 	r_file = open(results_file,'a')
 	writer = csv.writer(r_file,delimiter=',')
 	writer.writerow(results)
@@ -212,5 +209,8 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil Raw", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
+for neurons1 in range(20,200,20):
+	for neurons2 in range(10,50,10):
+		for neurons3 in range(5,15,5):
+			x_validation(in_file = filename, identifier = iden, neurons = [neurons1, neurons2, neurons3],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
 
