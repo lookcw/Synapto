@@ -10,7 +10,7 @@ import random
 
 
 def svm_func(filepath, o_filename, folds, seeds):
-	
+	print(filepath)
 	print("Number folds: ", folds)
 	# Get file and read with csv reader
 	with open(filepath) as f:
@@ -86,7 +86,7 @@ def svm_func(filepath, o_filename, folds, seeds):
 	# Write to output file
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), final_accuracy, folds, seeds])
+		writer.writerow([time.strftime("%m/%d/%Y"), filepath, final_accuracy, folds, seeds])
 
 	
 if __name__ == '__main__':
@@ -102,7 +102,7 @@ if __name__ == '__main__':
 			pass
 	except IOError as e:
 		with open(o_filename, 'w') as csvfile:
-			header = ['Date', 'Accuracy', 'Num Folds', 'Num Seeds']
+			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']
 			writer = csv.DictWriter(csvfile, fieldnames=header)
 			writer.writeheader()
 
