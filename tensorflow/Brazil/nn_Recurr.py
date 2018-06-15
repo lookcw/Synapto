@@ -14,7 +14,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
 # Network Parameters
 
-n_timeSteps = 30
+n_timeSteps = 60
 
 
 def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = "" 
@@ -98,6 +98,7 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 	
 	#reshape to 3D input for LSTM
 	print X_data.shape
+	#21 is for 21 electrodes
 	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, 21))
 	print X_data.shape
 
@@ -209,8 +210,6 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-for neurons1 in range(20,200,20):
-	for neurons2 in range(10,50,10):
-		for neurons3 in range(5,15,5):
-			x_validation(in_file = filename, identifier = iden, neurons = [neurons1, neurons2, neurons3],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
+
+x_validation(in_file = filename, identifier = iden, neurons = [200, 200, 200],learning_rate = 0.1,results_file = "../Results.csv",n_folds =10,n_classes = 2, seed = 5)
 
