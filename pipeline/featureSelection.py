@@ -8,15 +8,11 @@ import csv
 import os
 import sys
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
-print("starting")
 # Network Parameters
 
-def feature_selection(in_file = "", n_classes = 0):
+def feature_selection(in_file = ""):
 	if in_file == "":
 		print("did not include file name")
-		sys.exit(1)
-	if n_classes == 0:
-		print("did not include number of classes")
 		sys.exit(1)
 
 	#training set
@@ -96,5 +92,5 @@ for argument in sys.argv[1:]:
 	if (argument == "-f"):
 		filename = sys.argv[n+1]
 
-feature_selection(in_file = filename, n_classes = 2)
+#feature_selection(in_file = filename)
 
