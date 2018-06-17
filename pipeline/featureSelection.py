@@ -42,6 +42,13 @@ def feature_selection(in_file = ""):
 	X_data = np.array(total)
 	array_Y = np.array(array_Y)
 
+	unshuffled_Y = list(array_Y)
+	Ycol = []
+	for i in range(len(unshuffled_Y)):
+		if unshuffled_Y[i] == 0:
+			Ycol.append('-')
+		else:
+			Ycol.append('+')
 
 	#controlled shuffle function
 	def shuffle(input):
@@ -82,6 +89,7 @@ def feature_selection(in_file = ""):
 		print(X.shape)
 
 		df = pd.DataFrame(X)
+		df['Y'] = Ycol
 		df.to_csv(in_file[0:-4] + '_feature_reduced.csv', header = False, index = False)
 
 	reduce_features(X_data, array_Y)

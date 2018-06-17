@@ -1,11 +1,12 @@
 from featureSelection import feature_selection
 from svm import svm_func
 import os
+import sys
 
 # feature selection
 
-feature_directory = '/Users/Anoop/Documents/FeatureSets'
-reduced_directory = '/Users/Anoop/Documents/ReducedFeatureSets'
+feature_directory = '/Users/Anoop/Documents/FeatureSets' #sys.path[0] + '/FeatureSets'
+reduced_directory = '/Users/Anoop/Documents/ReducedFeatureSets' #sys.path[0] + '/ReducedFeatureSets'
 for filename in os.listdir(feature_directory):
 	if filename.endswith(".csv"):
 		reduced_filename = filename.split('.')[0] + "_feature_reduced.csv"
@@ -24,5 +25,8 @@ for filename in os.listdir(feature_directory):
 
 
 # learning model
-for filename in os.listdir(feature_directory):
-	svm_func('output.csv', 3, 3, os.path.join(reduced_directory,filename))
+num_folds = 3
+num_seeds = 3
+
+for filename in os.listdir(reduced_directory):
+	svm_func(os.path.join(reduced_directory,filename),'output.csv', num_folds, num_seeds)
