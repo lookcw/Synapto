@@ -158,7 +158,6 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 		
 		#Fit model
 		print "training..."
-		model.fit(train_X, train_Y, epochs = 10, batch_size = 2000)
 
 		# evaluate the model
 		print "testing..."

@@ -3,6 +3,11 @@ from svm import svm_func
 import os
 import sys
 
+
+#feature extraction
+
+
+
 # feature selection
 
 feature_directory = '/Users/Anoop/Documents/FeatureSets' #sys.path[0] + '/FeatureSets'
