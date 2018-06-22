@@ -3,6 +3,7 @@ import numpy as np
 import os
 import sys
 
+
 num_bunches = 1000
 num_timePoints = 30
 
@@ -60,18 +61,8 @@ for filename in os.listdir(basepath):
 			combined_AD = np.concatenate((combined_AD,total))
 
 combined = np.concatenate((combined_HC, combined_AD))
-print(combined.shape) #25000x631
+print(combined.shape)
 
-#store and delete last column
-targets = combined[:,-1]
-combined = np.delete(combined,-1,axis=1)
-#reshape into 25000 x 21 x timepoints
-combined = np.reshape(combined,(len(combined), 21, n_timeSteps))
-#transpose each 21 x n so each row is time series points of 1 electrode
-for i in range(len(combined)):
-	combined[i] = np.transpose(combined[i])
-#squish each row of raw points into feature vector
-#flatten out array so as to concatenate feature values from each electrode
 sys.exit()
 
 out_file = open("/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv","w")

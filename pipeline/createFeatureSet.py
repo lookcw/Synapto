@@ -3,6 +3,13 @@ import numpy as np
 import os
 import sys
 
+a = [[1,2,3],[4,5,6],[7,8,9]]
+print(a)
+for i in range(len(a)):
+	a = np.transpose(a)
+print(a)
+sys.exit()
+
 num_bunches = 1000
 num_timePoints = 30
 
