@@ -18,15 +18,14 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=6):
 
 # Delta
 def runD(x):
-
     fs = 250.0
     lowcut = 0.5 
     highcut = 3.0
 
     return butter_bandpass_filter(x, lowcut, highcut, fs, order=6)
- 
- # Theta
- def runT(x):
+
+# Theta
+def runT(x):
 
     fs = 250.0
     lowcut = 3.0
@@ -66,3 +65,19 @@ def runG(x):
 # Alpha = runA(x)
 # Beta = runB(x)
 # Gamma = runG(x)
+
+
+def splitbands(x):
+    ans = []
+    ans.append(runD(x))
+    ans.append(runT(x))
+    ans.append(runA(x))
+    ans.append(runB(x))
+    ans.append(runG(x))
+    return np.array(ans)
+
+
+
+
+
+

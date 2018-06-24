@@ -9,6 +9,7 @@ import sys
 
 
 # feature selection
+print("Feature Selection...")
 
 feature_directory = '/Users/Anoop/Documents/FeatureSets' #sys.path[0] + '/FeatureSets'
 reduced_directory = '/Users/Anoop/Documents/ReducedFeatureSets' #sys.path[0] + '/ReducedFeatureSets'
@@ -30,6 +31,8 @@ for filename in os.listdir(feature_directory):
 
 
 # learning model
+print("Learning model...")
+
 num_folds = 3
 num_seeds = 3
 

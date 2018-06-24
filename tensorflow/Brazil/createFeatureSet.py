@@ -3,6 +3,15 @@ import numpy as np
 import os
 import sys
 
+from BandPass1 import splitbands
+a = [1,2,3,4,5]
+a = np.array(a)
+b = splitbands(a)
+
+#print(a)
+#print(b)
+sys.exit()
+
 num_bunches = 1000
 num_timePoints = 30
 
@@ -65,13 +74,16 @@ print(combined.shape) #25000x631
 #store and delete last column
 targets = combined[:,-1]
 combined = np.delete(combined,-1,axis=1)
-#reshape into 25000 x 21 x timepoints
-combined = np.reshape(combined,(len(combined), 21, n_timeSteps))
-#transpose each 21 x n so each row is time series points of 1 electrode
+#reshape into 25000 x timepoints x 21
+combined = np.reshape(combined,(len(combined), n_timeSteps, 21))
+
+#transpose each 21 x n so each row is time series points (columns) of 1 electrode (row)
 for i in range(len(combined)):
-	combined[i] = np.transpose(combined[i])
-#squish each row of raw points into feature vector
-#flatten out array so as to concatenate feature values from each electrode
+	combined[i] = np.transpose(combined[i]) 
+	#combined[i] = alpha(combined[i]).append(beta(combined[i]))...etc test this with small array
+#add another dimension in each row to make it 5 bands x n
+#squish each band of raw points into n feature values
+#flatten out array so as to concatenate feature values of each band from each electrode (per instance)
 sys.exit()
 
 out_file = open("/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv","w")
