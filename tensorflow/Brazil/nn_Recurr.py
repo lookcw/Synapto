@@ -14,7 +14,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
 # Network Parameters
 
-n_timeSteps = 60
+n_timeSteps = 30
 
 
 def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = "" 
@@ -158,7 +158,6 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 		
 		#Fit model
 		print "training..."
-		model.fit(train_X, train_Y, epochs = 1, batch_size = 6250)
 
 		# evaluate the model
 		print "testing..."
@@ -211,5 +210,5 @@ for argument in sys.argv[1:]:
 	n+=1
 
 
-x_validation(in_file = filename, identifier = iden, neurons = [200, 200, 200],learning_rate = 0.1,results_file = "../Results.csv",n_folds =10,n_classes = 2, seed = 5)
+x_validation(in_file = filename, identifier = iden, neurons = [200, 200, 200],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
 

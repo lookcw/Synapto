@@ -12,8 +12,12 @@ import sys
 
 
 # This gets the first column of the csv file 
+# Assumes that the input file is set up in the following way:
+# Each file represents a band and the columns are data from each electrode 
 
 def features_func(filepath, o_filename):
+	
+	# for each electrode 
 	for i in range(0,21):
 		time_series_electrode = FileReader.file_as_float_array(filepath,
 			delimiter=',', column = i, offset = 0)

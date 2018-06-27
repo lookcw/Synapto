@@ -50,6 +50,7 @@ def svm_func(filepath, o_filename, folds, seeds):
 
 	X = np.array(attributes)
 	y = np.array(value)
+	print(y)
 
 	accuracies = 0
 
