@@ -2,12 +2,12 @@ import csv
 import numpy as np
 import os
 import sys
-
+from ASD_features import features_func
 
 num_bunches = 1000
-num_timePoints = 30
+num_timePoints = 60
 
-basepath = 'RawData/HCF50'
+basepath = 'BrazilRawData/HCF50'
 combined_HC = np.empty((0,21*num_timePoints+1))
 for filename in os.listdir(basepath):
 	if filename.endswith('.csv'):
@@ -33,7 +33,7 @@ for filename in os.listdir(basepath):
 			#print total
 			combined_HC = np.concatenate((combined_HC,total)) #12000x630
 
-basepath = 'RawData/ADF50'
+basepath = 'BrazilRawData/ADF50'
 combined_AD = np.empty((0,21*num_timePoints+1))
 for filename in os.listdir(basepath):
 	if filename.endswith('.csv'):
@@ -67,24 +67,25 @@ print(combined.shape) #25000x631
 targets = combined[:,-1]
 combined = np.delete(combined,-1,axis=1)
 #reshape into 25000 x timepoints x 21
-combined = np.reshape(combined,(len(combined), n_timeSteps, 21))
+combined = np.reshape(combined,(len(combined), num_timePoints, 21))
 
 from BandPass1 import splitbands
 
+out_file = open(sys.path[0] + '/FeatureSets/ASDfeatures',"w")
+writer = csv.writer(out_file)
 
+featureArray = np.empty(len(combined))
 for i in range(len(combined)):
-	#transpose each 21 x n so each row is time series points (columns) of 1 electrode (row)
-	combined[i] = np.transpose(combined[i]) 
+	print(str(i) + " out of 25000")
+	#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
+	transposed = np.transpose(combined[i]) 
+	features = []
 	#add another dimension in each row to make it 5 bands x n
-	combined[i] = splitbands(combined[i])
-	#squish each band of raw points into n feature values
-	#flatten out array so as to concatenate feature values of each band from each electrode (per instance)
-sys.exit()
-
-out_file = open("/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv","w")
-for i in range(len(combined)):
-	writer = csv.writer(out_file)
-	writer.writerow(combined[i])
-
-
-#createInstances
+	for j in range(len(transposed)):
+		bands = splitbands(transposed[j])
+		#squish each band of raw points into n feature values
+		for k in range(len(bands)): #bands[j] = band of raw data
+			bandfeatures = features_func(bands[k])
+			features.extend(bandfeatures)
+	#Add feature values of each band from each electrode (per instance) to new array
+	writer.writerow(features)
