@@ -7,10 +7,11 @@ import sys
 from decimal import Decimal
 import time
 import random
+from featureSetEdit import remove_plus_min
 
 
 def svm_func(filepath, o_filename, folds, seeds):
-	
+	print(filepath)
 	print("Number folds: ", folds)
 	# Get file and read with csv reader
 	with open(filepath) as f:
@@ -18,35 +19,8 @@ def svm_func(filepath, o_filename, folds, seeds):
 		next(reader) #skip header 
 		data = [r for r in reader] #Place all data in data array 
 
-
-	# attributes stores all the attributes and value stores the respective values (0 ir 1)
-	# Initializing attributes - 2D array that stores attributes belonging to each
-	# patient in each row 
-	rows = len(data)
-	attributes = [0] * rows
-	for row in range(rows):
-		cols = len(data[row]) - 1
-		attributes[row] = [0] * cols
-
-	# In order for the value to be read by clf.fit, change the + and - char values
-	# to 1 and 0, respectively
-	value_char = []
-	value = []
-
-	# Adding attributes to attribute 2D array and corresponding values to value 1D array 
-	for row in range(rows):
-		cols = len(data[row])
-		for col in range(cols):
-			if col == cols - 1:
-				value_char = data[row][col]
-				if value_char == '+':
-					value.append(1)
-				else:
-					value.append(0)
-				
-			else:
-				attributes[row][col] = float(data[row][col])
-			
+	# Using common function that will remove +/- 
+	value, attributes = remove_plus_min(data)
 
 	X = np.array(attributes)
 	y = np.array(value)
@@ -86,7 +60,7 @@ def svm_func(filepath, o_filename, folds, seeds):
 	# Write to output file
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), final_accuracy, folds, seeds])
+		writer.writerow([time.strftime("%m/%d/%Y"), filepath, final_accuracy, folds, seeds])
 
 	
 if __name__ == '__main__':
@@ -102,7 +76,7 @@ if __name__ == '__main__':
 			pass
 	except IOError as e:
 		with open(o_filename, 'w') as csvfile:
-			header = ['Date', 'Accuracy', 'Num Folds', 'Num Seeds']
+			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']
 			writer = csv.DictWriter(csvfile, fieldnames=header)
 			writer.writeheader()
 
