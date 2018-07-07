@@ -24,12 +24,14 @@ def feature_selection(in_file = ""):
 		array = list(reader)
 		n_input =  len(array[0])-1 
 		array = np.array(array)
+		print(array.shape)
 		
 	# Data input
 		#add each patient's feature values (row) to array
 		for row in array[1:]: #first row is column headers
-			if (row[-1] == '-'): #HC patients
+			if (row[-1] == str(0.0)): #AD patients
 				total.append(row[0:-1])
+				print(len(total))
 				#output = 0
 				array_Y.extend([0])
 			else: #AD patients
@@ -38,9 +40,9 @@ def feature_selection(in_file = ""):
 				array_Y.extend([1])
 	total = np.array(total)
 
-
 	X_data = np.array(total)
 	array_Y = np.array(array_Y)
+	print(array_Y)
 
 	unshuffled_Y = list(array_Y)
 	Ycol = []
