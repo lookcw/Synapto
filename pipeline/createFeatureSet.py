@@ -2,14 +2,13 @@ import csv
 import numpy as np
 import os
 import sys
-from ASD_features import features_func
 import pandas as pd
 
 
 num_bunches = 1
 num_timePoints = 60
 
-def createFeatureSet(num_bunches, num_timePoints):
+def createFeatureSet(num_bunches, num_timePoints, extractFeatures):
 
 	basepath = 'BrazilRawData/HCF50'
 	combined_HC = np.empty((0,21*num_timePoints+1))
@@ -76,16 +75,18 @@ def createFeatureSet(num_bunches, num_timePoints):
 
 	from BandPass1 import splitbands
 
-	if os.path.exists(sys.path[0] + '/FeatureSets/ASDfeatures.csv') == False:
-		open(sys.path[0] + '/FeatureSets/ASDfeatures.csv',"w")
+	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
+
+	if os.path.exists(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv') == False:
+		open(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv',"w")
 
 	#count number of lines already present in file - start at this number + 1 for iterations
-	read_file = open(sys.path[0] + '/FeatureSets/ASDfeatures.csv',"r")
+	read_file = open(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv',"r")
 	reader = csv.reader(read_file)
 	row_count = sum(1 for row in reader)
 	print(row_count)
 
-	out_file = open(sys.path[0] + '/FeatureSets/ASDfeatures.csv',"a") #used to be "a" for append
+	out_file = open(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv',"a") #used to be "a" for append
 	writer = csv.writer(out_file)
 
 	for i in range(row_count,len(combined)):
@@ -98,7 +99,7 @@ def createFeatureSet(num_bunches, num_timePoints):
 			bands = splitbands(transposed[j])
 			#squish each band of raw points into n feature values
 			for k in range(len(bands)): #bands[j] = band of raw data
-				bandfeatures = features_func(bands[k])
+				bandfeatures = extractFeatures(bands[k])
 				features.extend(bandfeatures)
 		features.append(targets[i])
 		#Add feature values of each band from each electrode (per instance) to new array

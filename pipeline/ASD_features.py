@@ -11,7 +11,7 @@ import csv
 import sys
 
 #def features_func(filepath, o_filename):
-def features_func(time_series_electrode):
+def ASDfeatures_func(time_series_electrode):
 	
 
 	dfa = nolds.dfa(time_series_electrode)
@@ -32,37 +32,3 @@ def features_func(time_series_electrode):
 	return [result.entropy_diagonal_lines, result.longest_diagonal_line, 
 	result.average_diagonal_line, result.recurrence_rate,
 	result.determinism, result.laminarity, result.trapping_time, dfa, sampen]
-
-if __name__ == '__main__':
-
-	o_filename = "features.csv"
-	filepath_inserted = False
-
-	# Only write header once
-	try:
-		with open(o_filename, 'r+') as csvfile:
-			pass
-	except IOError as e:
-		with open(o_filename, 'w') as csvfile:
-			header = ["L_entr", "L_max", "L_mean", "RR", "DET", "LAM", "TT", "DFA", "SampE"]
-			writer = csv.DictWriter(csvfile, fieldnames=header)
-			writer.writeheader()
-
-	if len(sys.argv) == 1 or len(sys.argv) % 2 == 0:
-		print("Did not enter inputs in correct format. Probably missing a header.")
-		sys.exit()
-
-	for i in range(1,len(sys.argv),2):		
-		if str(sys.argv[i]) == "-i":
-			filepath = str(sys.argv[i+1])
-			filepath_inserted = True
-		else:
-			print("Wrong format. Remember header must precede argument provided.")
-
-	if(filepath_inserted is False):
-		print("Input file path was not inserted. Please insert the filepath.")
-		exit(0)
-
-	#features_func(filepath, o_filename)
-
-
