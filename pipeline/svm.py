@@ -10,20 +10,20 @@ import random
 from featureSetEdit import remove_plus_min
 
 
-def svm_func(filepath, o_filename, folds, seeds):
-	print(filepath)
-	print("Number folds: ", folds)
-	# Get file and read with csv reader
-	with open(filepath) as f:
-		reader = csv.reader(f)
-		next(reader) #skip header 
-		data = [r for r in reader] #Place all data in data array 
+def svm_func(X, y):
+	# print(filepath)
+	# print("Number folds: ", folds)
+	# # Get file and read with csv reader
+	# with open(filepath) as f:
+	# 	reader = csv.reader(f)
+	# 	next(reader) #skip header 
+	# 	data = [r for r in reader] #Place all data in data array 
 
-	# Using common function that will remove +/- 
-	value, attributes = remove_plus_min(data)
+	# # Using common function that will remove +/- 
+	# value, attributes = remove_plus_min(data)
 
-	X = np.array(attributes)
-	y = np.array(value)
+	# X = np.array(attributes)
+	# y = np.array(value)
 
 	accuracies = 0
 
@@ -101,6 +101,20 @@ if __name__ == '__main__':
 		print("Input file path was not inserted. Please insert the filepath.")
 		exit(0)
 
-	svm_func(filepath, o_filename, num_folds, num_seeds)
+	print(filepath)
+	print("Number folds: ", folds)
+	Get file and read with csv reader
+	with open(filepath) as f:
+		reader = csv.reader(f)
+		next(reader) #skip header 
+		data = [r for r in reader] #Place all data in data array 
+
+	# Using common function that will remove +/- 
+	value, attributes = remove_plus_min(data)
+
+	X = np.array(attributes)
+	y = np.array(value)
+
+	svm_func(X, y)
 
 
