@@ -10,7 +10,7 @@ import random
 from featureSetEdit import remove_plus_min
 
 
-def svm_func(X, y):
+def svm_func(X, y, seeds, folds, o_filename):
 	# print(filepath)
 	# print("Number folds: ", folds)
 	# # Get file and read with csv reader
@@ -60,7 +60,7 @@ def svm_func(X, y):
 	# Write to output file
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), filepath, final_accuracy, folds, seeds])
+		writer.writerow([time.strftime("%m/%d/%Y"), final_accuracy, folds, seeds])
 
 	
 if __name__ == '__main__':
@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
 	print(filepath)
 	print("Number folds: ", folds)
-	Get file and read with csv reader
+	#Get file and read with csv reader
 	with open(filepath) as f:
 		reader = csv.reader(f)
 		next(reader) #skip header 
@@ -115,6 +115,6 @@ if __name__ == '__main__':
 	X = np.array(attributes)
 	y = np.array(value)
 
-	svm_func(X, y)
+	#svm_func(X, y)
 
 
