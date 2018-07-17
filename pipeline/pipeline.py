@@ -7,7 +7,11 @@ import numpy as np
 from ASD_features import extractASDFeatures
 from createFeatureSet import createFeatureSet
 
+#change feature name to use different feature extraction function and output new featureset file
 featureName = 'ASD'
+
+if featureName == 'ASD':
+	extractFeatureFunc = extractASDFeatures
 
 #feature extraction
 print("Feature Extraction...")
@@ -25,7 +29,7 @@ reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'featur
 #create feature set if does not exist in Feature Sets folder
 if os.path.exists(features_path) == False:
 	#3rd parameter is extractFeature function of choice
-	createFeatureSet(num_bunches, num_timePoints, extractASDFeatures)
+	createFeatureSet(num_bunches, num_timePoints, extractFeatureFunc)
 
 #obtain global X (input features) and y (output values)
 data = pd.read_csv(features_path, header = None)
