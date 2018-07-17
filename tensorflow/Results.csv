@@ -118,3 +118,10 @@ date,iden,filename,acc,FN,FP,TP,TN,Fmeasure,AUC,,,,,,,Classifier ,Classifier Par
 =======
 >>>>>>> e8dc14d3d2d88e2ab03625ddf6494d89a10e7d96
 >>>>>>> a462fee1b4459cc5bd97d74b2846b2e9b7fdcaaa
+2018-06-10 18:45:47.058082,test LSTM,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,54.556,52.90799999952316,0,0,0,0,0,0,3,"[50, 30, 10]",0.1,2,2,5
+2018-06-10 18:51:46.002064,test LSTM,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,54.644000000953675,52.96399999952315,0,0,0,0,0,0,"[200, 70, 10]",0.1,2,2,5
+2018-06-10 18:52:18.067252,test LSTM,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,50.54800000095368,50.28399999904633,0,0,0,0,0,0,"[100, 40, 5]",0.1,2,2,5
+2018-06-10 19:02:19.257038,test LSTM,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,55.75999999904632,54.06400000047684,0,0,0,0,0,0,"[200, 70, 5]",0.1,2,2,5
+2018-06-10 19:03:11.216865,test LSTM,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,54.65200000095368,53.01199999952316,0,0,0,0,0,0,"[200, 70, 10]",0.1,2,2,5
+2018-06-17 14:35:34.375565,200 neurons each layer,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,55.744000000953676,54.54000000047684,0,0,0,0,0,0,"[200, 200, 200]",0.1,2,2,5
+2018-06-17 14:40:41.779382,200 neurons each layer,/Users/Anoop/Documents/Synapto/IgnoreData/testCreateInstances.csv,89.9759999961853,65.67200000286103,0,0,0,0,0,0,"[200, 200, 200]",0.1,2,2,5

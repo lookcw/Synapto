@@ -17,13 +17,10 @@ print "starting"
 n_timeSteps = 30
 
 
-def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" 
+def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = "" 
 	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 5):
 	if in_file == "":
 		print "did not include file name"
-		sys.exit(1)
-	if n_hlayers == 0:
-		print "did not set n_hlayers to hiddle layers"
 		sys.exit(1)
 	if neurons == 0:
 		print "did not set neurons array"
@@ -69,7 +66,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	X_data = np.array(total)
 	array_Y = np.array(array_Y)
 
-
 	#convert to one-hot arrays
 	array_Y = array_Y.astype(int)
 	Y_data = np.eye(n_classes)[array_Y]
@@ -102,17 +98,23 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	
 	#reshape to 3D input for LSTM
 	print X_data.shape
+	#21 is for 21 electrodes
 	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, 21))
 	print X_data.shape
 
+	#normalize inputs
+	print X_data.dtype
+	#max = np.amax(X_data)
+	#array_X = array_X/max
 
 
 	for fold in range(0,n_folds):
 		model = Sequential()
 
-		model.add(LSTM(200, input_shape=(n_timeSteps, 21)))
+		model.add(LSTM(neurons[0], input_shape=(n_timeSteps, 21)))
 		#hidden layer
-		model.add(Dense(30, activation = 'relu'))
+		model.add(Dense(neurons[1], activation = 'relu'))
+		model.add(Dense(neurons[2], activation = 'relu'))
 		model.add(Dense(n_classes, activation = 'softmax'))
 
 		#Compile model
@@ -156,7 +158,6 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 		
 		#Fit model
 		print "training..."
-		model.fit(train_X, train_Y, epochs = 12, batch_size = 100)
 
 		# evaluate the model
 		print "testing..."
@@ -195,7 +196,7 @@ def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_fi
 	total_testAccuracy = total_testAccuracy/n_folds
 	print "Overall Test Accuracy", total_testAccuracy
 
-	results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes,seed]
+	results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,neurons,learning_rate,n_folds,n_classes,seed]
 	r_file = open(results_file,'a')
 	writer = csv.writer(r_file,delimiter=',')
 	writer.writerow(results)
@@ -208,5 +209,6 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-x_validation(in_file = filename, identifier = "Brazil Raw", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
+
+x_validation(in_file = filename, identifier = iden, neurons = [200, 200, 200],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
 
