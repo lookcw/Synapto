@@ -4,9 +4,10 @@ import os
 import sys
 import pandas as pd
 import numpy as np
-from ASD_features import ASDfeatures_func
+from ASD_features import extractASDFeatures
 from createFeatureSet import createFeatureSet
 
+featureName = 'ASD'
 
 #feature extraction
 print("Feature Extraction...")
@@ -18,12 +19,13 @@ num_timePoints = 60 #per bunch
 identifier = str(num_bunches*25) + '_' + str(num_timePoints)
 
 #define features and reduced_features paths
-features_path = sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv'
-reduced_features_path = sys.path[0] + '/ReducedFeatureSets/ASDfeatures'+identifier+'_reduced.csv'
+features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
+reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 
 #create feature set if does not exist in Feature Sets folder
 if os.path.exists(features_path) == False:
-	createFeatureSet(num_bunches, num_timePoints, ASDfeatures_func)
+	#3rd parameter is extractFeature function of choice
+	createFeatureSet(num_bunches, num_timePoints, extractASDFeatures)
 
 #obtain global X (input features) and y (output values)
 data = pd.read_csv(features_path, header = None)
@@ -41,20 +43,24 @@ X = data.drop(data.columns[-1], axis=1)
 print("Feature Selection...")
 
 #create reduced_features file if does not exist in Reduced Features Sets folder
-if os.path.exists(reduced_features_path) == False:
-	X_reduced = reduce_features(X,y)
-	X_reduced = pd.DataFrame(X_reduced)
-	#combine X_reduced and y
-	data_reduced = pd.concat([X_reduced, y], axis=1)
-	print(data_reduced.shape)
-	#output reduced csv file
-	data_reduced.to_csv(reduced_features_path, header=None, index=None)
-else: #read in reduced csv file if already exists
-	data_reduced = pd.read_csv(reduced_features_path, header=None)
-	#remove output column to obtain X_reduced
-	X_reduced = data_reduced.drop(data_reduced.columns[-1], axis=1)
+# if os.path.exists(reduced_features_path) == False:
+# 	X_reduced = reduce_features(X,y)
+# 	X_reduced = pd.DataFrame(X_reduced)
+# 	#combine X_reduced and y
+# 	data_reduced = pd.concat([X_reduced, y], axis=1)
+# 	print(data_reduced.shape)
+# 	#output reduced csv file
+# 	data_reduced.to_csv(reduced_features_path, header=None, index=None)
+# else: #read in reduced csv file if already exists
+# 	data_reduced = pd.read_csv(reduced_features_path, header=None)
+# 	#remove output column to obtain X_reduced
+# 	X_reduced = data_reduced.drop(data_reduced.columns[-1], axis=1)
 
-print(X_reduced.shape)
+# print(X_reduced.shape)
+
+#feature selection from ASD paper
+ASDX_reduced = reduce_features(X,y)
+print(ASDX_reduced.shape)
 
 #alternative feature selection from sklearn
 from sklearn.ensemble import RandomForestClassifier
@@ -112,7 +118,7 @@ models = [logreg, logreg_cv, rf, gboost, xgboost, svc, kneighbors]
 for model in models:
 	print('Cross-validation of : {0}'.format(model.__class__))
 	all_score = compute_score(model, X, y, scoring='accuracy')
-	reduced_score = compute_score(model, X_reduced, y, scoring='accuracy')
+	reduced_score = compute_score(model, ASDX_reduced, y, scoring='accuracy')
 	print('All features CV score = {0}'.format(all_score))
 	print('Reduced features CV score = {0}'.format(reduced_score))
 
