@@ -5,19 +5,28 @@ import sys
 import pandas as pd
 import numpy as np
 from ASD_features import extractASDFeatures
+from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 
-#change feature name to use different feature extraction function and output new featureset file
-featureName = 'ASD'
+
+if len(sys.argv) ==1:
+	print("Did not input feature name argument (-f)")
+	sys.exit()
+
+#input feature name to use different feature extraction function and output new featureset file
+featureName = sys.argv[1]
 
 if featureName == 'ASD':
 	extractFeatureFunc = extractASDFeatures
+elif featureName == 'Wavelet':
+	extractFeatureFunc = extractWaveletFeatures
+
 
 #feature extraction
 print("Feature Extraction...")
 
 num_bunches = 1 #per patient
-num_timePoints = 60 #per bunch
+num_timePoints = 60 #per instance
 
 #unique identifier for different input parameters
 identifier = str(num_bunches*25) + '_' + str(num_timePoints)
@@ -29,7 +38,11 @@ reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'featur
 #create feature set if does not exist in Feature Sets folder
 if os.path.exists(features_path) == False:
 	#3rd parameter is extractFeature function of choice
-	createFeatureSet(num_bunches, num_timePoints, extractFeatureFunc)
+	try:
+		createFeatureSet(num_bunches, num_timePoints, extractFeatureFunc)
+	except:
+		print("Did not input valid feature name")
+		sys.exit()
 
 #obtain global X (input features) and y (output values)
 data = pd.read_csv(features_path, header = None)
