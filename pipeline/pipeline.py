@@ -8,13 +8,36 @@ from ASD_features import extractASDFeatures
 from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 
+featureName = ''
 
-if len(sys.argv) ==1:
+num_bunches = 0 #per patient
+num_timePoints = 0 #per instance
+
+for i in range(1,len(sys.argv),2):		
+	if str(sys.argv[i]) == "-h":
+		helpString = ('Input argument headers:\n-f: feature name (choices: ASD, Wavelet)' + 
+		'\n-i: number of instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)')
+		print(helpString)
+		sys.exit()
+	elif str(sys.argv[i]) == "-f":
+		featureName = sys.argv[i+1]
+	elif str(sys.argv[i]) == "-i":
+		num_bunches = int(sys.argv[i+1])
+	elif str(sys.argv[i]) == "-t":
+		num_timePoints = int(sys.argv[i+1])
+	else:
+		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
+		sys.exit()
+
+if featureName == '':
 	print("Did not input feature name argument (-f)")
+	#sys.exit()
+if num_bunches == 0:
+	print("Did not input instances per patient argument (-i)")
+	#sys.exit()
+if num_timePoints == 0:
+	print("Did not input time points argument (-t)\nUse -h for help.")
 	sys.exit()
-
-#input feature name to use different feature extraction function and output new featureset file
-featureName = sys.argv[1]
 
 if featureName == 'ASD':
 	extractFeatureFunc = extractASDFeatures
@@ -24,9 +47,6 @@ elif featureName == 'Wavelet':
 
 #feature extraction
 print("Feature Extraction...")
-
-num_bunches = 1 #per patient
-num_timePoints = 60 #per instance
 
 #unique identifier for different input parameters
 identifier = str(num_bunches*25) + '_' + str(num_timePoints)
