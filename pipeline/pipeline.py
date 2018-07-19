@@ -59,7 +59,7 @@ reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'featur
 if os.path.exists(features_path) == False:
 	#3rd parameter is extractFeature function of choice
 	try:
-		createFeatureSet(num_bunches, num_timePoints, extractFeatureFunc)
+		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
 	except:
 		print("Did not input valid feature name")
 		sys.exit()
