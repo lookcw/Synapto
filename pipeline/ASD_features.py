@@ -11,7 +11,7 @@ import csv
 import sys
 
 #def features_func(filepath, o_filename):
-def ASDfeatures_func(time_series_electrode):
+def extractASDFeatures(time_series_electrode):
 	
 
 	dfa = nolds.dfa(time_series_electrode)

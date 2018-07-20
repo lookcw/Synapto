@@ -8,7 +8,7 @@ import pandas as pd
 num_bunches = 1
 num_timePoints = 60
 
-def createFeatureSet(num_bunches, num_timePoints, extractFeatures):
+def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 
 	basepath = 'BrazilRawData/HCF50'
 	combined_HC = np.empty((0,21*num_timePoints+1))
@@ -64,7 +64,7 @@ def createFeatureSet(num_bunches, num_timePoints, extractFeatures):
 				combined_AD = np.concatenate((combined_AD,total))
 
 	combined = np.concatenate((combined_HC, combined_AD))
-	print(combined.shape) #25000x631
+	#print(combined.shape) #25000x631
 
 	#store and delete last column
 	targets = combined[:,-1]
@@ -77,17 +77,21 @@ def createFeatureSet(num_bunches, num_timePoints, extractFeatures):
 
 	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
 
-	if os.path.exists(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv') == False:
-		open(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv',"w")
+	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
+
+	if os.path.exists(features_path) == False:
+		open(features_path,"w")
 
 	#count number of lines already present in file - start at this number + 1 for iterations
-	read_file = open(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv',"r")
+	read_file = open(features_path,"r")
 	reader = csv.reader(read_file)
 	row_count = sum(1 for row in reader)
 	print(row_count)
 
-	out_file = open(sys.path[0] + '/FeatureSets/ASDfeatures'+identifier+'.csv',"a") #used to be "a" for append
+	out_file = open(features_path,"a") #used to be "a" for append
 	writer = csv.writer(out_file)
+
+	print("Feature Extraction...")
 
 	for i in range(row_count,len(combined)):
 		print(str(i+1) + " out of " + str(25*num_bunches))
