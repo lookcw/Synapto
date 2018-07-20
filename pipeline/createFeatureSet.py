@@ -64,7 +64,7 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 				combined_AD = np.concatenate((combined_AD,total))
 
 	combined = np.concatenate((combined_HC, combined_AD))
-	print(combined.shape) #25000x631
+	#print(combined.shape) #25000x631
 
 	#store and delete last column
 	targets = combined[:,-1]
@@ -90,6 +90,8 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 
 	out_file = open(features_path,"a") #used to be "a" for append
 	writer = csv.writer(out_file)
+
+	print("Feature Extraction...")
 
 	for i in range(row_count,len(combined)):
 		print(str(i+1) + " out of " + str(25*num_bunches))

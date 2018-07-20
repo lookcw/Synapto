@@ -46,7 +46,7 @@ elif featureName == 'Wavelet':
 
 
 #feature extraction
-print("Feature Extraction...")
+print("Creating Feature Set...")
 
 #unique identifier for different input parameters
 identifier = str(num_bunches*25) + '_' + str(num_timePoints)
@@ -75,7 +75,7 @@ y = data.iloc[:,-1]
 #obtain X by dropping last column
 X = data.drop(data.columns[-1], axis=1)
 
-
+print("Input Shape:",X.shape)
 # feature selection
 print("Feature Selection...")
 
@@ -96,8 +96,8 @@ print("Feature Selection...")
 # print(X_reduced.shape)
 
 #feature selection from ASD paper
-ASDX_reduced = reduce_features(X,y)
-print(ASDX_reduced.shape)
+# ASDX_reduced = reduce_features(X,y)
+# print(ASDX_reduced.shape)
 
 #alternative feature selection from sklearn
 from sklearn.ensemble import RandomForestClassifier
@@ -155,7 +155,7 @@ models = [logreg, logreg_cv, rf, gboost, xgboost, svc, kneighbors]
 for model in models:
 	print('Cross-validation of : {0}'.format(model.__class__))
 	all_score = compute_score(model, X, y, scoring='accuracy')
-	reduced_score = compute_score(model, ASDX_reduced, y, scoring='accuracy')
+	reduced_score = compute_score(model, X_reduced, y, scoring='accuracy')
 	print('All features CV score = {0}'.format(all_score))
 	print('Reduced features CV score = {0}'.format(reduced_score))
 
