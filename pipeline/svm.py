@@ -11,19 +11,9 @@ from featureSetEdit import remove_plus_min
 
 
 def svm_func(X, y, seeds, folds, o_filename):
-	# print(filepath)
-	# print("Number folds: ", folds)
-	# # Get file and read with csv reader
-	# with open(filepath) as f:
-	# 	reader = csv.reader(f)
-	# 	next(reader) #skip header 
-	# 	data = [r for r in reader] #Place all data in data array 
 
-	# # Using common function that will remove +/- 
-	# value, attributes = remove_plus_min(data)
-
-	# X = np.array(attributes)
-	# y = np.array(value)
+	print("Number folds: ", folds)
+	print("Number seeds: ", seeds)
 
 	accuracies = 0
 
@@ -44,9 +34,9 @@ def svm_func(X, y, seeds, folds, o_filename):
 			X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 			clf.fit(X_train, y_train)
 			y_pred = clf.predict(X_test) # Predict on test set - store in y_pred
-			#print('Prediction:', y_pred) 
-			#print("Actual: ", y_test)	
-			#print(accuracy_score(y_test, y_pred)) # Get accuracy by comparing prediction to actual 
+			print('Prediction:', y_pred) 
+			print("Actual: ", y_test)	
+			print(accuracy_score(y_test, y_pred)) # Get accuracy by comparing prediction to actual 
 			scores.append(accuracy_score(y_test, y_pred))
 
 		scores = np.array(scores)
@@ -62,59 +52,61 @@ def svm_func(X, y, seeds, folds, o_filename):
 		writer = csv.writer(f)
 		writer.writerow([time.strftime("%m/%d/%Y"), final_accuracy, folds, seeds])
 
-	
-if __name__ == '__main__':
 
-	o_filename = "output.csv"
-	num_folds = 10
-	num_seeds = 10
-	filepath_inserted = False
+# Use main method for individual testing purposes 
 
-	# Only write header once
-	try:
-		with open(o_filename, 'r+') as csvfile:
-			pass
-	except IOError as e:
-		with open(o_filename, 'w') as csvfile:
-			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']
-			writer = csv.DictWriter(csvfile, fieldnames=header)
-			writer.writeheader()
+# if __name__ == '__main__':
 
-	if len(sys.argv) == 1 or len(sys.argv) % 2 == 0:
-		print("Did not enter inputs in correct format. Probably missing a header.")
-		sys.exit()
+# 	o_filename = "output.csv"
+# 	num_folds = 10
+# 	num_seeds = 10
+# 	filepath_inserted = False
 
-	for i in range(1,len(sys.argv),2):		
-		if str(sys.argv[i]) == "-i":
-			filepath = str(sys.argv[i+1])
-			filepath_inserted = True
-		elif str(sys.argv[i]) == "-o":
-			o_filename = sys.argv[i+1]
-		elif str(sys.argv[i]) == "-f":
-			num_folds = int(sys.argv[i+1])
-		elif str(sys.argv[i]) == "-s":
-			num_seeds = int(sys.argv[i+1])
-		else:
-			print("Wrong format. Remember header must precede argument provided.")
+# 	# Only write header once
+# 	try:
+# 		with open(o_filename, 'r+') as csvfile:
+# 			pass
+# 	except IOError as e:
+# 		with open(o_filename, 'w') as csvfile:
+# 			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']
+# 			writer = csv.DictWriter(csvfile, fieldnames=header)
+# 			writer.writeheader()
 
-	if(filepath_inserted is False):
-		print("Input file path was not inserted. Please insert the filepath.")
-		exit(0)
+# 	if len(sys.argv) == 1 or len(sys.argv) % 2 == 0:
+# 		print("Did not enter inputs in correct format. Probably missing a header.")
+# 		sys.exit()
 
-	print(filepath)
-	print("Number folds: ", folds)
-	#Get file and read with csv reader
-	with open(filepath) as f:
-		reader = csv.reader(f)
-		next(reader) #skip header 
-		data = [r for r in reader] #Place all data in data array 
+# 	for i in range(1,len(sys.argv),2):		
+# 		if str(sys.argv[i]) == "-i":
+# 			filepath = str(sys.argv[i+1])
+# 			filepath_inserted = True
+# 		elif str(sys.argv[i]) == "-o":
+# 			o_filename = sys.argv[i+1]
+# 		elif str(sys.argv[i]) == "-f":
+# 			num_folds = int(sys.argv[i+1])
+# 		elif str(sys.argv[i]) == "-s":
+# 			num_seeds = int(sys.argv[i+1])
+# 		else:
+# 			print("Wrong format. Remember header must precede argument provided.")
 
-	# Using common function that will remove +/- 
-	value, attributes = remove_plus_min(data)
+# 	if(filepath_inserted is False):
+# 		print("Input file path was not inserted. Please insert the filepath.")
+# 		exit(0)
 
-	X = np.array(attributes)
-	y = np.array(value)
+# 	print(filepath)
+# 	print("Number folds: ", num_folds)
+# 	#Get file and read with csv reader
+# 	with open(filepath) as f:
+# 		reader = csv.reader(f)
+# 		next(reader) #skip header 
+# 		data = [r for r in reader] #Place all data in data array 
 
-	#svm_func(X, y)
+# 	# Using common function that will remove +/- 
+# 	value, attributes = remove_plus_min(data)
+
+# 	X = np.array(attributes)
+# 	y = np.array(value)
+
+# 	svm_func(X, y, num_seeds, num_folds, o_filename)
 
 
