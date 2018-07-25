@@ -11,24 +11,14 @@ from featureSetEdit import remove_plus_min
 
 
 def svm_func(X, y, seeds, folds, o_filename):
-	# print(filepath)
-	# print("Number folds: ", folds)
-	# # Get file and read with csv reader
-	# with open(filepath) as f:
-	# 	reader = csv.reader(f)
-	# 	next(reader) #skip header 
-	# 	data = [r for r in reader] #Place all data in data array 
 
-	# # Using common function that will remove +/- 
-	# value, attributes = remove_plus_min(data)
-
-	# X = np.array(attributes)
-	# y = np.array(value)
+	print "Number folds: " + str(folds)
+	print "Number seeds: " + str(seeds)
 
 	accuracies = 0
 
 	for seed in range(0, seeds, 1):
-		print("Seed number: ", seed)
+		print "Seed number: " + str(seed)
 		r1 = random.Random(seed)
 
 		# For leave one out, number of splits is 25 - can change this number if different number of folds is needed
@@ -44,9 +34,9 @@ def svm_func(X, y, seeds, folds, o_filename):
 			X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 			clf.fit(X_train, y_train)
 			y_pred = clf.predict(X_test) # Predict on test set - store in y_pred
-			#print('Prediction:', y_pred) 
-			#print("Actual: ", y_test)	
-			#print(accuracy_score(y_test, y_pred)) # Get accuracy by comparing prediction to actual 
+			print "Prediction: "+ str(y_pred) 
+			print "Actual: " + str(y_test)	
+			print str(accuracy_score(y_test, y_pred)) # Get accuracy by comparing prediction to actual 
 			scores.append(accuracy_score(y_test, y_pred))
 
 		scores = np.array(scores)
@@ -56,13 +46,15 @@ def svm_func(X, y, seeds, folds, o_filename):
 		accuracies += accuracy
 
 	final_accuracy = accuracies/seeds
-	print(final_accuracy)
+	print str(final_accuracy)
 	# Write to output file
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
 		writer.writerow([time.strftime("%m/%d/%Y"), final_accuracy, folds, seeds])
 
-	
+
+# Use main method for individual testing purposes. 
+
 if __name__ == '__main__':
 
 	o_filename = "output.csv"
@@ -102,7 +94,6 @@ if __name__ == '__main__':
 		exit(0)
 
 	print(filepath)
-	print("Number folds: ", folds)
 	#Get file and read with csv reader
 	with open(filepath) as f:
 		reader = csv.reader(f)
@@ -115,6 +106,6 @@ if __name__ == '__main__':
 	X = np.array(attributes)
 	y = np.array(value)
 
-	#svm_func(X, y)
+	svm_func(X, y, num_seeds, num_folds, o_filename)
 
 

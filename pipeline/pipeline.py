@@ -1,4 +1,4 @@
-from featureSelection import reduce_features
+#from featureSelection import reduce_features
 from svm import svm_func
 import os
 import sys
