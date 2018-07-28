@@ -131,7 +131,7 @@ print("Learning model...")
 num_folds = 10
 num_seeds = 10
 
-#megha's svm
+#Megha's svm
 svm_func(X_reduced,y,num_seeds,num_folds, 'output.csv')
 
 
