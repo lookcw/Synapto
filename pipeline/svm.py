@@ -7,7 +7,8 @@ import sys
 from decimal import Decimal
 import time
 import random
-from featureSetEdit import remove_plus_min
+#from compute_score import compute_score
+#from featureSetEdit import remove_plus_min
 
 
 def svm_func(X, y, seeds, folds, o_filename):
@@ -45,12 +46,23 @@ def svm_func(X, y, seeds, folds, o_filename):
 		accuracy = round(scores.mean(),2)
 		accuracies += accuracy
 
+	#all_score = compute_score(model, X, y, num_folds, scoring='accuracy')
 	final_accuracy = accuracies/seeds
 	print str(final_accuracy)
+	
+	# Only write header once
+	try:
+		with open(o_filename, 'r+') as csvfile:
+			pass
+	except IOError as e:
+		with open(o_filename, 'w') as csvfile:
+			header = ['Date', 'Classifier', 'Accuracy', 'Num Folds', 'Num Seeds']
+			writer = csv.DictWriter(csvfile, fieldnames=header)
+			writer.writeheader()
 	# Write to output file
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), final_accuracy, folds, seeds])
+		writer.writerow([time.strftime("%m/%d/%Y"), 'SVM', final_accuracy, folds, seeds])
 
 
 # Use main method for individual testing purposes. 
