@@ -149,25 +149,25 @@ feature_red_name = ''
 # alternative feature selection from sklearn
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.feature_selection import SelectFromModel
-# clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-# clf = clf.fit(X, y)
-# feature_red_name = format(clf)
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
+clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+clf = clf.fit(X, y)
+feature_red_name = format(clf)
 
-# #feature ranking
-# features = pd.DataFrame()
-# features['feature'] = X.columns
-# features['importance'] = clf.feature_importances_
-# features.sort_values(by=['importance'], ascending=True, inplace=True)
-# features.set_index('feature', inplace=True)
-# features.plot(kind='barh', figsize=(25, 25))
-# #print(features)
+#feature ranking
+features = pd.DataFrame()
+features['feature'] = X.columns
+features['importance'] = clf.feature_importances_
+features.sort_values(by=['importance'], ascending=True, inplace=True)
+features.set_index('feature', inplace=True)
+features.plot(kind='barh', figsize=(25, 25))
+print(features)
 
-# #reduce features
-# model = SelectFromModel(clf, prefit=True)
-# X_reduced = model.transform(X)
-# print(X_reduced.shape)
+#reduce features
+model = SelectFromModel(clf, prefit=True)
+X_reduced = model.transform(X)
+print(X_reduced.shape)
 
 
 
