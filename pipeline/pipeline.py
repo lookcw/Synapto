@@ -15,11 +15,13 @@ from compute_score import compute_score
 featureName = ''
 num_bunches = 0 #per patient
 num_timePoints = 0 #per instance
+startAtFS = False
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
-		helpString = ('Input argument headers:\n-f: feature name (choices: ASD, Wavelet)' + 
-		'\n-i: number of instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)')
+		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-f: feature name (choices: ASD, Wavelet)' + 
+		'\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
+		'\n\nRun pipeline starting from feature selection:\nInput arguments:\n-fs: feature selection (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
 	elif str(sys.argv[i]) == "-f":
@@ -28,51 +30,55 @@ for i in range(1,len(sys.argv),2):
 		num_bunches = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-t":
 		num_timePoints = int(sys.argv[i+1])
+	elif str(sys.argv[i]) == "-fs":
+		features_path = sys.argv[i+1]
+		startAtFS = True
 	else:
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
 		sys.exit()
 
-if featureName == '':
-	print("Did not input feature name argument (-f)")
-	#sys.exit()
-if num_bunches == 0:
-	print("Did not input instances per patient argument (-i)")
-	#sys.exit()
-if num_timePoints == 0:
-	print("Did not input time points argument (-t)\nUse -h for help.")
-	sys.exit()
-
-if featureName == 'ASD':
-	extractFeatureFunc = extractASDFeatures
-elif featureName == 'Wavelet':
-	extractFeatureFunc = extractWaveletFeatures
-
-
-##################################################################################
-
-#feature extraction
-print("Creating Feature Set...")
-
-#unique identifier for different input parameters
-identifier = str(num_bunches*25) + '_' + str(num_timePoints)
-
-#define features and reduced_features paths
-features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
-reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
-
-#create feature set if does not exist in Feature Sets folder
-if os.path.exists(features_path) == False:
-	#3rd parameter is extractFeature function of choice
-	try:
-		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
-	except:
-		print("Did not input valid feature name")
+if not startAtFS:
+	if featureName == '':
+		print("Did not input feature name argument (-f)")
+		#sys.exit()
+	if num_bunches == 0:
+		print("Did not input instances per patient argument (-i)")
+		#sys.exit()
+	if num_timePoints == 0:
+		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
+
+	if featureName == 'ASD':
+		extractFeatureFunc = extractASDFeatures
+	elif featureName == 'Wavelet':
+		extractFeatureFunc = extractWaveletFeatures
+
+	#feature extraction
+	print("Creating Feature Set...")
+
+	#unique identifier for different input parameters
+	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
+
+	#define features and reduced_features paths
+	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
+	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
+
+	#create feature set if does not exist in Feature Sets folder
+	if not os.path.exists(features_path):
+		#3rd parameter is extractFeature function of choice
+		try:
+			createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
+		except:
+			print("Did not input valid feature name")
+			sys.exit()
 
 #####################################
 
-#obtain global X (input features) and y (output values)
-data = pd.read_csv(features_path, header = None)
+	#obtain global X (input features) and y (output values)
+	data = pd.read_csv(features_path, header = None)
+else: #starting pipeline with feature selection
+	data = pd.read_csv(features_path, header = None)
+
 #shuffle rows of dataframe
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
@@ -186,7 +192,6 @@ num_folds = 10
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
-#####################################
 
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')

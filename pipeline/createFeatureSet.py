@@ -79,7 +79,7 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 
-	if os.path.exists(features_path) == False:
+	if not os.path.exists(features_path):
 		open(features_path,"w")
 
 	#count number of lines already present in file - start at this number + 1 for iterations
