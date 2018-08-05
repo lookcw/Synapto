@@ -39,6 +39,7 @@ for i in range(1,len(sys.argv),2):
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
 		sys.exit()
 
+# If starting at the beginning - at feature set creation
 if not startAtFS:
 	if featureName == '':
 		print("Did not input feature name argument (-f)")
@@ -89,6 +90,8 @@ X = data.drop(data.columns[-1], axis=1)
 
 ##################################################################################
 
+# Get the feature ranking method which requires clf as input
+from feature_ranking import get_feature_importance
 #### feature selection
 print("Feature Selection...")
 print("Input Shape:", X.shape)
@@ -153,7 +156,6 @@ feature_red_name = ''
 
 #####################################
 
-# alternative feature selection from sklearn
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
 from sklearn.ensemble import RandomForestClassifier
@@ -162,21 +164,13 @@ clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
 clf = clf.fit(X, y)
 feature_red_name = format(clf)
 
-#feature ranking
-features = pd.DataFrame()
-features['feature'] = X.columns
-features['importance'] = clf.feature_importances_
-features.sort_values(by=['importance'], ascending=True, inplace=True)
-features.set_index('feature', inplace=True)
-features.plot(kind='barh', figsize=(25, 25))
-print(features)
+# Get features with ranking of feature's importance (for our visualization purposes)
+get_feature_importance(clf, X)
 
 #reduce features
 model = SelectFromModel(clf, prefit=True)
 X_reduced = model.transform(X)
 print(X_reduced.shape)
-
-
 
 ##################################################################################
 
