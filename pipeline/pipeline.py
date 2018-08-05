@@ -16,6 +16,7 @@ featureName = ''
 num_bunches = 0 #per patient
 num_timePoints = 0 #per instance
 startAtFS = False
+startAtbegin = True
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
@@ -33,6 +34,7 @@ for i in range(1,len(sys.argv),2):
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
 		startAtFS = True
+		startAtbegin = False
 	else:
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
 		sys.exit()
@@ -72,7 +74,6 @@ if not startAtFS:
 			print("Did not input valid feature name")
 			sys.exit()
 
-#####################################
 
 	#obtain global X (input features) and y (output values)
 	data = pd.read_csv(features_path, header = None)
