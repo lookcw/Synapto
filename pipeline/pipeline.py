@@ -48,6 +48,9 @@ if not startAtFS:
 		extractFeatureFunc = extractASDFeatures
 	elif featureName == 'Wavelet':
 		extractFeatureFunc = extractWaveletFeatures
+	else:
+		print("Invalid feature name. Choose from list in help documentation")
+		sys.exit()
 
 
 	#feature extraction
@@ -63,11 +66,13 @@ if not startAtFS:
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
-		try:
-			createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
-		except:
-			print("Did not input valid feature name")
-			sys.exit()
+		#try:
+		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
+		#except:
+		print("Did not input valid feature name")
+			#sys.exit()
+	else:
+		print("Feature set already exists")
 
 	#obtain global X (input features) and y (output values)
 	data = pd.read_csv(features_path, header = None)
@@ -102,11 +107,16 @@ print("Feature Selection...")
 
 # print(X_reduced.shape)
 
-#feature selection from ASD paper
+#feature selection from ASD paper (recursive feature elimination)
 # ASDX_reduced = reduce_features(X,y)
 # print(ASDX_reduced.shape)
 
-#alternative feature selection from sklearn
+#Univariate feature selection
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+X_new = SelectKBest(chi2, k=2).fit_transform(X, y)
+
+#Select from model feature selection
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectFromModel
 clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
