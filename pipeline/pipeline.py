@@ -16,7 +16,6 @@ featureName = ''
 num_bunches = 0 #per patient
 num_timePoints = 0 #per instance
 startAtFS = False
-startAtbegin = True
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
@@ -34,7 +33,6 @@ for i in range(1,len(sys.argv),2):
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
 		startAtFS = True
-		startAtbegin = False
 	else:
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
 		sys.exit()
@@ -105,12 +103,15 @@ feature_red_name = ''
 #####################################
 
 # Reduces features way too much
-# Select K Best
+# Select K Best - no feature importance 
 # from sklearn.feature_selection import SelectKBest
 # from sklearn.feature_selection import chi2
 # # feature extraction
-# test = SelectKBest(score_func=chi2, k=4)
-# fit = test.fit(X, y)
+# clf = SelectKBest(score_func=chi2, k=4)
+# clf = clf.fit(X, y)
+
+# This clf does NOT have a feature importance feature 
+
 # # summarize scores
 # np.set_printoptions(precision=3)
 # X_reduced = fit.transform(X)
@@ -122,13 +123,14 @@ feature_red_name = ''
 #####################################
 
 # Reduces features way too much
-# Feature Extraction with PCA
+# Feature Extraction with PCA -> does not have feature importance
 # import numpy
 # from pandas import read_csv
 # from sklearn.decomposition import PCA
 # # feature extraction
 # pca = PCA(n_components=3)
 # fit = pca.fit(X)
+# get_feature_importance(fit, X)
 # X_reduced = fit.transform(X)
 # print(X_reduced.shape)
 # # summarize components
@@ -138,19 +140,21 @@ feature_red_name = ''
 
 #####################################
 
-# Feature Importance with Extra Trees Classifier
+# Feature Importance with Extra Trees Classifier -> has feature importance 
 # from pandas import read_csv
 # from sklearn.ensemble import ExtraTreesClassifier
 # # feature extraction
-# model = ExtraTreesClassifier()
-# model.fit(X, y)
-# print(model.score(X, y, sample_weight=None))
+# clf = ExtraTreesClassifier()
+# clf = clf.fit(X, y)
+# get_feature_importance(clf, X)
+
+# print(clf.score(X, y, sample_weight=None))
 
 
 #####################################
 
-#### feature selection from ASD paper -> this plots 
-#### uses SVC
+### feature selection from ASD paper -> this plots 
+### uses SVC
 # X_reduced = reduce_features(X,y)
 # print(X_reduced.shape)
 
@@ -158,19 +162,19 @@ feature_red_name = ''
 
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectFromModel
-clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-clf = clf.fit(X, y)
-feature_red_name = format(clf)
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.feature_selection import SelectFromModel
+# clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+# clf = clf.fit(X, y)
+# feature_red_name = format(clf)
 
 # Get features with ranking of feature's importance (for our visualization purposes)
-get_feature_importance(clf, X)
+# get_feature_importance(clf, X)
 
 #reduce features
-model = SelectFromModel(clf, prefit=True)
-X_reduced = model.transform(X)
-print(X_reduced.shape)
+# model = SelectFromModel(clf, prefit=True)
+# X_reduced = model.transform(X)
+# print(X_reduced.shape)
 
 ##################################################################################
 

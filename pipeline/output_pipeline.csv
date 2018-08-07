@@ -192,3 +192,11 @@ Date,Classifier,Number of Features Before Reduction,Number of Features After Red
             warm_start=False)","(25, 945)","(25, 127)",0.408333333333,10,10
 "
 "
+08/07/2018,<class 'sklearn.linear_model.logistic.LogisticRegression'>,,"(25, 945)","(25, 37)",1.0,10,10
+08/07/2018,<class 'sklearn.linear_model.logistic.LogisticRegressionCV'>,,"(25, 945)","(25, 37)",0.975,10,10
+08/07/2018,<class 'sklearn.ensemble.forest.RandomForestClassifier'>,,"(25, 945)","(25, 37)",0.491666666667,10,10
+08/07/2018,<class 'sklearn.ensemble.gradient_boosting.GradientBoostingClassifier'>,,"(25, 945)","(25, 37)",0.591666666667,10,10
+08/07/2018,<class 'sklearn.svm.classes.SVC'>,,"(25, 945)","(25, 37)",0.516666666667,10,10
+08/07/2018,<class 'sklearn.neighbors.classification.KNeighborsClassifier'>,,"(25, 945)","(25, 37)",0.825,10,10
+"
+"

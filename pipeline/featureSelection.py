@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.svm import SVC
 from sklearn.feature_selection import RFECV
 from sklearn.datasets import make_classification
+from feature_ranking import get_feature_importance
 import matplotlib.pyplot as plt
 import pandas as pd 
 import csv
@@ -18,6 +19,8 @@ def reduce_features(X, y):
 	rfecv = RFECV(estimator=svc, step=1, cv=3, scoring='accuracy')
 
 	rfecv.fit(X, y)
+
+	# get_feature_importance(clf, X) -> RFECV doesn't have feature importance 
 
 	# Plot number of features VS. cross-validation scores
 	plt.figure()
