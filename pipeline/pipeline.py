@@ -1,4 +1,4 @@
-from featureSelection import reduce_features
+from recursiveFeatureElim import recursiveFeatureElim
 from svm import svm_func
 import os
 import sys
@@ -53,6 +53,9 @@ if not startAtFS:
 		extractFeatureFunc = extractASDFeatures
 	elif featureName == 'Wavelet':
 		extractFeatureFunc = extractWaveletFeatures
+	else:
+		print("Invalid feature name. Choose from list in help documentation")
+		sys.exit()
 
 	#feature extraction
 	print("Creating Feature Set...")
@@ -67,11 +70,13 @@ if not startAtFS:
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
-		try:
-			createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
-		except:
-			print("Did not input valid feature name")
-			sys.exit()
+		#try:
+		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
+		#except:
+		print("Did not input valid feature name")
+			#sys.exit()
+	else:
+		print("Feature set already exists")
 
 
 	#obtain global X (input features) and y (output values)
@@ -88,12 +93,13 @@ X = data.drop(data.columns[-1], axis=1)
 
 ##################################################################################
 
-# Get the feature ranking method which requires clf as input
-from feature_ranking import get_feature_importance
 #### feature selection
 print("Feature Selection...")
 print("Input Shape:", X.shape)
 #####################################
+
+# Get the feature ranking method which requires clf as input
+from feature_ranking import get_feature_importance
 
 feature_filename = 'features_filename.csv'
 feature_red_name = ''
@@ -153,23 +159,25 @@ feature_red_name = ''
 
 #####################################
 
-### feature selection from ASD paper -> this plots 
-### uses SVC
-# X_reduced = reduce_features(X,y)
+
+#### recursive feature elimination from ASD paper -> this plots 
+#### uses SVC
+# X_reduced = recursiveFeatureElim(X,y)
 # print(X_reduced.shape)
 
 #####################################
 
+# alternative feature selection from sklearn
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
 # from sklearn.ensemble import RandomForestClassifier
 # from sklearn.feature_selection import SelectFromModel
 # clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-# clf = clf.fit(X, y)
+
 # feature_red_name = format(clf)
 
 # Get features with ranking of feature's importance (for our visualization purposes)
-# get_feature_importance(clf, X)
+# get_feature_importance(clf, X, y)
 
 #reduce features
 # model = SelectFromModel(clf, prefit=True)

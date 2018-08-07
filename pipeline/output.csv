@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+07/25/2018,0.354,10,10
+07/25/2018,0.34199999999999997,10,10
+=======
 Date,Filename,yeah idk,Num Seeds,acc,TP,TN,FP,FN,F-measure,AUC,Classifier,Classifer Parameters
 5/28/18,ran_7_1_7_11_15_16_20_21,29,10,79.2,0.79,0.79,0.21,0.21,0.79,0.78,weka.classifiers.trees.RandomForest,-P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
 5/28/18,ran_7_1_3_5_6_7_15_20,29,10,78.4,0.78,0.79,0.21,0.22,0.78,0.82,weka.classifiers.trees.RandomForest,-P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
@@ -262,3 +266,4 @@ Date,Filename,yeah idk,Num Seeds,acc,TP,TN,FP,FN,F-measure,AUC,Classifier,Classi
 07/24/2018,0.396,10,10
 07/28/2018,0.372,10,10
 07/28/2018,0.384,10,10
+>>>>>>> 8bdffbe6556f203ad1938d0f0491fc4d8e98bcf8
