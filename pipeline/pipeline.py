@@ -1,4 +1,4 @@
-from featureSelection import reduce_features
+from recursiveFeatureElim import recursiveFeatureElim
 from svm import svm_func
 import os
 import sys
@@ -95,12 +95,13 @@ X = data.drop(data.columns[-1], axis=1)
 
 ##################################################################################
 
-# Get the feature ranking method which requires clf as input
-from feature_ranking import get_feature_importance
 #### feature selection
 print("Feature Selection...")
 print("Input Shape:", X.shape)
 #####################################
+
+# Get the feature ranking method which requires clf as input
+from feature_ranking import get_feature_importance
 
 feature_filename = 'features_filename.csv'
 feature_red_name = ''
@@ -154,13 +155,14 @@ feature_red_name = ''
 
 #####################################
 
-#### feature selection from ASD paper -> this plots 
+#### recursive feature elimination from ASD paper -> this plots 
 #### uses SVC
-# X_reduced = reduce_features(X,y)
+# X_reduced = recursiveFeatureElim(X,y)
 # print(X_reduced.shape)
 
 #####################################
 
+# alternative feature selection from sklearn
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
 from sklearn.ensemble import RandomForestClassifier
@@ -169,8 +171,15 @@ clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
 clf = clf.fit(X, y)
 feature_red_name = format(clf)
 
-# Get features with ranking of feature's importance (for our visualization purposes)
-get_feature_importance(clf, X)
+#feature ranking
+features = pd.DataFrame()
+features['feature'] = X.columns
+features['importance'] = clf.feature_importances_
+features.sort_values(by=['importance'], ascending=True, inplace=True)
+features.set_index('feature', inplace=True)
+features.plot(kind='barh', figsize=(25, 25))
+import matplotlib.pyplot as plt
+plt.show()
 
 #reduce features
 model = SelectFromModel(clf, prefit=True)
