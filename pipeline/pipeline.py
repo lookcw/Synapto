@@ -152,7 +152,7 @@ feature_red_name = ''
 # # feature extraction
 # clf = ExtraTreesClassifier()
 # clf = clf.fit(X, y)
-# get_feature_importance(clf, X)
+# get_feature_importance(clf, X, y)
 
 # print(clf.score(X, y, sample_weight=None))
 
@@ -170,19 +170,19 @@ feature_red_name = ''
 # alternative feature selection from sklearn
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.feature_selection import SelectFromModel
-# clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import SelectFromModel
+clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
 
 # feature_red_name = format(clf)
 
 # Get features with ranking of feature's importance (for our visualization purposes)
-# get_feature_importance(clf, X, y)
+get_feature_importance(clf, X, y)
 
 #reduce features
-# model = SelectFromModel(clf, prefit=True)
-# X_reduced = model.transform(X)
-# print(X_reduced.shape)
+model = SelectFromModel(clf, prefit=True)
+X_reduced = model.transform(X)
+print(X_reduced.shape)
 
 ##################################################################################
 
