@@ -1,17 +1,18 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def get_feature_importance(clf, X, y):
 	clf = clf.fit(X,y)
+	#print(clf)
 
-	#feature ranking
-	features = pd.DataFrame()
-	features['feature'] = X.columns
-	features['importance'] = clf.feature_importances_
-	features.sort_values(by=['importance'], ascending=True, inplace=True)
-	features.set_index('feature', inplace=True)
-	features.plot(kind='barh', figsize=(25, 25))
-	import matplotlib.pyplot as plt
+
+	#plot feature importances (top 50)
+	feat_importances = pd.Series(clf.feature_importances_, index=X.columns)
+	feat_importances = feat_importances.nlargest(50)
+	plt.figure(figsize=(16,8))
+	feat_importances.plot(kind='barh')
+	plt.gca().invert_yaxis()
 	plt.show()
 
 	#reduce features

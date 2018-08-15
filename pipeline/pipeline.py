@@ -66,7 +66,7 @@ if not startAtFS:
 	#define features and reduced_features paths
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
-
+	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
@@ -146,20 +146,6 @@ feature_red_name = ''
 
 #####################################
 
-# Feature Importance with Extra Trees Classifier -> has feature importance 
-# from pandas import read_csv
-# from sklearn.ensemble import ExtraTreesClassifier
-# # feature extraction
-# clf = ExtraTreesClassifier()
-# clf = clf.fit(X, y)
-# get_feature_importance(clf, X, y)
-
-# print(clf.score(X, y, sample_weight=None))
-
-
-#####################################
-
-
 #### recursive feature elimination from ASD paper -> this plots 
 #### uses SVC
 # X_reduced = recursiveFeatureElim(X,y)
@@ -167,11 +153,19 @@ feature_red_name = ''
 
 #####################################
 
+# Feature Importance with Extra Trees Classifier -> has feature importance 
+from pandas import read_csv
+from sklearn.ensemble import ExtraTreesClassifier
+# feature extraction
+clf = ExtraTreesClassifier()
+get_feature_importance(clf, X, y)
+
+# print(clf.score(X, y, sample_weight=None))
+
 # alternative feature selection from sklearn
 # This changes the number of features reduced each time, which makes the 
 # final accuracy vary. 
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectFromModel
 clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
 
 # feature_red_name = format(clf)
@@ -180,6 +174,7 @@ clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
 get_feature_importance(clf, X, y)
 
 #reduce features
+from sklearn.feature_selection import SelectFromModel
 model = SelectFromModel(clf, prefit=True)
 X_reduced = model.transform(X)
 print(X_reduced.shape)
