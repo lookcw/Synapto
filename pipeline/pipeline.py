@@ -66,7 +66,7 @@ if not startAtFS:
 	#define features and reduced_features paths
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
-	
+
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
@@ -80,9 +80,9 @@ if not startAtFS:
 
 
 	#obtain global X (input features) and y (output values)
-	data = pd.read_csv(features_path, header = None)
+	data = pd.read_csv(features_path)
 else: #starting pipeline with feature selection
-	data = pd.read_csv(features_path, header = None)
+	data = pd.read_csv(features_path)
 
 #shuffle rows of dataframe
 data.sample(frac=1).reset_index(drop=True)
