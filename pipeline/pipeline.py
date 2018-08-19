@@ -96,13 +96,10 @@ X = data.drop(data.columns[-1], axis=1)
 #### feature selection
 print("Feature Selection...")
 print("Input Shape:", X.shape)
-#####################################
 
-# Get the feature ranking method which requires clf as input
+
+# import feature importances plot function
 from feature_ranking import get_feature_importance
-
-feature_filename = 'features_filename.csv'
-feature_red_name = ''
 
 #### Substitute other feature selection methods here 
 
@@ -153,25 +150,24 @@ feature_red_name = ''
 
 #####################################
 
+# alternative feature selection from sklearn
 # Feature Importance with Extra Trees Classifier -> has feature importance 
 from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
-# feature extraction
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
+
 clf = ExtraTreesClassifier()
+# Get features with ranking of feature's importance (for our visualization purposes)
+get_feature_importance(clf, X, y)
+
+clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+get_feature_importance(clf, X, y)
+
+clf = GradientBoostingClassifier()
 get_feature_importance(clf, X, y)
 
 # print(clf.score(X, y, sample_weight=None))
-
-# alternative feature selection from sklearn
-# This changes the number of features reduced each time, which makes the 
-# final accuracy vary. 
-from sklearn.ensemble import RandomForestClassifier
-clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-
-# feature_red_name = format(clf)
-
-# Get features with ranking of feature's importance (for our visualization purposes)
-get_feature_importance(clf, X, y)
 
 #reduce features
 from sklearn.feature_selection import SelectFromModel
@@ -188,7 +184,6 @@ from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier  
-from sklearn.ensemble import RandomForestClassifier
 
 num_folds = 10
 num_seeds = 10
