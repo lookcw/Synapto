@@ -66,7 +66,7 @@ if not startAtFS:
 	#define features and reduced_features paths
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
-
+	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
