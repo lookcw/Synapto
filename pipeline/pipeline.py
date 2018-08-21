@@ -4,6 +4,7 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import csv
 import time
 from ASD_features import extractASDFeatures
@@ -159,15 +160,16 @@ from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 
 clf = ExtraTreesClassifier()
 # Get features with ranking of feature's importance (for our visualization purposes)
-get_feature_importance(clf, X, y)
+feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
 
 clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-get_feature_importance(clf, X, y)
+feat_importances_rf = get_feature_importance(clf, X, y, 50)
 
 clf = GradientBoostingClassifier()
-get_feature_importance(clf, X, y)
+feat_importances_gb = get_feature_importance(clf, X, y, 50)
 
-# print(clf.score(X, y, sample_weight=None))
+common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
+print(common_features)
 
 #reduce features
 from sklearn.feature_selection import SelectFromModel
@@ -216,14 +218,14 @@ for model in models:
 			pass
 	except IOError as e:
 		with open(o_filename, 'w') as csvfile:
-			header = ['Date', 'Classifier', 'Feature Reduction Method Used', 'Number of Features Before Reduction', 
+			header = ['Date', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
 			'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
 			writer = csv.DictWriter(csvfile, fieldnames=header)
 			writer.writeheader()
 	# Record the number of features that were reduced
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), feature_red_name, 
+		writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), clf, 
 			X.shape, X_reduced.shape, format(reduced_score), num_folds, num_seeds])
 
 # Insert new line into CSV file 
