@@ -91,7 +91,7 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 
 	#initialize header list
 	headers = []
-
+	
 	#create header list
 	for i in range(row_count,len(combined)):
 		#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
@@ -113,27 +113,3 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 
 	headers.append('class')
 	writer.writerow(headers)
-
-	for i in range(row_count,len(combined)):
-		print(str(i+1) + " out of " + str(25*num_bunches))
-		#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
-		transposed = np.transpose(combined[i]) 
-		features = []
-		#add another dimension in each row to make it 5 bands x n
-		for j in range(len(transposed)):
-			bands = splitbands(transposed[j])
-			#squish each band of raw points into n feature values
-			for k in range(len(bands)): #bands[j] = band of raw data
-				bandfeatures = extractFeatures(bands[k])
-				features.extend(bandfeatures)
-
-				#adding headers
-				if (i == 0):
-					featureHeaders = []
-					for h in range(len(bandfeatures)):
-						featureHeaders.append(("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1)))
-					headers.extend(featureHeaders)
-
-		features.append(targets[i])
-		#Add feature values of each band from each electrode (per instance) to new array
-		writer.writerow(features)
