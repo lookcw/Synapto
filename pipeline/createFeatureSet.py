@@ -3,7 +3,7 @@ import numpy as np
 import os
 import sys
 import pandas as pd
-
+from BandPass1 import splitbands
 
 num_bunches = 1
 num_timePoints = 60
@@ -73,7 +73,7 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 	#reshape into 25000 x timepoints x 21
 	combined = np.reshape(combined,(len(combined), num_timePoints, 21))
 
-	from BandPass1 import splitbands
+	
 
 	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
 
