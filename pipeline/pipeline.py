@@ -4,6 +4,7 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 import csv
 import time
 from ASD_features import extractASDFeatures
@@ -66,7 +67,7 @@ if not startAtFS:
 	#define features and reduced_features paths
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
-
+	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
@@ -80,9 +81,9 @@ if not startAtFS:
 
 
 	#obtain global X (input features) and y (output values)
-	data = pd.read_csv(features_path, header = None)
+	data = pd.read_csv(features_path)
 else: #starting pipeline with feature selection
-	data = pd.read_csv(features_path, header = None)
+	data = pd.read_csv(features_path)
 
 #shuffle rows of dataframe
 data.sample(frac=1).reset_index(drop=True)
@@ -96,13 +97,10 @@ X = data.drop(data.columns[-1], axis=1)
 #### feature selection
 print("Feature Selection...")
 print("Input Shape:", X.shape)
-#####################################
 
-# Get the feature ranking method which requires clf as input
+
+# import feature importances plot function
 from feature_ranking import get_feature_importance
-
-feature_filename = 'features_filename.csv'
-feature_red_name = ''
 
 #### Substitute other feature selection methods here 
 
@@ -146,20 +144,6 @@ feature_red_name = ''
 
 #####################################
 
-# Feature Importance with Extra Trees Classifier -> has feature importance 
-# from pandas import read_csv
-# from sklearn.ensemble import ExtraTreesClassifier
-# # feature extraction
-# clf = ExtraTreesClassifier()
-# clf = clf.fit(X, y)
-# get_feature_importance(clf, X)
-
-# print(clf.score(X, y, sample_weight=None))
-
-
-#####################################
-
-
 #### recursive feature elimination from ASD paper -> this plots 
 #### uses SVC
 # X_reduced = recursiveFeatureElim(X,y)
@@ -168,18 +152,27 @@ feature_red_name = ''
 #####################################
 
 # alternative feature selection from sklearn
-# This changes the number of features reduced each time, which makes the 
-# final accuracy vary. 
+# Feature Importance with Extra Trees Classifier -> has feature importance 
+from pandas import read_csv
+from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_selection import SelectFromModel
-clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 
-feature_red_name = format(clf)
-
+clf = ExtraTreesClassifier()
 # Get features with ranking of feature's importance (for our visualization purposes)
-get_feature_importance(clf, X, y)
+feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
 
-# reduce features
+clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+feat_importances_rf = get_feature_importance(clf, X, y, 50)
+
+clf = GradientBoostingClassifier()
+feat_importances_gb = get_feature_importance(clf, X, y, 50)
+
+common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
+print(common_features)
+
+#reduce features
+from sklearn.feature_selection import SelectFromModel
 model = SelectFromModel(clf, prefit=True)
 X_reduced = model.transform(X)
 print(X_reduced.shape)
@@ -193,7 +186,6 @@ from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier  
-from sklearn.ensemble import RandomForestClassifier
 
 num_folds = 10
 num_seeds = 10
@@ -226,14 +218,14 @@ for model in models:
 			pass
 	except IOError as e:
 		with open(o_filename, 'w') as csvfile:
-			header = ['Date', 'Classifier', 'Feature Reduction Method Used', 'Number of Features Before Reduction', 
+			header = ['Date', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
 			'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
 			writer = csv.DictWriter(csvfile, fieldnames=header)
 			writer.writeheader()
 	# Record the number of features that were reduced
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), feature_red_name, 
+		writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), clf, 
 			X.shape, X_reduced.shape, format(reduced_score), num_folds, num_seeds])
 
 # Insert new line into CSV file 
