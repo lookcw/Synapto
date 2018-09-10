@@ -99,9 +99,6 @@ print("Feature Selection...")
 print("Input Shape:", X.shape)
 
 
-# import feature importances plot function
-from feature_ranking import get_feature_importance
-
 #### Substitute other feature selection methods here 
 
 #####################################
@@ -151,8 +148,9 @@ from feature_ranking import get_feature_importance
 
 #####################################
 
-# alternative feature selection from sklearn
-# Feature Importance with Extra Trees Classifier -> has feature importance 
+# alternative feature selection from sklearn: all have feature importance
+# import feature importances plot function
+from feature_ranking import get_feature_importance
 from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
