@@ -15,4 +15,4 @@ def extractASDFeatures(time_series_electrode):
 		for j in range(len(mat[0])):
 			if j > i+1: #gets upper triangular matrix 
 				vec.append(mat[i][j])
-		print  map(float,vec)
+	return map(float,vec)
