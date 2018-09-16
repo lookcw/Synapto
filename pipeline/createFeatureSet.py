@@ -12,17 +12,13 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 		if filename.endswith('.csv'):
 			with open(os.path.join(basepath, filename)) as f:
 				reader = csv.reader(f)
-				array = list(reader)
-				array = np.array(array)
-				print(array.shape)
-				#print len(array) #160,000
-				#print len(array[0]) #21
-				data = array
+				data = np.array(list(reader))
+				print(data.shape)
 
 				#create bunches per patient
-				total = np.empty((num_bunches,len(array[0])*num_timePoints+1)) #1000x630
+				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x630
 				for bunch in range(num_bunches):
-					index = int(bunch*(len(array)/num_bunches))
+					index = int(bunch*(len(data)/num_bunches))
 					row = data[index]
 					for i in range(1,num_timePoints):
 						row = np.append(row, data[index+i])
@@ -38,17 +34,13 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 		if filename.endswith('.csv'):
 			with open(os.path.join(basepath, filename)) as f:
 				reader = csv.reader(f)
-				array = list(reader)
-				array = np.array(array)
-				print(array.shape)
-				#print len(array) #160,000
-				#print len(array[0]) #21
-				data = array
+				data = np.array(list(reader))
+				print(data.shape)
 
 				#create bunches per patient
-				total = np.empty((num_bunches,len(array[0])*num_timePoints+1)) #1000x210
+				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x210
 				for bunch in range(num_bunches):
-					index = int(bunch*(len(array)/num_bunches))
+					index = int(bunch*(len(data)/num_bunches))
 					#print index
 					row = data[index]
 					for i in range(1,num_timePoints):
