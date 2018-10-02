@@ -4,10 +4,10 @@ from subprocess import Popen, PIPE
 import numpy as np
 
 
-def extractFSLFeatures(time_series_electrode):
+def extractFSLFeatures(fileName):
 	p = Popen(["optirun","./FSL","-l", "1", "-m", "10", "-p", "0.049", "-s", "1", "-x", "100", "-w", "410"]
 		, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-	output, err = p.communicate(input=time_series_electrodes)
+	output, err = p.communicate(input=fileName)
 	mat = [s.strip().split(' ') for s in output.strip().split('\n')]
 	print mat
 	vec = []
