@@ -16,7 +16,7 @@ def createFSLFeatureSet(num_bunches, num_timePoints):
 
 				##
 				print os.path.join(basepath, filename)
- 				extractFSLFeatures(os.path.join(basepath, filename))
+ 				extractFSLFeatures(data)
 
 				#create bunches per patient
 				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x630
