@@ -7,13 +7,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import time
-from createFeatureSet import createFeatureSet
-from compute_score import compute_score
-
-#feature extraction functions
 from ASD_features import extractASDFeatures
 from WTcoef import extractWaveletFeatures
-from FSL_features import extractFSLFeatures
+from createFeatureSet import createFeatureSet
+from compute_score import compute_score
+from nn_keras import nn_keras
 
 
 featureName = ''
@@ -57,8 +55,6 @@ if not startAtFS:
 		extractFeatureFunc = extractASDFeatures
 	elif featureName == 'Wavelet':
 		extractFeatureFunc = extractWaveletFeatures
-	elif featureName == 'FSL':
-		extractFeatureFunc = extractFSLFeatures
 	else:
 		print("Invalid feature name. Choose from list in help documentation")
 		sys.exit()
@@ -76,10 +72,11 @@ if not startAtFS:
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
-		if featureName == 'FSL':
-			createFSLFeatureSet(num_bunches, num_timePoints, extractFeatureFunc)
-		else:
-			createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
+		#try:
+		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
+		#except:
+		print("Did not input valid feature name")
+			#sys.exit()
 	else:
 		print("Feature set already exists")
 
@@ -172,23 +169,8 @@ feat_importances_rf = get_feature_importance(clf, X, y, 50)
 clf = GradientBoostingClassifier()
 feat_importances_gb = get_feature_importance(clf, X, y, 50)
 
-#combine common features among all 3 combinations
-common_features_gb_rf = pd.Series(list(set(feat_importances_gb.index).intersection(set(feat_importances_rf.index))))
-common_features_gb_et = pd.Series(list(set(feat_importances_gb.index).intersection(set(feat_importances_et.index))))
-common_features_et_rf = pd.Series(list(set(feat_importances_et.index).intersection(set(feat_importances_rf.index))))
-common_features = pd.concat([common_features_gb_rf,common_features_gb_et,common_features_et_rf])
-# print(common_features_et_rf)
-# print(common_features_gb_et)
-# print(common_features_gb_rf)
-print("Common features",common_features)
-X_reduced_common_features = pd.DataFrame(X, columns = common_features)
-
-print(X_reduced_common_features.shape)
-
-#combine top 50 features from each clf
-union_features = pd.Series(list(set(feat_importances_gb.index).union(set(feat_importances_rf.index).union(set(feat_importances_et.index)))))
-X_reduced_union_features = pd.DataFrame(X, columns = union_features)
-print(X_reduced_union_features.shape)
+common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
+print(common_features)
 
 #reduce features
 from sklearn.feature_selection import SelectFromModel
@@ -214,6 +196,10 @@ o_filename = 'output_pipeline.csv'
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
+#nn_keras
+nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
+
 #various sklearn models
 logreg = LogisticRegression() 
 logreg_cv = LogisticRegressionCV()
@@ -229,12 +215,8 @@ for model in models:
 	print('Cross-validation of : {0}'.format(model.__class__))
 	all_score = compute_score(model, X, y, num_folds, scoring='accuracy')
 	reduced_score = compute_score(model, X_reduced, y, num_folds, scoring='accuracy')
-	reduced_common_score = compute_score(model, X_reduced_common_features, y, num_folds, scoring='accuracy')
-	reduced_union_score = compute_score(model, X_reduced_union_features, y, num_folds, scoring='accuracy')
 	print('All features CV score = {0}'.format(all_score))
 	print('Reduced features CV score = {0}'.format(reduced_score))
-	print('Reduced common features CV score = {0}'.format(reduced_common_score))
-	print('Reduced union features CV score = {0}'.format(reduced_union_score))
 
 	try:
 		with open(o_filename, 'r+') as csvfile:
