@@ -13,7 +13,7 @@ def get_feature_importance(clf, X, y, num_features):
 	plt.figure(figsize=(16,8))
 	feat_importances.plot(kind='barh')
 	plt.gca().invert_yaxis()
-	plt.show()
+	#plt.show()
 
 	return feat_importances
 

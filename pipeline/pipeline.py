@@ -11,6 +11,7 @@ from ASD_features import extractASDFeatures
 from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from compute_score import compute_score
+from nn_keras import nn_keras
 
 
 featureName = ''
@@ -194,6 +195,10 @@ o_filename = 'output_pipeline.csv'
 
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
+
+#nn_keras
+nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
 
 #various sklearn models
 logreg = LogisticRegression() 
