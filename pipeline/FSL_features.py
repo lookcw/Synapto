@@ -5,7 +5,7 @@ import numpy as np
 
 
 def extractFSLFeatures(time_series_electrode):
-	p = Popen(["optirun","./FSL","-l", "1", "-m", "10", "-p", "0.049", "-s", "1", "-x", "100", "-w", "410"]
+	p = Popen(["./FSL","-l", "1", "-m", "10", "-p", "0.049", "-s", "1", "-x", "100", "-w", "410"]
 		, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	inMat = "\n".join([','.join(x) for x in time_series_electrode])
 	output, err = p.communicate(input= inMat)

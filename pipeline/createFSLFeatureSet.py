@@ -29,8 +29,8 @@ def createFSLFeatureSet(num_bunches, num_timePoints):
 					matrix = np.array(matrix)
 					print(matrix.shape)
 					featuresRow = extractFSLFeatures(matrix)
-					print(features.shape)
+					# print(featuresRow.shape)
 					featuresRow = np.append(featuresRow,[0])
 
 
-createFSLFeatureSet(1,30)
+createFSLFeatureSet(1,1000)
