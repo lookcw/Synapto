@@ -10,6 +10,7 @@ import time
 from ASD_features import extractASDFeatures
 from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
+from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_score
 from nn_keras import nn_keras
 
@@ -21,7 +22,7 @@ startAtFS = False
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
-		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-f: feature name (choices: ASD, Wavelet)' + 
+		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-f: feature name (choices: ASD, Wavelet, FSL)' + 
 		'\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
 		'\n\nRun pipeline starting from feature selection:\nInput arguments:\n-fs: feature selection (.../PathToFeatureSetFile)')
 		print(helpString)
@@ -55,6 +56,8 @@ if not startAtFS:
 		extractFeatureFunc = extractASDFeatures
 	elif featureName == 'Wavelet':
 		extractFeatureFunc = extractWaveletFeatures
+	elif featureName == 'FSL':
+		extractFeatureFunc = createFSLFeatureSet
 	else:
 		print("Invalid feature name. Choose from list in help documentation")
 		sys.exit()
@@ -71,12 +74,15 @@ if not startAtFS:
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
-		#3rd parameter is extractFeature function of choice
-		#try:
-		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
-		#except:
-		print("Did not input valid feature name")
-			#sys.exit()
+		if (featureName == 'FSL'):
+			extractFeatureFunc(num_bunches, num_timePoints)
+		else:
+			#3rd parameter is extractFeature function of choice
+			#try:
+			createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
+			#except:
+			print("Did not input valid feature name")
+				#sys.exit()
 	else:
 		print("Feature set already exists")
 
