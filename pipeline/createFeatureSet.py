@@ -12,19 +12,17 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
 				reader = csv.reader(f)
-				data = np.array(list(reader))
-				print(data.shape)
+				array = list(reader)
+				array = np.array(array)
+				print(array.shape)
+				#print len(array) #160,000
+				#print len(array[0]) #21
+				data = array
 
 				#create bunches per patient
-<<<<<<< HEAD
-				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x630
-				for bunch in range(num_bunches):
-					index = int(bunch*(len(data)/num_bunches))
-=======
 				total = np.empty((num_epochs,len(array[0])*num_timePoints+1)) #1000x630
 				for bunch in range(num_epochs):
 					index = int(bunch*(len(array)/num_epochs))
->>>>>>> fsl-pipeline
 					row = data[index]
 					for i in range(1,num_timePoints):
 						row = np.append(row, data[index+i])
@@ -40,19 +38,17 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 		if filename.endswith('.csv'):
 			with open(os.path.join(path2, filename)) as f:
 				reader = csv.reader(f)
-				data = np.array(list(reader))
-				print(data.shape)
+				array = list(reader)
+				array = np.array(array)
+				print(array.shape)
+				#print len(array) #160,000
+				#print len(array[0]) #21
+				data = array
 
 				#create bunches per patient
-<<<<<<< HEAD
-				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x210
-				for bunch in range(num_bunches):
-					index = int(bunch*(len(data)/num_bunches))
-=======
 				total = np.empty((num_epochs,len(array[0])*num_timePoints+1)) #1000x210
 				for bunch in range(num_epochs):
 					index = int(bunch*(len(array)/num_epochs))
->>>>>>> fsl-pipeline
 					#print index
 					row = data[index]
 					for i in range(1,num_timePoints):
