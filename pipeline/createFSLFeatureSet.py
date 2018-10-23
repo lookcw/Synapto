@@ -4,10 +4,10 @@ import os
 import sys
 from FSL_features import extractFSLFeatures
 
-#def createFSLFeatureSet(num_bunches, num_timePoints, extractFeatureFunc):
-def createFSLFeatureSet(num_bunches, num_timePoints):
+#def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
+def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2):
 
-	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
+	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	features_path = sys.path[0] + '/FeatureSets/'+'FSLfeatures'+identifier+'.csv'
 
@@ -17,19 +17,18 @@ def createFSLFeatureSet(num_bunches, num_timePoints):
 		out_file = open(features_path,"a") #used to be "a" for append
 		writer = csv.writer(out_file)
 
-		basepath = 'BrazilRawData/HCF50'
-		for filename in os.listdir(basepath):
+		for filename in os.listdir(path1):
 			if filename.endswith('.csv'):
-				with open(os.path.join(basepath, filename)) as f:
+				with open(os.path.join(path1, filename)) as f:
 					reader = csv.reader(f)
 					data = np.array(list(reader))
 					print(data.shape)
 
-					print os.path.join(basepath, filename)
+					print os.path.join(path1, filename)
 
 					#create bunches per patient
-					for bunch in range(num_bunches):
-						index = int(bunch*(len(data)/num_bunches))
+					for bunch in range(num_epochs):
+						index = int(bunch*(len(data)/num_epochs))
 						matrix = []
 						matrix.append(data[index])
 						for i in range(1,num_timePoints):
@@ -41,19 +40,18 @@ def createFSLFeatureSet(num_bunches, num_timePoints):
 						featuresRow = np.append(featuresRow,[0])
 						writer.writerow(featuresRow)
 
-		basepath = 'BrazilRawData/ADF50'
-		for filename in os.listdir(basepath):
+		for filename in os.listdir(path2):
 			if filename.endswith('.csv'):
-				with open(os.path.join(basepath, filename)) as f:
+				with open(os.path.join(path2, filename)) as f:
 					reader = csv.reader(f)
 					data = np.array(list(reader))
 					print(data.shape)
 
-					print os.path.join(basepath, filename)
+					print os.path.join(path2, filename)
 
 					#create bunches per patient
-					for bunch in range(num_bunches):
-						index = int(bunch*(len(data)/num_bunches))
+					for bunch in range(num_epochs):
+						index = int(bunch*(len(data)/num_epochs))
 						matrix = []
 						matrix.append(data[index])
 						for i in range(1,num_timePoints):
