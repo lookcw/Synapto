@@ -4,21 +4,27 @@ import os
 import sys
 import pandas as pd
 
-def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
+def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2):
 
-	basepath = 'BrazilRawData/HCF50'
-	combined_HC = np.empty((0,21*num_timePoints+1))
-	for filename in os.listdir(basepath):
+	#extract from path to first patient group folder
+	combined_group1 = np.empty((0,num_electrodes*num_timePoints+1))
+	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
-			with open(os.path.join(basepath, filename)) as f:
+			with open(os.path.join(path1, filename)) as f:
 				reader = csv.reader(f)
 				data = np.array(list(reader))
 				print(data.shape)
 
 				#create bunches per patient
+<<<<<<< HEAD
 				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x630
 				for bunch in range(num_bunches):
 					index = int(bunch*(len(data)/num_bunches))
+=======
+				total = np.empty((num_epochs,len(array[0])*num_timePoints+1)) #1000x630
+				for bunch in range(num_epochs):
+					index = int(bunch*(len(array)/num_epochs))
+>>>>>>> fsl-pipeline
 					row = data[index]
 					for i in range(1,num_timePoints):
 						row = np.append(row, data[index+i])
@@ -26,21 +32,27 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 					row = np.append(row,[0])
 					total[bunch] = row
 				#print total
-				combined_HC = np.concatenate((combined_HC,total)) #12000x630
+				combined_group1 = np.concatenate((combined_group1,total)) #12000x630
 
-	basepath = 'BrazilRawData/ADF50'
-	combined_AD = np.empty((0,21*num_timePoints+1))
-	for filename in os.listdir(basepath):
+	#extract from path to second patient group folder
+	combined_group2 = np.empty((0,num_electrodes*num_timePoints+1))
+	for filename in os.listdir(path2):
 		if filename.endswith('.csv'):
-			with open(os.path.join(basepath, filename)) as f:
+			with open(os.path.join(path2, filename)) as f:
 				reader = csv.reader(f)
 				data = np.array(list(reader))
 				print(data.shape)
 
 				#create bunches per patient
+<<<<<<< HEAD
 				total = np.empty((num_bunches,len(data[0])*num_timePoints+1)) #1000x210
 				for bunch in range(num_bunches):
 					index = int(bunch*(len(data)/num_bunches))
+=======
+				total = np.empty((num_epochs,len(array[0])*num_timePoints+1)) #1000x210
+				for bunch in range(num_epochs):
+					index = int(bunch*(len(array)/num_epochs))
+>>>>>>> fsl-pipeline
 					#print index
 					row = data[index]
 					for i in range(1,num_timePoints):
@@ -49,9 +61,9 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 					row = np.append(row,[1])
 					total[bunch] = row
 				#print total
-				combined_AD = np.concatenate((combined_AD,total))
+				combined_group2 = np.concatenate((combined_group2,total))
 
-	combined = np.concatenate((combined_HC, combined_AD))
+	combined = np.concatenate((combined_group1, combined_group2))
 	#print(combined.shape) #25000x631
 
 	#store and delete last column
@@ -59,11 +71,11 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 
 	combined = np.delete(combined,-1,axis=1)
 	#reshape into 25000 x timepoints x 21
-	combined = np.reshape(combined,(len(combined), num_timePoints, 21))
+	combined = np.reshape(combined,(len(combined), num_timePoints, num_electrodes))
 
 	from BandPass1 import splitbands
 
-	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
+	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 
@@ -107,7 +119,7 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 	writer.writerow(headers)
 
 	for i in range(row_count,len(combined)):
-		print(str(i+1) + " out of " + str(25*num_bunches))
+		print(str(i+1) + " out of " + str(25*num_epochs))
 		#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
 		transposed = np.transpose(combined[i]) 
 		features = []

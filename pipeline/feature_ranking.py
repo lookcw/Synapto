@@ -14,8 +14,11 @@ def get_feature_importance(clf, X, y, num_features):
 	feat_importances.plot(kind='barh')
 	plt.gca().invert_yaxis()
 	#plt.show()
+<<<<<<< HEAD
 
 	print(feat_importances)
+=======
+>>>>>>> fsl-pipeline
 
 	return feat_importances
 

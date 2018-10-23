@@ -10,26 +10,30 @@ import time
 from ASD_features import extractASDFeatures
 from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
+from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_score
 from nn_keras import nn_keras
 
 
 featureName = ''
-num_bunches = 0 #per patient
+data_type = ''
+num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
 startAtFS = False
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
-		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-f: feature name (choices: ASD, Wavelet)' + 
-		'\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
+		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
+		'-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
 		'\n\nRun pipeline starting from feature selection:\nInput arguments:\n-fs: feature selection (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
+	elif str(sys.argv[i]) == "-d":
+		data_type = sys.argv[i+1]
 	elif str(sys.argv[i]) == "-f":
 		featureName = sys.argv[i+1]
 	elif str(sys.argv[i]) == "-i":
-		num_bunches = int(sys.argv[i+1])
+		num_epochs = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-t":
 		num_timePoints = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-fs":
@@ -41,10 +45,17 @@ for i in range(1,len(sys.argv),2):
 
 # If starting at the beginning - at feature set creation
 if not startAtFS:
+	if data_type == '':
+		print("Did not input data type. Choose from list in help documentation")
+		sys.exit()
+	if data_type != 'Brazil' and data_type != 'Greece':
+		print("Invalid type of data. Choose from list in help documentation")
+		sys.exit()
+
 	if featureName == '':
 		print("Did not input feature name argument (-f)")
 		#sys.exit()
-	if num_bunches == 0:
+	if num_epochs == 0:
 		print("Did not input instances per patient argument (-i)")
 		#sys.exit()
 	if num_timePoints == 0:
@@ -55,6 +66,8 @@ if not startAtFS:
 		extractFeatureFunc = extractASDFeatures
 	elif featureName == 'Wavelet':
 		extractFeatureFunc = extractWaveletFeatures
+	elif featureName == 'FSL':
+		extractFeatureFunc = createFSLFeatureSet
 	else:
 		print("Invalid feature name. Choose from list in help documentation")
 		sys.exit()
@@ -63,7 +76,7 @@ if not startAtFS:
 	print("Creating Feature Set...")
 
 	#unique identifier for different input parameters
-	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
+	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
@@ -72,11 +85,22 @@ if not startAtFS:
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		#3rd parameter is extractFeature function of choice
-		#try:
-		createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatureFunc)
-		#except:
-		print("Did not input valid feature name")
-			#sys.exit()
+		if (data_type == 'Brazil'):
+			data_folder_path1 = 'BrazilRawData/HCF50'
+			data_folder_path2 = 'BrazilRawData/ADF50'
+			num_electrodes = 21
+
+		if (data_type == 'Greece'):
+			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
+			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
+			num_electrodes = 8
+			
+		if (featureName == 'FSL'):
+			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2)
+		else:
+			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
+				data_folder_path1, data_folder_path2)
+
 	else:
 		print("Feature set already exists")
 
