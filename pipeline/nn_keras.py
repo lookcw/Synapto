@@ -140,11 +140,8 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 		print "training..."
 		print(train_X.shape)
 		print(train_Y.shape)
-<<<<<<< HEAD
+
 		model.fit(train_X, train_Y, epochs = 500, batch_size = 100)
-=======
-		model.fit(train_X, train_Y, epochs = 500, batch_size = 2)
->>>>>>> fsl-pipeline
 
 		# evaluate the model
 		print "testing..."
