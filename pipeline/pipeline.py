@@ -26,8 +26,8 @@ for i in range(1,len(sys.argv),2):
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
 		'-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
-		'-nfs: no feature selection' + 
-		'\n\nUse Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
+		'\n-nfs: no feature selection' + 
+		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
 	elif str(sys.argv[i]) == "-d":
