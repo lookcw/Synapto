@@ -20,12 +20,14 @@ data_type = ''
 num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
 startAtFS = False
+FS = True #feature selection
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
 		'-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
-		'\n\nRun pipeline starting from feature selection:\nInput arguments:\n-fs: feature selection (.../PathToFeatureSetFile)')
+		'-nfs: no feature selection' + 
+		'\n\nUse Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
 	elif str(sys.argv[i]) == "-d":
@@ -36,6 +38,8 @@ for i in range(1,len(sys.argv),2):
 		num_epochs = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-t":
 		num_timePoints = int(sys.argv[i+1])
+	elif str(sys.argv[i]) == "-nfs":
+		FS = False
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
 		startAtFS = True
@@ -118,89 +122,91 @@ y = data.iloc[:,-1]
 X = data.drop(data.columns[-1], axis=1)
 
 ##################################################################################
-
-#### feature selection
-print("Feature Selection...")
-print("Input Shape:", X.shape)
-
-
-# import feature importances plot function
-from feature_ranking import get_feature_importance
-
-#### Substitute other feature selection methods here 
-
-#####################################
-
-# Reduces features way too much
-# Select K Best - no feature importance 
-# from sklearn.feature_selection import SelectKBest
-# from sklearn.feature_selection import chi2
-# # feature extraction
-# clf = SelectKBest(score_func=chi2, k=4)
-# clf = clf.fit(X, y)
-
-# This clf does NOT have a feature importance feature 
-
-# # summarize scores
-# np.set_printoptions(precision=3)
-# X_reduced = fit.transform(X)
-# # summarize selected features
-# print(X_reduced.shape)
-
-# feature_red_name = format(fit)
-
-#####################################
-
-# Reduces features way too much
-# Feature Extraction with PCA -> does not have feature importance
-# import numpy
-# from pandas import read_csv
-# from sklearn.decomposition import PCA
-# # feature extraction
-# pca = PCA(n_components=3)
-# fit = pca.fit(X)
-# get_feature_importance(fit, X)
-# X_reduced = fit.transform(X)
-# print(X_reduced.shape)
-# # summarize components
-# print("Explained Variance: %s") % fit.explained_variance_ratio_
-# feature_red_name = format(fit)
-# print(fit.components_)
-
-#####################################
-
-#### recursive feature elimination from ASD paper -> this plots 
-#### uses SVC
-# X_reduced = recursiveFeatureElim(X,y)
-# print(X_reduced.shape)
-
-#####################################
-
-# alternative feature selection from sklearn
-# Feature Importance with Extra Trees Classifier -> has feature importance 
 from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 
-clf = ExtraTreesClassifier()
-# Get features with ranking of feature's importance (for our visualization purposes)
-feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+if (FS):
+	#### feature selection
+	print("Feature Selection...")
+	print("Input Shape:", X.shape)
 
-clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-feat_importances_rf = get_feature_importance(clf, X, y, 50)
 
-clf = GradientBoostingClassifier()
-feat_importances_gb = get_feature_importance(clf, X, y, 50)
+	# import feature importances plot function
+	from feature_ranking import get_feature_importance
 
-common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
-print(common_features)
+	#### Substitute other feature selection methods here 
 
-#reduce features
-from sklearn.feature_selection import SelectFromModel
-model = SelectFromModel(clf, prefit=True)
-X_reduced = model.transform(X)
-print(X_reduced.shape)
+	#####################################
+
+	# Reduces features way too much
+	# Select K Best - no feature importance 
+	# from sklearn.feature_selection import SelectKBest
+	# from sklearn.feature_selection import chi2
+	# # feature extraction
+	# clf = SelectKBest(score_func=chi2, k=4)
+	# clf = clf.fit(X, y)
+
+	# This clf does NOT have a feature importance feature 
+
+	# # summarize scores
+	# np.set_printoptions(precision=3)
+	# X_reduced = fit.transform(X)
+	# # summarize selected features
+	# print(X_reduced.shape)
+
+	# feature_red_name = format(fit)
+
+	#####################################
+
+	# Reduces features way too much
+	# Feature Extraction with PCA -> does not have feature importance
+	# import numpy
+	# from pandas import read_csv
+	# from sklearn.decomposition import PCA
+	# # feature extraction
+	# pca = PCA(n_components=3)
+	# fit = pca.fit(X)
+	# get_feature_importance(fit, X)
+	# X_reduced = fit.transform(X)
+	# print(X_reduced.shape)
+	# # summarize components
+	# print("Explained Variance: %s") % fit.explained_variance_ratio_
+	# feature_red_name = format(fit)
+	# print(fit.components_)
+
+	#####################################
+
+	#### recursive feature elimination from ASD paper -> this plots 
+	#### uses SVC
+	# X_reduced = recursiveFeatureElim(X,y)
+	# print(X_reduced.shape)
+
+	#####################################
+
+	# alternative feature selection from sklearn
+	# Feature Importance with Extra Trees Classifier -> has feature importance 
+	
+
+	clf = ExtraTreesClassifier()
+	# Get features with ranking of feature's importance (for our visualization purposes)
+	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+
+	clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+	feat_importances_rf = get_feature_importance(clf, X, y, 50)
+
+	clf = GradientBoostingClassifier()
+	feat_importances_gb = get_feature_importance(clf, X, y, 50)
+
+	common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
+	print("Common features",common_features)
+
+	#reduce features
+	from sklearn.feature_selection import SelectFromModel
+	model = SelectFromModel(clf, prefit=True)
+	X_reduced = model.transform(X)
+	print(X_reduced.shape)
 
 ##################################################################################
 
@@ -238,24 +244,33 @@ models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
 for model in models:
 	print('Cross-validation of : {0}'.format(model.__class__))
 	all_score = compute_score(model, X, y, num_folds, scoring='accuracy')
-	reduced_score = compute_score(model, X_reduced, y, num_folds, scoring='accuracy')
 	print('All features CV score = {0}'.format(all_score))
-	print('Reduced features CV score = {0}'.format(reduced_score))
+	if (FS):
+		reduced_score = compute_score(model, X_reduced, y, num_folds, scoring='accuracy')
+		print('Reduced features CV score = {0}'.format(reduced_score))
 
 	try:
 		with open(o_filename, 'r+') as csvfile:
 			pass
 	except IOError as e:
 		with open(o_filename, 'w') as csvfile:
-			header = ['Date', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
-			'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
+			if (FS):
+				header = ['Date', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
+				'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
+			else:
+				header = ['Date', 'Classifier', 
+				'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
 			writer = csv.DictWriter(csvfile, fieldnames=header)
 			writer.writeheader()
 	# Record the number of features that were reduced
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), clf, 
+		if (FS):
+			writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), clf, 
 			X.shape, X_reduced.shape, format(reduced_score), num_folds, num_seeds])
+		else:
+			writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), 
+			X.shape, format(all_score), num_folds, num_seeds])
 
 # Insert new line into CSV file 
 with open(o_filename, 'a') as f:
