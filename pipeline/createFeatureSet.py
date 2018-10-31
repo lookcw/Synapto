@@ -4,7 +4,7 @@ import os
 import sys
 import pandas as pd
 
-def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2):
+def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2, data_type):
 
 	#extract from path to first patient group folder
 	combined_group1 = np.empty((0,num_electrodes*num_timePoints+1))
@@ -73,7 +73,7 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
+	features_path = sys.path[0] + '/FeatureSets/'+data_type+featureName+'features'+identifier+'.csv'
 
 	if not os.path.exists(features_path):
 		open(features_path,"w")

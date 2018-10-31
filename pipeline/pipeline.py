@@ -83,8 +83,8 @@ if not startAtFS:
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
-	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
-	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
+	features_path = sys.path[0] + '/FeatureSets/'+ data_type + featureName+'features'+identifier+'.csv'
+	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+data_type+featureName+'features'+identifier+'_reduced.csv'
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
@@ -100,10 +100,10 @@ if not startAtFS:
 			num_electrodes = 8
 			
 		if (featureName == 'FSL'):
-			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2)
+			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type)
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-				data_folder_path1, data_folder_path2)
+				data_folder_path1, data_folder_path2, data_type)
 
 	else:
 		print("Feature set already exists")
