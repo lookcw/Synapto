@@ -1,4 +1,5 @@
 IgnoreData/
+FeatureSets/
 .DS_Store
 output_pipeline.csv
 pipeline/FeatureSets/
