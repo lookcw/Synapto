@@ -11,8 +11,9 @@ from ASD_features import extractASDFeatures
 from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createFSLFeatureSet import createFSLFeatureSet
-from compute_score import compute_score
+from compute_score import compute_group_score
 from nn_keras import nn_keras
+import random
 
 
 featureName = ''
@@ -106,16 +107,19 @@ if not startAtFS:
 
 
 	#obtain global X (input features) and y (output values)
-	data = pd.read_csv(features_path)
+	data = pd.read_csv(features_path,header = None)
 else: #starting pipeline with feature selection
-	data = pd.read_csv(features_path)
+	data = pd.read_csv(features_path, header = None)
 
 #shuffle rows of dataframe
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
-y = data.iloc[:,-1]
+y = data.iloc[:,-1].values
+groups = data.index.values
+unique, counts = np.unique(groups, return_counts=True)
+print dict(zip(unique, counts))
 #### obtain X by dropping last column
-X = data.drop(data.columns[-1], axis=1)
+X = data.drop([data.columns[-1],data.columns[0]], axis=1)
 
 ##################################################################################
 
@@ -200,7 +204,7 @@ print(common_features)
 from sklearn.feature_selection import SelectFromModel
 model = SelectFromModel(clf, prefit=True)
 X_reduced = model.transform(X)
-print(X_reduced.shape)
+print("reduced shape:" + str(X_reduced.shape))
 
 ##################################################################################
 
@@ -212,7 +216,7 @@ from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier  
 
-num_folds = 10
+num_folds = 25	
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
@@ -221,7 +225,7 @@ o_filename = 'output_pipeline.csv'
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
 #nn_keras
-nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+##nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
 
 #various sklearn models
@@ -236,9 +240,11 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #loop through models and print accuracy for each
 models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
 for model in models:
+	X = np.array(X)
+	y = np.array(y)
 	print('Cross-validation of : {0}'.format(model.__class__))
-	all_score = compute_score(model, X, y, num_folds, scoring='accuracy')
-	reduced_score = compute_score(model, X_reduced, y, num_folds, scoring='accuracy')
+	all_score = compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
+	reduced_score = compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
 	print('All features CV score = {0}'.format(all_score))
 	print('Reduced features CV score = {0}'.format(reduced_score))
 
@@ -246,7 +252,7 @@ for model in models:
 		with open(o_filename, 'r+') as csvfile:
 			pass
 	except IOError as e:
-		with open(o_filename, 'w') as csvfile:
+		with open(o_filename, 'a') as csvfile:
 			header = ['Date', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
 			'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
 			writer = csv.DictWriter(csvfile, fieldnames=header)
