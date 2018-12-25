@@ -6,74 +6,77 @@ import pandas as pd
 from BandPass1 import splitbands
 
 
-def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
+def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2):
 
-	basepath = 'BrazilRawData/HCF50'
-	combined_HC = np.empty((0,21*num_timePoints+1))
-	for filename in os.listdir(basepath):
+	#extract from path to first patient group folder
+	combined_group1 = np.empty((0,num_electrodes*num_timePoints+1+1))
+	patient_num = 1
+	for filename in os.listdir(path1):
+		print patient_num
 		if filename.endswith('.csv'):
-			with open(os.path.join(basepath, filename)) as f:
+			with open(os.path.join(path1, filename)) as f:
 				reader = csv.reader(f)
-				array = list(reader)
-				array = np.array(array)
+				array = np.array(list(reader))
 				print(array.shape)
 				#print len(array) #160,000
 				#print len(array[0]) #21
 				data = array
 
-				#create bunches per patient
-				total = np.empty((num_bunches,len(array[0])*num_timePoints+1)) #1000x630
-				for bunch in range(num_bunches):
-					index = int(bunch*(len(array)/num_bunches))
-					row = data[index]
-					for i in range(1,num_timePoints):
-						row = np.append(row, data[index+i])
+				#create bunches per patient, creates num_bunches of instances, takes care of one patient per iteration
+				total = np.empty((num_epochs,(len(array[0]))*(num_timePoints)+1+1)) #1000x630
+				for bunch in range(num_epochs):
+					index = int(bunch*(len(array)/num_epochs))
+					row = data[index:index+num_timePoints].flatten()
+					row = np.append(np.insert(row,0,patient_num), [0])
 					#print row
-					row = np.append(row,[0])
 					total[bunch] = row
 				#print total
-				combined_HC = np.concatenate((combined_HC,total)) #12000x630
+				combined_group1 = np.concatenate((combined_group1,total)) #12000x630
+				patient_num += 1
 
-	basepath = 'BrazilRawData/ADF50'
-	combined_AD = np.empty((0,21*num_timePoints+1))
-	for filename in os.listdir(basepath):
+	#extract from path to second patient group folder
+	combined_group2 = np.empty((0,(num_electrodes)*num_timePoints+1+1))
+	for filename in os.listdir(path2):
 		if filename.endswith('.csv'):
-			with open(os.path.join(basepath, filename)) as f:
+			with open(os.path.join(path2, filename)) as f:
 				reader = csv.reader(f)
 				array = list(reader)
 				array = np.array(array)
-				print(array.shape)
 				#print len(array) #160,000
 				#print len(array[0]) #21
 				data = array
 
 				#create bunches per patient
-				total = np.empty((num_bunches,len(array[0])*num_timePoints+1)) #1000x210
-				for bunch in range(num_bunches):
-					index = int(bunch*(len(array)/num_bunches))
-					#print index
-					row = data[index]
-					for i in range(1,num_timePoints):
-						row = np.append(row, data[index+i])
+				total = np.empty((num_epochs,(len(array[0]))*(num_timePoints)+1+1))  #1000x210
+				for bunch in range(num_epochs):
+					index = int(bunch*(len(array)/num_epochs))
+					row = data[index:index+num_timePoints].flatten()
+					row = np.append(np.insert(row,0,patient_num), [1])
 					#print row
-					row = np.append(row,[1])
 					total[bunch] = row
 				#print total
-				combined_AD = np.concatenate((combined_AD,total))
+				combined_group2 = np.concatenate((combined_group2,total))
+				patient_num += 1
 
-	combined = np.concatenate((combined_HC, combined_AD))
+	combined = np.concatenate((combined_group1, combined_group2))
 	#print(combined.shape) #25000x631
 
 	#store and delete last column
 	targets = combined[:,-1]
+	groups = combined[:,0]
+	print groups
 
+	combined = np.delete(combined,0,axis=1)
 	combined = np.delete(combined,-1,axis=1)
+	print combined.shape
+	print combined
 	#reshape into 25000 x timepoints x 21
-	combined = np.reshape(combined,(len(combined), num_timePoints, 21))
+	combined = np.reshape(combined,(len(combined), num_timePoints, num_electrodes))
+
 
 	
 
-	identifier = str(num_bunches*25) + '_' + str(num_timePoints)
+	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	features_path = sys.path[0] + '/FeatureSets/'+featureName+'features'+identifier+'.csv'
 
@@ -117,10 +120,11 @@ def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
 	writer.writerow(headers)
 
 	for i in range(row_count,len(combined)):
-		print(str(i+1) + " out of " + str(25*num_bunches))
+		print(str(i+1) + " out of " + str(25*num_epochs))
 		#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
 		transposed = np.transpose(combined[i]) 
-		features = []
+		features = [groups[i]]
+
 		#add another dimension in each row to make it 5 bands x n
 		for j in range(len(transposed)):
 			bands = splitbands(transposed[j])
