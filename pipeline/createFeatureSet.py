@@ -3,6 +3,7 @@ import numpy as np
 import os
 import sys
 import pandas as pd
+from BandPass1 import splitbands
 
 
 def createFeatureSet(num_bunches, num_timePoints, featureName, extractFeatures):
