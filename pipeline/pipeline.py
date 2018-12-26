@@ -14,6 +14,7 @@ from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 import random
+from nn_Recurr import nn_Recurr
 
 
 featureName = ''
@@ -22,12 +23,13 @@ num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
 startAtFS = False
 FS = True #feature selection
+RECURR = False
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
 		'-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
-		'\n-nfs: no feature selection' + 
+		'\n-nfs: no feature selection\n-recurr: use LSTM' +
 		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
@@ -41,6 +43,8 @@ for i in range(1,len(sys.argv),2):
 		num_timePoints = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-nfs":
 		FS = False
+	elif str(sys.argv[i]) == "-recurr":
+		RECURR = True
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
 		startAtFS = True
@@ -56,36 +60,40 @@ if not startAtFS:
 	if data_type != 'Brazil' and data_type != 'Greece':
 		print("Invalid type of data. Choose from list in help documentation")
 		sys.exit()
-
-	if featureName == '':
-		print("Did not input feature name argument (-f)")
-		#sys.exit()
+	if not RECURR:
+		if featureName == '':
+			print("Did not input feature name argument (-f)")
+			#sys.exit()
 	if num_epochs == 0:
 		print("Did not input instances per patient argument (-i)")
 		#sys.exit()
 	if num_timePoints == 0:
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
-
-	if featureName == 'ASD':
-		extractFeatureFunc = extractASDFeatures
-	elif featureName == 'Wavelet':
-		extractFeatureFunc = extractWaveletFeatures
-	elif featureName == 'FSL':
-		extractFeatureFunc = createFSLFeatureSet
-	else:
-		print("Invalid feature name. Choose from list in help documentation")
-		sys.exit()
+	if not RECURR:
+		if featureName == 'ASD':
+			extractFeatureFunc = extractASDFeatures
+		elif featureName == 'Wavelet':
+			extractFeatureFunc = extractWaveletFeatures
+		elif featureName == 'FSL':
+			extractFeatureFunc = createFSLFeatureSet
+		else:
+			print("Invalid feature name. Choose from list in help documentation")
+			sys.exit()
 
 	#feature extraction
 	print("Creating Feature Set...")
 
-	#unique identifier for different input parameters
-	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
+	if (RECURR):
+		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
+		features_path = sys.path[0] + '/FeatureSets/'+data_type+'Recurr'+identifier+'.csv'
+	else:
+		#unique identifier for different input parameters
+		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-	#define features and reduced_features paths
-	features_path = sys.path[0] + '/FeatureSets/'+ data_type + featureName+'features'+identifier+'.csv'
-	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+data_type+featureName+'features'+identifier+'_reduced.csv'
+		#define features and reduced_features paths
+		features_path = sys.path[0] + '/FeatureSets/'+ data_type + featureName+'features'+identifier+'.csv'
+		reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+data_type+featureName+'features'+identifier+'_reduced.csv'
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
@@ -102,12 +110,20 @@ if not startAtFS:
 			
 		if (featureName == 'FSL'):
 			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type)
+		elif (RECURR):
+			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+				data_folder_path1, data_folder_path2, data_type, RECURR)
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
 				data_folder_path1, data_folder_path2, data_type)
 
 	else:
 		print("Feature set already exists")
+
+	if (data_type == 'Brazil'):
+		num_electrodes = 21
+	if (data_type == 'Greece'):
+		num_electrodes = 8
 
 
 	#obtain global X (input features) and y (output values)
@@ -234,6 +250,10 @@ o_filename = 'output_pipeline.csv'
 #nn_keras
 ##nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
+#nn_Recurr
+if (RECURR):
+	nn_Recurr(X, y, n_hlayers = 3, neurons = [1000, 1000, 1000],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
+		n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
 
 #various sklearn models
 logreg = LogisticRegression() 
