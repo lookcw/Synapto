@@ -16,13 +16,13 @@ def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type):
 
 		out_file = open(features_path,"a") #used to be "a" for append
 		writer = csv.writer(out_file)
-
+		patient_num = 1
 		for filename in os.listdir(path1):
+			print patient_num
 			if filename.endswith('.csv'):
 				with open(os.path.join(path1, filename)) as f:
 					reader = csv.reader(f)
 					data = np.array(list(reader))
-					print(data.shape)
 
 					print os.path.join(path1, filename)
 
@@ -38,14 +38,16 @@ def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type):
 						featuresRow = extractFSLFeatures(matrix)
 						# print(featuresRow.shape)
 						featuresRow = np.append(featuresRow,[0])
+						featuresRow = np.insert(featuresRow,0,patient_num)
 						writer.writerow(featuresRow)
+					patient_num += 1
 
 		for filename in os.listdir(path2):
+			print patient_num
 			if filename.endswith('.csv'):
 				with open(os.path.join(path2, filename)) as f:
 					reader = csv.reader(f)
 					data = np.array(list(reader))
-					print(data.shape)
 
 					print os.path.join(path2, filename)
 
@@ -61,7 +63,9 @@ def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type):
 						featuresRow = extractFSLFeatures(matrix)
 						# print(featuresRow.shape)
 						featuresRow = np.append(featuresRow,[1])
+						featuresRow = np.insert(featuresRow,0,patient_num)
 						writer.writerow(featuresRow)
+					patient_num += 1
 
 
 #createFSLFeatureSet(1,215)
