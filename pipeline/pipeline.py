@@ -128,6 +128,9 @@ print("Feature Selection...")
 print("Input Shape:", X.shape)
 
 
+# import feature importances plot function
+from feature_ranking import get_feature_importance
+
 #### Substitute other feature selection methods here 
 
 #####################################
@@ -177,9 +180,8 @@ print("Input Shape:", X.shape)
 
 #####################################
 
-# alternative feature selection from sklearn: all have feature importance
-# import feature importances plot function
-from feature_ranking import get_feature_importance
+# alternative feature selection from sklearn
+# Feature Importance with Extra Trees Classifier -> has feature importance 
 from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -187,13 +189,13 @@ from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 
 clf = ExtraTreesClassifier()
 # Get features with ranking of feature's importance (for our visualization purposes)
-feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
 
 clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-feat_importances_rf = get_feature_importance(clf, X, y, 945)
+feat_importances_rf = get_feature_importance(clf, X, y, 50)
 
 clf = GradientBoostingClassifier()
-feat_importances_gb = get_feature_importance(clf, X, y, 945)
+feat_importances_gb = get_feature_importance(clf, X, y, 50)
 
 common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
 print(common_features)
@@ -265,5 +267,3 @@ for model in models:
 with open(o_filename, 'a') as f:
 	writer = csv.writer(f)
 	writer.writerow("\n")
-
-
