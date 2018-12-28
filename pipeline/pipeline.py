@@ -139,7 +139,7 @@ groups = data.index.values
 unique, counts = np.unique(groups, return_counts=True)
 print dict(zip(unique, counts))
 #### obtain X by dropping last column
-X = data.drop([data.columns[-1],data.columns[0]], axis=1)
+X = data.drop(data.columns[-1], axis=1)
 
 ##################################################################################
 from pandas import read_csv
@@ -274,7 +274,7 @@ for model in models:
 	reduced_score = compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
 	print('All features CV score = {0}'.format(all_score))
 	if (FS):
-		reduced_score = compute_score(model, X_reduced, y, num_folds, scoring='accuracy')
+		reduced_score = compute_group_score(model, X_reduced, y, num_folds,groups,scoring='accuracy')
 		print('Reduced features CV score = {0}'.format(reduced_score))
 
 	try:
