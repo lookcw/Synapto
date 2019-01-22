@@ -39,6 +39,7 @@ for i in range(1,len(sys.argv),2):
 		num_timePoints = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
+		filename = features_path.split('/')[-1]
 		startAtFS = True
 	else:
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
