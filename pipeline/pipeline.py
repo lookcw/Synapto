@@ -28,7 +28,7 @@ RECURR = False
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
-		'-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
+		'\n-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
 		'\n-nfs: no feature selection\n-recurr: use LSTM' +
 		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
@@ -109,13 +109,13 @@ if not startAtFS:
 			num_electrodes = 8
 			
 		if (featureName == 'FSL'):
-			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type)
+			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
 				data_folder_path1, data_folder_path2, data_type, RECURR)
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-				data_folder_path1, data_folder_path2, data_type)
+				data_folder_path1, data_folder_path2, data_type, RECURR)
 
 	else:
 		print("Feature set already exists")
@@ -127,7 +127,13 @@ if not startAtFS:
 
 
 	#obtain global X (input features) and y (output values)
-	data = pd.read_csv(features_path,header = None)
+
+	#use existing headers made from createFeatureSet function if not FSL or Recurr
+	if (not featureName == 'FSL' and not RECURR):
+		data = pd.read_csv(features_path)
+	#otherwise assume no headers in featureset csv
+	else:
+		data = pd.read_csv(features_path, header = None)
 else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = None)
 
@@ -141,6 +147,10 @@ print dict(zip(unique, counts))
 #### obtain X by dropping last column
 X = data.drop(data.columns[-1], axis=1)
 
+#drop first patient id column made from createFSLFeatureSet function
+#if (FSL):
+#	X = data.drop(data.columns[0], axis=1)
+
 ##################################################################################
 from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
@@ -151,7 +161,6 @@ if (FS):
 	#### feature selection
 	print("Feature Selection...")
 	print("Input Shape:", X.shape)
-
 
 	# import feature importances plot function
 	from feature_ranking import get_feature_importance
@@ -248,7 +257,7 @@ o_filename = 'output_pipeline.csv'
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
 #nn_keras
-##nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+#nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
 #nn_Recurr
 if (RECURR):
