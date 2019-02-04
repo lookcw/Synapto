@@ -1,8 +1,10 @@
+
 import tensorflow as tf
 import numpy as np
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
+from keras.layers import LSTM
 import csv
 import os
 import math
@@ -11,15 +13,13 @@ import sys
 import datetime
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
-# Network Parameters
 
 
-
-
-def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5):
+def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5, 
+	n_electrodes=0, n_timeSteps=0):
 	
 	if n_hlayers == 0:
-		print "did not set n_hlayers to hiddle layers"
+		print "did not set n_hlayers to hidden layers"
 		sys.exit(1)
 	if neurons == 0:
 		print "did not set neurons array"
@@ -97,12 +97,18 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 	total_Fmeasure = 0
 	total_AUC = 0
 
+	#reshape to 3D input for LSTM
+	print X_data.shape
+	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, n_electrodes)) #make num_electrodes variable
+	print X_data.shape
 
 
 	for fold in range(0,n_folds):
 		model = Sequential()
-		model.add(Dense(neurons[0], activation = 'relu', input_dim = n_input))
 
+		model.add(LSTM(neurons[0], input_shape=(n_timeSteps, n_electrodes)))
+
+		#hidden layers
 		for i in range(1,n_hlayers):
 			model.add(Dense(neurons[i], activation = 'relu'))
 
@@ -110,6 +116,18 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 
 		#Compile model
 		model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+		#embed_dim = 128
+		#lstm_out = 200
+		#batch_size = 32
+
+		#model = Sequential()
+		#model.add(Embedding(2500, embed_dim,input_length = X.shape[1], dropout = 0.2))
+		#model.add(LSTM(lstm_out, dropout_U = 0.2, dropout_W = 0.2))
+		#model.add(Dense(2,activation='softmax'))
+		#model.compile(loss = 'categorical_crossentropy', optimizer='adam',metrics = ['accuracy'])
+		#print(model.summary())
+
 
 		Xdata = X_data
 		Ydata = Y_data
@@ -141,7 +159,7 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 		print(train_X.shape)
 		print(train_Y.shape)
 
-		model.fit(train_X, train_Y, epochs = 30, batch_size = 10)
+		model.fit(train_X, train_Y, epochs = 10, batch_size = 10)
 
 		# evaluate the model
 		print "testing..."
@@ -176,9 +194,9 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 	#print("Overall ROC AUC:", total_AUC)
 
 	total_trainAccuracy = total_trainAccuracy/n_folds
-	print "Overall Train Accuracy", total_trainAccuracy
+	print "Overall LSTM Train Accuracy", total_trainAccuracy
 	total_testAccuracy = total_testAccuracy/n_folds
-	print "Overall Test Accuracy", total_testAccuracy
+	print "Overall LSTM Test Accuracy", total_testAccuracy
 
 	# results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes,seed]
 	# r_file = open(results_file,'a')
@@ -193,5 +211,6 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-#nn_keras(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
-
+#nn_Recurr(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
+		
+		

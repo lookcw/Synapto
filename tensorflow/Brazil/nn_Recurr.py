@@ -1,9 +1,9 @@
+
 import tensorflow as tf
 import numpy as np
 import keras
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.layers import LSTM
 import csv
 import os
 import math
@@ -12,24 +12,18 @@ import sys
 import datetime
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
 print "starting"
-# Network Parameters
-
-n_timeSteps = 30
 
 
-def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = "" 
-	,identifier = "" ,learning_rate = 0,n_classes = 0, seed = 5):
-	if in_file == "":
-		print "did not include file name"
+def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5, n_electrodes):
+	
+	if n_hlayers == 0:
+		print "did not set n_hlayers to hidden layers"
 		sys.exit(1)
 	if neurons == 0:
 		print "did not set neurons array"
 		sys.exit(1)
 	if n_folds == 0:
 		print "did not set number of folds"
-		sys.exit(1)
-	if results_file == "":
-		print "did not set results file"
 		sys.exit(1)
 	if learning_rate == 0:
 		print "did not set learning rate"
@@ -38,33 +32,39 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 		print "did not set seed"
 		sys.exit(1)
 
-	#training set
-	array_Y = []
-	total = []
-	with open(in_file) as f:
-		reader = csv.reader(f)
-		#next(reader)
-		array = list(reader)
-		n_input =  len(array[0])-1 
-		array = np.array(array)
-		
-	# Data input (190 total erp values per patient)
-		#add each patient's erp values (row) to HC or AD vector 
-		for row in array[0:]: #first row is column headers
-			if (row[-1] == '0.0'): #rows 1-96 are HC patients
-				total.append(row[0:-1])
-				#output = 0
-				array_Y.extend([0])
-			else: #rows 97-171 are AD patients
-				total.append(row[0:-1])
-				#output = 1
-				array_Y.extend([1])
-	total = np.array(total)
-	
-	tf.set_random_seed(seed)
+	X_data = np.array(X)
+	array_Y = np.array(y)
 
-	X_data = np.array(total)
-	array_Y = np.array(array_Y)
+	instances, n_input = X_data.shape
+
+	# #training set
+	# array_Y = []
+	# total = []
+	# with open(in_file) as f:
+	# 	reader = csv.reader(f)
+	# 	#next(reader)
+	# 	array = list(reader)
+	# 	n_input =  len(array[0])-1 
+	# 	array = np.array(array)
+		
+	# # Data input (190 total erp values per patient)
+	# 	#add each patient's erp values (row) to HC or AD vector 
+	# 	for row in array[0:]: #first row is column headers
+	# 		if (row[-1] == '0.0'): #rows 1-96 are HC patients
+	# 			total.append(row[0:-1])
+	# 			#output = 0
+	# 			array_Y.extend([0])
+	# 		else: #rows 97-171 are AD patients
+	# 			total.append(row[0:-1])
+	# 			#output = 1
+	# 			array_Y.extend([1])
+	# total = np.array(total)
+	
+	# tf.set_random_seed(seed)
+
+	# X_data = np.array(total)
+	# array_Y = np.array(array_Y)
+
 
 	#convert to one-hot arrays
 	array_Y = array_Y.astype(int)
@@ -95,26 +95,21 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 	total_Fmeasure = 0
 	total_AUC = 0
 
-	
 	#reshape to 3D input for LSTM
 	print X_data.shape
-	#21 is for 21 electrodes
-	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, 21))
+	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, n_electrodes)) #make num_electrodes variable
 	print X_data.shape
-
-	#normalize inputs
-	print X_data.dtype
-	#max = np.amax(X_data)
-	#array_X = array_X/max
 
 
 	for fold in range(0,n_folds):
 		model = Sequential()
 
-		model.add(LSTM(neurons[0], input_shape=(n_timeSteps, 21)))
-		#hidden layer
-		model.add(Dense(neurons[1], activation = 'relu'))
-		model.add(Dense(neurons[2], activation = 'relu'))
+		model.add(LSTM(neurons[0], input_shape=(n_timeSteps, n_electrodes)))
+
+		#hidden layers
+		for i in range(1,n_hlayers):
+			model.add(Dense(neurons[i], activation = 'relu'))
+
 		model.add(Dense(n_classes, activation = 'softmax'))
 
 		#Compile model
@@ -130,7 +125,8 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 		#model.add(Dense(2,activation='softmax'))
 		#model.compile(loss = 'categorical_crossentropy', optimizer='adam',metrics = ['accuracy'])
 		#print(model.summary())
-		
+
+
 		Xdata = X_data
 		Ydata = Y_data
 		Xdata = np.array(Xdata)
@@ -158,6 +154,10 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 		
 		#Fit model
 		print "training..."
+		print(train_X.shape)
+		print(train_Y.shape)
+
+		model.fit(train_X, train_Y, epochs = 500, batch_size = 100)
 
 		# evaluate the model
 		print "testing..."
@@ -196,10 +196,10 @@ def x_validation(in_file = "" ,neurons = [],n_folds = 0,results_file  = ""
 	total_testAccuracy = total_testAccuracy/n_folds
 	print "Overall Test Accuracy", total_testAccuracy
 
-	results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,neurons,learning_rate,n_folds,n_classes,seed]
-	r_file = open(results_file,'a')
-	writer = csv.writer(r_file,delimiter=',')
-	writer.writerow(results)
+	# results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes,seed]
+	# r_file = open(results_file,'a')
+	# writer = csv.writer(r_file,delimiter=',')
+	# writer.writerow(results)
 
 n=1
 for argument in sys.argv[1:]:
@@ -209,6 +209,6 @@ for argument in sys.argv[1:]:
 		iden = sys.argv[n+1]
 	n+=1
 
-
-x_validation(in_file = filename, identifier = iden, neurons = [200, 200, 200],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
-
+#nn_Recurr(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
+		
+		
