@@ -47,6 +47,7 @@ for i in range(1,len(sys.argv),2):
 		RECURR = True
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
+		filename = features_path.split('/')[-1]
 		startAtFS = True
 	else:
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
@@ -91,9 +92,10 @@ if not startAtFS:
 		#unique identifier for different input parameters
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-		#define features and reduced_features paths
-		features_path = sys.path[0] + '/FeatureSets/'+ data_type + featureName+'features'+identifier+'.csv'
-		reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+data_type+featureName+'features'+identifier+'_reduced.csv'
+	#define features and reduced_features paths
+	filename = featureName+'features'+identifier+'.csv'
+	features_path = sys.path[0] + '/FeatureSets/'+ filename
+	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
@@ -129,13 +131,15 @@ if not startAtFS:
 	#obtain global X (input features) and y (output values)
 
 	#use existing headers made from createFeatureSet function if not FSL or Recurr
-	if (not featureName == 'FSL' and not RECURR):
-		data = pd.read_csv(features_path)
+	#if (not featureName == 'FSL' and not RECURR):
+	#	data = pd.read_csv(features_path)
 	#otherwise assume no headers in featureset csv
-	else:
-		data = pd.read_csv(features_path, header = None)
+	#else:
+	#	data = pd.read_csv(features_path, header = None)
+	
+	data = pd.read_csv(features_path,header = 'infer')
 else: #starting pipeline with feature selection
-	data = pd.read_csv(features_path, header = None)
+	data = pd.read_csv(features_path, header = 'infer')
 
 #shuffle rows of dataframe
 data.sample(frac=1).reset_index(drop=True)
@@ -275,44 +279,39 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 
 #loop through models and print accuracy for each
 models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+# models = [svc]
 for model in models:
 	X = np.array(X)
 	y = np.array(y)
 	print('Cross-validation of : {0}'.format(model.__class__))
-	all_score = compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
-	reduced_score = compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
-	print('All features CV score = {0}'.format(all_score))
-	if (FS):
-		reduced_score = compute_group_score(model, X_reduced, y, num_folds,groups,scoring='accuracy')
-		print('Reduced features CV score = {0}'.format(reduced_score))
+	(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
+	(red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc) =\
+		compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
+	print('All features CV score = {0}'.format(accuracy))
+	print('Reduced features CV score = {0}'.format(red_accuracy))
 
 	try:
 		with open(o_filename, 'r+') as csvfile:
 			pass
 	except IOError as e:
-		with open(o_filename, 'w') as csvfile:
-			if (FS):
-				header = ['Date', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
-				'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
-			else:
-				header = ['Date', 'Classifier', 
-				'Number of Features After Reduction', 'Accuracy', 'Num Folds', 'Num Seeds']
-
+		with open(o_filename, 'a') as csvfile:
+			header = ['Date','filename', 'Feature', 'Data', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
+			'Number of Features After Reduction', 'Num Folds', 'Num Seeds', 'Accuracy','F-score','True Negative',
+			'False Positive','False Negative','True Positive',"ROCAUC", 'red Accuracy','red F-score',
+			'red True Negative','red False Positive','red False Negative','red True Positive',"red ROCAUC"]
 			writer = csv.DictWriter(csvfile, fieldnames=header)
 			writer.writeheader()
 	# Record the number of features that were reduced
 	with open(o_filename, 'a') as f:
 		writer = csv.writer(f)
-		if (FS):
-			writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), clf, 
-			X.shape, X_reduced.shape, format(reduced_score), num_folds, num_seeds])
-		else:
-			writer.writerow([time.strftime("%m/%d/%Y"), format(model.__class__), 
-			X.shape, format(all_score), num_folds, num_seeds])
+		metrics = [accuracy,f1, tnP,fpP,fnP,tpP,roc_auc]
+		red_metrics = [red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc]
+		writer.writerow([time.strftime("%m/%d/%Y"), filename, featureName, data_type, format(model.__class__), format(clf.__class__), 
+			X.shape, X_reduced.shape, num_folds, num_seeds]+ metrics + red_metrics)
 
 # Insert new line into CSV file 
-with open(o_filename, 'a') as f:
-	writer = csv.writer(f)
-	writer.writerow("\n")
+# with open(o_filename, 'a') as f:
+# 	writer = csv.writer(f)
+# 	writer.writerow("\n")
 
 
