@@ -120,8 +120,7 @@ data.sample(frac=1).reset_index(drop=True)
 y = data.iloc[:,-1].values
 groups = data.index.values
 unique, counts = np.unique(groups, return_counts=True)
-print dict(zip(unique, counts))
-#### obtain X by dropping last column
+#### obtain X by dropping last and first columns (label and group number)
 X = data.drop([data.columns[-1],data.columns[0]], axis=1)
 
 ##################################################################################
