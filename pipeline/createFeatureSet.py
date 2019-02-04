@@ -13,27 +13,50 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
+<<<<<<< HEAD
 				print("fuck me")
+=======
+				
+>>>>>>> Changes to megha
 				reader = csv.reader(f)
-				array = list(reader)
-				array = np.array(array)
-				print(array.shape)
-				#print len(array) #160,000
-				#print len(array[0]) #21
-				data = array
 
-				#create bunches per patient
-				total = np.empty((num_epochs,len(array[0])*num_timePoints+1)) #1000x630
-				for bunch in range(num_epochs):
-					index = int(bunch*(len(array)/num_epochs))
-					row = data[index]
-					for i in range(1,num_timePoints):
-						row = np.append(row, data[index+i])
-					#print row
-					row = np.append(row,[0])
-					total[bunch] = row
-				#print total
-				combined_group1 = np.concatenate((combined_group1,total)) #12000x630
+				time_point_count = 0
+				# Patient number is first number in the row
+				curr_array = [patient_num]
+				featureSet = []
+
+				# For each row in the file 
+				for row in reader:
+					if time_point_count != num_timePoints:
+						curr_array.extend(row)
+						time_point_count += 1
+					else:
+						curr_array.append(0)
+						featureSet.append(curr_array)
+						curr_array = []
+						time_point_count = 0
+				patient_num += 1
+
+
+
+				# array = np.array(list(reader))
+				# print(array.shape)
+				# #print len(array) #160,000
+				# #print len(array[0]) #21
+				# data = array
+
+				# #create bunches per patient, creates num_bunches of instances, takes care of one patient per iteration
+				# total = np.empty((num_epochs,(len(array[0]))*(num_timePoints)+1+1)) #1000x630
+				# for bunch in range(num_epochs):
+				# 	index = int(bunch*(len(array)/num_epochs))
+				# 	row = data[index:index+num_timePoints].flatten()
+				# 	row = np.append(np.insert(row,0,patient_num), [0])
+				# 	#print row
+				# 	total[bunch] = row
+				# #print total
+				# # What is this doing
+				# combined_group1 = np.concatenate((combined_group1,total)) #12000x630
+				# patient_num += 1
 
 	#extract from path to second patient group folder
 	combined_group2 = np.empty((0,num_electrodes*num_timePoints+1))

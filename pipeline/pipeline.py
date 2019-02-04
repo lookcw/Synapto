@@ -33,12 +33,22 @@ for i in range(1,len(sys.argv),2):
 		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
+	
 	elif str(sys.argv[i]) == "-d":
 		data_type = sys.argv[i+1]
+		if data_type != 'Brazil' and data_type != 'Greece':
+			print("Invalid type of data. Choose from list in help documentation")
+			sys.exit()
+
 	elif str(sys.argv[i]) == "-f":
 		featureName = sys.argv[i+1]
+
 	elif str(sys.argv[i]) == "-i":
 		num_epochs = int(sys.argv[i+1])
+		if num_epochs == 0:
+			print("Did not input instances per patient argument (-i)")
+			sys.exit()
+
 	elif str(sys.argv[i]) == "-t":
 		num_timePoints = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-nfs":
