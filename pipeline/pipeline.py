@@ -14,6 +14,7 @@ from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 import random
+from nn_Recurr import nn_Recurr
 
 
 featureName = ''
@@ -21,12 +22,15 @@ data_type = ''
 num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
 startAtFS = False
+FS = True #feature selection
+RECURR = False
 
 for i in range(1,len(sys.argv),2):		
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
-		'-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
-		'\n\nRun pipeline starting from feature selection:\nInput arguments:\n-fs: feature selection (.../PathToFeatureSetFile)')
+		'\n-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
+		'\n-nfs: no feature selection\n-recurr: use LSTM' +
+		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
 	elif str(sys.argv[i]) == "-d":
@@ -37,6 +41,10 @@ for i in range(1,len(sys.argv),2):
 		num_epochs = int(sys.argv[i+1])
 	elif str(sys.argv[i]) == "-t":
 		num_timePoints = int(sys.argv[i+1])
+	elif str(sys.argv[i]) == "-nfs":
+		FS = False
+	elif str(sys.argv[i]) == "-recurr":
+		RECURR = True
 	elif str(sys.argv[i]) == "-fs":
 		features_path = sys.argv[i+1]
 		filename = features_path.split('/')[-1]
@@ -53,32 +61,36 @@ if not startAtFS:
 	if data_type != 'Brazil' and data_type != 'Greece':
 		print("Invalid type of data. Choose from list in help documentation")
 		sys.exit()
-
-	if featureName == '':
-		print("Did not input feature name argument (-f)")
-		#sys.exit()
+	if not RECURR:
+		if featureName == '':
+			print("Did not input feature name argument (-f)")
+			#sys.exit()
 	if num_epochs == 0:
 		print("Did not input instances per patient argument (-i)")
 		#sys.exit()
 	if num_timePoints == 0:
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
-
-	if featureName == 'ASD':
-		extractFeatureFunc = extractASDFeatures
-	elif featureName == 'Wavelet':
-		extractFeatureFunc = extractWaveletFeatures
-	elif featureName == 'FSL':
-		extractFeatureFunc = createFSLFeatureSet
-	else:
-		print("Invalid feature name. Choose from list in help documentation")
-		sys.exit()
+	if not RECURR:
+		if featureName == 'ASD':
+			extractFeatureFunc = extractASDFeatures
+		elif featureName == 'Wavelet':
+			extractFeatureFunc = extractWaveletFeatures
+		elif featureName == 'FSL':
+			extractFeatureFunc = createFSLFeatureSet
+		else:
+			print("Invalid feature name. Choose from list in help documentation")
+			sys.exit()
 
 	#feature extraction
 	print("Creating Feature Set...")
 
-	#unique identifier for different input parameters
-	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
+	if (RECURR):
+		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
+		features_path = sys.path[0] + '/FeatureSets/'+data_type+'Recurr'+identifier+'.csv'
+	else:
+		#unique identifier for different input parameters
+		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
 	filename = featureName+'features'+identifier+'.csv'
@@ -99,16 +111,31 @@ if not startAtFS:
 			num_electrodes = 8
 			
 		if (featureName == 'FSL'):
-			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2)
+			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
+		elif (RECURR):
+			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+				data_folder_path1, data_folder_path2, data_type, RECURR)
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-				data_folder_path1, data_folder_path2)
+				data_folder_path1, data_folder_path2, data_type, RECURR)
 
 	else:
 		print("Feature set already exists")
 
+	if (data_type == 'Brazil'):
+		num_electrodes = 21
+	if (data_type == 'Greece'):
+		num_electrodes = 8
+
 
 	#obtain global X (input features) and y (output values)
+
+	#use existing headers made from createFeatureSet function if not FSL or Recurr
+	#if (not featureName == 'FSL' and not RECURR):
+	#	data = pd.read_csv(features_path)
+	#otherwise assume no headers in featureset csv
+	#else:
+	#	data = pd.read_csv(features_path, header = None)
 	
 	data = pd.read_csv(features_path,header = 'infer')
 else: #starting pipeline with feature selection
@@ -133,80 +160,96 @@ print("Input Shape:", X.shape)
 # import feature importances plot function
 from feature_ranking import get_feature_importance
 
-#### Substitute other feature selection methods here 
+#drop first patient id column made from createFSLFeatureSet function
+#if (FSL):
+#	X = data.drop(data.columns[0], axis=1)
 
-#####################################
-
-# Reduces features way too much
-# Select K Best - no feature importance 
-# from sklearn.feature_selection import SelectKBest
-# from sklearn.feature_selection import chi2
-# # feature extraction
-# clf = SelectKBest(score_func=chi2, k=4)
-# clf = clf.fit(X, y)
-
-# This clf does NOT have a feature importance feature 
-
-# # summarize scores
-# np.set_printoptions(precision=3)
-# X_reduced = fit.transform(X)
-# # summarize selected features
-# print(X_reduced.shape)
-
-# feature_red_name = format(fit)
-
-#####################################
-
-# Reduces features way too much
-# Feature Extraction with PCA -> does not have feature importance
-# import numpy
-# from pandas import read_csv
-# from sklearn.decomposition import PCA
-# # feature extraction
-# pca = PCA(n_components=3)
-# fit = pca.fit(X)
-# get_feature_importance(fit, X)
-# X_reduced = fit.transform(X)
-# print(X_reduced.shape)
-# # summarize components
-# print("Explained Variance: %s") % fit.explained_variance_ratio_
-# feature_red_name = format(fit)
-# print(fit.components_)
-
-#####################################
-
-#### recursive feature elimination from ASD paper -> this plots 
-#### uses SVC
-# X_reduced = recursiveFeatureElim(X,y)
-# print(X_reduced.shape)
-
-#####################################
-
-# alternative feature selection from sklearn
-# Feature Importance with Extra Trees Classifier -> has feature importance 
+##################################################################################
 from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 
-clf = ExtraTreesClassifier()
-# Get features with ranking of feature's importance (for our visualization purposes)
-feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+if (FS):
+	#### feature selection
+	print("Feature Selection...")
+	print("Input Shape:", X.shape)
 
-clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-feat_importances_rf = get_feature_importance(clf, X, y, 50)
+	# import feature importances plot function
+	from feature_ranking import get_feature_importance
 
-clf = GradientBoostingClassifier()
-feat_importances_gb = get_feature_importance(clf, X, y, 50)
+	#### Substitute other feature selection methods here 
 
-common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
-print(common_features)
+	#####################################
 
-#reduce features
-from sklearn.feature_selection import SelectFromModel
-model = SelectFromModel(clf, prefit=True)
-X_reduced = model.transform(X)
-print("reduced shape:" + str(X_reduced.shape))
+	# Reduces features way too much
+	# Select K Best - no feature importance 
+	# from sklearn.feature_selection import SelectKBest
+	# from sklearn.feature_selection import chi2
+	# # feature extraction
+	# clf = SelectKBest(score_func=chi2, k=4)
+	# clf = clf.fit(X, y)
+
+	# This clf does NOT have a feature importance feature 
+
+	# # summarize scores
+	# np.set_printoptions(precision=3)
+	# X_reduced = fit.transform(X)
+	# # summarize selected features
+	# print(X_reduced.shape)
+
+	# feature_red_name = format(fit)
+
+	#####################################
+
+	# Reduces features way too much
+	# Feature Extraction with PCA -> does not have feature importance
+	# import numpy
+	# from pandas import read_csv
+	# from sklearn.decomposition import PCA
+	# # feature extraction
+	# pca = PCA(n_components=3)
+	# fit = pca.fit(X)
+	# get_feature_importance(fit, X)
+	# X_reduced = fit.transform(X)
+	# print(X_reduced.shape)
+	# # summarize components
+	# print("Explained Variance: %s") % fit.explained_variance_ratio_
+	# feature_red_name = format(fit)
+	# print(fit.components_)
+
+	#####################################
+
+	#### recursive feature elimination from ASD paper -> this plots 
+	#### uses SVC
+	# X_reduced = recursiveFeatureElim(X,y)
+	# print(X_reduced.shape)
+
+	#####################################
+
+	# alternative feature selection from sklearn
+	# Feature Importance with Extra Trees Classifier -> has feature importance 
+	
+
+	clf = ExtraTreesClassifier()
+	# Get features with ranking of feature's importance (for our visualization purposes)
+	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+
+	clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+	feat_importances_rf = get_feature_importance(clf, X, y, 50)
+
+	clf = GradientBoostingClassifier()
+	feat_importances_gb = get_feature_importance(clf, X, y, 50)
+
+	common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
+	print("Common features",common_features)
+
+	#reduce features
+	from sklearn.feature_selection import SelectFromModel
+	model = SelectFromModel(clf, prefit=True)
+	X_reduced = model.transform(X)
+	print("reduced shape:" + str(X_reduced.shape))
+
 
 ##################################################################################
 
@@ -227,8 +270,12 @@ o_filename = 'output_pipeline.csv'
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
 #nn_keras
-##nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+#nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
+#nn_Recurr
+if (RECURR):
+	nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
+		n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
 
 #various sklearn models
 logreg = LogisticRegression() 

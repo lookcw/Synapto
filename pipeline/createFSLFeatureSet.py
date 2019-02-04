@@ -5,11 +5,11 @@ import sys
 from FSL_features import extractFSLFeatures
 
 #def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
-def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2):
+def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, recurr):
 
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-	features_path = sys.path[0] + '/FeatureSets/'+'FSLfeatures'+identifier+'.csv'
+	features_path = sys.path[0] + '/FeatureSets/'+data_type+'FSLfeatures'+identifier+'.csv'
 
 	if not os.path.exists(features_path):
 		open(features_path,"w")
