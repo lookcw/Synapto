@@ -12,7 +12,7 @@ from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
-from nn_keras import nn_keras
+#from nn_keras import nn_keras
 import random
 
 
