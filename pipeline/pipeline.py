@@ -25,7 +25,7 @@ startAtFS = False
 FS = True #feature selection
 RECURR = False
 
-for i in range(1,len(sys.argv),2):		
+for i in range(1,len(sys.argv),2):
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
 		'\n-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +

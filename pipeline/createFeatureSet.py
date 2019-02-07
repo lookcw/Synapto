@@ -3,6 +3,8 @@ import numpy as np
 import os
 import sys
 import pandas as pd
+from BandPass1 import splitbands
+
 
 def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2, data_type, recurr):
 
@@ -11,6 +13,7 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
+				print("fuck me")
 				reader = csv.reader(f)
 				array = list(reader)
 				array = np.array(array)
