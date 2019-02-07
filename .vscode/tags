@@ -1,0 +1,1190 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AD	../tensorflow/Brazil/fold_to_feature_file.py	/^	AD = []$/;"	kind:variable	line:51
+AD	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^	AD = []$/;"	kind:variable	line:44
+AD_folders	../tensorflow/Brazil/fold_to_feature_file.py	/^AD_folders = ["..\/..\/Data\/AD_fft_B"]$/;"	kind:variable	line:17
+AD_folders	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^AD_folders = ["ADD_fft","ADS_fft","ADT_fft"]$/;"	kind:variable	line:13
+AD_prefix	../tensorflow/Brazil/fold_to_feature_file.py	/^AD_prefix = ["BAfftB"] $/;"	kind:variable	line:21
+AD_prefix	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^AD_prefix = ["NADfft","NASfft","NATfft"]$/;"	kind:variable	line:15
+ASD_features.py	../pipeline/ASD_features.py	1;"	kind:file	line:1
+ASD_features_9.py	../ASD Replication/ASD_features_9.py	1;"	kind:file	line:1
+ASD_features_testonbands.py	../ASD Replication/ASD_features_testonbands.py	1;"	kind:file	line:1
+BandPass1.py	../pipeline/BandPass1.py	1;"	kind:file	line:1
+CertInstallCommand	../get-pip.py	/^    class CertInstallCommand(InstallCommand):$/;"	kind:class	line:87
+E	../tensorflow/Brazil/fold_to_feature_file.py	/^			E = (array[:,e])$/;"	kind:variable	line:34
+E	../tensorflow/Brazil/fold_to_feature_file.py	/^			E = (array[:,e])$/;"	kind:variable	line:64
+E	../tensorflow/Brazil/nn.py	/^                E = (array[:,e])$/;"	kind:variable	line:61
+E	../tensorflow/Brazil/nn.py	/^                E = (array[:,e])$/;"	kind:variable	line:83
+E	../tensorflow/Brazil/nn.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:64
+E	../tensorflow/Brazil/nn.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:86
+E	../tensorflow/Brazil/nnMMSE.py	/^                E = (array[:,e])$/;"	kind:variable	line:60
+E	../tensorflow/Brazil/nnMMSE.py	/^                E = (array[:,e])$/;"	kind:variable	line:86
+E	../tensorflow/Brazil/nnMMSE.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:63
+E	../tensorflow/Brazil/nnMMSE.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:89
+E	../tensorflow/Brazil/nnWeights.py	/^                E = (array[:,e])$/;"	kind:variable	line:37
+E	../tensorflow/Brazil/nnWeights.py	/^                E = (array[:,e])$/;"	kind:variable	line:59
+E	../tensorflow/Brazil/nnWeights.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:40
+E	../tensorflow/Brazil/nnWeights.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:62
+E	../tensorflow/Greece/nnBinary.py	/^                    E = (array[:,e])$/;"	kind:variable	line:105
+E	../tensorflow/Greece/nnBinary.py	/^                    E = (array[:,e])$/;"	kind:variable	line:122
+E	../tensorflow/Greece/nnBinary.py	/^                    E = (array[:,e])$/;"	kind:variable	line:64
+E	../tensorflow/Greece/nnBinary.py	/^                    E = (array[:,e])$/;"	kind:variable	line:82
+E	../tensorflow/Greece/nnBinary_Chris.py	/^                    E = (array[:,e])$/;"	kind:variable	line:105
+E	../tensorflow/Greece/nnBinary_Chris.py	/^                    E = (array[:,e])$/;"	kind:variable	line:122
+E	../tensorflow/Greece/nnBinary_Chris.py	/^                    E = (array[:,e])$/;"	kind:variable	line:64
+E	../tensorflow/Greece/nnBinary_Chris.py	/^                    E = (array[:,e])$/;"	kind:variable	line:82
+E	../tensorflow/Greece/nnFFT.py	/^                E = (array[:,e])$/;"	kind:variable	line:60
+E	../tensorflow/Greece/nnFFT.py	/^                E = (array[:,e])$/;"	kind:variable	line:79
+E	../tensorflow/Greece/nnFFT.py	/^                E = (array[:,e])$/;"	kind:variable	line:98
+E	../tensorflow/Greece/nnTri.py	/^                E = (array[:,e])$/;"	kind:variable	line:60
+E	../tensorflow/Greece/nnTri.py	/^                E = (array[:,e])$/;"	kind:variable	line:79
+E	../tensorflow/Greece/nnTri.py	/^                E = (array[:,e])$/;"	kind:variable	line:98
+E	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^			E = (array[:,e])$/;"	kind:variable	line:28
+E	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^			E = (array[:,e])$/;"	kind:variable	line:56
+E	../tensorflow/Neuronetrix/nn.py	/^                E = (array[:,e])$/;"	kind:variable	line:60
+E	../tensorflow/Neuronetrix/nn.py	/^                E = (array[:,e])$/;"	kind:variable	line:82
+E	../tensorflow/Neuronetrix/nn.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:63
+E	../tensorflow/Neuronetrix/nn.py	/^                E = E[0:94] #93 fft-B values$/;"	kind:variable	line:85
+E	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^                E = (array[:,e])$/;"	kind:variable	line:37
+E	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^                E = (array[:,e])$/;"	kind:variable	line:56
+E	../tensorflow/Neuronetrix/nnRaw.py	/^	                E = (array[:,e])$/;"	kind:variable	line:105
+E	../tensorflow/Neuronetrix/nnRaw.py	/^	                E = (array[:,e])$/;"	kind:variable	line:122
+E	../tensorflow/Neuronetrix/nnRaw.py	/^	                E = (array[:,e])$/;"	kind:variable	line:64
+E	../tensorflow/Neuronetrix/nnRaw.py	/^	                E = (array[:,e])$/;"	kind:variable	line:82
+Etotal	../tensorflow/Brazil/nn.py	/^            Etotal = []$/;"	kind:variable	line:59
+Etotal	../tensorflow/Brazil/nn.py	/^            Etotal = []$/;"	kind:variable	line:81
+Etotal	../tensorflow/Brazil/nnMMSE.py	/^            Etotal = []$/;"	kind:variable	line:58
+Etotal	../tensorflow/Brazil/nnMMSE.py	/^            Etotal = []$/;"	kind:variable	line:84
+Etotal	../tensorflow/Brazil/nnWeights.py	/^            Etotal = []$/;"	kind:variable	line:35
+Etotal	../tensorflow/Brazil/nnWeights.py	/^            Etotal = []$/;"	kind:variable	line:57
+Etotal	../tensorflow/Greece/nnBinary.py	/^                Etotal = []$/;"	kind:variable	line:103
+Etotal	../tensorflow/Greece/nnBinary.py	/^                Etotal = []$/;"	kind:variable	line:120
+Etotal	../tensorflow/Greece/nnBinary.py	/^                Etotal = []$/;"	kind:variable	line:62
+Etotal	../tensorflow/Greece/nnBinary.py	/^                Etotal = []$/;"	kind:variable	line:80
+Etotal	../tensorflow/Greece/nnBinary_Chris.py	/^                Etotal = []$/;"	kind:variable	line:103
+Etotal	../tensorflow/Greece/nnBinary_Chris.py	/^                Etotal = []$/;"	kind:variable	line:120
+Etotal	../tensorflow/Greece/nnBinary_Chris.py	/^                Etotal = []$/;"	kind:variable	line:62
+Etotal	../tensorflow/Greece/nnBinary_Chris.py	/^                Etotal = []$/;"	kind:variable	line:80
+Etotal	../tensorflow/Greece/nnFFT.py	/^            Etotal = []$/;"	kind:variable	line:58
+Etotal	../tensorflow/Greece/nnFFT.py	/^            Etotal = []$/;"	kind:variable	line:77
+Etotal	../tensorflow/Greece/nnFFT.py	/^            Etotal = []$/;"	kind:variable	line:96
+Etotal	../tensorflow/Greece/nnTri.py	/^            Etotal = []$/;"	kind:variable	line:58
+Etotal	../tensorflow/Greece/nnTri.py	/^            Etotal = []$/;"	kind:variable	line:77
+Etotal	../tensorflow/Greece/nnTri.py	/^            Etotal = []$/;"	kind:variable	line:96
+Etotal	../tensorflow/Neuronetrix/nn.py	/^            Etotal = []$/;"	kind:variable	line:58
+Etotal	../tensorflow/Neuronetrix/nn.py	/^            Etotal = []$/;"	kind:variable	line:80
+Etotal	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            Etotal = []$/;"	kind:variable	line:35
+Etotal	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            Etotal = []$/;"	kind:variable	line:54
+Etotal	../tensorflow/Neuronetrix/nnRaw.py	/^	            Etotal = []$/;"	kind:variable	line:103
+Etotal	../tensorflow/Neuronetrix/nnRaw.py	/^	            Etotal = []$/;"	kind:variable	line:120
+Etotal	../tensorflow/Neuronetrix/nnRaw.py	/^	            Etotal = []$/;"	kind:variable	line:62
+Etotal	../tensorflow/Neuronetrix/nnRaw.py	/^	            Etotal = []$/;"	kind:variable	line:80
+FS	../pipeline/pipeline.py	/^		FS = False$/;"	kind:variable	line:45
+FS	../pipeline/pipeline.py	/^FS = True #feature selection$/;"	kind:variable	line:25
+FSL2Vector.py	../FSL/FSL2Vector.py	1;"	kind:file	line:1
+FSL_features.py	../pipeline/FSL_features.py	1;"	kind:file	line:1
+H1	../tensorflow/Brazil/nn.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:35
+H1	../tensorflow/Brazil/nnMMSE.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:35
+H1	../tensorflow/Greece/nnBinary.py	/^    H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:36
+H1	../tensorflow/Greece/nnBinary_Chris.py	/^    H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:36
+H1	../tensorflow/Greece/nnFFT.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:35
+H1	../tensorflow/Greece/nnLat.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:35
+H1	../tensorflow/Greece/nnTri.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:35
+H1	../tensorflow/Neuronetrix/nn.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:35
+H1	../tensorflow/Neuronetrix/nnERP_test.py	/^H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:32
+H1	../tensorflow/Neuronetrix/nnRaw.py	/^	H1 = tf.nn.sigmoid(tf.matmul(X, W1) + b1)$/;"	kind:variable	line:36
+H2	../tensorflow/Brazil/nn.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:36
+H2	../tensorflow/Brazil/nnMMSE.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:36
+H2	../tensorflow/Greece/nnBinary.py	/^    H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:37
+H2	../tensorflow/Greece/nnBinary_Chris.py	/^    H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:37
+H2	../tensorflow/Greece/nnFFT.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:36
+H2	../tensorflow/Greece/nnLat.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:36
+H2	../tensorflow/Greece/nnTri.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:36
+H2	../tensorflow/Neuronetrix/nn.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:36
+H2	../tensorflow/Neuronetrix/nnERP_test.py	/^H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:33
+H2	../tensorflow/Neuronetrix/nnRaw.py	/^	H2 = tf.nn.sigmoid(tf.matmul(H1, W2) + b2)$/;"	kind:variable	line:37
+H3	../tensorflow/Brazil/nn.py	/^H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:37
+H3	../tensorflow/Brazil/nnMMSE.py	/^H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:37
+H3	../tensorflow/Greece/nnBinary.py	/^    H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:38
+H3	../tensorflow/Greece/nnBinary_Chris.py	/^    H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:38
+H3	../tensorflow/Greece/nnFFT.py	/^H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:37
+H3	../tensorflow/Greece/nnLat.py	/^H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:37
+H3	../tensorflow/Greece/nnTri.py	/^H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:37
+H3	../tensorflow/Neuronetrix/nn.py	/^H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:37
+H3	../tensorflow/Neuronetrix/nnRaw.py	/^	H3 = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:38
+HC	../tensorflow/Brazil/fold_to_feature_file.py	/^	HC = []$/;"	kind:variable	line:23
+HC	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^	HC = []$/;"	kind:variable	line:17
+HC_folders	../tensorflow/Brazil/fold_to_feature_file.py	/^HC_folders = ["..\/..\/Data\/HC_fft_B"]$/;"	kind:variable	line:16
+HC_folders	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^HC_folders = ["HCD_fft","HCS_fft","HCT_fft"]$/;"	kind:variable	line:12
+HC_prefix	../tensorflow/Brazil/fold_to_feature_file.py	/^HC_prefix = ["BHfftB"]$/;"	kind:variable	line:20
+HC_prefix	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^HC_prefix = ["NHDfft","NHSfft","NHTfft"]$/;"	kind:variable	line:14
+RECURR	../pipeline/pipeline.py	/^		RECURR = True$/;"	kind:variable	line:47
+RECURR	../pipeline/pipeline.py	/^RECURR = False$/;"	kind:variable	line:26
+W	../tensorflow/Brazil/weights_test.py	/^W = tf.Variable(tf.random_normal([3, 3]), name="Weight1")$/;"	kind:variable	line:13
+W1	../tensorflow/Brazil/nn.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:23
+W1	../tensorflow/Brazil/nnMMSE.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:23
+W1	../tensorflow/Greece/nnBinary.py	/^    W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:24
+W1	../tensorflow/Greece/nnBinary_Chris.py	/^    W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:24
+W1	../tensorflow/Greece/nnFFT.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:23
+W1	../tensorflow/Greece/nnLat.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:23
+W1	../tensorflow/Greece/nnTri.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:23
+W1	../tensorflow/Neuronetrix/nn.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:23
+W1	../tensorflow/Neuronetrix/nnERP_test.py	/^W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:22
+W1	../tensorflow/Neuronetrix/nnRaw.py	/^	W1 = tf.Variable(tf.random_normal([n_input, n_hidden1]), name="Weight1")$/;"	kind:variable	line:24
+W2	../tensorflow/Brazil/nn.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:24
+W2	../tensorflow/Brazil/nnMMSE.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:24
+W2	../tensorflow/Greece/nnBinary.py	/^    W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:25
+W2	../tensorflow/Greece/nnBinary_Chris.py	/^    W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:25
+W2	../tensorflow/Greece/nnFFT.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:24
+W2	../tensorflow/Greece/nnLat.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:24
+W2	../tensorflow/Greece/nnTri.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:24
+W2	../tensorflow/Neuronetrix/nn.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:24
+W2	../tensorflow/Neuronetrix/nnERP_test.py	/^W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:23
+W2	../tensorflow/Neuronetrix/nnRaw.py	/^	W2 = tf.Variable(tf.random_normal([n_hidden1, n_hidden2]), name="Weight2")$/;"	kind:variable	line:25
+W3	../tensorflow/Brazil/nn.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:25
+W3	../tensorflow/Brazil/nnMMSE.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:25
+W3	../tensorflow/Greece/nnBinary.py	/^    W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:26
+W3	../tensorflow/Greece/nnBinary_Chris.py	/^    W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:26
+W3	../tensorflow/Greece/nnFFT.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:25
+W3	../tensorflow/Greece/nnLat.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:25
+W3	../tensorflow/Greece/nnTri.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:25
+W3	../tensorflow/Neuronetrix/nn.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:25
+W3	../tensorflow/Neuronetrix/nnERP_test.py	/^W3 = tf.Variable(tf.random_normal([n_hidden2, n_classes]), name="Weight3")$/;"	kind:variable	line:24
+W3	../tensorflow/Neuronetrix/nnRaw.py	/^	W3 = tf.Variable(tf.random_normal([n_hidden2, n_hidden3]), name="Weight3")$/;"	kind:variable	line:26
+W4	../tensorflow/Brazil/nn.py	/^W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:26
+W4	../tensorflow/Brazil/nnMMSE.py	/^W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:26
+W4	../tensorflow/Greece/nnBinary.py	/^    W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:27
+W4	../tensorflow/Greece/nnBinary_Chris.py	/^    W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:27
+W4	../tensorflow/Greece/nnFFT.py	/^W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:26
+W4	../tensorflow/Greece/nnLat.py	/^W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:26
+W4	../tensorflow/Greece/nnTri.py	/^W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:26
+W4	../tensorflow/Neuronetrix/nn.py	/^W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:26
+W4	../tensorflow/Neuronetrix/nnRaw.py	/^	W4 = tf.Variable(tf.random_normal([n_hidden3, n_classes]), name="Weight4")$/;"	kind:variable	line:27
+WTcoef.py	../pipeline/WTcoef.py	1;"	kind:file	line:1
+X	../pipeline/pipeline.py	/^	X = np.array(X)$/;"	kind:variable	line:293
+X	../pipeline/pipeline.py	/^X = data.drop([data.columns[-1],data.columns[0]], axis=1)$/;"	kind:variable	line:151
+X	../pipeline/svm.py	/^	X = np.array(attributes)$/;"	kind:variable	line:118
+X	../tensorflow/Brazil/nn.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Brazil/nnMMSE.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Brazil/nnWeights.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Greece/nnBinary.py	/^    X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:21
+X	../tensorflow/Greece/nnBinary_Chris.py	/^    X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:21
+X	../tensorflow/Greece/nnFFT.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Greece/nnLat.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Greece/nnTri.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Neuronetrix/nn.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Neuronetrix/nnERP.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:19
+X	../tensorflow/Neuronetrix/nnERP_test.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:19
+X	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:20
+X	../tensorflow/Neuronetrix/nnRaw.py	/^	X = tf.placeholder(tf.float32, shape=[None, n_input], name="x-input")$/;"	kind:variable	line:21
+X_data	../tensorflow/Brazil/nn.py	/^X_data = np.array(total)$/;"	kind:variable	line:98
+X_data	../tensorflow/Brazil/nnMMSE.py	/^X_data = np.array(total)$/;"	kind:variable	line:105
+X_data	../tensorflow/Brazil/nnWeights.py	/^X_data = np.array(total)$/;"	kind:variable	line:74
+X_data	../tensorflow/Greece/nnBinary.py	/^    X_data = np.array(total)$/;"	kind:variable	line:138
+X_data	../tensorflow/Greece/nnBinary_Chris.py	/^    X_data = np.array(total)$/;"	kind:variable	line:138
+X_data	../tensorflow/Greece/nnFFT.py	/^X_data = np.array(total)$/;"	kind:variable	line:111
+X_data	../tensorflow/Greece/nnLat.py	/^X_data = np.array(total)$/;"	kind:variable	line:75
+X_data	../tensorflow/Greece/nnTri.py	/^X_data = np.array(total)$/;"	kind:variable	line:111
+X_data	../tensorflow/Neuronetrix/nn.py	/^X_data = np.array(total)$/;"	kind:variable	line:97
+X_data	../tensorflow/Neuronetrix/nnERP.py	/^X_data = np.array(total)$/;"	kind:variable	line:55
+X_data	../tensorflow/Neuronetrix/nnERP_Chris.py	/^X_data = np.array(total)$/;"	kind:variable	line:48
+X_data	../tensorflow/Neuronetrix/nnERP_test.py	/^X_data = np.array(total)$/;"	kind:variable	line:74
+X_data	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^X_data = np.array(total)$/;"	kind:variable	line:68
+X_data	../tensorflow/Neuronetrix/nnRaw.py	/^	X_data = np.array(total)$/;"	kind:variable	line:138
+X_reduced	../pipeline/pipeline.py	/^	X_reduced = model.transform(X)$/;"	kind:variable	line:250
+Y	../tensorflow/Brazil/nn.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Brazil/nnMMSE.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Brazil/nnWeights.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Greece/nnBinary.py	/^    Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:22
+Y	../tensorflow/Greece/nnBinary_Chris.py	/^    Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:22
+Y	../tensorflow/Greece/nnFFT.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Greece/nnLat.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Greece/nnTri.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Neuronetrix/nn.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Neuronetrix/nnERP.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:20
+Y	../tensorflow/Neuronetrix/nnERP_test.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:20
+Y	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:21
+Y	../tensorflow/Neuronetrix/nnRaw.py	/^	Y = tf.placeholder(tf.float32, shape=[None, n_classes], name="y-input")$/;"	kind:variable	line:22
+Y_data	../tensorflow/Brazil/nn.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:103
+Y_data	../tensorflow/Brazil/nnMMSE.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:110
+Y_data	../tensorflow/Brazil/nnWeights.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:79
+Y_data	../tensorflow/Greece/nnBinary.py	/^    Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:143
+Y_data	../tensorflow/Greece/nnBinary_Chris.py	/^    Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:143
+Y_data	../tensorflow/Greece/nnFFT.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:116
+Y_data	../tensorflow/Greece/nnLat.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:80
+Y_data	../tensorflow/Greece/nnTri.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:116
+Y_data	../tensorflow/Neuronetrix/nn.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:102
+Y_data	../tensorflow/Neuronetrix/nnERP.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:60
+Y_data	../tensorflow/Neuronetrix/nnERP_Chris.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:52
+Y_data	../tensorflow/Neuronetrix/nnERP_test.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:79
+Y_data	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:73
+Y_data	../tensorflow/Neuronetrix/nnRaw.py	/^	Y_data = np.eye(n_classes)[array_Y]$/;"	kind:variable	line:143
+_b85alphabet	../get-pip.py	/^    _b85alphabet = (b"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"$/;"	kind:variable	line:43
+args	../get-pip.py	/^        args = sys.argv[1:]$/;"	kind:variable	line:108
+array	../tensorflow/Brazil/createInstances.py	/^			array = list(reader)$/;"	kind:variable	line:16
+array	../tensorflow/Brazil/createInstances.py	/^			array = list(reader)$/;"	kind:variable	line:42
+array	../tensorflow/Brazil/createInstances.py	/^			array = np.array(array)$/;"	kind:variable	line:17
+array	../tensorflow/Brazil/createInstances.py	/^			array = np.array(array)$/;"	kind:variable	line:43
+array	../tensorflow/Brazil/fold_to_feature_file.py	/^		array = list(reader)$/;"	kind:variable	line:57
+array	../tensorflow/Brazil/fold_to_feature_file.py	/^		array = np.array(array)$/;"	kind:variable	line:58
+array	../tensorflow/Brazil/fold_to_feature_file.py	/^		array = np.array(list(reader))$/;"	kind:variable	line:28
+array	../tensorflow/Brazil/nn.py	/^            array = list(reader)$/;"	kind:variable	line:55
+array	../tensorflow/Brazil/nn.py	/^            array = list(reader)$/;"	kind:variable	line:78
+array	../tensorflow/Brazil/nn.py	/^            array = np.array(array)$/;"	kind:variable	line:56
+array	../tensorflow/Brazil/nn.py	/^            array = np.array(array)$/;"	kind:variable	line:79
+array	../tensorflow/Brazil/nnMMSE.py	/^            array = list(reader)$/;"	kind:variable	line:55
+array	../tensorflow/Brazil/nnMMSE.py	/^            array = list(reader)$/;"	kind:variable	line:81
+array	../tensorflow/Brazil/nnMMSE.py	/^            array = np.array(array)$/;"	kind:variable	line:56
+array	../tensorflow/Brazil/nnMMSE.py	/^            array = np.array(array)$/;"	kind:variable	line:82
+array	../tensorflow/Brazil/nnWeights.py	/^            array = list(reader)$/;"	kind:variable	line:32
+array	../tensorflow/Brazil/nnWeights.py	/^            array = list(reader)$/;"	kind:variable	line:54
+array	../tensorflow/Brazil/nnWeights.py	/^            array = np.array(array)$/;"	kind:variable	line:33
+array	../tensorflow/Brazil/nnWeights.py	/^            array = np.array(array)$/;"	kind:variable	line:55
+array	../tensorflow/Greece/nnBinary.py	/^                array = list(reader)$/;"	kind:variable	line:100
+array	../tensorflow/Greece/nnBinary.py	/^                array = list(reader)$/;"	kind:variable	line:117
+array	../tensorflow/Greece/nnBinary.py	/^                array = list(reader)$/;"	kind:variable	line:59
+array	../tensorflow/Greece/nnBinary.py	/^                array = list(reader)$/;"	kind:variable	line:77
+array	../tensorflow/Greece/nnBinary.py	/^                array = np.array(array)$/;"	kind:variable	line:101
+array	../tensorflow/Greece/nnBinary.py	/^                array = np.array(array)$/;"	kind:variable	line:118
+array	../tensorflow/Greece/nnBinary.py	/^                array = np.array(array)$/;"	kind:variable	line:60
+array	../tensorflow/Greece/nnBinary.py	/^                array = np.array(array)$/;"	kind:variable	line:78
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = list(reader)$/;"	kind:variable	line:100
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = list(reader)$/;"	kind:variable	line:117
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = list(reader)$/;"	kind:variable	line:59
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = list(reader)$/;"	kind:variable	line:77
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = np.array(array)$/;"	kind:variable	line:101
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = np.array(array)$/;"	kind:variable	line:118
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = np.array(array)$/;"	kind:variable	line:60
+array	../tensorflow/Greece/nnBinary_Chris.py	/^                array = np.array(array)$/;"	kind:variable	line:78
+array	../tensorflow/Greece/nnFFT.py	/^            array = list(reader)$/;"	kind:variable	line:55
+array	../tensorflow/Greece/nnFFT.py	/^            array = list(reader)$/;"	kind:variable	line:74
+array	../tensorflow/Greece/nnFFT.py	/^            array = list(reader)$/;"	kind:variable	line:93
+array	../tensorflow/Greece/nnFFT.py	/^            array = np.array(array)$/;"	kind:variable	line:56
+array	../tensorflow/Greece/nnFFT.py	/^            array = np.array(array)$/;"	kind:variable	line:75
+array	../tensorflow/Greece/nnFFT.py	/^            array = np.array(array)$/;"	kind:variable	line:94
+array	../tensorflow/Greece/nnLat.py	/^    array = list(reader)$/;"	kind:variable	line:54
+array	../tensorflow/Greece/nnLat.py	/^    array = np.array(array)$/;"	kind:variable	line:55
+array	../tensorflow/Greece/nnTri.py	/^            array = list(reader)$/;"	kind:variable	line:55
+array	../tensorflow/Greece/nnTri.py	/^            array = list(reader)$/;"	kind:variable	line:74
+array	../tensorflow/Greece/nnTri.py	/^            array = list(reader)$/;"	kind:variable	line:93
+array	../tensorflow/Greece/nnTri.py	/^            array = np.array(array)$/;"	kind:variable	line:56
+array	../tensorflow/Greece/nnTri.py	/^            array = np.array(array)$/;"	kind:variable	line:75
+array	../tensorflow/Greece/nnTri.py	/^            array = np.array(array)$/;"	kind:variable	line:94
+array	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		array = list(reader)$/;"	kind:variable	line:49
+array	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		array = np.array(array)$/;"	kind:variable	line:50
+array	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		array = np.array(list(reader))$/;"	kind:variable	line:22
+array	../tensorflow/Neuronetrix/nn.py	/^            array = list(reader)$/;"	kind:variable	line:55
+array	../tensorflow/Neuronetrix/nn.py	/^            array = list(reader)$/;"	kind:variable	line:77
+array	../tensorflow/Neuronetrix/nn.py	/^            array = np.array(array)$/;"	kind:variable	line:56
+array	../tensorflow/Neuronetrix/nn.py	/^            array = np.array(array)$/;"	kind:variable	line:78
+array	../tensorflow/Neuronetrix/nnERP.py	/^        array = list(reader)$/;"	kind:variable	line:31
+array	../tensorflow/Neuronetrix/nnERP.py	/^        array = np.array(array)$/;"	kind:variable	line:32
+array	../tensorflow/Neuronetrix/nnERP_Chris.py	/^	array = list(reader)$/;"	kind:variable	line:31
+array	../tensorflow/Neuronetrix/nnERP_Chris.py	/^	array = np.array(array)$/;"	kind:variable	line:32
+array	../tensorflow/Neuronetrix/nnERP_test.py	/^            array = list(reader)$/;"	kind:variable	line:52
+array	../tensorflow/Neuronetrix/nnERP_test.py	/^            array = np.array(array)$/;"	kind:variable	line:53
+array	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            array = list(reader)$/;"	kind:variable	line:32
+array	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            array = list(reader)$/;"	kind:variable	line:51
+array	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            array = np.array(array)$/;"	kind:variable	line:33
+array	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            array = np.array(array)$/;"	kind:variable	line:52
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = list(reader)$/;"	kind:variable	line:100
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = list(reader)$/;"	kind:variable	line:117
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = list(reader)$/;"	kind:variable	line:59
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = list(reader)$/;"	kind:variable	line:77
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = np.array(array)$/;"	kind:variable	line:101
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = np.array(array)$/;"	kind:variable	line:118
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = np.array(array)$/;"	kind:variable	line:60
+array	../tensorflow/Neuronetrix/nnRaw.py	/^	            array = np.array(array)$/;"	kind:variable	line:78
+array_Y	../tensorflow/Brazil/nn.py	/^array_Y = []$/;"	kind:variable	line:47
+array_Y	../tensorflow/Brazil/nn.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:102
+array_Y	../tensorflow/Brazil/nn.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:100
+array_Y	../tensorflow/Brazil/nnMMSE.py	/^array_Y = []$/;"	kind:variable	line:47
+array_Y	../tensorflow/Brazil/nnMMSE.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:109
+array_Y	../tensorflow/Brazil/nnMMSE.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:107
+array_Y	../tensorflow/Brazil/nnWeights.py	/^array_Y = []$/;"	kind:variable	line:24
+array_Y	../tensorflow/Brazil/nnWeights.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:78
+array_Y	../tensorflow/Brazil/nnWeights.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:76
+array_Y	../tensorflow/Greece/nnBinary.py	/^    array_Y = []$/;"	kind:variable	line:48
+array_Y	../tensorflow/Greece/nnBinary.py	/^    array_Y = array_Y.astype(int)$/;"	kind:variable	line:142
+array_Y	../tensorflow/Greece/nnBinary.py	/^    array_Y = np.array(array_Y)$/;"	kind:variable	line:140
+array_Y	../tensorflow/Greece/nnBinary_Chris.py	/^    array_Y = []$/;"	kind:variable	line:48
+array_Y	../tensorflow/Greece/nnBinary_Chris.py	/^    array_Y = array_Y.astype(int)$/;"	kind:variable	line:142
+array_Y	../tensorflow/Greece/nnBinary_Chris.py	/^    array_Y = np.array(array_Y)$/;"	kind:variable	line:140
+array_Y	../tensorflow/Greece/nnFFT.py	/^array_Y = []$/;"	kind:variable	line:47
+array_Y	../tensorflow/Greece/nnFFT.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:115
+array_Y	../tensorflow/Greece/nnFFT.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:113
+array_Y	../tensorflow/Greece/nnLat.py	/^array_Y = []$/;"	kind:variable	line:47
+array_Y	../tensorflow/Greece/nnLat.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:79
+array_Y	../tensorflow/Greece/nnLat.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:77
+array_Y	../tensorflow/Greece/nnTri.py	/^array_Y = []$/;"	kind:variable	line:47
+array_Y	../tensorflow/Greece/nnTri.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:115
+array_Y	../tensorflow/Greece/nnTri.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:113
+array_Y	../tensorflow/Neuronetrix/nn.py	/^array_Y = []$/;"	kind:variable	line:47
+array_Y	../tensorflow/Neuronetrix/nn.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:101
+array_Y	../tensorflow/Neuronetrix/nn.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:99
+array_Y	../tensorflow/Neuronetrix/nnERP.py	/^array_Y = []$/;"	kind:variable	line:24
+array_Y	../tensorflow/Neuronetrix/nnERP.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:59
+array_Y	../tensorflow/Neuronetrix/nnERP.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:57
+array_Y	../tensorflow/Neuronetrix/nnERP_Chris.py	/^array_Y = []$/;"	kind:variable	line:24
+array_Y	../tensorflow/Neuronetrix/nnERP_Chris.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:51
+array_Y	../tensorflow/Neuronetrix/nnERP_Chris.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:49
+array_Y	../tensorflow/Neuronetrix/nnERP_test.py	/^array_Y = []$/;"	kind:variable	line:43
+array_Y	../tensorflow/Neuronetrix/nnERP_test.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:78
+array_Y	../tensorflow/Neuronetrix/nnERP_test.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:76
+array_Y	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^array_Y = []$/;"	kind:variable	line:24
+array_Y	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^array_Y = array_Y.astype(int)$/;"	kind:variable	line:72
+array_Y	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^array_Y = np.array(array_Y)$/;"	kind:variable	line:70
+array_Y	../tensorflow/Neuronetrix/nnRaw.py	/^	array_Y = []$/;"	kind:variable	line:48
+array_Y	../tensorflow/Neuronetrix/nnRaw.py	/^	array_Y = array_Y.astype(int)$/;"	kind:variable	line:142
+array_Y	../tensorflow/Neuronetrix/nnRaw.py	/^	array_Y = np.array(array_Y)$/;"	kind:variable	line:140
+attributes	../ASD Replication/ASD_features_9.py	/^attributes = [0] * rows$/;"	kind:variable	line:19
+attributes	../ASD Replication/rqa.py	/^attributes = [0] * rows$/;"	kind:variable	line:16
+augment	../tensorflow/Brazil/chris_data_aug.py	/^def augment(array, copies):$/;"	kind:function	line:9
+augment	../tensorflow/Brazil/chris_data_aug_b.py	/^def augment(in_file, copies):$/;"	kind:function	line:7
+augment	../tensorflow/Brazil/data_aug.py	/^def augment(in_file, copies):$/;"	kind:function	line:7
+b1	../tensorflow/Brazil/nn.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:28
+b1	../tensorflow/Brazil/nnMMSE.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:28
+b1	../tensorflow/Greece/nnBinary.py	/^    b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:29
+b1	../tensorflow/Greece/nnBinary_Chris.py	/^    b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:29
+b1	../tensorflow/Greece/nnFFT.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:28
+b1	../tensorflow/Greece/nnLat.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:28
+b1	../tensorflow/Greece/nnTri.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:28
+b1	../tensorflow/Neuronetrix/nn.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:28
+b1	../tensorflow/Neuronetrix/nnERP_test.py	/^b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:26
+b1	../tensorflow/Neuronetrix/nnRaw.py	/^	b1 = tf.Variable(tf.random_normal([n_hidden1]), name="Bias1")$/;"	kind:variable	line:29
+b2	../tensorflow/Brazil/nn.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:29
+b2	../tensorflow/Brazil/nnMMSE.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:29
+b2	../tensorflow/Greece/nnBinary.py	/^    b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:30
+b2	../tensorflow/Greece/nnBinary_Chris.py	/^    b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:30
+b2	../tensorflow/Greece/nnFFT.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:29
+b2	../tensorflow/Greece/nnLat.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:29
+b2	../tensorflow/Greece/nnTri.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:29
+b2	../tensorflow/Neuronetrix/nn.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:29
+b2	../tensorflow/Neuronetrix/nnERP_test.py	/^b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:27
+b2	../tensorflow/Neuronetrix/nnRaw.py	/^	b2 = tf.Variable(tf.random_normal([n_hidden2]), name="Bias2")$/;"	kind:variable	line:30
+b3	../tensorflow/Brazil/nn.py	/^b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:30
+b3	../tensorflow/Brazil/nnMMSE.py	/^b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:30
+b3	../tensorflow/Greece/nnBinary.py	/^    b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:31
+b3	../tensorflow/Greece/nnBinary_Chris.py	/^    b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:31
+b3	../tensorflow/Greece/nnFFT.py	/^b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:30
+b3	../tensorflow/Greece/nnLat.py	/^b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:30
+b3	../tensorflow/Greece/nnTri.py	/^b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:30
+b3	../tensorflow/Neuronetrix/nn.py	/^b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:30
+b3	../tensorflow/Neuronetrix/nnERP_test.py	/^b3 = tf.Variable(tf.random_normal([n_classes]), name="Bias3")$/;"	kind:variable	line:28
+b3	../tensorflow/Neuronetrix/nnRaw.py	/^	b3 = tf.Variable(tf.random_normal([n_hidden3]), name="Bias3")$/;"	kind:variable	line:31
+b4	../tensorflow/Brazil/nn.py	/^b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:31
+b4	../tensorflow/Brazil/nnMMSE.py	/^b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:31
+b4	../tensorflow/Greece/nnBinary.py	/^    b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:32
+b4	../tensorflow/Greece/nnBinary_Chris.py	/^    b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:32
+b4	../tensorflow/Greece/nnFFT.py	/^b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:31
+b4	../tensorflow/Greece/nnLat.py	/^b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:31
+b4	../tensorflow/Greece/nnTri.py	/^b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:31
+b4	../tensorflow/Neuronetrix/nn.py	/^b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:31
+b4	../tensorflow/Neuronetrix/nnRaw.py	/^	b4 = tf.Variable(tf.random_normal([n_classes]), name="Bias4")$/;"	kind:variable	line:32
+b85decode	../get-pip.py	/^    def b85decode(b):$/;"	kind:function	line:46
+basepath	../tensorflow/Brazil/createInstances.py	/^basepath = 'RawData\/ADF50'$/;"	kind:variable	line:36
+basepath	../tensorflow/Brazil/createInstances.py	/^basepath = 'RawData\/HCF50'$/;"	kind:variable	line:10
+basepath	../tensorflow/Brazil/nn.py	/^basepath = 'AD_fft_B\/'$/;"	kind:variable	line:72
+basepath	../tensorflow/Brazil/nn.py	/^basepath = 'HC_fft_B\/'$/;"	kind:variable	line:49
+basepath	../tensorflow/Brazil/nnMMSE.py	/^basepath = 'AD_fft_B\/'$/;"	kind:variable	line:75
+basepath	../tensorflow/Brazil/nnMMSE.py	/^basepath = 'HC_fft_B\/'$/;"	kind:variable	line:49
+basepath	../tensorflow/Brazil/nnWeights.py	/^basepath = 'AD_fft_B\/'$/;"	kind:variable	line:48
+basepath	../tensorflow/Brazil/nnWeights.py	/^basepath = 'HC_fft_B\/'$/;"	kind:variable	line:26
+basepath	../tensorflow/Greece/nnBinary.py	/^    basepath = 'AD_stan'$/;"	kind:variable	line:94
+basepath	../tensorflow/Greece/nnBinary.py	/^    basepath = 'AD_targ'$/;"	kind:variable	line:111
+basepath	../tensorflow/Greece/nnBinary.py	/^    basepath = 'HC_stan'$/;"	kind:variable	line:53
+basepath	../tensorflow/Greece/nnBinary.py	/^    basepath = 'HC_targ'$/;"	kind:variable	line:71
+basepath	../tensorflow/Greece/nnBinary_Chris.py	/^    basepath = 'AD_stan'$/;"	kind:variable	line:94
+basepath	../tensorflow/Greece/nnBinary_Chris.py	/^    basepath = 'AD_targ'$/;"	kind:variable	line:111
+basepath	../tensorflow/Greece/nnBinary_Chris.py	/^    basepath = 'HC_stan'$/;"	kind:variable	line:53
+basepath	../tensorflow/Greece/nnBinary_Chris.py	/^    basepath = 'HC_targ'$/;"	kind:variable	line:71
+basepath	../tensorflow/Greece/nnFFT.py	/^basepath = 'AD_stan_fft'$/;"	kind:variable	line:87
+basepath	../tensorflow/Greece/nnFFT.py	/^basepath = 'HC_stan_fft'$/;"	kind:variable	line:49
+basepath	../tensorflow/Greece/nnFFT.py	/^basepath = 'MCI_stan_fft'$/;"	kind:variable	line:68
+basepath	../tensorflow/Greece/nnLat.py	/^basepath = 'data\/'$/;"	kind:variable	line:49
+basepath	../tensorflow/Greece/nnTri.py	/^basepath = 'AD_targ'$/;"	kind:variable	line:87
+basepath	../tensorflow/Greece/nnTri.py	/^basepath = 'HC_targ'$/;"	kind:variable	line:49
+basepath	../tensorflow/Greece/nnTri.py	/^basepath = 'MCI_targ'$/;"	kind:variable	line:68
+basepath	../tensorflow/Neuronetrix/nn.py	/^basepath = 'AD_fft_B\/'$/;"	kind:variable	line:71
+basepath	../tensorflow/Neuronetrix/nn.py	/^basepath = 'HC_fft_B\/'$/;"	kind:variable	line:49
+basepath	../tensorflow/Neuronetrix/nnERP.py	/^basepath = 'data\/'$/;"	kind:variable	line:26
+basepath	../tensorflow/Neuronetrix/nnERP_Chris.py	/^basepath = 'data\/'$/;"	kind:variable	line:26
+basepath	../tensorflow/Neuronetrix/nnERP_test.py	/^basepath = 'data\/'$/;"	kind:variable	line:45
+basepath	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^basepath = 'ADS_fft'$/;"	kind:variable	line:45
+basepath	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^basepath = 'HCS_fft'$/;"	kind:variable	line:26
+basepath	../tensorflow/Neuronetrix/nnRaw.py	/^	basepath = 'AD_stan'$/;"	kind:variable	line:94
+basepath	../tensorflow/Neuronetrix/nnRaw.py	/^	basepath = 'AD_targ'$/;"	kind:variable	line:111
+basepath	../tensorflow/Neuronetrix/nnRaw.py	/^	basepath = 'HC_stan'$/;"	kind:variable	line:53
+basepath	../tensorflow/Neuronetrix/nnRaw.py	/^	basepath = 'HC_targ'$/;"	kind:variable	line:71
+bootstrap	../get-pip.py	/^def bootstrap(tmpdir=None):$/;"	kind:function	line:80
+butter_bandpass	../pipeline/BandPass1.py	/^def butter_bandpass(lowcut, highcut, fs, order=6):$/;"	kind:function	line:6
+butter_bandpass_filter	../pipeline/BandPass1.py	/^def butter_bandpass_filter(data, lowcut, highcut, fs, order=6):$/;"	kind:function	line:14
+cert_path	../get-pip.py	/^        cert_path = os.path.join(tmpdir, "cacert.pem")$/;"	kind:variable	line:169
+chris_data_aug.py	../tensorflow/Brazil/chris_data_aug.py	1;"	kind:file	line:1
+chris_data_aug_b.py	../tensorflow/Brazil/chris_data_aug_b.py	1;"	kind:file	line:1
+clf	../pipeline/pipeline.py	/^	clf = ExtraTreesClassifier()$/;"	kind:variable	line:234
+clf	../pipeline/pipeline.py	/^	clf = GradientBoostingClassifier()$/;"	kind:variable	line:241
+clf	../pipeline/pipeline.py	/^	clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')$/;"	kind:variable	line:238
+cols	../ASD Replication/ASD_features_9.py	/^	cols = len(data[row]) - 1$/;"	kind:variable	line:21
+cols	../ASD Replication/ASD_features_9.py	/^	cols = len(data[row])$/;"	kind:variable	line:29
+cols	../ASD Replication/rqa.py	/^	cols = len(data[row]) - 1$/;"	kind:variable	line:18
+cols	../ASD Replication/rqa.py	/^	cols = len(data[row])$/;"	kind:variable	line:26
+combined	../tensorflow/Brazil/createInstances.py	/^combined = np.concatenate((combined_HC, combined_AD))$/;"	kind:variable	line:63
+combined_AD	../tensorflow/Brazil/createInstances.py	/^			combined_AD = np.concatenate((combined_AD,total))$/;"	kind:variable	line:61
+combined_AD	../tensorflow/Brazil/createInstances.py	/^combined_AD = np.empty((0,21*num_timePoints+1))$/;"	kind:variable	line:37
+combined_AD	../tensorflow/Brazil/nn.py	/^combined_AD = []$/;"	kind:variable	line:73
+combined_AD	../tensorflow/Brazil/nn.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:92
+combined_AD	../tensorflow/Brazil/nnMMSE.py	/^combined_AD = []$/;"	kind:variable	line:76
+combined_AD	../tensorflow/Brazil/nnMMSE.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:99
+combined_AD	../tensorflow/Brazil/nnWeights.py	/^combined_AD = []$/;"	kind:variable	line:49
+combined_AD	../tensorflow/Brazil/nnWeights.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:68
+combined_AD	../tensorflow/Greece/nnBinary.py	/^    combined_AD = []$/;"	kind:variable	line:51
+combined_AD	../tensorflow/Greece/nnBinary.py	/^    combined_AD = np.array(combined_AD)$/;"	kind:variable	line:132
+combined_AD	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_AD = []$/;"	kind:variable	line:51
+combined_AD	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_AD = np.array(combined_AD)$/;"	kind:variable	line:132
+combined_AD	../tensorflow/Greece/nnFFT.py	/^combined_AD = []$/;"	kind:variable	line:88
+combined_AD	../tensorflow/Greece/nnFFT.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:104
+combined_AD	../tensorflow/Greece/nnLat.py	/^combined_AD = []$/;"	kind:variable	line:51
+combined_AD	../tensorflow/Greece/nnLat.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:69
+combined_AD	../tensorflow/Greece/nnTri.py	/^combined_AD = []$/;"	kind:variable	line:88
+combined_AD	../tensorflow/Greece/nnTri.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:104
+combined_AD	../tensorflow/Neuronetrix/nn.py	/^combined_AD = []$/;"	kind:variable	line:72
+combined_AD	../tensorflow/Neuronetrix/nn.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:91
+combined_AD	../tensorflow/Neuronetrix/nnERP.py	/^combined_AD = []$/;"	kind:variable	line:28
+combined_AD	../tensorflow/Neuronetrix/nnERP.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:49
+combined_AD	../tensorflow/Neuronetrix/nnERP_test.py	/^combined_AD = []$/;"	kind:variable	line:47
+combined_AD	../tensorflow/Neuronetrix/nnERP_test.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:68
+combined_AD	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^combined_AD = []$/;"	kind:variable	line:46
+combined_AD	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^combined_AD = np.array(combined_AD)$/;"	kind:variable	line:62
+combined_AD	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_AD = []$/;"	kind:variable	line:51
+combined_AD	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_AD = np.array(combined_AD)$/;"	kind:variable	line:132
+combined_ADs	../tensorflow/Greece/nnBinary.py	/^    combined_ADs = []$/;"	kind:variable	line:95
+combined_ADs	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_ADs = []$/;"	kind:variable	line:95
+combined_ADs	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_ADs = []$/;"	kind:variable	line:95
+combined_ADt	../tensorflow/Greece/nnBinary.py	/^    combined_ADt = []$/;"	kind:variable	line:112
+combined_ADt	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_ADt = []$/;"	kind:variable	line:112
+combined_ADt	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_ADt = []$/;"	kind:variable	line:112
+combined_HC	../tensorflow/Brazil/createInstances.py	/^			combined_HC = np.concatenate((combined_HC,total)) #12000x630$/;"	kind:variable	line:34
+combined_HC	../tensorflow/Brazil/createInstances.py	/^combined_HC = np.empty((0,21*num_timePoints+1))$/;"	kind:variable	line:11
+combined_HC	../tensorflow/Brazil/nn.py	/^combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Brazil/nn.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:70
+combined_HC	../tensorflow/Brazil/nnMMSE.py	/^combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Brazil/nnMMSE.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:73
+combined_HC	../tensorflow/Brazil/nnWeights.py	/^combined_HC = []$/;"	kind:variable	line:27
+combined_HC	../tensorflow/Brazil/nnWeights.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:46
+combined_HC	../tensorflow/Greece/nnBinary.py	/^    combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Greece/nnBinary.py	/^    combined_HC = np.array(combined_HC)$/;"	kind:variable	line:92
+combined_HC	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_HC = np.array(combined_HC)$/;"	kind:variable	line:92
+combined_HC	../tensorflow/Greece/nnFFT.py	/^combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Greece/nnFFT.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:66
+combined_HC	../tensorflow/Greece/nnLat.py	/^combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Greece/nnLat.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:68
+combined_HC	../tensorflow/Greece/nnTri.py	/^combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Greece/nnTri.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:66
+combined_HC	../tensorflow/Neuronetrix/nn.py	/^combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Neuronetrix/nn.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:69
+combined_HC	../tensorflow/Neuronetrix/nnERP.py	/^combined_HC = []$/;"	kind:variable	line:27
+combined_HC	../tensorflow/Neuronetrix/nnERP.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:48
+combined_HC	../tensorflow/Neuronetrix/nnERP_test.py	/^combined_HC = []$/;"	kind:variable	line:46
+combined_HC	../tensorflow/Neuronetrix/nnERP_test.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:67
+combined_HC	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^combined_HC = []$/;"	kind:variable	line:27
+combined_HC	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^combined_HC = np.array(combined_HC)$/;"	kind:variable	line:43
+combined_HC	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_HC = []$/;"	kind:variable	line:50
+combined_HC	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_HC = np.array(combined_HC)$/;"	kind:variable	line:92
+combined_HCs	../tensorflow/Greece/nnBinary.py	/^    combined_HCs = []$/;"	kind:variable	line:54
+combined_HCs	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_HCs = []$/;"	kind:variable	line:54
+combined_HCs	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_HCs = []$/;"	kind:variable	line:54
+combined_HCt	../tensorflow/Greece/nnBinary.py	/^    combined_HCt = []$/;"	kind:variable	line:72
+combined_HCt	../tensorflow/Greece/nnBinary_Chris.py	/^    combined_HCt = []$/;"	kind:variable	line:72
+combined_HCt	../tensorflow/Neuronetrix/nnRaw.py	/^	combined_HCt = []$/;"	kind:variable	line:72
+combined_MCI	../tensorflow/Greece/nnFFT.py	/^combined_MCI = []$/;"	kind:variable	line:69
+combined_MCI	../tensorflow/Greece/nnFFT.py	/^combined_MCI = np.array(combined_MCI)$/;"	kind:variable	line:85
+combined_MCI	../tensorflow/Greece/nnTri.py	/^combined_MCI = []$/;"	kind:variable	line:69
+combined_MCI	../tensorflow/Greece/nnTri.py	/^combined_MCI = np.array(combined_MCI)$/;"	kind:variable	line:85
+common_features	../pipeline/pipeline.py	/^	common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values$/;"	kind:variable	line:244
+computation	../ASD Replication/ASD_features_9.py	/^	computation = RQAComputation.create(settings, verbose=False)$/;"	kind:variable	line:67
+computation	../ASD Replication/rqa.py	/^computation = RQAComputation.create(settings, verbose=False)$/;"	kind:variable	line:51
+compute_group_score	../pipeline/compute_score.py	/^def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy'):$/;"	kind:function	line:8
+compute_score.py	../pipeline/compute_score.py	1;"	kind:file	line:1
+concat	../tensorflow/Greece/nnBinary.py	/^        concat = []$/;"	kind:variable	line:128
+concat	../tensorflow/Greece/nnBinary.py	/^        concat = []$/;"	kind:variable	line:88
+concat	../tensorflow/Greece/nnBinary_Chris.py	/^        concat = []$/;"	kind:variable	line:128
+concat	../tensorflow/Greece/nnBinary_Chris.py	/^        concat = []$/;"	kind:variable	line:88
+concat	../tensorflow/Neuronetrix/nnRaw.py	/^	    concat = []$/;"	kind:variable	line:128
+concat	../tensorflow/Neuronetrix/nnRaw.py	/^	    concat = []$/;"	kind:variable	line:88
+copies	../tensorflow/Brazil/nn_Chris.py	/^copies = 0$/;"	kind:variable	line:308
+count	../FSL/run_FSL_neuronetrix.py	/^count = 0$/;"	kind:variable	line:11
+count	../Synapto_Weka/run_all_featuresets.py	/^count = 0$/;"	kind:variable	line:21
+count	../tensorflow/Brazil/fold_to_feature_file.py	/^count = 0$/;"	kind:variable	line:13
+count	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^count = 0$/;"	kind:variable	line:11
+count_cols	../tensorflow/Brazil/fold_to_feature_file.py	/^	count_cols = 0 $/;"	kind:variable	line:24
+count_cols	../tensorflow/Brazil/fold_to_feature_file.py	/^	count_cols = 0 $/;"	kind:variable	line:52
+count_cols	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^	count_cols = 0 $/;"	kind:variable	line:18
+count_cols	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^	count_cols = 0 $/;"	kind:variable	line:45
+createFSLFeatureSet	../pipeline/createFSLFeatureSet.py	/^def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, recurr):$/;"	kind:function	line:8
+createFSLFeatureSet.py	../pipeline/createFSLFeatureSet.py	1;"	kind:file	line:1
+createFeatureSet	../pipeline/createFeatureSet.py	/^def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2, data_type, recurr):$/;"	kind:function	line:9
+createFeatureSet.py	../pipeline/createFeatureSet.py	1;"	kind:file	line:1
+createInstances.py	../tensorflow/Brazil/createInstances.py	1;"	kind:file	line:1
+createRecurrFeatureSet.py	../pipeline/createRecurrFeatureSet.py	1;"	kind:file	line:1
+data	../ASD Replication/ASD_features_9.py	/^		data = [r for r in reader] #Place all data in data array $/;"	kind:variable	line:16
+data	../ASD Replication/rqa.py	/^		data = [r for r in reader] #Place all data in data array $/;"	kind:variable	line:13
+data	../pipeline/pipeline.py	/^	data = pd.read_csv(features_path, header = 'infer')$/;"	kind:variable	line:142
+data	../pipeline/pipeline.py	/^	data = pd.read_csv(features_path,header = 'infer')$/;"	kind:variable	line:140
+data	../pipeline/svm.py	/^		data = [r for r in reader] #Place all data in data array $/;"	kind:variable	line:113
+data	../tensorflow/Brazil/createInstances.py	/^			data = array$/;"	kind:variable	line:21
+data	../tensorflow/Brazil/createInstances.py	/^			data = array$/;"	kind:variable	line:47
+data_aug.py	../tensorflow/Brazil/data_aug.py	1;"	kind:file	line:1
+data_dir	../FSL/FSL2Vector.py	/^data_dir = "Brazil_FSL"$/;"	kind:variable	line:4
+data_dir	../Synapto_Weka/run_all_featuresets.py	/^data_dir = "..\/Feature_Sets\/"$/;"	kind:variable	line:6
+data_dirs	../FSL/run_FSL_neuronetrix.py	/^data_dirs = os.listdir("..\/Data\/")$/;"	kind:variable	line:7
+data_dirs	../Synapto_Weka/run_all_featuresets.py	/^data_dirs = os.listdir(data_dir)$/;"	kind:variable	line:7
+data_folder_path1	../pipeline/pipeline.py	/^			data_folder_path1 = '...\/PathToGreeceHC_DataFolder'$/;"	kind:variable	line:109
+data_folder_path1	../pipeline/pipeline.py	/^			data_folder_path1 = 'BrazilRawData\/HCF50'$/;"	kind:variable	line:104
+data_folder_path2	../pipeline/pipeline.py	/^			data_folder_path2 = '...\/PathToGreeceMCI_DataFolder'$/;"	kind:variable	line:110
+data_folder_path2	../pipeline/pipeline.py	/^			data_folder_path2 = 'BrazilRawData\/ADF50'$/;"	kind:variable	line:105
+data_type	../pipeline/pipeline.py	/^		data_type = sys.argv[i+1]$/;"	kind:variable	line:37
+data_type	../pipeline/pipeline.py	/^data_type = ''$/;"	kind:variable	line:21
+dfa	../ASD Replication/ASD_features_9.py	/^	dfa = nolds.dfa(attributes[band])$/;"	kind:variable	line:50
+dfa	../ASD Replication/nolds_feature.py	/^dfa = nolds.dfa(rwalk)$/;"	kind:variable	line:5
+dirs	../FSL/run_FSL_neuronetrix.py	/^	dirs = os.listdir(os.path.join("..\/Data",data_dir))$/;"	kind:variable	line:13
+done_files	../Synapto_Weka/run_all_featuresets.py	/^done_files = set([])$/;"	kind:variable	line:13
+elements	../tensorflow/Brazil/nn.py	/^elements = len(X_data)$/;"	kind:variable	line:114
+elements	../tensorflow/Brazil/nnMMSE.py	/^elements = len(X_data)$/;"	kind:variable	line:121
+elements	../tensorflow/Brazil/nnWeights.py	/^elements = len(X_data)$/;"	kind:variable	line:90
+elements	../tensorflow/Greece/nnBinary.py	/^    elements = len(X_data)$/;"	kind:variable	line:154
+elements	../tensorflow/Greece/nnBinary_Chris.py	/^    elements = len(X_data)$/;"	kind:variable	line:154
+elements	../tensorflow/Greece/nnFFT.py	/^elements = len(X_data)$/;"	kind:variable	line:127
+elements	../tensorflow/Greece/nnLat.py	/^elements = len(X_data)$/;"	kind:variable	line:91
+elements	../tensorflow/Greece/nnTri.py	/^elements = len(X_data)$/;"	kind:variable	line:127
+elements	../tensorflow/Neuronetrix/nn.py	/^elements = len(X_data)$/;"	kind:variable	line:113
+elements	../tensorflow/Neuronetrix/nnERP.py	/^elements = len(X_data)$/;"	kind:variable	line:71
+elements	../tensorflow/Neuronetrix/nnERP_Chris.py	/^elements = len(X_data)$/;"	kind:variable	line:62
+elements	../tensorflow/Neuronetrix/nnERP_test.py	/^elements = len(X_data)$/;"	kind:variable	line:90
+elements	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^elements = len(X_data)$/;"	kind:variable	line:84
+elements	../tensorflow/Neuronetrix/nnRaw.py	/^	elements = len(X_data)$/;"	kind:variable	line:154
+extractASDFeatures	../pipeline/ASD_features.py	/^def extractASDFeatures(time_series_electrode):$/;"	kind:function	line:14
+extractFSLFeatures	../pipeline/FSL_features.py	/^def extractFSLFeatures(time_series_electrode):$/;"	kind:function	line:7
+extractFeatureFunc	../pipeline/pipeline.py	/^			extractFeatureFunc = createFSLFeatureSet$/;"	kind:variable	line:80
+extractFeatureFunc	../pipeline/pipeline.py	/^			extractFeatureFunc = extractASDFeatures$/;"	kind:variable	line:76
+extractFeatureFunc	../pipeline/pipeline.py	/^			extractFeatureFunc = extractWaveletFeatures$/;"	kind:variable	line:78
+extractWaveletFeatures	../pipeline/WTcoef.py	/^def extractWaveletFeatures(x):$/;"	kind:function	line:5
+f	../tensorflow/Brazil/fold_to_feature_file.py	/^		f = open(AD_folders[j] + "\/" + AD_prefix[j] + str(i+1) +".csv",'r')$/;"	kind:variable	line:55
+f	../tensorflow/Brazil/fold_to_feature_file.py	/^		f = open(HC_folders[j] + "\/" + HC_prefix[j] + str(i+1) +".csv",'r')$/;"	kind:variable	line:26
+f	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		f = open(AD_folders[j] + "\/" + AD_prefix[j] + str(i+1) +".csv",'r')$/;"	kind:variable	line:47
+f	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		f = open(HC_folders[j] + "\/" + HC_prefix[j] + str(i+1) +".csv",'r')$/;"	kind:variable	line:20
+f_out	../tensorflow/Brazil/fold_to_feature_file.py	/^f_out = open("Feature_Sets\/fft_B_des.csv",'wb')$/;"	kind:variable	line:11
+f_out	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^f_out = open("data\/all_fft_des.csv",'wb')$/;"	kind:variable	line:9
+feat_importances_et	../pipeline/pipeline.py	/^	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features$/;"	kind:variable	line:236
+feat_importances_gb	../pipeline/pipeline.py	/^	feat_importances_gb = get_feature_importance(clf, X, y, 50)$/;"	kind:variable	line:242
+feat_importances_rf	../pipeline/pipeline.py	/^	feat_importances_rf = get_feature_importance(clf, X, y, 50)$/;"	kind:variable	line:239
+featureName	../pipeline/pipeline.py	/^		featureName = sys.argv[i+1]$/;"	kind:variable	line:39
+featureName	../pipeline/pipeline.py	/^featureName = ''$/;"	kind:variable	line:20
+featureSelection.py	../pipeline/featureSelection.py	1;"	kind:file	line:1
+featureSetEdit.py	../pipeline/featureSetEdit.py	1;"	kind:file	line:1
+feature_ranking.py	../pipeline/feature_ranking.py	1;"	kind:file	line:1
+features_func	../ASD Replication/ASD_features_testonbands.py	/^def features_func(filepath, o_filename):$/;"	kind:function	line:18
+features_path	../pipeline/pipeline.py	/^		features_path = sys.argv[i+1]$/;"	kind:variable	line:49
+features_path	../pipeline/pipeline.py	/^		features_path = sys.path[0] + '\/FeatureSets\/'+data_type+'Recurr'+identifier+'.csv'$/;"	kind:variable	line:90
+features_path	../pipeline/pipeline.py	/^	features_path = sys.path[0] + '\/FeatureSets\/'+ filename$/;"	kind:variable	line:97
+file	../FSL/FSL2Vector.py	/^		file = os.path.join(vec_dir + "\/" +  dir_name ,filename.split('.')[0]+".csv")$/;"	kind:variable	line:9
+file	../FSL/run_FSL_neuronetrix.py	/^		file = os.path.join(output_dir,data_dir) + "\/" + filename.replace(".csv","") + ".dat"$/;"	kind:variable	line:22
+filename	../pipeline/pipeline.py	/^		filename = features_path.split('\/')[-1]$/;"	kind:variable	line:50
+filename	../pipeline/pipeline.py	/^	filename = featureName+'features'+identifier+'.csv'$/;"	kind:variable	line:96
+filepath	../ASD Replication/ASD_features_testonbands.py	/^			filepath = str(sys.argv[i+1])$/;"	kind:variable	line:80
+filepath	../Synapto_Weka/svm.py	/^			filepath = str(sys.argv[i+1])$/;"	kind:variable	line:116
+filepath	../pipeline/svm.py	/^			filepath = str(sys.argv[i+1])$/;"	kind:variable	line:93
+filepath_inserted	../ASD Replication/ASD_features_testonbands.py	/^			filepath_inserted = True$/;"	kind:variable	line:81
+filepath_inserted	../ASD Replication/ASD_features_testonbands.py	/^	filepath_inserted = False$/;"	kind:variable	line:62
+filepath_inserted	../Synapto_Weka/svm.py	/^			filepath_inserted = True$/;"	kind:variable	line:117
+filepath_inserted	../Synapto_Weka/svm.py	/^	filepath_inserted = False$/;"	kind:variable	line:98
+filepath_inserted	../pipeline/svm.py	/^			filepath_inserted = True$/;"	kind:variable	line:94
+filepath_inserted	../pipeline/svm.py	/^	filepath_inserted = False$/;"	kind:variable	line:75
+find_zScore.py	../tensorflow/Brazil/find_zScore.py	1;"	kind:file	line:1
+find_zScore.py	../tensorflow/Neuronetrix/data/find_zScore.py	1;"	kind:file	line:1
+find_zScore.py	../tensorflow/Neuronetrix/find_zScore.py	1;"	kind:file	line:1
+fold_to_feature_file.py	../tensorflow/Brazil/fold_to_feature_file.py	1;"	kind:file	line:1
+fold_to_feature_file.py	../tensorflow/Neuronetrix/fold_to_feature_file.py	1;"	kind:file	line:1
+gboost	../pipeline/pipeline.py	/^gboost = GradientBoostingClassifier()$/;"	kind:variable	line:284
+get-pip.py	../get-pip.py	1;"	kind:file	line:1
+get_feature_importance	../pipeline/feature_ranking.py	/^def get_feature_importance(clf, X, y, num_features):$/;"	kind:function	line:8
+groups	../pipeline/pipeline.py	/^groups = data.index.values$/;"	kind:variable	line:148
+header	../ASD Replication/ASD_features_9.py	/^			header = ["L_entr", "L_max", "L_mean", "RR", "DET", "LAM", "TT", "DFA", "SampE"]$/;"	kind:variable	line:86
+header	../ASD Replication/ASD_features_testonbands.py	/^			header = ["L_entr", "L_max", "L_mean", "RR", "DET", "LAM", "TT", "DFA", "SampE"]$/;"	kind:variable	line:70
+header	../Synapto_Weka/svm.py	/^			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']$/;"	kind:variable	line:106
+header	../pipeline/pipeline.py	/^			header = ['Date','filename', 'Feature', 'Data', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', $/;"	kind:variable	line:307
+header	../pipeline/svm.py	/^			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']$/;"	kind:variable	line:83
+header	../tensorflow/Brazil/fold_to_feature_file.py	/^			header = []$/;"	kind:variable	line:43
+header	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^			header = []$/;"	kind:variable	line:36
+helpString	../pipeline/pipeline.py	/^		helpString = ('Run pipeline starting from beginning:\\nInput arguments:\\n-d: data type (choices: Brazil, Greece)' +$/;"	kind:variable	line:30
+identifier	../pipeline/pipeline.py	/^		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'$/;"	kind:variable	line:89
+identifier	../pipeline/pipeline.py	/^		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'$/;"	kind:variable	line:93
+implicit_setuptools	../get-pip.py	/^        implicit_setuptools = False$/;"	kind:variable	line:106
+implicit_wheel	../get-pip.py	/^        implicit_wheel = False$/;"	kind:variable	line:113
+index	../tensorflow/Brazil/createInstances.py	/^				index = int(bunch*(len(array)\/num_bunches))$/;"	kind:variable	line:26
+index	../tensorflow/Brazil/createInstances.py	/^				index = int(bunch*(len(array)\/num_bunches))$/;"	kind:variable	line:52
+infile	../Synapto_Weka/run_all_featuresets.py	/^			infile= os.path.join(data_dir+dir,filename)$/;"	kind:variable	line:25
+init	../tensorflow/Brazil/weights_test.py	/^	init = tf.global_variables_initializer()$/;"	kind:variable	line:16
+is_number	../tensorflow/Brazil/nn_Chris.py	/^def is_number(s):$/;"	kind:function	line:15
+iterbytes	../get-pip.py	/^    def iterbytes(buf):$/;"	kind:function	line:37
+iterbytes	../get-pip.py	/^    iterbytes = iter$/;"	kind:variable	line:35
+key	../tensorflow/Brazil/nnMMSE.py	/^            key = name.index("_")$/;"	kind:variable	line:69
+key	../tensorflow/Brazil/nnMMSE.py	/^            key = name.index("_")$/;"	kind:variable	line:95
+kneighbors	../pipeline/pipeline.py	/^kneighbors = KNeighborsClassifier(n_neighbors=5)  $/;"	kind:variable	line:287
+label	../FSL/run_FSL_neuronetrix.py	/^			label = "AD"$/;"	kind:variable	line:18
+label	../FSL/run_FSL_neuronetrix.py	/^			label = "HC"$/;"	kind:variable	line:20
+learning_rate	../tensorflow/Brazil/nn.py	/^learning_rate = 0.3$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Brazil/nnMMSE.py	/^learning_rate = 0.01$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Brazil/nnWeights.py	/^learning_rate = 0.2$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Greece/nnBinary.py	/^    learning_rate = 0.2$/;"	kind:variable	line:10
+learning_rate	../tensorflow/Greece/nnBinary_Chris.py	/^    learning_rate = 0.2$/;"	kind:variable	line:10
+learning_rate	../tensorflow/Greece/nnFFT.py	/^learning_rate = 0.4$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Greece/nnLat.py	/^learning_rate = 0.01$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Greece/nnTri.py	/^learning_rate = 0.2$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Neuronetrix/nn.py	/^learning_rate = 0.3$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Neuronetrix/nnERP.py	/^learning_rate = 0.3$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Neuronetrix/nnERP_Chris.py	/^learning_rate = 0.3$/;"	kind:variable	line:12
+learning_rate	../tensorflow/Neuronetrix/nnERP_test.py	/^learning_rate = 0.01$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^learning_rate = 0.4$/;"	kind:variable	line:9
+learning_rate	../tensorflow/Neuronetrix/nnRaw.py	/^	learning_rate = 0.2$/;"	kind:variable	line:10
+logreg	../pipeline/pipeline.py	/^logreg = LogisticRegression() $/;"	kind:variable	line:281
+logreg_cv	../pipeline/pipeline.py	/^logreg_cv = LogisticRegressionCV()$/;"	kind:variable	line:282
+loss	../tensorflow/Brazil/nn.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:42
+loss	../tensorflow/Brazil/nnMMSE.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:42
+loss	../tensorflow/Greece/nnBinary.py	/^    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:43
+loss	../tensorflow/Greece/nnBinary_Chris.py	/^    loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:43
+loss	../tensorflow/Greece/nnFFT.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:42
+loss	../tensorflow/Greece/nnLat.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:42
+loss	../tensorflow/Greece/nnTri.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:42
+loss	../tensorflow/Neuronetrix/nn.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:42
+loss	../tensorflow/Neuronetrix/nnERP_test.py	/^loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:38
+loss	../tensorflow/Neuronetrix/nnRaw.py	/^	loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=Y, logits=output))$/;"	kind:variable	line:43
+main	../get-pip.py	/^def main():$/;"	kind:function	line:182
+mat	../FSL/FSL2Vector.py	/^		mat = list(reader)$/;"	kind:variable	line:18
+metrics	../pipeline/metrics.py	/^def metrics(y_true,y_pred,y_scores):$/;"	kind:function	line:6
+metrics	../pipeline/pipeline.py	/^		metrics = [accuracy,f1, tnP,fpP,fnP,tpP,roc_auc]$/;"	kind:variable	line:316
+metrics.py	../pipeline/metrics.py	1;"	kind:file	line:1
+min_diagonal_line_length	../ASD Replication/ASD_features_9.py	/^	                        min_diagonal_line_length=2,$/;"	kind:variable	line:62
+min_diagonal_line_length	../ASD Replication/rqa.py	/^                        min_diagonal_line_length=2,$/;"	kind:variable	line:47
+min_vertical_line_length	../ASD Replication/ASD_features_9.py	/^	                        min_vertical_line_length=2,$/;"	kind:variable	line:63
+min_vertical_line_length	../ASD Replication/rqa.py	/^                        min_vertical_line_length=2,$/;"	kind:variable	line:48
+min_white_vertical_line_length	../ASD Replication/ASD_features_9.py	/^	                        min_white_vertical_line_length=2)$/;"	kind:variable	line:64
+min_white_vertical_line_length	../ASD Replication/rqa.py	/^                        min_white_vertical_line_length=2)$/;"	kind:variable	line:49
+model	../pipeline/pipeline.py	/^	model = SelectFromModel(clf, prefit=True)$/;"	kind:variable	line:249
+models	../pipeline/pipeline.py	/^models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]$/;"	kind:variable	line:290
+n	../pipeline/nn_Recurr.py	/^n=1$/;"	kind:variable	line:206
+n	../pipeline/nn_keras.py	/^n=1$/;"	kind:variable	line:188
+n	../tensorflow/Brazil/nn_Anoop.py	/^n=1$/;"	kind:variable	line:282
+n	../tensorflow/Brazil/nn_Chris.py	/^n=1$/;"	kind:variable	line:309
+n	../tensorflow/Brazil/nn_Chris_2.py	/^n=1$/;"	kind:variable	line:279
+n	../tensorflow/Brazil/nn_Keras.py	/^n=1$/;"	kind:variable	line:186
+n	../tensorflow/Brazil/nn_Keras_Chris.py	/^n=1$/;"	kind:variable	line:186
+n	../tensorflow/Brazil/nn_Recurr.py	/^n=1$/;"	kind:variable	line:204
+n_classes	../tensorflow/Brazil/nn.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:14
+n_classes	../tensorflow/Brazil/nnMMSE.py	/^n_classes = 30 # MMSE score (24-30 = normal cognition, 19-23 = MCI, 10-18 = moderate, <=9 = severe)$/;"	kind:variable	line:14
+n_classes	../tensorflow/Brazil/nnWeights.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:14
+n_classes	../tensorflow/Greece/nnBinary.py	/^    n_classes = 2 # 0 - Healthy, 1 - AD$/;"	kind:variable	line:15
+n_classes	../tensorflow/Greece/nnBinary_Chris.py	/^    n_classes = 2 # 0 - Healthy, 1 - AD$/;"	kind:variable	line:15
+n_classes	../tensorflow/Greece/nnFFT.py	/^n_classes = 3 # 0 - Healthy, 1 - MCI, 2 - AD$/;"	kind:variable	line:14
+n_classes	../tensorflow/Greece/nnLat.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:14
+n_classes	../tensorflow/Greece/nnTri.py	/^n_classes = 3 # 0 - Healthy, 1 - MCI, 2 - AD$/;"	kind:variable	line:14
+n_classes	../tensorflow/Neuronetrix/nn.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:14
+n_classes	../tensorflow/Neuronetrix/nnERP.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:13
+n_classes	../tensorflow/Neuronetrix/nnERP_Chris.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:16
+n_classes	../tensorflow/Neuronetrix/nnERP_test.py	/^n_classes = 2 # 0 or 1 for Healthy or Alzheimer's$/;"	kind:variable	line:13
+n_classes	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^n_classes = 2 # 0 - Healthy, 1 - AD$/;"	kind:variable	line:14
+n_classes	../tensorflow/Neuronetrix/nnRaw.py	/^	n_classes = 2 # 0 - Healthy, 1 - AD$/;"	kind:variable	line:15
+n_hidden1	../tensorflow/Brazil/nn.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Brazil/nnMMSE.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Brazil/nnWeights.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Greece/nnBinary.py	/^    n_hidden1 = 100 # 1st layer number of neurons$/;"	kind:variable	line:11
+n_hidden1	../tensorflow/Greece/nnBinary_Chris.py	/^    n_hidden1 = 100 # 1st layer number of neurons$/;"	kind:variable	line:11
+n_hidden1	../tensorflow/Greece/nnFFT.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Greece/nnLat.py	/^n_hidden1 = 10 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Greece/nnTri.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Neuronetrix/nn.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Neuronetrix/nnERP.py	/^n_hidden1 = 40 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Neuronetrix/nnERP_Chris.py	/^n_hidden1 = 40 # 1st layer number of neurons$/;"	kind:variable	line:13
+n_hidden1	../tensorflow/Neuronetrix/nnERP_test.py	/^n_hidden1 = 4 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:10
+n_hidden1	../tensorflow/Neuronetrix/nnRaw.py	/^	n_hidden1 = 20 # 1st layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Brazil/nn.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Brazil/nnMMSE.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Brazil/nnWeights.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Greece/nnBinary.py	/^    n_hidden2 = 100 # 2nd layer number of neurons$/;"	kind:variable	line:12
+n_hidden2	../tensorflow/Greece/nnBinary_Chris.py	/^    n_hidden2 = 100 # 2nd layer number of neurons$/;"	kind:variable	line:12
+n_hidden2	../tensorflow/Greece/nnFFT.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Greece/nnLat.py	/^n_hidden2 = 10 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Greece/nnTri.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Neuronetrix/nn.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Neuronetrix/nnERP.py	/^n_hidden2 = 40 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Neuronetrix/nnERP_Chris.py	/^n_hidden2 = 40 # 2nd layer number of neurons$/;"	kind:variable	line:14
+n_hidden2	../tensorflow/Neuronetrix/nnERP_test.py	/^n_hidden2 = 4 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:11
+n_hidden2	../tensorflow/Neuronetrix/nnRaw.py	/^	n_hidden2 = 20 # 2nd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Brazil/nn.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Brazil/nnMMSE.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Brazil/nnWeights.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Greece/nnBinary.py	/^    n_hidden3 = 100 # 3rd layer number of neurons$/;"	kind:variable	line:13
+n_hidden3	../tensorflow/Greece/nnBinary_Chris.py	/^    n_hidden3 = 100 # 3rd layer number of neurons$/;"	kind:variable	line:13
+n_hidden3	../tensorflow/Greece/nnFFT.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Greece/nnLat.py	/^n_hidden3 = 10 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Greece/nnTri.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Neuronetrix/nn.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:12
+n_hidden3	../tensorflow/Neuronetrix/nnRaw.py	/^	n_hidden3 = 20 # 3rd layer number of neurons$/;"	kind:variable	line:13
+n_input	../tensorflow/Brazil/nn.py	/^n_input = 1974 # Data input (94 fft values per electrode x 21 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Brazil/nnMMSE.py	/^n_input = 1974 # Data input (94 fft values per electrode x 21 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Brazil/nnWeights.py	/^n_input = 1974 # Data input (94 fft values per electrode x 21 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Greece/nnBinary.py	/^    n_input = 4816 # Data input$/;"	kind:variable	line:14
+n_input	../tensorflow/Greece/nnBinary_Chris.py	/^    n_input = 4816 # Data input$/;"	kind:variable	line:14
+n_input	../tensorflow/Greece/nnFFT.py	/^n_input = 1208 # Data input (151 fft values per electrode x 8 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Greece/nnLat.py	/^n_input = 48 # Data input (3128 raw ERP values per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Greece/nnTri.py	/^n_input = 2408 # Data input (301 erp values per electrode x 8 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Neuronetrix/nn.py	/^n_input = 1974 # Data input (94 fft values per electrode x 21 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Neuronetrix/nnERP.py	/^n_input = 189 # Data input (189 total erp values per patient)$/;"	kind:variable	line:12
+n_input	../tensorflow/Neuronetrix/nnERP_Chris.py	/^n_input =  189 # Data input (190 total erp values per patient)$/;"	kind:variable	line:15
+n_input	../tensorflow/Neuronetrix/nnERP_test.py	/^n_input = 189 # Data input (190 total erp values per patient)$/;"	kind:variable	line:12
+n_input	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^n_input = 525 # Data input (151 fft values per electrode x 8 electrodes per patient)$/;"	kind:variable	line:13
+n_input	../tensorflow/Neuronetrix/nnRaw.py	/^	n_input = 4816 # Data input$/;"	kind:variable	line:14
+name	../tensorflow/Brazil/nnMMSE.py	/^            name = str(filename)$/;"	kind:variable	line:68
+name	../tensorflow/Brazil/nnMMSE.py	/^            name = str(filename)$/;"	kind:variable	line:94
+neighbourhood	../ASD Replication/ASD_features_9.py	/^	                        neighbourhood=FixedRadius(1.0),$/;"	kind:variable	line:59
+neighbourhood	../ASD Replication/rqa.py	/^                        neighbourhood=FixedRadius(1.0),$/;"	kind:variable	line:44
+nn.py	../tensorflow/Brazil/nn.py	1;"	kind:file	line:1
+nn.py	../tensorflow/Neuronetrix/nn.py	1;"	kind:file	line:1
+nnBinary.py	../tensorflow/Greece/nnBinary.py	1;"	kind:file	line:1
+nnBinary_Chris.py	../tensorflow/Greece/nnBinary_Chris.py	1;"	kind:file	line:1
+nnERP.py	../tensorflow/Neuronetrix/nnERP.py	1;"	kind:file	line:1
+nnERP_Chris.py	../tensorflow/Neuronetrix/nnERP_Chris.py	1;"	kind:file	line:1
+nnERP_test.py	../tensorflow/Neuronetrix/nnERP_test.py	1;"	kind:file	line:1
+nnFFT.py	../tensorflow/Greece/nnFFT.py	1;"	kind:file	line:1
+nnLat.py	../tensorflow/Greece/nnLat.py	1;"	kind:file	line:1
+nnMMSE.py	../tensorflow/Brazil/nnMMSE.py	1;"	kind:file	line:1
+nnNeuroFFT.py	../tensorflow/Neuronetrix/nnNeuroFFT.py	1;"	kind:file	line:1
+nnRaw.py	../tensorflow/Neuronetrix/nnRaw.py	1;"	kind:file	line:1
+nnTri.py	../tensorflow/Greece/nnTri.py	1;"	kind:file	line:1
+nnWeights.py	../tensorflow/Brazil/nnWeights.py	1;"	kind:file	line:1
+nn_Anoop.py	../tensorflow/Brazil/nn_Anoop.py	1;"	kind:file	line:1
+nn_Chris.py	../tensorflow/Brazil/nn_Chris.py	1;"	kind:file	line:1
+nn_Chris_2.py	../tensorflow/Brazil/nn_Chris_2.py	1;"	kind:file	line:1
+nn_Keras.py	../tensorflow/Brazil/nn_Keras.py	1;"	kind:file	line:1
+nn_Keras_Chris.py	../tensorflow/Brazil/nn_Keras_Chris.py	1;"	kind:file	line:1
+nn_Recurr	../pipeline/nn_Recurr.py	/^def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5, $/;"	kind:function	line:18
+nn_Recurr	../tensorflow/Brazil/nn_Recurr.py	/^def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5, n_electrodes):$/;"	kind:function	line:17
+nn_Recurr.py	../pipeline/nn_Recurr.py	1;"	kind:file	line:1
+nn_Recurr.py	../tensorflow/Brazil/nn_Recurr.py	1;"	kind:file	line:1
+nn_keras	../pipeline/nn_keras.py	/^def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5):$/;"	kind:function	line:19
+nn_keras.py	../pipeline/nn_keras.py	1;"	kind:file	line:1
+nolds_feature.py	../ASD Replication/nolds_feature.py	1;"	kind:file	line:1
+norm	../tensorflow/Brazil/normalize.py	/^def norm(arr_in):$/;"	kind:function	line:7
+normalize.py	../tensorflow/Brazil/normalize.py	1;"	kind:file	line:1
+normalize_2.py	../tensorflow/Brazil/normalize_2.py	1;"	kind:file	line:1
+num_AD	../tensorflow/Brazil/fold_to_feature_file.py	/^num_AD = 12$/;"	kind:variable	line:9
+num_AD	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^num_AD = 75$/;"	kind:variable	line:7
+num_HC	../tensorflow/Brazil/fold_to_feature_file.py	/^num_HC = 12$/;"	kind:variable	line:8
+num_HC	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^num_HC = 75$/;"	kind:variable	line:6
+num_bunches	../tensorflow/Brazil/createInstances.py	/^num_bunches = 1000$/;"	kind:variable	line:7
+num_electrodes	../pipeline/pipeline.py	/^			num_electrodes = 21$/;"	kind:variable	line:106
+num_electrodes	../pipeline/pipeline.py	/^			num_electrodes = 8$/;"	kind:variable	line:111
+num_electrodes	../pipeline/pipeline.py	/^		num_electrodes = 21$/;"	kind:variable	line:126
+num_electrodes	../pipeline/pipeline.py	/^		num_electrodes = 8$/;"	kind:variable	line:128
+num_epochs	../pipeline/pipeline.py	/^		num_epochs = int(sys.argv[i+1])$/;"	kind:variable	line:41
+num_epochs	../pipeline/pipeline.py	/^num_epochs = 0 #per patient$/;"	kind:variable	line:22
+num_folds	../Synapto_Weka/svm.py	/^			num_folds = int(sys.argv[i+1])$/;"	kind:variable	line:121
+num_folds	../Synapto_Weka/svm.py	/^	num_folds = 10$/;"	kind:variable	line:96
+num_folds	../pipeline/pipeline.py	/^num_folds = 25	$/;"	kind:variable	line:264
+num_folds	../pipeline/svm.py	/^			num_folds = int(sys.argv[i+1])$/;"	kind:variable	line:98
+num_folds	../pipeline/svm.py	/^	num_folds = 10$/;"	kind:variable	line:73
+num_folds	../tensorflow/Brazil/nn.py	/^num_folds = 2 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Brazil/nnMMSE.py	/^num_folds = 2 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Brazil/nnWeights.py	/^num_folds = 2 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Greece/nnBinary.py	/^    num_folds = 3 #cross validation$/;"	kind:variable	line:16
+num_folds	../tensorflow/Greece/nnBinary_Chris.py	/^    num_folds = 10 #cross validation$/;"	kind:variable	line:16
+num_folds	../tensorflow/Greece/nnFFT.py	/^num_folds = 10 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Greece/nnLat.py	/^num_folds = 10 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Greece/nnTri.py	/^num_folds = 10 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Neuronetrix/nn.py	/^num_folds = 3 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Neuronetrix/nnERP.py	/^num_folds = 2 #cross validation$/;"	kind:variable	line:14
+num_folds	../tensorflow/Neuronetrix/nnERP_Chris.py	/^num_folds = 3 #cross validation$/;"	kind:variable	line:17
+num_folds	../tensorflow/Neuronetrix/nnERP_test.py	/^num_folds = 2 #cross validation$/;"	kind:variable	line:14
+num_folds	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^num_folds = 2 #cross validation$/;"	kind:variable	line:15
+num_folds	../tensorflow/Neuronetrix/nnRaw.py	/^	num_folds = 10 #cross validation$/;"	kind:variable	line:16
+num_seeds	../Synapto_Weka/svm.py	/^			num_seeds = int(sys.argv[i+1])$/;"	kind:variable	line:123
+num_seeds	../Synapto_Weka/svm.py	/^	num_seeds = 10$/;"	kind:variable	line:97
+num_seeds	../pipeline/pipeline.py	/^num_seeds = 10$/;"	kind:variable	line:265
+num_seeds	../pipeline/svm.py	/^			num_seeds = int(sys.argv[i+1])$/;"	kind:variable	line:100
+num_seeds	../pipeline/svm.py	/^	num_seeds = 10$/;"	kind:variable	line:74
+num_timePoints	../pipeline/pipeline.py	/^		num_timePoints = int(sys.argv[i+1])$/;"	kind:variable	line:43
+num_timePoints	../pipeline/pipeline.py	/^num_timePoints = 0 #per instance$/;"	kind:variable	line:23
+num_timePoints	../tensorflow/Brazil/createInstances.py	/^num_timePoints = 30$/;"	kind:variable	line:8
+o_filename	../ASD Replication/ASD_features_9.py	/^	o_filename = "features.csv"$/;"	kind:variable	line:78
+o_filename	../ASD Replication/ASD_features_testonbands.py	/^	o_filename = "features.csv"$/;"	kind:variable	line:61
+o_filename	../Synapto_Weka/svm.py	/^			o_filename = sys.argv[i+1]$/;"	kind:variable	line:119
+o_filename	../Synapto_Weka/svm.py	/^	o_filename = "output.csv"$/;"	kind:variable	line:95
+o_filename	../pipeline/pipeline.py	/^o_filename = 'output_pipeline.csv'$/;"	kind:variable	line:266
+o_filename	../pipeline/svm.py	/^			o_filename = sys.argv[i+1]$/;"	kind:variable	line:96
+o_filename	../pipeline/svm.py	/^	o_filename = "output.csv"$/;"	kind:variable	line:72
+offset	../tensorflow/Neuronetrix/nnERP.py	/^        offset = 1;$/;"	kind:variable	line:34
+optimizer	../tensorflow/Brazil/nn.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:43
+optimizer	../tensorflow/Brazil/nnMMSE.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:43
+optimizer	../tensorflow/Greece/nnBinary.py	/^    optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:44
+optimizer	../tensorflow/Greece/nnBinary_Chris.py	/^    optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:44
+optimizer	../tensorflow/Greece/nnFFT.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:43
+optimizer	../tensorflow/Greece/nnLat.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:43
+optimizer	../tensorflow/Greece/nnTri.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:43
+optimizer	../tensorflow/Neuronetrix/nn.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:43
+optimizer	../tensorflow/Neuronetrix/nnERP_test.py	/^optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:39
+optimizer	../tensorflow/Neuronetrix/nnRaw.py	/^	optimizer = tf.train.GradientDescentOptimizer(learning_rate)$/;"	kind:variable	line:44
+out_file	../tensorflow/Brazil/createInstances.py	/^out_file = open("\/Users\/Anoop\/Documents\/Synapto\/IgnoreData\/testCreateInstances.csv","w")$/;"	kind:variable	line:68
+output	../tensorflow/Brazil/nn.py	/^output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:39
+output	../tensorflow/Brazil/nnMMSE.py	/^output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:39
+output	../tensorflow/Greece/nnBinary.py	/^    output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:40
+output	../tensorflow/Greece/nnBinary_Chris.py	/^    output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:40
+output	../tensorflow/Greece/nnFFT.py	/^output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:39
+output	../tensorflow/Greece/nnLat.py	/^output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:39
+output	../tensorflow/Greece/nnTri.py	/^output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:39
+output	../tensorflow/Neuronetrix/nn.py	/^output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:39
+output	../tensorflow/Neuronetrix/nnERP_test.py	/^output = tf.nn.sigmoid(tf.matmul(H2, W3) + b3)$/;"	kind:variable	line:35
+output	../tensorflow/Neuronetrix/nnRaw.py	/^	output = tf.nn.sigmoid(tf.matmul(H3, W4) + b4)$/;"	kind:variable	line:40
+output_dir	../FSL/run_FSL_neuronetrix.py	/^output_dir = "Brazil_FSL\/"$/;"	kind:variable	line:8
+output_file	../Synapto_Weka/run_all_featuresets.py	/^output_file = "output.csv"$/;"	kind:variable	line:8
+parse_args	../get-pip.py	/^        def parse_args(self, args):$/;"	kind:member	line:88
+pipeline.py	../pipeline/pipeline.py	1;"	kind:file	line:1
+reader	../ASD Replication/ASD_features_9.py	/^		reader = csv.reader(f)$/;"	kind:variable	line:14
+reader	../ASD Replication/rqa.py	/^		reader = csv.reader(f)$/;"	kind:variable	line:11
+reader	../FSL/FSL2Vector.py	/^		reader = csv.reader(open(os.path.join( data_dir + "\/" + dir_name  ,filename),'r'),delimiter = ' ')$/;"	kind:variable	line:16
+reader	../pipeline/svm.py	/^		reader = csv.reader(f)$/;"	kind:variable	line:111
+reader	../tensorflow/Brazil/createInstances.py	/^			reader = csv.reader(f)$/;"	kind:variable	line:15
+reader	../tensorflow/Brazil/createInstances.py	/^			reader = csv.reader(f)$/;"	kind:variable	line:41
+reader	../tensorflow/Brazil/fold_to_feature_file.py	/^		reader = csv.reader(f,delimiter = "," )$/;"	kind:variable	line:27
+reader	../tensorflow/Brazil/fold_to_feature_file.py	/^		reader = csv.reader(f,delimiter = "," )$/;"	kind:variable	line:56
+reader	../tensorflow/Brazil/nn.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:54
+reader	../tensorflow/Brazil/nn.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:77
+reader	../tensorflow/Brazil/nnMMSE.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:54
+reader	../tensorflow/Brazil/nnMMSE.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:80
+reader	../tensorflow/Brazil/nnWeights.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:31
+reader	../tensorflow/Brazil/nnWeights.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:53
+reader	../tensorflow/Greece/nnBinary.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:116
+reader	../tensorflow/Greece/nnBinary.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:58
+reader	../tensorflow/Greece/nnBinary.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:76
+reader	../tensorflow/Greece/nnBinary.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:99
+reader	../tensorflow/Greece/nnBinary_Chris.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:116
+reader	../tensorflow/Greece/nnBinary_Chris.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:58
+reader	../tensorflow/Greece/nnBinary_Chris.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:76
+reader	../tensorflow/Greece/nnBinary_Chris.py	/^                reader = csv.reader(f)$/;"	kind:variable	line:99
+reader	../tensorflow/Greece/nnFFT.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:54
+reader	../tensorflow/Greece/nnFFT.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:73
+reader	../tensorflow/Greece/nnFFT.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:92
+reader	../tensorflow/Greece/nnLat.py	/^    reader = csv.reader(f)$/;"	kind:variable	line:53
+reader	../tensorflow/Greece/nnTri.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:54
+reader	../tensorflow/Greece/nnTri.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:73
+reader	../tensorflow/Greece/nnTri.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:92
+reader	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		reader = csv.reader(f,delimiter = "," )$/;"	kind:variable	line:21
+reader	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^		reader = csv.reader(f,delimiter = "," )$/;"	kind:variable	line:48
+reader	../tensorflow/Neuronetrix/nn.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:54
+reader	../tensorflow/Neuronetrix/nn.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:76
+reader	../tensorflow/Neuronetrix/nnERP.py	/^        reader = csv.reader(f)$/;"	kind:variable	line:30
+reader	../tensorflow/Neuronetrix/nnERP_Chris.py	/^	reader = csv.reader(f)$/;"	kind:variable	line:29
+reader	../tensorflow/Neuronetrix/nnERP_test.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:51
+reader	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:31
+reader	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^            reader = csv.reader(f)$/;"	kind:variable	line:50
+reader	../tensorflow/Neuronetrix/nnRaw.py	/^	            reader = csv.reader(f)$/;"	kind:variable	line:116
+reader	../tensorflow/Neuronetrix/nnRaw.py	/^	            reader = csv.reader(f)$/;"	kind:variable	line:58
+reader	../tensorflow/Neuronetrix/nnRaw.py	/^	            reader = csv.reader(f)$/;"	kind:variable	line:76
+reader	../tensorflow/Neuronetrix/nnRaw.py	/^	            reader = csv.reader(f)$/;"	kind:variable	line:99
+recursiveFeatureElim	../pipeline/recursiveFeatureElim.py	/^def recursiveFeatureElim(X, y):$/;"	kind:function	line:13
+recursiveFeatureElim.py	../pipeline/recursiveFeatureElim.py	1;"	kind:file	line:1
+red_metrics	../pipeline/pipeline.py	/^		red_metrics = [red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc]$/;"	kind:variable	line:317
+reduce_features	../pipeline/featureSelection.py	/^def reduce_features(X, y):$/;"	kind:function	line:14
+reduced_features_path	../pipeline/pipeline.py	/^	reduced_features_path = sys.path[0] + '\/ReducedFeatureSets\/'+featureName+'features'+identifier+'_reduced.csv'$/;"	kind:variable	line:98
+remove_plus_min	../pipeline/featureSetEdit.py	/^def remove_plus_min(data):$/;"	kind:function	line:5
+result	../ASD Replication/ASD_features_9.py	/^	result = computation.run()$/;"	kind:variable	line:68
+result	../ASD Replication/rqa.py	/^result = computation.run()$/;"	kind:variable	line:52
+results	../Synapto_Weka/run_all_featuresets.py	/^results = list(csv.reader(open(output_file,'r'),delimiter = ','))$/;"	kind:variable	line:11
+rf	../pipeline/pipeline.py	/^rf = RandomForestClassifier()$/;"	kind:variable	line:283
+row	../tensorflow/Brazil/createInstances.py	/^					row = np.append(row, data[index+i])$/;"	kind:variable	line:29
+row	../tensorflow/Brazil/createInstances.py	/^					row = np.append(row, data[index+i])$/;"	kind:variable	line:56
+row	../tensorflow/Brazil/createInstances.py	/^				row = data[index]$/;"	kind:variable	line:27
+row	../tensorflow/Brazil/createInstances.py	/^				row = data[index]$/;"	kind:variable	line:54
+row	../tensorflow/Brazil/createInstances.py	/^				row = np.append(row,[0])$/;"	kind:variable	line:31
+row	../tensorflow/Brazil/createInstances.py	/^				row = np.append(row,[1])$/;"	kind:variable	line:58
+rows	../ASD Replication/ASD_features_9.py	/^rows = len(data)$/;"	kind:variable	line:18
+rows	../ASD Replication/rqa.py	/^rows = len(data)$/;"	kind:variable	line:15
+rowvals	../tensorflow/Greece/nnLat.py	/^            rowvals = array[row,0:-1] #columns$/;"	kind:variable	line:59
+rowvals	../tensorflow/Greece/nnLat.py	/^            rowvals = array[row,0:-1] #columns$/;"	kind:variable	line:64
+rowvals	../tensorflow/Neuronetrix/nnERP.py	/^                rowvals = (array[row,0:189]) #189 columns$/;"	kind:variable	line:37
+rowvals	../tensorflow/Neuronetrix/nnERP.py	/^                rowvals = (array[row,0:189]) #189 columns$/;"	kind:variable	line:43
+rowvals	../tensorflow/Neuronetrix/nnERP_test.py	/^                    rowvals = (array[row,0:189]) #189 columns$/;"	kind:variable	line:57
+rowvals	../tensorflow/Neuronetrix/nnERP_test.py	/^                    rowvals = (array[row,0:189]) #189 columns$/;"	kind:variable	line:63
+rqa.py	../ASD Replication/rqa.py	1;"	kind:file	line:1
+runA	../pipeline/BandPass1.py	/^def runA(x):$/;"	kind:function	line:37
+runB	../pipeline/BandPass1.py	/^def runB(x):$/;"	kind:function	line:46
+runD	../pipeline/BandPass1.py	/^def runD(x):$/;"	kind:function	line:20
+runG	../pipeline/BandPass1.py	/^def runG(x):$/;"	kind:function	line:55
+runT	../pipeline/BandPass1.py	/^def runT(x):$/;"	kind:function	line:28
+run_FSL_neuronetrix.py	../FSL/run_FSL_neuronetrix.py	1;"	kind:file	line:1
+run_all_featuresets.py	../Synapto_Weka/run_all_featuresets.py	1;"	kind:file	line:1
+rwalk	../ASD Replication/nolds_feature.py	/^rwalk = np.cumsum(np.random.random(1000))$/;"	kind:variable	line:4
+sampen	../ASD Replication/ASD_features_9.py	/^	sampen = nolds.sampen(attributes[band])$/;"	kind:variable	line:51
+sampen	../ASD Replication/nolds_feature.py	/^sampen = nolds.sampen(rwalk)$/;"	kind:variable	line:6
+score	../tensorflow/Brazil/nnMMSE.py	/^            score = int(val)$/;"	kind:variable	line:71
+score	../tensorflow/Brazil/nnMMSE.py	/^            score = int(val)$/;"	kind:variable	line:97
+seed	../tensorflow/Brazil/weights_test.py	/^seed = 1$/;"	kind:variable	line:5
+sess	../tensorflow/Brazil/nn.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Brazil/nnMMSE.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Brazil/nnWeights.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Brazil/weights_test.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:9
+sess	../tensorflow/Greece/nnBinary.py	/^    sess = tf.InteractiveSession()$/;"	kind:variable	line:19
+sess	../tensorflow/Greece/nnBinary_Chris.py	/^    sess = tf.InteractiveSession()$/;"	kind:variable	line:19
+sess	../tensorflow/Greece/nnFFT.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Greece/nnLat.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Greece/nnTri.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Neuronetrix/nn.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Neuronetrix/nnERP.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:17
+sess	../tensorflow/Neuronetrix/nnERP_test.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:17
+sess	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^sess = tf.InteractiveSession()$/;"	kind:variable	line:18
+sess	../tensorflow/Neuronetrix/nnRaw.py	/^	sess = tf.InteractiveSession()$/;"	kind:variable	line:19
+settings	../ASD Replication/ASD_features_9.py	/^	settings = Settings(attributes[band], embedding_dimension=3,$/;"	kind:variable	line:57
+settings	../ASD Replication/rqa.py	/^settings = Settings(attributes, embedding_dimension=3,$/;"	kind:variable	line:42
+shuffle	../pipeline/nn_Recurr.py	/^	def shuffle(input):$/;"	kind:function	line:76
+shuffle	../pipeline/nn_keras.py	/^	def shuffle(input):$/;"	kind:function	line:76
+shuffle	../tensorflow/Brazil/nn.py	/^def shuffle(input):$/;"	kind:function	line:106
+shuffle	../tensorflow/Brazil/nnMMSE.py	/^def shuffle(input):$/;"	kind:function	line:113
+shuffle	../tensorflow/Brazil/nnWeights.py	/^def shuffle(input):$/;"	kind:function	line:82
+shuffle	../tensorflow/Brazil/nn_Anoop.py	/^	def shuffle(input):$/;"	kind:function	line:77
+shuffle	../tensorflow/Brazil/nn_Chris.py	/^	def shuffle(input):$/;"	kind:function	line:91
+shuffle	../tensorflow/Brazil/nn_Chris_2.py	/^	def shuffle(input):$/;"	kind:function	line:75
+shuffle	../tensorflow/Brazil/nn_Keras.py	/^	def shuffle(input):$/;"	kind:function	line:77
+shuffle	../tensorflow/Brazil/nn_Keras_Chris.py	/^	def shuffle(input):$/;"	kind:function	line:77
+shuffle	../tensorflow/Brazil/nn_Recurr.py	/^	def shuffle(input):$/;"	kind:function	line:74
+shuffle	../tensorflow/Greece/nnBinary.py	/^    def shuffle(input):$/;"	kind:function	line:146
+shuffle	../tensorflow/Greece/nnBinary_Chris.py	/^    def shuffle(input):$/;"	kind:function	line:146
+shuffle	../tensorflow/Greece/nnFFT.py	/^def shuffle(input):$/;"	kind:function	line:119
+shuffle	../tensorflow/Greece/nnLat.py	/^def shuffle(input):$/;"	kind:function	line:83
+shuffle	../tensorflow/Greece/nnTri.py	/^def shuffle(input):$/;"	kind:function	line:119
+shuffle	../tensorflow/Neuronetrix/nn.py	/^def shuffle(input):$/;"	kind:function	line:105
+shuffle	../tensorflow/Neuronetrix/nnERP.py	/^def shuffle(input):$/;"	kind:function	line:63
+shuffle	../tensorflow/Neuronetrix/nnERP_Chris.py	/^def shuffle(input):$/;"	kind:function	line:55
+shuffle	../tensorflow/Neuronetrix/nnERP_test.py	/^def shuffle(input):$/;"	kind:function	line:82
+shuffle	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^def shuffle(input):$/;"	kind:function	line:76
+shuffle	../tensorflow/Neuronetrix/nnRaw.py	/^	def shuffle(input):$/;"	kind:function	line:146
+similarity_measure	../ASD Replication/ASD_features_9.py	/^	                        similarity_measure=EuclideanMetric,$/;"	kind:variable	line:60
+similarity_measure	../ASD Replication/rqa.py	/^                        similarity_measure=EuclideanMetric,$/;"	kind:variable	line:45
+splitbands	../pipeline/BandPass1.py	/^def splitbands(x):$/;"	kind:function	line:70
+startAtFS	../pipeline/pipeline.py	/^		startAtFS = True$/;"	kind:variable	line:51
+startAtFS	../pipeline/pipeline.py	/^startAtFS = False$/;"	kind:variable	line:24
+svc	../pipeline/pipeline.py	/^svc = SVC()$/;"	kind:variable	line:286
+svm.py	../Synapto_Weka/svm.py	1;"	kind:file	line:1
+svm.py	../pipeline/svm.py	1;"	kind:file	line:1
+svm_func	../Synapto_Weka/svm.py	/^def svm_func(filepath, o_filename, folds, seeds):$/;"	kind:function	line:12
+svm_func	../pipeline/svm.py	/^def svm_func(X, y, seeds, folds, o_filename):$/;"	kind:function	line:14
+test_X	../tensorflow/Brazil/nn.py	/^test_X=[]$/;"	kind:variable	line:117
+test_X	../tensorflow/Brazil/nnMMSE.py	/^test_X=[]$/;"	kind:variable	line:124
+test_X	../tensorflow/Brazil/nnWeights.py	/^test_X=[]$/;"	kind:variable	line:93
+test_X	../tensorflow/Greece/nnBinary.py	/^    test_X=[]$/;"	kind:variable	line:157
+test_X	../tensorflow/Greece/nnBinary_Chris.py	/^    test_X=[]$/;"	kind:variable	line:157
+test_X	../tensorflow/Greece/nnFFT.py	/^test_X=[]$/;"	kind:variable	line:130
+test_X	../tensorflow/Greece/nnLat.py	/^test_X=[]$/;"	kind:variable	line:94
+test_X	../tensorflow/Greece/nnTri.py	/^test_X=[]$/;"	kind:variable	line:130
+test_X	../tensorflow/Neuronetrix/nn.py	/^test_X=[]$/;"	kind:variable	line:116
+test_X	../tensorflow/Neuronetrix/nnERP.py	/^test_X=[]$/;"	kind:variable	line:74
+test_X	../tensorflow/Neuronetrix/nnERP_Chris.py	/^test_X=[]$/;"	kind:variable	line:65
+test_X	../tensorflow/Neuronetrix/nnERP_test.py	/^test_X=[]$/;"	kind:variable	line:93
+test_X	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^test_X=[]$/;"	kind:variable	line:87
+test_X	../tensorflow/Neuronetrix/nnRaw.py	/^	test_X=[]$/;"	kind:variable	line:157
+test_Y	../tensorflow/Brazil/nn.py	/^test_Y=[]$/;"	kind:variable	line:118
+test_Y	../tensorflow/Brazil/nnMMSE.py	/^test_Y=[]$/;"	kind:variable	line:125
+test_Y	../tensorflow/Brazil/nnWeights.py	/^test_Y=[]$/;"	kind:variable	line:94
+test_Y	../tensorflow/Greece/nnBinary.py	/^    test_Y=[]$/;"	kind:variable	line:158
+test_Y	../tensorflow/Greece/nnBinary_Chris.py	/^    test_Y=[]$/;"	kind:variable	line:158
+test_Y	../tensorflow/Greece/nnFFT.py	/^test_Y=[]$/;"	kind:variable	line:131
+test_Y	../tensorflow/Greece/nnLat.py	/^test_Y=[]$/;"	kind:variable	line:95
+test_Y	../tensorflow/Greece/nnTri.py	/^test_Y=[]$/;"	kind:variable	line:131
+test_Y	../tensorflow/Neuronetrix/nn.py	/^test_Y=[]$/;"	kind:variable	line:117
+test_Y	../tensorflow/Neuronetrix/nnERP.py	/^test_Y=[]$/;"	kind:variable	line:75
+test_Y	../tensorflow/Neuronetrix/nnERP_Chris.py	/^test_Y=[]$/;"	kind:variable	line:66
+test_Y	../tensorflow/Neuronetrix/nnERP_test.py	/^test_Y=[]$/;"	kind:variable	line:94
+test_Y	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^test_Y=[]$/;"	kind:variable	line:88
+test_Y	../tensorflow/Neuronetrix/nnRaw.py	/^	test_Y=[]$/;"	kind:variable	line:158
+theiler_corrector	../ASD Replication/ASD_features_9.py	/^	                        theiler_corrector=1,$/;"	kind:variable	line:61
+theiler_corrector	../ASD Replication/rqa.py	/^                        theiler_corrector=1,$/;"	kind:variable	line:46
+time_delay	../ASD Replication/ASD_features_9.py	/^	                        time_delay=1,$/;"	kind:variable	line:58
+time_delay	../ASD Replication/rqa.py	/^                        time_delay=1,$/;"	kind:variable	line:43
+time_series	../ASD Replication/ASD_features_9.py	/^time_series = FileReader.file_as_float_array('..\/..\/..\/Synapto\/tensorflow\/Brazil\/Feature_Sets\/Fil_higARmin7.csv',$/;"	kind:variable	line:41
+time_series	../ASD Replication/rqa.py	/^time_series = FileReader.file_as_float_array('..\/..\/..\/Synapto\/tensorflow\/Brazil\/Feature_Sets\/Fil_higARmin7.csv',$/;"	kind:variable	line:38
+total	../tensorflow/Brazil/createInstances.py	/^			total = np.empty((num_bunches,len(array[0])*num_timePoints+1)) #1000x210$/;"	kind:variable	line:50
+total	../tensorflow/Brazil/createInstances.py	/^			total = np.empty((num_bunches,len(array[0])*num_timePoints+1)) #1000x630$/;"	kind:variable	line:24
+total	../tensorflow/Brazil/nn.py	/^total = []$/;"	kind:variable	line:94
+total	../tensorflow/Brazil/nnMMSE.py	/^total = []$/;"	kind:variable	line:101
+total	../tensorflow/Brazil/nnWeights.py	/^total = []$/;"	kind:variable	line:70
+total	../tensorflow/Greece/nnBinary.py	/^    total = []$/;"	kind:variable	line:134
+total	../tensorflow/Greece/nnBinary_Chris.py	/^    total = []$/;"	kind:variable	line:134
+total	../tensorflow/Greece/nnFFT.py	/^total = []$/;"	kind:variable	line:106
+total	../tensorflow/Greece/nnLat.py	/^total = []$/;"	kind:variable	line:71
+total	../tensorflow/Greece/nnTri.py	/^total = []$/;"	kind:variable	line:106
+total	../tensorflow/Neuronetrix/nn.py	/^total = []$/;"	kind:variable	line:93
+total	../tensorflow/Neuronetrix/nnERP.py	/^total = []$/;"	kind:variable	line:51
+total	../tensorflow/Neuronetrix/nnERP_Chris.py	/^total = []$/;"	kind:variable	line:27
+total	../tensorflow/Neuronetrix/nnERP_Chris.py	/^total = np.array(total)$/;"	kind:variable	line:43
+total	../tensorflow/Neuronetrix/nnERP_test.py	/^total = []$/;"	kind:variable	line:70
+total	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total = []$/;"	kind:variable	line:64
+total	../tensorflow/Neuronetrix/nnRaw.py	/^	total = []$/;"	kind:variable	line:134
+totalDiff	../tensorflow/Brazil/nnMMSE.py	/^totalDiff = 0$/;"	kind:variable	line:126
+total_AUC	../tensorflow/Brazil/nn.py	/^total_AUC = 0$/;"	kind:variable	line:126
+total_AUC	../tensorflow/Brazil/nnWeights.py	/^total_AUC = 0$/;"	kind:variable	line:102
+total_AUC	../tensorflow/Greece/nnBinary.py	/^    total_AUC = 0$/;"	kind:variable	line:166
+total_AUC	../tensorflow/Greece/nnBinary_Chris.py	/^    total_AUC = 0$/;"	kind:variable	line:166
+total_AUC	../tensorflow/Greece/nnLat.py	/^total_AUC = 0$/;"	kind:variable	line:103
+total_AUC	../tensorflow/Neuronetrix/nn.py	/^total_AUC = 0$/;"	kind:variable	line:125
+total_AUC	../tensorflow/Neuronetrix/nnERP.py	/^total_AUC = 0$/;"	kind:variable	line:83
+total_AUC	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_AUC = 0$/;"	kind:variable	line:96
+total_AUC	../tensorflow/Neuronetrix/nnRaw.py	/^	total_AUC = 0$/;"	kind:variable	line:166
+total_FN	../tensorflow/Brazil/nn.py	/^total_FN = 0$/;"	kind:variable	line:123
+total_FN	../tensorflow/Brazil/nnWeights.py	/^total_FN = 0$/;"	kind:variable	line:99
+total_FN	../tensorflow/Greece/nnBinary.py	/^    total_FN = 0$/;"	kind:variable	line:163
+total_FN	../tensorflow/Greece/nnBinary_Chris.py	/^    total_FN = 0$/;"	kind:variable	line:163
+total_FN	../tensorflow/Greece/nnLat.py	/^total_FN = 0$/;"	kind:variable	line:100
+total_FN	../tensorflow/Neuronetrix/nn.py	/^total_FN = 0$/;"	kind:variable	line:122
+total_FN	../tensorflow/Neuronetrix/nnERP.py	/^total_FN = 0$/;"	kind:variable	line:80
+total_FN	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_FN = 0$/;"	kind:variable	line:93
+total_FN	../tensorflow/Neuronetrix/nnRaw.py	/^	total_FN = 0$/;"	kind:variable	line:163
+total_FP	../tensorflow/Brazil/nn.py	/^total_FP = 0$/;"	kind:variable	line:122
+total_FP	../tensorflow/Brazil/nnWeights.py	/^total_FP = 0$/;"	kind:variable	line:98
+total_FP	../tensorflow/Greece/nnBinary.py	/^    total_FP = 0$/;"	kind:variable	line:162
+total_FP	../tensorflow/Greece/nnBinary_Chris.py	/^    total_FP = 0$/;"	kind:variable	line:162
+total_FP	../tensorflow/Greece/nnLat.py	/^total_FP = 0$/;"	kind:variable	line:99
+total_FP	../tensorflow/Neuronetrix/nn.py	/^total_FP = 0$/;"	kind:variable	line:121
+total_FP	../tensorflow/Neuronetrix/nnERP.py	/^total_FP = 0$/;"	kind:variable	line:79
+total_FP	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_FP = 0$/;"	kind:variable	line:92
+total_FP	../tensorflow/Neuronetrix/nnRaw.py	/^	total_FP = 0$/;"	kind:variable	line:162
+total_Fmeasure	../tensorflow/Brazil/nn.py	/^total_Fmeasure = 0$/;"	kind:variable	line:125
+total_Fmeasure	../tensorflow/Brazil/nnWeights.py	/^total_Fmeasure = 0$/;"	kind:variable	line:101
+total_Fmeasure	../tensorflow/Greece/nnBinary.py	/^    total_Fmeasure = 0$/;"	kind:variable	line:165
+total_Fmeasure	../tensorflow/Greece/nnBinary_Chris.py	/^    total_Fmeasure = 0$/;"	kind:variable	line:165
+total_Fmeasure	../tensorflow/Greece/nnLat.py	/^total_Fmeasure = 0$/;"	kind:variable	line:102
+total_Fmeasure	../tensorflow/Neuronetrix/nn.py	/^total_Fmeasure = 0$/;"	kind:variable	line:124
+total_Fmeasure	../tensorflow/Neuronetrix/nnERP.py	/^total_Fmeasure = 0$/;"	kind:variable	line:82
+total_Fmeasure	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_Fmeasure = 0$/;"	kind:variable	line:95
+total_Fmeasure	../tensorflow/Neuronetrix/nnRaw.py	/^	total_Fmeasure = 0$/;"	kind:variable	line:165
+total_Prec	../tensorflow/Brazil/nn.py	/^total_Prec = 0$/;"	kind:variable	line:124
+total_Prec	../tensorflow/Brazil/nnWeights.py	/^total_Prec = 0$/;"	kind:variable	line:100
+total_Prec	../tensorflow/Greece/nnBinary.py	/^    total_Prec = 0$/;"	kind:variable	line:164
+total_Prec	../tensorflow/Greece/nnBinary_Chris.py	/^    total_Prec = 0$/;"	kind:variable	line:164
+total_Prec	../tensorflow/Greece/nnLat.py	/^total_Prec = 0$/;"	kind:variable	line:101
+total_Prec	../tensorflow/Neuronetrix/nn.py	/^total_Prec = 0$/;"	kind:variable	line:123
+total_Prec	../tensorflow/Neuronetrix/nnERP.py	/^total_Prec = 0$/;"	kind:variable	line:81
+total_Prec	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_Prec = 0$/;"	kind:variable	line:94
+total_Prec	../tensorflow/Neuronetrix/nnRaw.py	/^	total_Prec = 0$/;"	kind:variable	line:164
+total_TP	../tensorflow/Brazil/nn.py	/^total_TP = 0$/;"	kind:variable	line:120
+total_TP	../tensorflow/Brazil/nnWeights.py	/^total_TP = 0$/;"	kind:variable	line:96
+total_TP	../tensorflow/Greece/nnBinary.py	/^    total_TP = 0$/;"	kind:variable	line:160
+total_TP	../tensorflow/Greece/nnBinary_Chris.py	/^    total_TP = 0$/;"	kind:variable	line:160
+total_TP	../tensorflow/Greece/nnLat.py	/^total_TP = 0$/;"	kind:variable	line:97
+total_TP	../tensorflow/Neuronetrix/nn.py	/^total_TP = 0$/;"	kind:variable	line:119
+total_TP	../tensorflow/Neuronetrix/nnERP.py	/^total_TP = 0$/;"	kind:variable	line:77
+total_TP	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_TP = 0$/;"	kind:variable	line:90
+total_TP	../tensorflow/Neuronetrix/nnRaw.py	/^	total_TP = 0$/;"	kind:variable	line:160
+total_accuracy	../tensorflow/Brazil/nn.py	/^total_accuracy = 0$/;"	kind:variable	line:119
+total_accuracy	../tensorflow/Brazil/nnWeights.py	/^total_accuracy = 0$/;"	kind:variable	line:95
+total_accuracy	../tensorflow/Greece/nnBinary.py	/^    total_accuracy = 0$/;"	kind:variable	line:159
+total_accuracy	../tensorflow/Greece/nnBinary_Chris.py	/^    total_accuracy = 0$/;"	kind:variable	line:159
+total_accuracy	../tensorflow/Greece/nnFFT.py	/^total_accuracy = 0$/;"	kind:variable	line:132
+total_accuracy	../tensorflow/Greece/nnLat.py	/^total_accuracy = 0$/;"	kind:variable	line:96
+total_accuracy	../tensorflow/Greece/nnTri.py	/^total_accuracy = 0$/;"	kind:variable	line:132
+total_accuracy	../tensorflow/Neuronetrix/nn.py	/^total_accuracy = 0$/;"	kind:variable	line:118
+total_accuracy	../tensorflow/Neuronetrix/nnERP.py	/^total_accuracy = 0$/;"	kind:variable	line:76
+total_accuracy	../tensorflow/Neuronetrix/nnERP_Chris.py	/^total_accuracy = 0$/;"	kind:variable	line:67
+total_accuracy	../tensorflow/Neuronetrix/nnERP_test.py	/^total_accuracy = 0$/;"	kind:variable	line:95
+total_accuracy	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^total_accuracy = 0$/;"	kind:variable	line:89
+total_accuracy	../tensorflow/Neuronetrix/nnRaw.py	/^	total_accuracy = 0$/;"	kind:variable	line:159
+total_fn	../tensorflow/Greece/nnFFT.py	/^total_fn = 0$/;"	kind:variable	line:134
+total_fn	../tensorflow/Greece/nnTri.py	/^total_fn = 0$/;"	kind:variable	line:134
+total_fn	../tensorflow/Neuronetrix/nnERP_Chris.py	/^total_fn = 0$/;"	kind:variable	line:69
+total_fn	../tensorflow/Neuronetrix/nnERP_test.py	/^total_fn = 0$/;"	kind:variable	line:97
+total_fp	../tensorflow/Greece/nnFFT.py	/^total_fp = 0$/;"	kind:variable	line:133
+total_fp	../tensorflow/Greece/nnTri.py	/^total_fp = 0$/;"	kind:variable	line:133
+total_fp	../tensorflow/Neuronetrix/nnERP_Chris.py	/^total_fp = 0$/;"	kind:variable	line:68
+total_fp	../tensorflow/Neuronetrix/nnERP_test.py	/^total_fp = 0$/;"	kind:variable	line:96
+train	../tensorflow/Brazil/nn.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:44
+train	../tensorflow/Brazil/nnMMSE.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:44
+train	../tensorflow/Greece/nnBinary.py	/^    train = optimizer.minimize(loss)$/;"	kind:variable	line:45
+train	../tensorflow/Greece/nnBinary_Chris.py	/^    train = optimizer.minimize(loss)$/;"	kind:variable	line:45
+train	../tensorflow/Greece/nnFFT.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:44
+train	../tensorflow/Greece/nnLat.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:44
+train	../tensorflow/Greece/nnTri.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:44
+train	../tensorflow/Neuronetrix/nn.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:44
+train	../tensorflow/Neuronetrix/nnERP_test.py	/^train = optimizer.minimize(loss)$/;"	kind:variable	line:40
+train	../tensorflow/Neuronetrix/nnRaw.py	/^	train = optimizer.minimize(loss)$/;"	kind:variable	line:45
+train_X	../tensorflow/Brazil/nn.py	/^train_X=[]$/;"	kind:variable	line:115
+train_X	../tensorflow/Brazil/nnMMSE.py	/^train_X=[]$/;"	kind:variable	line:122
+train_X	../tensorflow/Brazil/nnWeights.py	/^train_X=[]$/;"	kind:variable	line:91
+train_X	../tensorflow/Greece/nnBinary.py	/^    train_X=[]$/;"	kind:variable	line:155
+train_X	../tensorflow/Greece/nnBinary_Chris.py	/^    train_X=[]$/;"	kind:variable	line:155
+train_X	../tensorflow/Greece/nnFFT.py	/^train_X=[]$/;"	kind:variable	line:128
+train_X	../tensorflow/Greece/nnLat.py	/^train_X=[]$/;"	kind:variable	line:92
+train_X	../tensorflow/Greece/nnTri.py	/^train_X=[]$/;"	kind:variable	line:128
+train_X	../tensorflow/Neuronetrix/nn.py	/^train_X=[]$/;"	kind:variable	line:114
+train_X	../tensorflow/Neuronetrix/nnERP.py	/^train_X=[]$/;"	kind:variable	line:72
+train_X	../tensorflow/Neuronetrix/nnERP_Chris.py	/^train_X=[]$/;"	kind:variable	line:63
+train_X	../tensorflow/Neuronetrix/nnERP_test.py	/^train_X=[]$/;"	kind:variable	line:91
+train_X	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^train_X=[]$/;"	kind:variable	line:85
+train_X	../tensorflow/Neuronetrix/nnRaw.py	/^	train_X=[]$/;"	kind:variable	line:155
+train_Y	../tensorflow/Brazil/nn.py	/^train_Y=[]$/;"	kind:variable	line:116
+train_Y	../tensorflow/Brazil/nnMMSE.py	/^train_Y=[]$/;"	kind:variable	line:123
+train_Y	../tensorflow/Brazil/nnWeights.py	/^train_Y=[]$/;"	kind:variable	line:92
+train_Y	../tensorflow/Greece/nnBinary.py	/^    train_Y=[]$/;"	kind:variable	line:156
+train_Y	../tensorflow/Greece/nnBinary_Chris.py	/^    train_Y=[]$/;"	kind:variable	line:156
+train_Y	../tensorflow/Greece/nnFFT.py	/^train_Y=[]$/;"	kind:variable	line:129
+train_Y	../tensorflow/Greece/nnLat.py	/^train_Y=[]$/;"	kind:variable	line:93
+train_Y	../tensorflow/Greece/nnTri.py	/^train_Y=[]$/;"	kind:variable	line:129
+train_Y	../tensorflow/Neuronetrix/nn.py	/^train_Y=[]$/;"	kind:variable	line:115
+train_Y	../tensorflow/Neuronetrix/nnERP.py	/^train_Y=[]$/;"	kind:variable	line:73
+train_Y	../tensorflow/Neuronetrix/nnERP_Chris.py	/^train_Y=[]$/;"	kind:variable	line:64
+train_Y	../tensorflow/Neuronetrix/nnERP_test.py	/^train_Y=[]$/;"	kind:variable	line:92
+train_Y	../tensorflow/Neuronetrix/nnNeuroFFT.py	/^train_Y=[]$/;"	kind:variable	line:86
+train_Y	../tensorflow/Neuronetrix/nnRaw.py	/^	train_Y=[]$/;"	kind:variable	line:156
+val	../tensorflow/Brazil/nnMMSE.py	/^            val = name[key+1]+name[key+2]$/;"	kind:variable	line:70
+val	../tensorflow/Brazil/nnMMSE.py	/^            val = name[key+1]+name[key+2]$/;"	kind:variable	line:96
+value	../ASD Replication/ASD_features_9.py	/^value = []$/;"	kind:variable	line:25
+value	../ASD Replication/rqa.py	/^value = []$/;"	kind:variable	line:22
+value_char	../ASD Replication/ASD_features_9.py	/^			value_char = data[row][col]$/;"	kind:variable	line:32
+value_char	../ASD Replication/ASD_features_9.py	/^value_char = []$/;"	kind:variable	line:24
+value_char	../ASD Replication/rqa.py	/^			value_char = data[row][col]$/;"	kind:variable	line:29
+value_char	../ASD Replication/rqa.py	/^value_char = []$/;"	kind:variable	line:21
+vec	../FSL/FSL2Vector.py	/^		vec = []$/;"	kind:variable	line:8
+vec_dir	../FSL/FSL2Vector.py	/^vec_dir = "Brazil_FSL_Features"$/;"	kind:variable	line:5
+weights_test.py	../tensorflow/Brazil/weights_test.py	1;"	kind:file	line:1
+writer	../ASD Replication/ASD_features_9.py	/^			writer = csv.DictWriter(csvfile, fieldnames=header)$/;"	kind:variable	line:87
+writer	../ASD Replication/ASD_features_9.py	/^		writer = csv.writer(f)$/;"	kind:variable	line:91
+writer	../ASD Replication/ASD_features_testonbands.py	/^			writer = csv.DictWriter(csvfile, fieldnames=header)$/;"	kind:variable	line:71
+writer	../ASD Replication/rqa.py	/^		writer = csv.writer(f)$/;"	kind:variable	line:63
+writer	../FSL/FSL2Vector.py	/^		writer = csv.writer(open(file,'w'),delimiter = ',')$/;"	kind:variable	line:17
+writer	../Synapto_Weka/svm.py	/^			writer = csv.DictWriter(csvfile, fieldnames=header)$/;"	kind:variable	line:107
+writer	../pipeline/pipeline.py	/^			writer = csv.DictWriter(csvfile, fieldnames=header)$/;"	kind:variable	line:311
+writer	../pipeline/pipeline.py	/^		writer = csv.writer(f)$/;"	kind:variable	line:315
+writer	../pipeline/svm.py	/^			writer = csv.DictWriter(csvfile, fieldnames=header)$/;"	kind:variable	line:84
+writer	../tensorflow/Brazil/createInstances.py	/^	writer = csv.writer(out_file)$/;"	kind:variable	line:70
+writer	../tensorflow/Brazil/fold_to_feature_file.py	/^writer = csv.writer(f_out,delimiter=',')$/;"	kind:variable	line:12
+writer	../tensorflow/Neuronetrix/fold_to_feature_file.py	/^writer = csv.writer(f_out,delimiter=',')$/;"	kind:variable	line:10
+x_validation	../tensorflow/Brazil/nn_Anoop.py	/^def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" $/;"	kind:function	line:16
+x_validation	../tensorflow/Brazil/nn_Chris.py	/^def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" $/;"	kind:function	line:22
+x_validation	../tensorflow/Brazil/nn_Chris_2.py	/^def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" $/;"	kind:function	line:16
+x_validation	../tensorflow/Brazil/nn_Keras.py	/^def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" $/;"	kind:function	line:19
+x_validation	../tensorflow/Brazil/nn_Keras_Chris.py	/^def x_validation(in_file = "" ,n_hlayers = 0,neurons = [],n_folds = 0,results_file  = "" $/;"	kind:function	line:19
+y	../pipeline/pipeline.py	/^	y = np.array(y)$/;"	kind:variable	line:294
+y	../pipeline/pipeline.py	/^y = data.iloc[:,-1].values$/;"	kind:variable	line:147
+y	../pipeline/svm.py	/^	y = np.array(value)$/;"	kind:variable	line:119
+zscore	../tensorflow/Brazil/find_zScore.py	/^def zscore(arr_in):$/;"	kind:function	line:6
+zscore	../tensorflow/Neuronetrix/data/find_zScore.py	/^def zscore(arr_in):$/;"	kind:function	line:5
+zscore	../tensorflow/Neuronetrix/find_zScore.py	/^def zscore(arr_in):$/;"	kind:function	line:6
+zscore_file	../tensorflow/Brazil/find_zScore.py	/^def zscore_file(in_file,out_file,is_header):$/;"	kind:function	line:15
+zscore_file	../tensorflow/Brazil/normalize.py	/^def zscore_file(in_file,out_file,is_header):$/;"	kind:function	line:15
+zscore_file	../tensorflow/Brazil/normalize_2.py	/^def zscore_file(in_file,out_file,is_header):$/;"	kind:function	line:7
+zscore_file	../tensorflow/Neuronetrix/data/find_zScore.py	/^def zscore_file(in_file,out_file,is_header):$/;"	kind:function	line:13
+zscore_file	../tensorflow/Neuronetrix/find_zScore.py	/^def zscore_file(in_file,out_file,is_header):$/;"	kind:function	line:15

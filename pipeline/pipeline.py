@@ -93,7 +93,7 @@ if not startAtFS:
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
-	filename = featureName+'features'+identifier+'.csv'
+	filename = data_type + featureName+'features'+identifier+'.csv'
 	features_path = sys.path[0] + '/FeatureSets/'+ filename
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 	
@@ -233,13 +233,13 @@ if (FS):
 
 	clf = ExtraTreesClassifier()
 	# Get features with ranking of feature's importance (for our visualization purposes)
-	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
 
 	clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-	feat_importances_rf = get_feature_importance(clf, X, y, 50)
+	feat_importances_rf = get_feature_importance(clf, X, y, 945)
 
 	clf = GradientBoostingClassifier()
-	feat_importances_gb = get_feature_importance(clf, X, y, 50)
+	feat_importances_gb = get_feature_importance(clf, X, y, 945)
 
 	common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
 	print("Common features",common_features)
