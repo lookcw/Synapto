@@ -13,6 +13,7 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
+				print("fuck me")
 				reader = csv.reader(f)
 				array = list(reader)
 				array = np.array(array)
