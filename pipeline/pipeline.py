@@ -12,7 +12,7 @@ from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
-#from nn_keras import nn_keras
+from nn_keras import nn_keras
 import random
 from nn_Recurr import nn_Recurr
 
@@ -25,7 +25,7 @@ startAtFS = False
 FS = True #feature selection
 RECURR = False
 
-for i in range(1,len(sys.argv),2):		
+for i in range(1,len(sys.argv),2):
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
 		'\n-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
@@ -318,7 +318,9 @@ for model in models:
 		writer.writerow([time.strftime("%m/%d/%Y"), filename, featureName, data_type, format(model.__class__), format(clf.__class__), 
 			X.shape, X_reduced.shape, num_folds, num_seeds]+ metrics + red_metrics)
 
+# Insert new line into CSV file 
 # with open(o_filename, 'a') as f:
 # 	writer = csv.writer(f)
 # 	writer.writerow("\n")
+
 
