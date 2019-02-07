@@ -1,7 +1,7 @@
 
 
 CC = gcc
-CFLAGS += -Wall -O3 -fopenmp
+CFLAGS += --without-multilib -Wall -O3 -fopenmp
 LDFLAGS = -lm -fopenmp
 
 BIN  = FSL
