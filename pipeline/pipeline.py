@@ -14,7 +14,7 @@ from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
 #from nn_keras import nn_keras
 import random
-from nn_Recurr import nn_Recurr
+#from nn_Recurr import nn_Recurr
 
 
 featureName = ''
@@ -103,7 +103,7 @@ if not startAtFS:
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
-	filename = featureName+'features'+identifier+'.csv'
+	filename = data_type+featureName+'features'+identifier+'.csv'
 	features_path = sys.path[0] + '/FeatureSets/'+ filename
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 	
@@ -243,18 +243,18 @@ if (FS):
 
 	clf = ExtraTreesClassifier()
 	# Get features with ranking of feature's importance (for our visualization purposes)
-	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
 
 	clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-	feat_importances_rf = get_feature_importance(clf, X, y, 50)
+	feat_importances_rf = get_feature_importance(clf, X, y, 945)
 
 	clf = GradientBoostingClassifier()
-	feat_importances_gb = get_feature_importance(clf, X, y, 50)
+	feat_importances_gb = get_feature_importance(clf, X, y, 945)
 
 	common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
 	print("Common features",common_features)
 
-	#reduce features
+	# reduce features
 	from sklearn.feature_selection import SelectFromModel
 	model = SelectFromModel(clf, prefit=True)
 	X_reduced = model.transform(X)
@@ -283,9 +283,9 @@ o_filename = 'output_pipeline.csv'
 #nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
 #nn_Recurr
-if (RECURR):
-	nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
-		n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
+# if (RECURR):
+	# nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
+	# 	n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
 
 #various sklearn models
 logreg = LogisticRegression() 

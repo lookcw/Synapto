@@ -33,7 +33,7 @@ def get_feature_importance(clf, X, y, num_features):
 		writer = csv.writer(f)
 		# Print the feature importances to a console
 		# X.shape[1] goes to the total number of features 
-		for feat in range(X.shape[1]):
+		for feat in range(1, X.shape[1]):
 			print("%d. feature %d (%f)" % (feat + 1, indices[feat], feat_importances[indices[feat]]))
 			writer.writerow([feat + 1, indices[feat], feat_importances[indices[feat]]])
 
