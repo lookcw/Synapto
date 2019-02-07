@@ -13,11 +13,7 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
-<<<<<<< HEAD
-				print("fuck me")
-=======
 				
->>>>>>> Changes to megha
 				reader = csv.reader(f)
 
 				time_point_count = 0
