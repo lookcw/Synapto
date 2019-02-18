@@ -141,6 +141,7 @@ if not startAtFS:
 else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = 'infer')
 
+print data
 #shuffle rows of dataframe
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
