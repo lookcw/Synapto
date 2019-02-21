@@ -152,7 +152,7 @@ groups = data['patient num']
 unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last and first columns (label and group number)
 X = data.drop([data.columns[-1],data.columns[0]], axis=1)
-X.to_csv("fuckk.csv")
+X.to_csv("fuckk.csv",index= False) 	
 
 ##################################################################################
 
@@ -265,7 +265,7 @@ from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier  
 
-num_folds = 25	
+num_folds = 10
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
