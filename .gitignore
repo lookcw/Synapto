@@ -4,3 +4,4 @@ FeatureSets/
 output_pipeline.csv
 pipeline/BrazilRawData/
 Data/
+client_secret.json

@@ -15,7 +15,7 @@ from compute_score import compute_group_score
 from nn_keras import nn_keras
 import random
 from nn_Recurr import nn_Recurr
-
+from DriveUpload import upload2Drive
 
 featureName = ''
 data_type = ''
@@ -318,7 +318,7 @@ for model in models:
 		red_metrics = [red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc]
 		writer.writerow([time.strftime("%m/%d/%Y"), filename, featureName, data_type, format(model.__class__), format(clf.__class__), 
 			X.shape, X_reduced.shape, num_folds, num_seeds]+ metrics + red_metrics)
-
+upload2Drive()
 # Insert new line into CSV file 
 # with open(o_filename, 'a') as f:
 # 	writer = csv.writer(f)
