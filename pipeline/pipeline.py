@@ -103,11 +103,7 @@ if not startAtFS:
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
-<<<<<<< HEAD
 	filename = data_type+featureName+'features'+identifier+'.csv'
-=======
-	filename = data_type + featureName+'features'+identifier+'.csv'
->>>>>>> 17cdab2fa1e30db05acabf29680e89ece2d0de2c
 	features_path = sys.path[0] + '/FeatureSets/'+ filename
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 	
@@ -183,14 +179,12 @@ from pandas import read_csv
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
+from feature_ranking import get_feature_importance # import feature importances plot function
 
 if (FS):
 	#### feature selection
 	print("Feature Selection...")
 	print("Input Shape:", X.shape)
-
-	# import feature importances plot function
-	from feature_ranking import get_feature_importance
 
 	#### Substitute other feature selection methods here 
 
@@ -243,26 +237,20 @@ if (FS):
 
 	# alternative feature selection from sklearn
 	# Feature Importance with Extra Trees Classifier -> has feature importance 
-	
 
-	clf = ExtraTreesClassifier()
-	# Get features with ranking of feature's importance (for our visualization purposes)
-	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+	#  get x_reduced code from this file
+	from get_XReduced import get_XReduced
 
-	clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-	feat_importances_rf = get_feature_importance(clf, X, y, 945)
+	clf1 = ExtraTreesClassifier()
+	clf2 = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+	clf3 = GradientBoostingClassifier()
+	# add the classifiers to the array 
+	clfs = [clf1, clf2, clf3]
+	x_reduced = []
 
-	clf = GradientBoostingClassifier()
-	feat_importances_gb = get_feature_importance(clf, X, y, 945)
-
-	common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values
-	print("Common features",common_features)
-
-	# reduce features
-	from sklearn.feature_selection import SelectFromModel
-	model = SelectFromModel(clf, prefit=True)
-	X_reduced = model.transform(X)
-	print("reduced shape:" + str(X_reduced.shape))
+	for clf in clfs:	
+		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+		x_reduced.append(get_XReduced(clf, X))
 
 
 ##################################################################################
@@ -270,15 +258,35 @@ if (FS):
 # learning model
 print("Learning model...")
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
-#from xgboost import XGBClassifier
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier  
+from write_accuracy_to_file import write_accuracy_to_file
+#from xgboost import XGBClassifier
 
 num_folds = 25	
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
+#various sklearn models
+logreg = LogisticRegression() 
+logreg_cv = LogisticRegressionCV()
+rf = RandomForestClassifier()
+gboost = GradientBoostingClassifier()
+svc = SVC()
+kneighbors = KNeighborsClassifier(n_neighbors=5)  
+#xgboost = XGBClassifier() -> not working
+
+#loop through models and print accuracy for each
+models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+# models = [svc]
+
+# Get and write accuracies to an output csv file
+for i in range(0, len(clfs)):
+	print(format(clfs[i].__class__))
+	print("\n")
+	for model in models:
+		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type)
 
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
@@ -290,51 +298,4 @@ o_filename = 'output_pipeline.csv'
 # if (RECURR):
 	# nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
 	# 	n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
-
-#various sklearn models
-logreg = LogisticRegression() 
-logreg_cv = LogisticRegressionCV()
-rf = RandomForestClassifier()
-gboost = GradientBoostingClassifier()
-#xgboost = XGBClassifier() -> not working
-svc = SVC()
-kneighbors = KNeighborsClassifier(n_neighbors=5)  
-
-#loop through models and print accuracy for each
-models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
-# models = [svc]
-for model in models:
-	X = np.array(X)
-	y = np.array(y)
-	print('Cross-validation of : {0}'.format(model.__class__))
-	(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
-	(red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc) =\
-		compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
-	print('All features CV score = {0}'.format(accuracy))
-	print('Reduced features CV score = {0}'.format(red_accuracy))
-
-	try:
-		with open(o_filename, 'r+') as csvfile:
-			pass
-	except IOError as e:
-		with open(o_filename, 'a') as csvfile:
-			header = ['Date','filename', 'Feature', 'Data', 'Classifier', 'Feature Reduction Classifier', 'Number of Features Before Reduction', 
-			'Number of Features After Reduction', 'Num Folds', 'Num Seeds', 'Accuracy','F-score','True Negative',
-			'False Positive','False Negative','True Positive',"ROCAUC", 'red Accuracy','red F-score',
-			'red True Negative','red False Positive','red False Negative','red True Positive',"red ROCAUC"]
-			writer = csv.DictWriter(csvfile, fieldnames=header)
-			writer.writeheader()
-	# Record the number of features that were reduced
-	with open(o_filename, 'a') as f:
-		writer = csv.writer(f)
-		metrics = [accuracy,f1, tnP,fpP,fnP,tpP,roc_auc]
-		red_metrics = [red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc]
-		writer.writerow([time.strftime("%m/%d/%Y"), filename, featureName, data_type, format(model.__class__), format(clf.__class__), 
-			X.shape, X_reduced.shape, num_folds, num_seeds]+ metrics + red_metrics)
-
-# Insert new line into CSV file 
-# with open(o_filename, 'a') as f:
-# 	writer = csv.writer(f)
-# 	writer.writerow("\n")
-
 

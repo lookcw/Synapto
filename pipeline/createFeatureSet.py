@@ -11,13 +11,13 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 	#extract from path to first patient group folder
 	# HC
 	combined_group1 = np.empty((0,num_electrodes*num_timePoints+1))
+	print(combined_group1)
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
 
 				reader = csv.reader(f)
-				array = list(reader)
-				array = np.array(array)
+				array = np.array(list(reader))
 				print(array.shape)
 				#print len(array) #160,000
 				#print len(array[0]) #21
@@ -35,11 +35,14 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 					row = np.append(row,[0])
 					total[bunch] = row
 				#print total
+				print("Printing total shape")
+				print(total.shape)
 				combined_group1 = np.concatenate((combined_group1,total))
 				
 				# reader = csv.reader(f)
 
 				# time_point_count = 0
+				# patient_num = 1
 				# # Patient number is first number in the row
 				# curr_array = [patient_num]
 				# featureSet = []
@@ -55,6 +58,8 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 				# 		curr_array = []
 				# 		time_point_count = 0
 				# patient_num += 1
+				# print(combined_group1.shape)
+				# combined_group1 = np.concatenate((combined_group1,featureSet))
 
 
 
@@ -104,6 +109,27 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 					total[bunch] = row
 				#print total
 				combined_group2 = np.concatenate((combined_group2,total))
+
+				# reader = csv.reader(f)
+
+				# time_point_count = 0
+				# patient_num = 1
+				# # Patient number is first number in the row
+				# curr_array = [patient_num]
+				# featureSet = []
+
+				# # For each row in the file 
+				# for row in reader:
+				# 	if time_point_count != num_timePoints:
+				# 		curr_array.extend(row)
+				# 		time_point_count += 1
+				# 	else:
+				# 		curr_array.append(0)
+				# 		featureSet.append(curr_array)
+				# 		curr_array = []
+				# 		time_point_count = 0
+				# patient_num += 1
+				# combined_group2 = np.concatenate((combined_group2,featureSet))
 
 	combined = np.concatenate((combined_group1, combined_group2))
 	#print(combined.shape) #25000x631
