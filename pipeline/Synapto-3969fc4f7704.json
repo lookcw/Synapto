@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "synapto",
+  "private_key_id": "3969fc4f77045a9c11187e4395d6ec28f6d4a444",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCtPNIGHP9wAtGi\nrQJh0Xpsbffm/LVgD4SO55J0Y2QD02LXhteNneLyCOlq2SEVggaGoBRkcBrMhjSY\nq+wy/1URw2hDP7Q1hs+No5all3fA8gjNXHSkffgIMUoSsUnGcsRcaoII+s5BI3Ga\nU+A0mJdTROkXds7Rs/LKBGZEEe/2iXhPPqlGk5RvFaZcLgRpzsY73d0dl255VMr0\n3hS1l+EpxBTBr8t6oBUeJapOyYczTNdtOw2Asihpg0d/HcgcDkStz2KMFkKnd9nh\nJ5gKKYROAIgINyZJWoSDmnfa9Hnslx35u42BQCtBCioZzLeyCFwUOCjElTHXrEEb\nm/ODFPIFAgMBAAECggEAIYn031od2gGxtFzqaSW1HejsZbvnIYHfmAsdP4s+gb8b\nE773XGOE3Hb9OcJvtUpHGSlEyW0qww34gNZIFFd6kMXUGbDrorFG3ZUeRVDdzm0N\nZzTPIEmDC5L/VD8emVz+xyWXp0VnSRUjmU1Dyur/4Q8mUXSe9dpw1sujQOp4GrKQ\nhkUof5qXTVcM3xJhwSw4jDFDRQ40Mr5sGHlhbr8Th/q6s/tlGbFx+7ggYnMpOYHm\nK8SEXrqnKqiGhGoIXnMiNbr9KvYHCPJNWGusVxr0ija/8AP+rJRLhVA2msMBiY3p\n9FxY/W8rWxXS4IkCptg1xR8HOxgtANZG5zI0vZDwAQKBgQDtgF0Oy3+yJs/C+LCG\nSGu10JT8bEw85kyo2Ar6vayqOhxQakEx5xlzPbNORYfKTv/rTE+2NEZm5rGz+a2p\nI8aIid10+yo0rxXfbmpAWP5d4M6IJmthltXzwjMXGQvn6Kg+eCDWTnARbNWFo9RC\n9J/KrumHEGtdqp3ZG7qZVh/JRQKBgQC6uxMFPVsWviMj1H5xypaFHKPs1Rj4F6js\nYnG7N4FIOfCr1TXsHeK5gAp9Et63yzfx/Iwa3WOQ+upo+Fo72lkndlJk5CV6IyFJ\nUuu7ti/B7Hu4uV0Q31SfvAB6r1BFk0dBmV3BVN4guWMrmJiDRRk4rDtV9WLOLu1S\na9e/3rgxwQKBgQCcN3l+OMZGhRbVNMTPnqUSUx8cJZPD3ut/h5M5ODdxRIXJMwqs\n60gnL+dXzY4yuOHGgExSGXJRTt6F9e2POlPlDWGYB3jMbHmjnDnRF3hAgZT3ouWw\nrAkQq6T1RWk6YiL/6/4VWESIgaC0pX0BiWvtYj2CtH8afhYTbxS+tRJ1TQKBgQCY\nER9FRhk3JTLCzBsJGj2IO7G3fjcuWz5C+0y5dVNAeYbouOKH3jK0dHSWNNbRgJqX\n495JRn/+IojhYVdCpOez/mTNKwrmM1O5PeEh5hVwbOC4p6QFyIpG5zjQsJLDhlQi\nNP6oIjAfIDqF12hkhtIqWACeWQ7U8Fxuocp6w6rnQQKBgHfc/hl4STJT//elKCcQ\nH7Yu5S/YONCUPNvcFBVbhHd9PAQrCtfcqCHvyO84oJ4r/cIgO3oGhVzq+hIQ066O\nNTerlv/f5SJZT8WrLmE9wMsgBlPMw+WxUQGp6HvUK1do/LaKKtRmSso2nslk0RGy\n/BhhmqkS1ewmb1kZfChhwEXG\n-----END PRIVATE KEY-----\n",
+  "client_email": "synapto-pipeline@synapto.iam.gserviceaccount.com",
+  "client_id": "113355904950503745723",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/synapto-pipeline%40synapto.iam.gserviceaccount.com"
+}

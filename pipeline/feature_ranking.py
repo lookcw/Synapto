@@ -41,9 +41,9 @@ def get_feature_importance(clf, X, y, num_features):
 	# 	print("%d. feature %d" % (f + 1, indices[f]))
 	
 	# Plot features
-	plt.figure(figsize=(16,8))
-	feat_importances.plot(kind='barh')
-	plt.gca().invert_yaxis()
+#	plt.figure(figsize=(16,8))
+#	feat_importances.plot(kind='barh')
+#	plt.gca().invert_yaxis()
 	#plt.show()
 	#print(feat_importances)
 

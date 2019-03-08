@@ -10,9 +10,11 @@ def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, rec
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	features_path = sys.path[0] + '/FeatureSets/'+data_type+'FSLfeatures'+identifier+'.csv'
+	needHeader = True
+
 
 	if not os.path.exists(features_path):
-		open(features_path,"w")
+		open(features_path,"w") 
 
 		out_file = open(features_path,"a") #used to be "a" for append
 		writer = csv.writer(out_file)
@@ -23,9 +25,19 @@ def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, rec
 				with open(os.path.join(path1, filename)) as f:
 					reader = csv.reader(f)
 					data = np.array(list(reader))
+					if needHeader:
+						num_electrodes = data.shape[1]
+						print num_electrodes
+						header = ['patient num']
+						for i in range(num_electrodes):
+							for j in range(i+1,num_electrodes):
+								header.append("e"+str(i+1) +"_e"+str(j+1))
+						header.append('class')
+						writer.writerow(header)
+						needHeader = False
+
 
 					print os.path.join(path1, filename)
-
 					#create bunches per patient
 					for bunch in range(num_epochs):
 						index = int(bunch*(len(data)/num_epochs))
