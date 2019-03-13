@@ -286,6 +286,18 @@ num_folds = 25
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
+
+# Megha's svm
+#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
+
+#nn_keras
+nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
+#nn_Recurr
+if (RECURR):
+	nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
+		n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
+
 #various sklearn models
 logreg = LogisticRegression() 
 logreg_cv = LogisticRegressionCV()
