@@ -1,0 +1,137 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ASD_features.py	../ASD_features.py	1;"	kind:file	line:1
+BandPass1.py	../BandPass1.py	1;"	kind:file	line:1
+DriveUpload.py	../DriveUpload.py	1;"	kind:file	line:1
+FS	../pipeline.py	/^		FS = False$/;"	kind:variable	line:55
+FS	../pipeline.py	/^FS = True #feature selection$/;"	kind:variable	line:25
+FSL_features.py	../FSL_features.py	1;"	kind:file	line:1
+PCA.py	../PCA.py	1;"	kind:file	line:1
+RECURR	../pipeline.py	/^		RECURR = True$/;"	kind:variable	line:57
+RECURR	../pipeline.py	/^RECURR = False$/;"	kind:variable	line:26
+SelectKBest.py	../SelectKBest.py	1;"	kind:file	line:1
+WTcoef.py	../WTcoef.py	1;"	kind:file	line:1
+X	../pipeline.py	/^X = data.drop([data.columns[-1],data.columns[0]], axis=1)$/;"	kind:variable	line:163
+X	../svm.py	/^	X = np.array(attributes)$/;"	kind:variable	line:118
+X_reduced	../feature_classifications.py	/^X_reduced = model.transform(X)$/;"	kind:variable	line:25
+butter_bandpass	../BandPass1.py	/^def butter_bandpass(lowcut, highcut, fs, order=6):$/;"	kind:function	line:6
+butter_bandpass_filter	../BandPass1.py	/^def butter_bandpass_filter(data, lowcut, highcut, fs, order=6):$/;"	kind:function	line:14
+clf	../feature_classifications.py	/^clf = ExtraTreesClassifier()$/;"	kind:variable	line:9
+clf	../feature_classifications.py	/^clf = GradientBoostingClassifier()$/;"	kind:variable	line:16
+clf	../feature_classifications.py	/^clf = RandomForestClassifier(n_estimators=50, max_features='sqrt')$/;"	kind:variable	line:13
+clf1	../pipeline.py	/^	clf1 = ExtraTreesClassifier()$/;"	kind:variable	line:247
+clf2	../pipeline.py	/^	clf2 = RandomForestClassifier(n_estimators=50, max_features='sqrt')$/;"	kind:variable	line:248
+clf3	../pipeline.py	/^	clf3 = GradientBoostingClassifier()$/;"	kind:variable	line:249
+clfs	../pipeline.py	/^	clfs = [clf1, clf2, clf3]$/;"	kind:variable	line:251
+common_features	../feature_classifications.py	/^common_features = pd.Series(list(set(feat_importances_rf).intersection(set(feat_importances_gb)))).values$/;"	kind:variable	line:19
+compute_group_score	../compute_score.py	/^def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy'):$/;"	kind:function	line:8
+compute_score.py	../compute_score.py	1;"	kind:file	line:1
+createFSLFeatureSet	../createFSLFeatureSet.py	/^def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, recurr):$/;"	kind:function	line:8
+createFSLFeatureSet.py	../createFSLFeatureSet.py	1;"	kind:file	line:1
+createFeatureSet	../createFeatureSet.py	/^def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2, data_type, recurr):$/;"	kind:function	line:9
+createFeatureSet.py	../createFeatureSet.py	1;"	kind:file	line:1
+createRecurrFeatureSet.py	../createRecurrFeatureSet.py	1;"	kind:file	line:1
+data	../pipeline.py	/^	data = pd.read_csv(features_path, header = 'infer')$/;"	kind:variable	line:152
+data	../pipeline.py	/^	data = pd.read_csv(features_path,header = 'infer')$/;"	kind:variable	line:150
+data	../svm.py	/^		data = [r for r in reader] #Place all data in data array $/;"	kind:variable	line:113
+data_folder_path1	../pipeline.py	/^			data_folder_path1 = '...\/PathToGreeceHC_DataFolder'$/;"	kind:variable	line:119
+data_folder_path1	../pipeline.py	/^			data_folder_path1 = 'BrazilRawData\/HCF50'$/;"	kind:variable	line:114
+data_folder_path2	../pipeline.py	/^			data_folder_path2 = '...\/PathToGreeceMCI_DataFolder'$/;"	kind:variable	line:120
+data_folder_path2	../pipeline.py	/^			data_folder_path2 = 'BrazilRawData\/ADF50'$/;"	kind:variable	line:115
+data_type	../pipeline.py	/^		data_type = sys.argv[i+1]$/;"	kind:variable	line:38
+data_type	../pipeline.py	/^data_type = ''$/;"	kind:variable	line:21
+extractASDFeatures	../ASD_features.py	/^def extractASDFeatures(time_series_electrode):$/;"	kind:function	line:14
+extractFSLFeatures	../FSL_features.py	/^def extractFSLFeatures(time_series_electrode):$/;"	kind:function	line:7
+extractFeatureFunc	../pipeline.py	/^			extractFeatureFunc = createFSLFeatureSet$/;"	kind:variable	line:90
+extractFeatureFunc	../pipeline.py	/^			extractFeatureFunc = extractASDFeatures$/;"	kind:variable	line:86
+extractFeatureFunc	../pipeline.py	/^			extractFeatureFunc = extractWaveletFeatures$/;"	kind:variable	line:88
+extractWaveletFeatures	../WTcoef.py	/^def extractWaveletFeatures(x):$/;"	kind:function	line:5
+feat_importances_et	../feature_classifications.py	/^feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features$/;"	kind:variable	line:11
+feat_importances_et	../pipeline.py	/^		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features$/;"	kind:variable	line:255
+feat_importances_gb	../feature_classifications.py	/^feat_importances_gb = get_feature_importance(clf, X, y, 945)$/;"	kind:variable	line:17
+feat_importances_rf	../feature_classifications.py	/^feat_importances_rf = get_feature_importance(clf, X, y, 945)$/;"	kind:variable	line:14
+featureName	../pipeline.py	/^		featureName = sys.argv[i+1]$/;"	kind:variable	line:44
+featureName	../pipeline.py	/^featureName = ''$/;"	kind:variable	line:20
+featureSelection.py	../featureSelection.py	1;"	kind:file	line:1
+featureSetEdit.py	../featureSetEdit.py	1;"	kind:file	line:1
+feature_classifications.py	../feature_classifications.py	1;"	kind:file	line:1
+feature_ranking.py	../feature_ranking.py	1;"	kind:file	line:1
+features_path	../pipeline.py	/^		features_path = sys.argv[i+1]$/;"	kind:variable	line:59
+features_path	../pipeline.py	/^		features_path = sys.path[0] + '\/FeatureSets\/'+data_type+'Recurr'+identifier+'.csv'$/;"	kind:variable	line:100
+features_path	../pipeline.py	/^	features_path = sys.path[0] + '\/FeatureSets\/'+ filename$/;"	kind:variable	line:107
+filename	../pipeline.py	/^		filename = features_path.split('\/')[-1]$/;"	kind:variable	line:60
+filename	../pipeline.py	/^	filename = data_type+featureName+'features'+identifier+'.csv'$/;"	kind:variable	line:106
+filepath	../svm.py	/^			filepath = str(sys.argv[i+1])$/;"	kind:variable	line:93
+filepath_inserted	../svm.py	/^			filepath_inserted = True$/;"	kind:variable	line:94
+filepath_inserted	../svm.py	/^	filepath_inserted = False$/;"	kind:variable	line:75
+gboost	../pipeline.py	/^gboost = GradientBoostingClassifier()$/;"	kind:variable	line:278
+get_XReduced	../get_XReduced.py	/^def get_XReduced(clf, X):$/;"	kind:function	line:6
+get_XReduced.py	../get_XReduced.py	1;"	kind:file	line:1
+get_feature_importance	../feature_ranking.py	/^def get_feature_importance(clf, X, y, num_features):$/;"	kind:function	line:8
+groups	../pipeline.py	/^groups = data['patient num']$/;"	kind:variable	line:158
+header	../svm.py	/^			header = ['Date', 'Filepath', 'Accuracy', 'Num Folds', 'Num Seeds']$/;"	kind:variable	line:83
+helpString	../pipeline.py	/^		helpString = ('Run pipeline starting from beginning:\\nInput arguments:\\n-d: data type (choices: Brazil, Greece)' +$/;"	kind:variable	line:30
+identifier	../pipeline.py	/^		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'$/;"	kind:variable	line:103
+identifier	../pipeline.py	/^		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'$/;"	kind:variable	line:99
+kneighbors	../pipeline.py	/^kneighbors = KNeighborsClassifier(n_neighbors=5)  $/;"	kind:variable	line:280
+logreg	../pipeline.py	/^logreg = LogisticRegression() $/;"	kind:variable	line:275
+logreg_cv	../pipeline.py	/^logreg_cv = LogisticRegressionCV()$/;"	kind:variable	line:276
+metrics	../metrics.py	/^def metrics(y_true,y_pred,y_scores):$/;"	kind:function	line:6
+metrics.py	../metrics.py	1;"	kind:file	line:1
+model	../feature_classifications.py	/^model = SelectFromModel(clf, prefit=True)$/;"	kind:variable	line:24
+models	../pipeline.py	/^models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]$/;"	kind:variable	line:284
+n	../nn_Recurr.py	/^n=1$/;"	kind:variable	line:206
+n	../nn_keras.py	/^n=1$/;"	kind:variable	line:188
+nn_Recurr	../nn_Recurr.py	/^def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5, $/;"	kind:function	line:18
+nn_Recurr.py	../nn_Recurr.py	1;"	kind:file	line:1
+nn_keras	../nn_keras.py	/^def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5):$/;"	kind:function	line:19
+nn_keras.py	../nn_keras.py	1;"	kind:file	line:1
+num_electrodes	../pipeline.py	/^			num_electrodes = 21$/;"	kind:variable	line:116
+num_electrodes	../pipeline.py	/^			num_electrodes = 8$/;"	kind:variable	line:121
+num_electrodes	../pipeline.py	/^		num_electrodes = 21$/;"	kind:variable	line:136
+num_electrodes	../pipeline.py	/^		num_electrodes = 8$/;"	kind:variable	line:138
+num_epochs	../pipeline.py	/^		num_epochs = int(sys.argv[i+1])$/;"	kind:variable	line:47
+num_epochs	../pipeline.py	/^num_epochs = 0 #per patient$/;"	kind:variable	line:22
+num_folds	../pipeline.py	/^num_folds = 25	$/;"	kind:variable	line:270
+num_folds	../svm.py	/^			num_folds = int(sys.argv[i+1])$/;"	kind:variable	line:98
+num_folds	../svm.py	/^	num_folds = 10$/;"	kind:variable	line:73
+num_seeds	../pipeline.py	/^num_seeds = 10$/;"	kind:variable	line:271
+num_seeds	../svm.py	/^			num_seeds = int(sys.argv[i+1])$/;"	kind:variable	line:100
+num_seeds	../svm.py	/^	num_seeds = 10$/;"	kind:variable	line:74
+num_timePoints	../pipeline.py	/^		num_timePoints = int(sys.argv[i+1])$/;"	kind:variable	line:53
+num_timePoints	../pipeline.py	/^num_timePoints = 0 #per instance$/;"	kind:variable	line:23
+o_filename	../pipeline.py	/^o_filename = 'output_pipeline.csv'$/;"	kind:variable	line:272
+o_filename	../svm.py	/^			o_filename = sys.argv[i+1]$/;"	kind:variable	line:96
+o_filename	../svm.py	/^	o_filename = "output.csv"$/;"	kind:variable	line:72
+pipeline.py	../pipeline.py	1;"	kind:file	line:1
+reader	../svm.py	/^		reader = csv.reader(f)$/;"	kind:variable	line:111
+recursiveFeatureElim	../recursiveFeatureElim.py	/^def recursiveFeatureElim(X, y):$/;"	kind:function	line:13
+recursiveFeatureElim.py	../recursiveFeatureElim.py	1;"	kind:file	line:1
+reduce_features	../featureSelection.py	/^def reduce_features(X, y):$/;"	kind:function	line:14
+reduced_features_path	../pipeline.py	/^	reduced_features_path = sys.path[0] + '\/ReducedFeatureSets\/'+featureName+'features'+identifier+'_reduced.csv'$/;"	kind:variable	line:108
+remove_plus_min	../featureSetEdit.py	/^def remove_plus_min(data):$/;"	kind:function	line:5
+rf	../pipeline.py	/^rf = RandomForestClassifier()$/;"	kind:variable	line:277
+runA	../BandPass1.py	/^def runA(x):$/;"	kind:function	line:37
+runB	../BandPass1.py	/^def runB(x):$/;"	kind:function	line:46
+runD	../BandPass1.py	/^def runD(x):$/;"	kind:function	line:20
+runG	../BandPass1.py	/^def runG(x):$/;"	kind:function	line:55
+runT	../BandPass1.py	/^def runT(x):$/;"	kind:function	line:28
+shuffle	../nn_Recurr.py	/^	def shuffle(input):$/;"	kind:function	line:76
+shuffle	../nn_keras.py	/^	def shuffle(input):$/;"	kind:function	line:76
+splitbands	../BandPass1.py	/^def splitbands(x):$/;"	kind:function	line:70
+startAtFS	../pipeline.py	/^		startAtFS = True$/;"	kind:variable	line:61
+startAtFS	../pipeline.py	/^startAtFS = False$/;"	kind:variable	line:24
+svc	../pipeline.py	/^svc = SVC()$/;"	kind:variable	line:279
+svm.py	../svm.py	1;"	kind:file	line:1
+svm_func	../svm.py	/^def svm_func(X, y, seeds, folds, o_filename):$/;"	kind:function	line:14
+upload2Drive	../DriveUpload.py	/^def upload2Drive():$/;"	kind:function	line:6
+write_accuracy_to_file	../write_accuracy_to_file.py	/^def write_accuracy_to_file(clf, model, groups, X_reduced, X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type):$/;"	kind:function	line:10
+write_accuracy_to_file.py	../write_accuracy_to_file.py	1;"	kind:file	line:1
+writer	../svm.py	/^			writer = csv.DictWriter(csvfile, fieldnames=header)$/;"	kind:variable	line:84
+x_reduced	../pipeline.py	/^	x_reduced = []$/;"	kind:variable	line:252
+y	../pipeline.py	/^y = data.iloc[:,-1].values$/;"	kind:variable	line:157
+y	../svm.py	/^	y = np.array(value)$/;"	kind:variable	line:119
