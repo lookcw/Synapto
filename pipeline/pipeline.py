@@ -317,14 +317,3 @@ for i in range(0, len(clfs)):
 	for model in models:
 		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type)
 
-# Megha's svm
-#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
-
-#nn_keras
-#nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
-
-#nn_Recurr
-# if (RECURR):
-	# nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
-	# 	n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
-
