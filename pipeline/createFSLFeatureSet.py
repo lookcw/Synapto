@@ -7,8 +7,8 @@ from BandPass1 import getBands
 
 global_patient_num = 0
 
-def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_timePoints,path):
-	bands =['a']
+def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_timePoints,path,isBands=False):
+	bands =['d','t','a','b','g']
 	global global_patient_num
 	out_file = open(features_path,"a") #used to be "a" for append
 	writer = csv.writer(out_file)
@@ -21,7 +21,6 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 				data = np.array(list(reader))
 				if needHeader:
 					num_electrodes = data.shape[1]
-					print num_electrodes
 					header = ['patient num']
 					for band in bands:
 						for i in range(num_electrodes):
@@ -31,8 +30,6 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 					writer.writerow(header)
 					needHeader = False
 
-
-				print os.path.join(path, filename)
 				#create bunches per patient
 				for bunch in range(num_epochs):
 					index = int(bunch*(len(data)/num_epochs))
@@ -40,26 +37,28 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 					matrix.append(data[index])
 					for i in range(1,num_timePoints):
 						matrix.append(data[index+i])
-					matrix = np.array(matrix,dtype=np.float) 
-					transposed = np.transpose(matrix)
-					delta = np.empty(transposed.shape)
-					theta = np.empty(transposed.shape)
-					alpha = np.empty(transposed.shape)
-					beta = np.empty(transposed.shape)
-					gamma = np.empty(transposed.shape)
-					for i in range(len(transposed)):
-						bands = getBands(transposed[i])
-						delta[i] = bands[0]
-						# theta[i] = bands[1]
-						# alpha[i] = bands[2]	
-						# beta[i] = bands[3]
-						# gamma[i] = bands[4]
-					# allBands = [delta,theta,alpha,beta,gamma]
-					allBands = [alpha]
 					featuresRow = []
-					for i in range(len(allBands)):
-						featuresRow.append(extractFSLFeatures(np.transpose(allBands[i]).astype('str')))
-						# print(featuresRow.shape)
+					if(isBands):
+						matrix = np.array(matrix,dtype=np.float) 
+						transposed = np.transpose(matrix)
+						delta = np.empty(transposed.shape)
+						theta = np.empty(transposed.shape)
+						alpha = np.empty(transposed.shape)
+						beta = np.empty(transposed.shape)
+						gamma = np.empty(transposed.shape)
+						for i in range(len(transposed)):
+							bands = getBands(transposed[i])
+							delta[i] = bands[0]
+							theta[i] = bands[1]
+							alpha[i] = bands[2]	
+							beta[i] = bands[3]
+							gamma[i] = bands[4]
+						allBands = [delta,theta,alpha,beta,gamma]
+						for i in range(len(allBands)):
+							featuresRow.append(extractFSLFeatures(np.transpose(allBands[i]).astype('str')))	
+						
+					else:
+						featuresRow = extractFSLFeatures(matrix)
 					featuresRow = np.array(featuresRow)
 					featuresRow = np.append(featuresRow,[adhc])
 					featuresRow = np.insert(featuresRow,0,patient_num)
@@ -73,7 +72,6 @@ def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, rec
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	features_path = sys.path[0] + '/FeatureSets/'+data_type+'FSLfeatures'+identifier+'.csv'
-	needHeader = True
 
 	if not os.path.exists(features_path):
 		writeFeatureSet(0,1,features_path, True, num_epochs,num_timePoints,path1)

@@ -14,6 +14,8 @@ from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 import random
+from sklearn.utils import shuffle
+
 #from nn_Recurr import nn_Recurr
 
 
@@ -152,6 +154,7 @@ else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = 'infer')
 
 #shuffle rows of dataframe
+data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
