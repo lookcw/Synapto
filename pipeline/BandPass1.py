@@ -76,7 +76,8 @@ def splitbands(x):
     ans.append(runG(x))
     return np.array(ans)
 
-
+def getBands(x):
+    return [runD(x),runT(x),runA(x),runB(x),runG(x)]
 
 
 
