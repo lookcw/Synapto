@@ -14,6 +14,8 @@ from createFSLFeatureSet import createFSLFeatureSet
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 import random
+from sklearn.utils import shuffle
+
 #from nn_Recurr import nn_Recurr
 
 
@@ -147,16 +149,24 @@ if not startAtFS:
 	#else:
 	#	data = pd.read_csv(features_path, header = None)
 	
-	data = pd.read_csv(features_path,header = 'infer')
+	data = pd.read_csv(features_path,header = 'infer',delimiter=',')
 else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = 'infer')
 
 #shuffle rows of dataframe
+data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
+<<<<<<< HEAD
 groups = data['patient_num']
 
+=======
+groups = data['patient num']
+print "groups.shape :" + str(groups.shape) 
+print groups
+	
+>>>>>>> 01935208dcafe525a2db4e0095dd3f64d0116177
 
 unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last and first columns (label and group number)
@@ -268,7 +278,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from write_accuracy_to_file import write_accuracy_to_file
 #from xgboost import XGBClassifier
 
-num_folds = 25	
+num_folds = 25
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
@@ -284,7 +294,6 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #loop through models and print accuracy for each
 models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
-
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
 	print(format(clfs[i].__class__))
