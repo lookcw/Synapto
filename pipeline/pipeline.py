@@ -155,14 +155,17 @@ else: #starting pipeline with feature selection
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
-groups = data.index.values
+groups = data['patient_num']
+
+
 unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last and first columns (label and group number)
 X = data.drop([data.columns[-1],data.columns[0]], axis=1)
+X.to_csv("fuckk.csv",index= False) 	
 
 ##################################################################################
 
-#### feature selection
+### feature selection
 print("Feature Selection...")
 print("Input Shape:", X.shape)
 
@@ -248,6 +251,7 @@ if (FS):
 	clfs = [clf1, clf2, clf3]
 	x_reduced = []
 
+	# Causing error because input contains NaN
 	for clf in clfs:	
 		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
 		x_reduced.append(get_XReduced(clf, X))
