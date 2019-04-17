@@ -4,7 +4,7 @@ from pyrqa.settings import Settings
 from pyrqa.neighbourhood import FixedRadius
 from pyrqa.metric import EuclideanMetric
 from pyrqa.computation import RQAComputation
-from pyrqa.file_reader import FileReader
+# from pyrqa.file_reader import FileReader
 import nolds
 import numpy as np
 import csv
