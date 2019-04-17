@@ -8,14 +8,16 @@ import matplotlib.pyplot as plt
 import csv
 import time
 from ASD_features import extractASDFeatures
-from WTcoef import extractWaveletFeatures
+# from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
-from createFSLFeatureSet import createFSLFeatureSet
+from createMatrixFeatureSet import createMatrixFeatureSet
+from pearson_features import extractPearsonFeatures
+from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 import random
 from sklearn.utils import shuffle
-
+import functools
 #from nn_Recurr import nn_Recurr
 
 
@@ -86,10 +88,12 @@ if not startAtFS:
 	if not RECURR:
 		if featureName == 'ASD':
 			extractFeatureFunc = extractASDFeatures
-		elif featureName == 'Wavelet':
-			extractFeatureFunc = extractWaveletFeatures
+		# elif featureName == 'Wavelet':
+			# extractFeatureFunc = extractWaveletFeatures
 		elif featureName == 'FSL':
-			extractFeatureFunc = createFSLFeatureSet
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractFSLFeatures)
+		elif featureName == 'Pearson':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractPearsonFeatures)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -111,6 +115,7 @@ if not startAtFS:
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
+		print("feature file dne, making it now")
 		#3rd parameter is extractFeature function of choice
 		if (data_type == 'Brazil'):
 			data_folder_path1 = 'BrazilRawData/HCF50'
@@ -122,7 +127,7 @@ if not startAtFS:
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
 			num_electrodes = 8
 			
-		if (featureName == 'FSL'):
+		if (featureName == 'FSL' or featureName == 'Pearson'):
 			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 

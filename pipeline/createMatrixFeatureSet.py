@@ -2,12 +2,11 @@ import csv
 import numpy as np
 import os
 import sys
-from FSL_features import extractFSLFeatures
 from BandPass1 import getBands
 
 global_patient_num = 0
 
-def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_timePoints,path,isBands=False):
+def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_epochs,num_timePoints,path,isBands=False):
 	bands =['d','t','a','b','g']
 	global global_patient_num
 	out_file = open(features_path,"a") #used to be "a" for append
@@ -22,10 +21,15 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 				if needHeader:
 					num_electrodes = data.shape[1]
 					header = ['patient num']
-					for band in bands:
+					if (isBands):
+						for band in bands:
+							for i in range(num_electrodes):
+								for j in range(i+1,num_electrodes):
+									header.append(band+"_"+"e"+str(i+1) +"_e"+str(j+1))
+					else :
 						for i in range(num_electrodes):
-							for j in range(i+1,num_electrodes):
-								header.append(band+"_"+"e"+str(i+1) +"_e"+str(j+1))
+								for j in range(i+1,num_electrodes):
+									header.append("e"+str(i+1) +"_e"+str(j+1))
 					header.append('class')
 					writer.writerow(header)
 					needHeader = False
@@ -37,9 +41,9 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 					matrix.append(data[index])
 					for i in range(1,num_timePoints):
 						matrix.append(data[index+i])
+					matrix = np.array(matrix,dtype=np.float) 
 					featuresRow = []
 					if(isBands):
-						matrix = np.array(matrix,dtype=np.float) 
 						transposed = np.transpose(matrix)
 						delta = np.empty(transposed.shape)
 						theta = np.empty(transposed.shape)
@@ -55,10 +59,10 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 							gamma[i] = bands[4]
 						allBands = [delta,theta,alpha,beta,gamma]
 						for i in range(len(allBands)):
-							featuresRow.append(extractFSLFeatures(np.transpose(allBands[i]).astype('str')))	
+							featuresRow.append(function(np.transpose(allBands[i]).astype('str')))	
 						
 					else:
-						featuresRow = extractFSLFeatures(matrix)
+						featuresRow = function(matrix)
 					featuresRow = np.array(featuresRow)
 					featuresRow = np.append(featuresRow,[adhc])
 					featuresRow = np.insert(featuresRow,0,patient_num)
@@ -67,15 +71,15 @@ def writeFeatureSet(adhc, start_num, features_path, needHeader,num_epochs,num_ti
 				global_patient_num = patient_num
 
 #def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
-def createFSLFeatureSet(num_epochs, num_timePoints, path1, path2, data_type, recurr):
-
+def createMatrixFeatureSet(function,num_epochs, num_timePoints, path1, path2, data_type, recurr,):
+	print ("num epochs: ", num_epochs)
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-	features_path = sys.path[0] + '/FeatureSets/'+data_type+'FSLfeatures'+identifier+'.csv'
+	features_path = sys.path[0] + '/FeatureSets/'+data_type+'Pearsonfeatures'+identifier+'.csv'
 
 	if not os.path.exists(features_path):
-		writeFeatureSet(0,1,features_path, True, num_epochs,num_timePoints,path1)
-		writeFeatureSet(1,global_patient_num,features_path, False, num_epochs,num_timePoints,path2)
+		writeFeatureSet(function,0,1,features_path, True, num_epochs,num_timePoints,path1)
+		writeFeatureSet(function,1,global_patient_num,features_path, False, num_epochs,num_timePoints,path2)
 
 #createFSLFeatureSet(1,215)
 #minimum is about 215 raw points for extractFSLFeatures function
