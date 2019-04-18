@@ -91,9 +91,9 @@ if not startAtFS:
 		# elif featureName == 'Wavelet':
 			# extractFeatureFunc = extractWaveletFeatures
 		elif featureName == 'FSL':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractFSLFeatures)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractFSLFeatures,featureName)
 		elif featureName == 'Pearson':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractPearsonFeatures)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractPearsonFeatures,featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -109,7 +109,7 @@ if not startAtFS:
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
-	filename = data_type+featureName+'features'+identifier+'.csv'
+	filename = data_type+featureName+identifier+'.csv'
 	features_path = sys.path[0] + '/FeatureSets/'+ filename
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 	

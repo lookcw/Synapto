@@ -71,11 +71,13 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_epoc
 				global_patient_num = patient_num
 
 #def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
-def createMatrixFeatureSet(function,num_epochs, num_timePoints, path1, path2, data_type, recurr,):
+def createMatrixFeatureSet(function,feature_name,num_epochs, num_timePoints, path1, path2, data_type, recurr,):
 	print ("num epochs: ", num_epochs)
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-	features_path = sys.path[0] + '/FeatureSets/'+data_type+'Pearsonfeatures'+identifier+'.csv'
+
+	features_path = sys.path[0] + '/FeatureSets/' + data_type + feature_name + identifier+'.csv'
+	print("feature set: " + features_path)
 
 	if not os.path.exists(features_path):
 		writeFeatureSet(function,0,1,features_path, True, num_epochs,num_timePoints,path1)
