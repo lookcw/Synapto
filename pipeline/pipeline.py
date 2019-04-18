@@ -164,8 +164,8 @@ data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
 groups = data['patient num']
-print "groups.shape :" + str(groups.shape) 
-print groups
+print("groups.shape :" + str(groups.shape))
+print(groups)
 	
 
 unique, counts = np.unique(groups, return_counts=True)
