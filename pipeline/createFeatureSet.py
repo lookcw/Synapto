@@ -16,12 +16,10 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
-
+				# read the data (format is rows = electrode readings (time points), columns = electrodes (21 of them))
 				reader = csv.reader(f)
 				array = np.array(list(reader))
 				print(array.shape)
-				#print len(array) #160,000
-				#print len(array[0]) #21
 				data = array
 
 				#create bunches per patient
@@ -131,9 +129,9 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 
 		print("Feature Extraction...")
 
-		#initialize header list
+		#initialize header list (add the first column which is patient num)
 		headers = []
-
+		headers.append("patient_num")
 		#create header list
 		for i in range(row_count,len(combined)):
 			#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
@@ -170,12 +168,13 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 					bandfeatures = extractFeatures(bands[k])
 					features.extend(bandfeatures)
 
+					# Why was this happening twice lol
 					#adding headers
-					if (i == 0):
-						featureHeaders = []
-						for h in range(len(bandfeatures)):
-							featureHeaders.append(("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1)))
-						headers.extend(featureHeaders)
+					# if (i == 0):
+					# 	featureHeaders = []
+					# 	for h in range(len(bandfeatures)):
+					# 		featureHeaders.append(("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1)))
+					# 	headers.extend(featureHeaders)
 
 			features.append(targets[i])
 			#Add feature values of each band from each electrode (per instance) to new array

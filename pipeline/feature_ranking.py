@@ -8,6 +8,7 @@ import csv
 def get_feature_importance(clf, X, y, num_features):
 	clf = clf.fit(X,y)
 	#print(clf)
+	# np.nan_to_num(X)
 
 
 	#plot feature importances (top 50)
