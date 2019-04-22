@@ -127,6 +127,11 @@ if not startAtFS:
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
 			num_electrodes = 8
 			
+		if (data_type == 'newBrazil'):
+			data_folder_path1 = '.../HCF50_new'
+			data_folder_path2 = '.../ADF50_new'
+			num_electrodes = 8	
+			
 		if (featureName == 'FSL' or featureName == 'Pearson'):
 			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
