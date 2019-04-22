@@ -40,7 +40,7 @@ for i in range(1,len(sys.argv),2):
 	
 	elif str(sys.argv[i]) == "-d":
 		data_type = sys.argv[i+1]
-		if data_type != 'Brazil' and data_type != 'Greece':
+		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
 			print("Invalid type of data. Choose from list in help documentation")
 			sys.exit()
 
@@ -72,7 +72,7 @@ if not startAtFS:
 	if data_type == '':
 		print("Did not input data type. Choose from list in help documentation")
 		sys.exit()
-	if data_type != 'Brazil' and data_type != 'Greece':
+	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
 		print("Invalid type of data. Choose from list in help documentation")
 		sys.exit()
 	if not RECURR:
@@ -126,10 +126,10 @@ if not startAtFS:
 			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
 			num_electrodes = 8
-			
+
 		if (data_type == 'newBrazil'):
-			data_folder_path1 = '.../HCF50_new'
-			data_folder_path2 = '.../ADF50_new'
+			data_folder_path1 = 'BrazilRawData/HCF50_new'
+			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 8	
 			
 		if (featureName == 'FSL' or featureName == 'Pearson'):

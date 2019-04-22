@@ -4,7 +4,7 @@ features=('FSL' 'Wavelet' 'Pearson')
 
 for feature in ${features[@]}; do
     for i in ${!is[@]}; do
-    echo  "python pipeline.py -d Brazil -f $feature -i ${is[$i]} -t ${ts[$i]}"
-        python pipeline.py -d "Brazil" -f $feature -i ${is[$i]} -t ${ts[$i]}
+    echo  "python pipeline.py -d newBrazil -f $feature -i ${is[$i]} -t ${ts[$i]}"
+        python pipeline.py -d "newBrazil" -f $feature -i ${is[$i]} -t ${ts[$i]}
     done
 done
