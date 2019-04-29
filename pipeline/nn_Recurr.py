@@ -99,6 +99,8 @@ def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cl
 
 	#reshape to 3D input for LSTM
 	print X_data.shape
+	print n_timeSteps
+	print n_electrodes
 	X_data = np.reshape(X_data,(len(X_data), n_timeSteps, n_electrodes)) #make num_electrodes variable
 	print X_data.shape
 

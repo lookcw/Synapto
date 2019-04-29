@@ -19,6 +19,7 @@ import random
 from sklearn.utils import shuffle
 import functools
 #from nn_Recurr import nn_Recurr
+from nn_Recurr import nn_Recurr
 
 
 featureName = ''
@@ -172,10 +173,16 @@ groups = data['patient num']
 print "groups.shape :" + str(groups.shape) 
 print groups
 	
+if (not RECURR):
+	groups = data['patient num']
+	print(groups)
 
-unique, counts = np.unique(groups, return_counts=True)
-#### obtain X by dropping last and first columns (label and group number)
-X = data.drop([data.columns[-1],data.columns[0]], axis=1)
+
+	unique, counts = np.unique(groups, return_counts=True)
+	#### obtain X by dropping last and first columns (label and group number)
+	X = data.drop([data.columns[-1],data.columns[0]], axis=1)
+else:
+	X = data.drop([data.columns[-1]], axis=1)
 X.to_csv("fuckk.csv",index= False) 	
 
 ##################################################################################
@@ -270,7 +277,6 @@ if (FS):
 		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
 		x_reduced.append(get_XReduced(clf, X))
 
-
 ##################################################################################
 
 # learning model
@@ -291,15 +297,16 @@ o_filename = 'output_pipeline.csv'
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
 #nn_keras
-nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+
 
 #nn_Recurr
 if (RECURR):
 	nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
-		n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
+		n_electrodes = 21, n_timeSteps=30)
 
 #various sklearn models
-logreg = LogisticRegression() 
+logreg = LogisticRegression()
 logreg_cv = LogisticRegressionCV()
 rf = RandomForestClassifier()
 gboost = GradientBoostingClassifier()
@@ -308,12 +315,13 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #xgboost = XGBClassifier() -> not working
 
 #loop through models and print accuracy for each
-models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
 	print(format(clfs[i].__class__))
 	print("\n")
 	for model in models:
+		print model
 		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type)
 
