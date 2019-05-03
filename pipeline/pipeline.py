@@ -302,7 +302,7 @@ nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n
 
 #nn_Recurr
 if (RECURR):
-	nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
+	nn_Recurr(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
 		n_electrodes = 21, n_timeSteps=30)
 
 #various sklearn models
