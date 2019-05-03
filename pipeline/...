@@ -1,0 +1,10 @@
+Unstaged changes after reset:
+M	pipeline/compute_score.py
+M	pipeline/compute_score.pyc
+M	pipeline/feature_importance_values.csv
+M	pipeline/feature_ranking.py
+M	pipeline/fuckk.csv
+M	pipeline/nn_Recurr.py
+M	pipeline/nn_keras.py
+M	pipeline/pipeline.py
+M	pipeline/write_accuracy_to_file.py
