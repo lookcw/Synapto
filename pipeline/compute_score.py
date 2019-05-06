@@ -31,8 +31,8 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 	print "groups: ",groups.shape
 	if nn_model == []:
 		for train, test in gkf.split(X, y, groups=groups):
-			print(X[train])
-			print(y[train])
+			#print(X[train])
+			#print(y[train])
 			try:
 				clf.fit(X[train],y[train])
 			except ValueError:
@@ -76,7 +76,6 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 
 			y_pred[count:count+len(test)] = nn_model.predict(X[test])[:,1]
 			y_true[count:count+len(test)] = y[test][:,1]
-
 
 			#reset model parameters
 			nn_model.load_weights("initial_model.h5")

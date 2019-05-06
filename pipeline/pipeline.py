@@ -288,7 +288,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from write_accuracy_to_file import write_accuracy_to_file
 #from xgboost import XGBClassifier
 
-num_folds = 25
+num_folds = 5
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
