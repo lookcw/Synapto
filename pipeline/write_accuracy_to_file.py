@@ -13,7 +13,7 @@ def write_accuracy_to_file(clf, model, groups, X_reduced, X, y, num_folds, num_s
 	print('Cross-validation of : {0}'.format(model.__class__))
 	(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
 	(red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc) =\
-		compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
+		compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
 	print('All features CV score = {0}'.format(accuracy))
 	print('Reduced features CV score = {0}'.format(red_accuracy))
 
