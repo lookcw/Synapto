@@ -19,7 +19,6 @@ import random
 from sklearn.utils import shuffle
 import functools
 #from nn_Recurr import nn_Recurr
-from nn_Recurr import nn_Recurr
 
 
 featureName = ''
@@ -44,14 +43,16 @@ for i in range(1,len(sys.argv),2):
 		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
 			print("Invalid type of data. Choose from list in help documentation")
 			sys.exit()
+	elif str(sys.argv[i]) == "-e":
+		epochs_per_instance = int(sys.argv[i+1])
 
 	elif str(sys.argv[i]) == "-f":
 		featureName = sys.argv[i+1]
 
 	elif str(sys.argv[i]) == "-i":
-		num_epochs = int(sys.argv[i+1])
-		if num_epochs == 0:
-			print("Did not input instances per patient argument (-i)")
+		num_instances = int(sys.argv[i+1])
+		if num_instances == 0:
+			print("Did not input instances per patient argument (-p)")
 			sys.exit()
 
 	elif str(sys.argv[i]) == "-t":
@@ -67,6 +68,8 @@ for i in range(1,len(sys.argv),2):
 	else:
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
 		sys.exit()
+
+num_epochs = num_instances * epochs_per_instance
 
 # If starting at the beginning - at feature set creation
 if not startAtFS:
@@ -131,10 +134,10 @@ if not startAtFS:
 		if (data_type == 'newBrazil'):
 			data_folder_path1 = 'BrazilRawData/HCF50_new'
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
-			num_electrodes = 8	
+			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson'):
-			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
+			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
 				data_folder_path1, data_folder_path2, data_type, RECURR)
@@ -173,17 +176,11 @@ groups = data['patient num']
 print "groups.shape :" + str(groups.shape) 
 print groups
 	
-if (not RECURR):
-	groups = data['patient num']
-	print(groups)
 
-
-	unique, counts = np.unique(groups, return_counts=True)
-	#### obtain X by dropping last and first columns (label and group number)
-	X = data.drop([data.columns[-1],data.columns[0]], axis=1)
-else:
-	X = data.drop([data.columns[-1]], axis=1)
-X.to_csv("fuckk.csv",index= False) 	
+unique, counts = np.unique(groups, return_counts=True)
+#### obtain X by dropping last and first columns (label and group number)
+X = data.drop([data.columns[-1],data.columns[0]], axis=1)
+# X.to_csv("fuckk.csv",index= False) 
 
 ##################################################################################
 
@@ -277,6 +274,7 @@ if (FS):
 		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
 		x_reduced.append(get_XReduced(clf, X))
 
+
 ##################################################################################
 
 # learning model
@@ -288,25 +286,16 @@ from sklearn.neighbors import KNeighborsClassifier
 from write_accuracy_to_file import write_accuracy_to_file
 #from xgboost import XGBClassifier
 
+<<<<<<< HEAD
 num_folds = 5
+=======
+num_folds = 10
+>>>>>>> adding instance number functionality
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
-
-# Megha's svm
-#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
-
-#nn_keras
-nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
-
-
-#nn_Recurr
-if (RECURR):
-	nn_Recurr(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
-		n_electrodes = 21, n_timeSteps=30)
-
 #various sklearn models
-logreg = LogisticRegression()
+logreg = LogisticRegression() 
 logreg_cv = LogisticRegressionCV()
 rf = RandomForestClassifier()
 gboost = GradientBoostingClassifier()
@@ -315,13 +304,23 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #xgboost = XGBClassifier() -> not working
 
 #loop through models and print accuracy for each
-models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
 	print(format(clfs[i].__class__))
 	print("\n")
 	for model in models:
-		print model
 		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type)
+
+# Megha's svm
+#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
+
+#nn_keras
+#nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
+#nn_Recurr
+# if (RECURR):
+	# nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
+	# 	n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
 
