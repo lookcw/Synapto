@@ -10,12 +10,13 @@ import time
 def write_accuracy_to_file(clf, model, groups, X_reduced, X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type):
 	X = np.array(X)
 	y = np.array(y)
-	print('Cross-validation of : {0}'.format(model.__class__))
+	print('##################### Cross-validation of : {0} #####################'.format(model.__class__) )
 	(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = compute_group_score(model, X, y, num_folds,groups, scoring='accuracy')
+	print('######## reduced scores ########')
 	(red_accuracy, red_f1, red_tnP,red_fpP,red_fnP,red_tpP,red_roc_auc) =\
 		compute_group_score(model, X_reduced, y, num_folds,groups, scoring='accuracy')
-	print('All features CV score = {0}'.format(accuracy))
-	print('Reduced features CV score = {0}'.format(red_accuracy))
+	# print('All features CV score = {0}'.format(accuracy))
+	# print('Reduced features CV score = {0}'.format(red_accuracy))
 
 	try:
 		with open(o_filename, 'r+') as csvfile:
