@@ -67,7 +67,7 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 						
 					else:
 						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
-						featuresRow.append(function(matrix))
+						featuresRow += (function(matrix))
 					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######
 					# toWrite = np.zeros((21,21))
 					# toWrite[np.triu_indices(21, 1)] = featuresRow
@@ -82,11 +82,9 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 					# 	np.savetxt(summary_filename, pearson_data, delimiter=",")
 					# else:
 					# 	np.savetxt(summary_filename, toWrite, delimiter=",")
-						
-						# Keep presets
+					
 					featuresRow = np.array(featuresRow)
-					featuresRow = np.append(featuresRow,[adhc])
-					# featuresRow = np.insert(featuresRow,0,patient_num)
+					featuresRow = np.append(featuresRow,adhc)
 					writer.writerow(featuresRow)
 					global_instance_num+=1
 
@@ -94,11 +92,9 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 				global_patient_num = patient_num
 
 #def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
-def createMatrixFeatureSet(function,feature_name, num_instances, num_timePoints, epochs_per_patient,  path1, path2, data_type, recurr,):
-	identifier = str(num_instances) + 'epochs_' + str(num_timePoints) + 'timepoints'
+def createMatrixFeatureSet(function,feature_name, num_instances, num_timePoints, epochs_per_patient,  path1, path2, features_path, recurr,):
 
 
-	features_path = sys.path[0] + '/FeatureSets/' + data_type + feature_name + identifier+'.csv'
 	print("feature set: " + features_path)
 
 	if not os.path.exists(features_path):

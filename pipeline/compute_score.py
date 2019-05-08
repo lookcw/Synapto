@@ -9,11 +9,11 @@ from nn_keras import nn_keras
 #define function to compute cross validation score
 def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_model = []):
 
-	print(X.shape)
-	print(y.shape)
+	# print(X.shape)
+	# print(y.shape)
 
 	if "keras" in str(clf):
-		print("yes")
+		# print("yes")
 		y = y.astype(int)
 		y = np.eye(2)[y]
 
@@ -31,7 +31,7 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 	print "groups: ",groups.shape
 	if nn_model == []:
 		for train, test in gkf.split(X, y, groups=groups):
-			#print(X[train])
+			# print(X[train])
 			#print(y[train])
 			try:
 				clf.fit(X[train],y[train])
@@ -51,12 +51,12 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 			clf = clone(clf)
 			count += len(test)
 		(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = metrics(y_true,y_pred,y_scores)
-		print("Test accuracy",accuracy)
+		# print("Test accuracy",accuracy)
 		print("Test f1",f1)
-		print("Test tnP",tnP)
-		print("Test fnP",fnP)
-		print("Test fpP",fpP)
-		print("Test tpP",tpP)
+		# print("Test tnP",tnP)
+		# print("Test fnP",fnP)
+		# print("Test fpP",fpP)
+		# print("Test tpP",tpP)
 		print("Test roc_auc",roc_auc)
 		return (accuracy,f1, tnP,fpP,fnP,tpP,roc_auc)
 	else:
@@ -65,11 +65,11 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 		#serialize initial model weights
 		nn_model.save_weights("initial_model.h5")
 		for train, test in gkf.split(X, y, groups=groups):
-			print "Fold Number: " + str(fold_num)
+			# print "Fold Number: " + str(fold_num)
 			nn_model.fit(X[train], y[train], epochs = 100, batch_size = 10)
 			trainscores = nn_model.evaluate(X[train], y[train])
 			train_acc = trainscores[1]*100
-			print "nn_model group k-fold train acc: " + str(train_acc)
+			# print "nn_model group k-fold train acc: " + str(train_acc)
 			testscores = nn_model.evaluate(X[test], y[test])
 			test_acc = testscores[1]*100
 			#print "nn_model group k-fold test acc: " + str(test_acc)
@@ -87,9 +87,9 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 		y_true = np.where(y_true > 0.5, 1, 0)
 		(accuracy,f1,tnP,fpP,fnP,tpP,roc_auc) = metrics(y_true,y_pred, None)
 		print("Test accuracy",accuracy)
-		print("Test f1",f1)
-		print("Test tnP",tnP)
-		print("Test fnP",fnP)
-		print("Test fpP",fpP)
-		print("Test tpP",tpP)
+		# print("Test f1",f1)
+		# print("Test tnP",tnP)
+		# print("Test fnP",fnP)
+		# print("Test fpP",fpP)
+		# print("Test tpP",tpP)
 		print("Test roc_auc",roc_auc)
