@@ -206,6 +206,21 @@ num_folds = 10
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
+<<<<<<< HEAD
+=======
+
+# Megha's svm
+#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
+
+#nn_keras
+nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+
+
+#nn_Recurr
+if (RECURR):
+	nn_recurr = nn_Recurr(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
+>>>>>>> refactoring LSTM
 #various sklearn models
 logreg = LogisticRegression() 
 logreg_cv = LogisticRegressionCV()
@@ -216,7 +231,11 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #xgboost = XGBClassifier() -> not working
 
 #loop through models and print accuracy for each
+<<<<<<< HEAD
 models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+=======
+models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+>>>>>>> refactoring LSTM
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
