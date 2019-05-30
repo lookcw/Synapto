@@ -158,15 +158,10 @@ data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
-<<<<<<< HEAD
-groups = data['patient_num']
 
-=======
 groups = data['patient num']
 print "groups.shape :" + str(groups.shape) 
 print groups
-	
->>>>>>> 01935208dcafe525a2db4e0095dd3f64d0116177
 
 unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last and first columns (label and group number)
