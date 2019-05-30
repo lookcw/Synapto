@@ -12,6 +12,8 @@ from ASD_features import extractASDFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
 from pearson_features import extractPearsonFeatures
+from granger_features import extractGrangerFeatures
+from domFreq_features import extractDomFreqFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
 from nn_keras import nn_keras
@@ -91,9 +93,14 @@ if not startAtFS:
 		# elif featureName == 'Wavelet':
 			# extractFeatureFunc = extractWaveletFeatures
 		elif featureName == 'FSL':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractFSLFeatures)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractFSLFeatures, featureName)
 		elif featureName == 'Pearson':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractPearsonFeatures)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractPearsonFeatures, featureName)
+		elif featureName == 'Granger':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractGrangerFeatures, featureName)
+		elif featureName == 'DomFreq':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
+			# extractFeatureFunc = extractDomFreqFeatures
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -109,7 +116,7 @@ if not startAtFS:
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
 	#define features and reduced_features paths
-	filename = data_type+featureName+'features'+identifier+'.csv'
+	filename = data_type+featureName+identifier+'.csv'
 	features_path = sys.path[0] + '/FeatureSets/'+ filename
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
 	
@@ -127,7 +134,7 @@ if not startAtFS:
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
 			num_electrodes = 8
 			
-		if (featureName == 'FSL' or featureName == 'Pearson'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
 			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
@@ -251,20 +258,20 @@ if (FS):
 	# alternative feature selection from sklearn
 	# Feature Importance with Extra Trees Classifier -> has feature importance 
 
-	#  get x_reduced code from this file
-	from get_XReduced import get_XReduced
+#  get x_reduced code from this file
+from get_XReduced import get_XReduced
 
-	clf1 = ExtraTreesClassifier()
-	clf2 = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-	clf3 = GradientBoostingClassifier()
-	# add the classifiers to the array 
-	clfs = [clf1, clf2, clf3]
-	x_reduced = []
+clf1 = ExtraTreesClassifier()
+clf2 = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+clf3 = GradientBoostingClassifier()
+# add the classifiers to the array 
+clfs = [clf1, clf2, clf3]
+x_reduced = []
 
-	# Causing error because input contains NaN
-	for clf in clfs:	
-		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
-		x_reduced.append(get_XReduced(clf, X))
+# Causing error because input contains NaN
+for clf in clfs:	
+	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+	x_reduced.append(get_XReduced(clf, X))
 
 
 ##################################################################################
