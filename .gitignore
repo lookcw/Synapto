@@ -4,8 +4,5 @@ FeatureSets/
 output_pipeline.csv
 pipeline/BrazilRawData/
 Data/
-<<<<<<< HEAD
 *.pyc
-=======
 client_secret.json
->>>>>>> 016188368c1ab2cf45706084fe4578f92e1bf595
