@@ -20,6 +20,9 @@ from nn_keras import nn_keras
 import random
 from sklearn.utils import shuffle
 import functools
+from feature_ranking import get_feature_importance
+from identifier import paramToFilename,recurrParamToFilename
+from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 #from nn_Recurr import nn_Recurr
 
 
@@ -42,17 +45,19 @@ for i in range(1,len(sys.argv),2):
 	
 	elif str(sys.argv[i]) == "-d":
 		data_type = sys.argv[i+1]
-		if data_type != 'Brazil' and data_type != 'Greece':
+		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
 			print("Invalid type of data. Choose from list in help documentation")
 			sys.exit()
+	elif str(sys.argv[i]) == "-e":
+		epochs_per_instance = int(sys.argv[i+1])
 
 	elif str(sys.argv[i]) == "-f":
 		featureName = sys.argv[i+1]
 
 	elif str(sys.argv[i]) == "-i":
-		num_epochs = int(sys.argv[i+1])
-		if num_epochs == 0:
-			print("Did not input instances per patient argument (-i)")
+		num_instances = int(sys.argv[i+1])
+		if num_instances == 0:
+			print("Did not input instances per patient argument (-p)")
 			sys.exit()
 
 	elif str(sys.argv[i]) == "-t":
@@ -69,12 +74,14 @@ for i in range(1,len(sys.argv),2):
 		print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
 		sys.exit()
 
+num_epochs = num_instances * epochs_per_instance
+
 # If starting at the beginning - at feature set creation
 if not startAtFS:
 	if data_type == '':
 		print("Did not input data type. Choose from list in help documentation")
 		sys.exit()
-	if data_type != 'Brazil' and data_type != 'Greece':
+	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
 		print("Invalid type of data. Choose from list in help documentation")
 		sys.exit()
 	if not RECURR:
@@ -109,30 +116,33 @@ if not startAtFS:
 	print("Creating Feature Set...")
 
 	if (RECURR):
-		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
-		features_path = sys.path[0] + '/FeatureSets/'+data_type+'Recurr'+identifier+'.csv'
+		features_path = sys.path[0] + '/FeatureSets/' + recurrParamToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
 	else:
 		#unique identifier for different input parameters
-		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
+		features_path = sys.path[0] + '/FeatureSets/'+  paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
 
 	#define features and reduced_features paths
-	filename = data_type+featureName+identifier+'.csv'
-	features_path = sys.path[0] + '/FeatureSets/'+ filename
-	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+featureName+'features'+identifier+'_reduced.csv'
+	
+	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+ paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
 		print("feature file dne, making it now")
 		#3rd parameter is extractFeature function of choice
 		if (data_type == 'Brazil'):
-			data_folder_path1 = 'BrazilRawData/HCF50'
-			data_folder_path2 = 'BrazilRawData/ADF50'
+			data_folder_path1 = 'BrazilRawData/HCF1_50'
+			data_folder_path2 = 'BrazilRawData/ADF1_50'
 			num_electrodes = 21
 
 		if (data_type == 'Greece'):
 			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
 			num_electrodes = 8
+
+		if (data_type == 'newBrazil'):
+			data_folder_path1 = 'BrazilRawData/HCF50_new'
+			data_folder_path2 = 'BrazilRawData/ADF50_new'
+			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
 			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
@@ -150,16 +160,6 @@ if not startAtFS:
 		num_electrodes = 21
 	if (data_type == 'Greece'):
 		num_electrodes = 8
-
-
-	#obtain global X (input features) and y (output values)
-
-	#use existing headers made from createFeatureSet function if not FSL or Recurr
-	#if (not featureName == 'FSL' and not RECURR):
-	#	data = pd.read_csv(features_path)
-	#otherwise assume no headers in featureset csv
-	#else:
-	#	data = pd.read_csv(features_path, header = None)
 	
 	data = pd.read_csv(features_path,header = 'infer',delimiter=',')
 else: #starting pipeline with feature selection
@@ -170,93 +170,22 @@ data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
+
 groups = data['patient num']
-print("groups.shape :" + str(groups.shape))
-print(groups)
-	
+
+print "groups.shape :" + str(groups.shape) 
+print groups
 
 unique, counts = np.unique(groups, return_counts=True)
-#### obtain X by dropping last and first columns (label and group number)
-X = data.drop([data.columns[-1],data.columns[0]], axis=1)
-X.to_csv("fuckk.csv",index= False) 	
+#### obtain X by dropping last, first, and 2nd columns (label, patient number, and instance number)
+X = data.drop([data.columns[-1],data.columns[0],data.columns[1]], axis=1)
 
-##################################################################################
-
-### feature selection
-print("Feature Selection...")
-print("Input Shape:", X.shape)
-
-
-# import feature importances plot function
-from feature_ranking import get_feature_importance
-
-#drop first patient id column made from createFSLFeatureSet function
-#if (FSL):
-#	X = data.drop(data.columns[0], axis=1)
-
-##################################################################################
-from pandas import read_csv
-from sklearn.ensemble import ExtraTreesClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
-from feature_ranking import get_feature_importance # import feature importances plot function
 
 if (FS):
 	#### feature selection
 	print("Feature Selection...")
 	print("Input Shape:", X.shape)
 
-	#### Substitute other feature selection methods here 
-
-	#####################################
-
-	# Reduces features way too much
-	# Select K Best - no feature importance 
-	# from sklearn.feature_selection import SelectKBest
-	# from sklearn.feature_selection import chi2
-	# # feature extraction
-	# clf = SelectKBest(score_func=chi2, k=4)
-	# clf = clf.fit(X, y)
-
-	# This clf does NOT have a feature importance feature 
-
-	# # summarize scores
-	# np.set_printoptions(precision=3)
-	# X_reduced = fit.transform(X)
-	# # summarize selected features
-	# print(X_reduced.shape)
-
-	# feature_red_name = format(fit)
-
-	#####################################
-
-	# Reduces features way too much
-	# Feature Extraction with PCA -> does not have feature importance
-	# import numpy
-	# from pandas import read_csv
-	# from sklearn.decomposition import PCA
-	# # feature extraction
-	# pca = PCA(n_components=3)
-	# fit = pca.fit(X)
-	# get_feature_importance(fit, X)
-	# X_reduced = fit.transform(X)
-	# print(X_reduced.shape)
-	# # summarize components
-	# print("Explained Variance: %s") % fit.explained_variance_ratio_
-	# feature_red_name = format(fit)
-	# print(fit.components_)
-
-	#####################################
-
-	#### recursive feature elimination from ASD paper -> this plots 
-	#### uses SVC
-	# X_reduced = recursiveFeatureElim(X,y)
-	# print(X_reduced.shape)
-
-	#####################################
-
-	# alternative feature selection from sklearn
-	# Feature Importance with Extra Trees Classifier -> has feature importance 
 
 #  get x_reduced code from this file
 from get_XReduced import get_XReduced
@@ -268,10 +197,11 @@ clf3 = GradientBoostingClassifier()
 clfs = [clf1, clf2, clf3]
 x_reduced = []
 
-# Causing error because input contains NaN
-for clf in clfs:	
-	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
-	x_reduced.append(get_XReduced(clf, X))
+
+	# Causing error because input contains NaN
+	for clf in clfs:	
+		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+		x_reduced.append(get_XReduced(clf, X))
 
 
 ##################################################################################
@@ -285,7 +215,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from write_accuracy_to_file import write_accuracy_to_file
 #from xgboost import XGBClassifier
 
-num_folds = 25
+num_folds = 10
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
@@ -306,7 +236,7 @@ for i in range(0, len(clfs)):
 	print(format(clfs[i].__class__))
 	print("\n")
 	for model in models:
-		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, filename, featureName, data_type)
+		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, features_path, featureName, data_type)
 
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')

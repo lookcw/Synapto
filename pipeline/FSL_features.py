@@ -5,6 +5,7 @@ import numpy as np
 
 
 def extractFSLFeatures(time_series_electrode):
+    time_series_electrode = time_series_electrode.astype(str)
     if "TERM_PROGRAM" in os.environ:
         p = Popen(["./FSL_mac", "-l", "1", "-m", "10", "-p", "0.049", "-s",
                    "1", "-x", "100", "-w", "410"], stdin=PIPE, stdout=PIPE, stderr=PIPE)

@@ -12,6 +12,8 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_elec
 	# HC
 	combined_group1 = np.empty((0,num_electrodes*num_timePoints+2))
 	patient_num = 1
+
+	# for each filename inside the folder (HC), if the file is a csv file, open it
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
@@ -130,22 +132,11 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_elec
 
 		print("Feature Extraction...")
 
-		
-		# num_electrodes = data.shape[1] # number of columns = number of electrodes
-		# header = ['patient num']
-		# if (isBands):
-		# 	for band in bands:
-		# 		for i in range(num_electrodes):
-		# 			header.append(band+"_"+"e"+str(i+1))
-		# else :
-		# 	for i in range(num_electrodes):
-		# 		header.append("e"+str(i+1))
-		# header.append('class')
-		# writer.writerow(header)
-			
 
 		#initialize header list (add the first column which is patient num)
-		headers = ['patient num']
+		headers = []
+		headers.append("patient_num")
+
 		#create header list
 		# for all columns 
 		for i in range(row_count,len(combined)):
@@ -164,9 +155,11 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_elec
 						bandfeatures = function(bands[k])
 					#adding headers
 					if (i == 0):
-						featureHeaders = ["patient num"]
-						for h in range(len(bandfeatures)):
-							featureHeaders.append(("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1)))
+						# Shouldn't be printing out patient num here
+						featureHeaders = []
+						# This gets repeated for each band
+						for h in range(len(bandfeatures)):		
+							featureHeaders.append("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1))
 						headers.extend(featureHeaders)
 
 		headers.append('class')
