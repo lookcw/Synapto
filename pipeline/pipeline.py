@@ -198,13 +198,9 @@ clf3 = GradientBoostingClassifier()
 clfs = [clf1, clf2, clf3]
 x_reduced = []
 
-
-	# Causing error because input contains NaN
 for clf in clfs:
 	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
 	x_reduced.append(get_XReduced(clf, X))
-
-
 ##################################################################################
 
 # learning model

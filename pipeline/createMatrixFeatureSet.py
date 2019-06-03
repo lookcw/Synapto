@@ -25,7 +25,7 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compare
 				reader = csv.reader(f)
 				data = np.array(list(reader))
 
-				
+################################################################################################# HEADERS 			
 				# if comparing electrodes: do this header
 				if needHeader and compareElectrodes:
 					num_electrodes = data.shape[1] # number of columns = number of electrodes
@@ -58,7 +58,7 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compare
 					header.append('class')
 					writer.writerow(header)
 					needHeader = False
-
+#################################################################################################
 
 				#create bunches per patient
 				for bunch in range(num_instances*epochs_per_patient):
@@ -90,8 +90,6 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compare
 							featuresRow.append(function(np.transpose(allBands[i]).astype('str')))	
 						
 					else:
-
-
 						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
 						featuresRow += (function(matrix))
 						if(adhc == 0):
@@ -123,11 +121,7 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compare
 				patient_num += 1
 				global_patient_num = patient_num
 
-#def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
 def createMatrixFeatureSet(function,feature_name, num_instances, num_timePoints, epochs_per_patient, path1, path2, features_path, recurr,):
-	# # print ("num epochs: ", num_epochs)
-	# identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
-	# features_path = sys.path[0] + '/FeatureSets/' + data_type + feature_name + identifier+'.csv'
 	print("feature set: " + features_path)
 
 	if not os.path.exists(features_path):
