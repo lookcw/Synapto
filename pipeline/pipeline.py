@@ -199,9 +199,9 @@ x_reduced = []
 
 
 	# Causing error because input contains NaN
-	for clf in clfs:	
-		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
-		x_reduced.append(get_XReduced(clf, X))
+for clf in clfs:
+	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+	x_reduced.append(get_XReduced(clf, X))
 
 
 ##################################################################################
