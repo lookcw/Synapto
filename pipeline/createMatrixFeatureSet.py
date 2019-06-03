@@ -127,7 +127,7 @@ def createMatrixFeatureSet(function,feature_name,num_epochs, num_timePoints, pat
 	# print ("num epochs: ", num_epochs)
 	identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 	features_path = sys.path[0] + '/FeatureSets/' + data_type + feature_name + identifier+'.csv'
-	# print("feature set: " + features_path)
+	print("feature set: " + features_path)
 
 	if not os.path.exists(features_path):
 		# if comparing electrodes

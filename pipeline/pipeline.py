@@ -120,7 +120,7 @@ if not startAtFS:
 	else:
 		#unique identifier for different input parameters
 		features_path = sys.path[0] + '/FeatureSets/'+  paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
-
+		
 	#define features and reduced_features paths
 	
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+ paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
@@ -130,8 +130,8 @@ if not startAtFS:
 		print("feature file dne, making it now")
 		#3rd parameter is extractFeature function of choice
 		if (data_type == 'Brazil'):
-			data_folder_path1 = 'BrazilRawData/HCF1_50'
-			data_folder_path2 = 'BrazilRawData/ADF1_50'
+			data_folder_path1 = 'BrazilRawData/HCF50'
+			data_folder_path2 = 'BrazilRawData/ADF50'
 			num_electrodes = 21
 
 		if (data_type == 'Greece'):
@@ -145,7 +145,8 @@ if not startAtFS:
 			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
-			extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
+			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
 				data_folder_path1, data_folder_path2, data_type, RECURR)
@@ -161,7 +162,7 @@ if not startAtFS:
 	if (data_type == 'Greece'):
 		num_electrodes = 8
 	
-	data = pd.read_csv(features_path,header = 'infer',delimiter=',')
+	data = pd.read_csv(features_path, header = 'infer', delimiter=',')
 else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = 'infer')
 
