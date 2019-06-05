@@ -12,6 +12,8 @@ from ASD_features import extractASDFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
 from pearson_features import extractPearsonFeatures
+from granger_features import extractGrangerFeatures
+from domFreq_features import extractDomFreqFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
 from nn_keras import nn_keras
@@ -98,9 +100,14 @@ if not startAtFS:
 		# elif featureName == 'Wavelet':
 			# extractFeatureFunc = extractWaveletFeatures
 		elif featureName == 'FSL':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractFSLFeatures,featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractFSLFeatures, featureName)
 		elif featureName == 'Pearson':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractPearsonFeatures,featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractPearsonFeatures, featureName)
+		elif featureName == 'Granger':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractGrangerFeatures, featureName)
+		elif featureName == 'DomFreq':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
+			# extractFeatureFunc = extractDomFreqFeatures
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -113,17 +120,18 @@ if not startAtFS:
 	else:
 		#unique identifier for different input parameters
 		features_path = sys.path[0] + '/FeatureSets/'+  paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
-
+		
 	#define features and reduced_features paths
 	
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+ paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
 	
 	#create feature set if does not exist in Feature Sets folder
 	if not os.path.exists(features_path):
+		print("feature file dne, making it now")
 		#3rd parameter is extractFeature function of choice
 		if (data_type == 'Brazil'):
-			data_folder_path1 = 'BrazilRawData/HCF1_50'
-			data_folder_path2 = 'BrazilRawData/ADF1_50'
+			data_folder_path1 = 'BrazilRawData/HCF50'
+			data_folder_path2 = 'BrazilRawData/ADF50'
 			num_electrodes = 21
 
 		if (data_type == 'Greece'):
@@ -136,8 +144,9 @@ if not startAtFS:
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 21
 			
-		if (featureName == 'FSL' or featureName == 'Pearson'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
 			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
 				data_folder_path1, data_folder_path2, data_type, RECURR)
@@ -153,7 +162,7 @@ if not startAtFS:
 	if (data_type == 'Greece'):
 		num_electrodes = 8
 	
-	data = pd.read_csv(features_path,header = 'infer',delimiter=',')
+	data = pd.read_csv(features_path, header = 'infer', delimiter=',')
 else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = 'infer')
 
@@ -162,35 +171,36 @@ data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
+
 groups = data['patient num']
+
 print "groups.shape :" + str(groups.shape) 
 print groups
-	
 
 unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last, first, and 2nd columns (label, patient number, and instance number)
 X = data.drop([data.columns[-1],data.columns[0],data.columns[1]], axis=1)
+
+
 if (FS):
 	#### feature selection
 	print("Feature Selection...")
 	print("Input Shape:", X.shape)
 
 
-	#  get x_reduced code from this file
-	from get_XReduced import get_XReduced
+#  get x_reduced code from this file
+from get_XReduced import get_XReduced
 
-	clf1 = ExtraTreesClassifier()
-	clf2 = RandomForestClassifier(n_estimators=50, max_features='sqrt')
-	clf3 = GradientBoostingClassifier()
-	# add the classifiers to the array 
-	clfs = [clf1, clf2, clf3]
-	x_reduced = []
+clf1 = ExtraTreesClassifier()
+clf2 = RandomForestClassifier(n_estimators=50, max_features='sqrt')
+clf3 = GradientBoostingClassifier()
+# add the classifiers to the array 
+clfs = [clf1, clf2, clf3]
+x_reduced = []
 
-	for clf in clfs:	
-		feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
-		x_reduced.append(get_XReduced(clf, X))
-
-
+for clf in clfs:
+	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+	x_reduced.append(get_XReduced(clf, X))
 ##################################################################################
 
 # learning model

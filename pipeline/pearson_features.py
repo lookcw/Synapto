@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 
+# Takes in a time series in the form of raw electrode data (takes in a matrix)
 
 elec = [0,1,2,3,4,5,6,7,8,9,15,16,17,18,19,20]
 
