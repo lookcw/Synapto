@@ -146,7 +146,7 @@ if not startAtFS:
 				data_folder_path1, data_folder_path2, data_type, RECURR)
 
 	else:
-		print("Feature set already exists")
+		print("Feature set already exists: " + features_path)
 
 	if (data_type == 'Brazil'):
 		num_electrodes = 21
