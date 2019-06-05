@@ -199,7 +199,7 @@ clfs = [clf1, clf2, clf3]
 x_reduced = []
 
 for clf in clfs:
-	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
 	x_reduced.append(get_XReduced(clf, X))
 ##################################################################################
 

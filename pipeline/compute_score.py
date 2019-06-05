@@ -51,7 +51,7 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 			clf = clone(clf)
 			count += len(test)
 		(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = metrics(y_true,y_pred,y_scores)
-		# print("Test accuracy",accuracy)
+		print("Test accuracy",accuracy)
 		print("Test f1",f1)
 		# print("Test tnP",tnP)
 		# print("Test fnP",fnP)

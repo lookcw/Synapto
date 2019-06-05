@@ -23,11 +23,11 @@ def extractDomFreqFeatures(time_series):
 		N = time_series_electrode.shape[-1] # number of timepoints in electrode
 
 		yf = fft(y)
-		yf = yf[0:(N/2)+1] # get useable half of the fft vector
+		yf = yf[0:(N/2)] # get useable half of the fft vector
 		print(yf.shape)
 
 		freq = np.arange(0,Fs/2,Fs/N)
-		freq = freq[freq>=1]
+		yf = yf[freq>=1] # get fft value when freq is greater than 1
 
 		max_index = np.argmax(yf)
 
