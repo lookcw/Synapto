@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame
 
+# Takes in a time series in the form of raw electrode data (takes in a matrix)
 
 def extractPearsonFeatures(time_series_electrode):
     eegMat = pd.DataFrame(data = time_series_electrode)

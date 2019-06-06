@@ -6,22 +6,21 @@ import pandas as pd
 from BandPass1 import splitbands
 
 
-def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, num_electrodes, path1, path2, data_type, recurr):
+def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_electrodes, path1, path2, data_type, recurr):
 
 	#extract from path to first patient group folder
 	# HC
 	combined_group1 = np.empty((0,num_electrodes*num_timePoints+2))
-	print(combined_group1)
 	patient_num = 1
+
+	# for each filename inside the folder (HC), if the file is a csv file, open it
 	for filename in os.listdir(path1):
 		if filename.endswith('.csv'):
 			with open(os.path.join(path1, filename)) as f:
-
+				# read the data (format is rows = electrode readings (time points), columns = electrodes (21 of them))
 				reader = csv.reader(f)
 				array = np.array(list(reader))
 				print(array.shape)
-				#print len(array) #160,000
-				#print len(array[0]) #21
 				data = array
 
 				#create bunches per patient
@@ -115,7 +114,8 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 
 		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
 
-		features_path = sys.path[0] + '/FeatureSets/'+data_type+featureName+'features'+identifier+'.csv'
+		# features_path = sys.path[0] + '/FeatureSets/'+data_type+featureName+'features'+identifier+'.csv'
+		features_path = sys.path[0] + '/FeatureSets/'+data_type+featureName+identifier+'.csv'
 
 		if not os.path.exists(features_path):
 			open(features_path,"w")
@@ -124,33 +124,42 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 		read_file = open(features_path,"r")
 		reader = csv.reader(read_file)
 		row_count = sum(1 for row in reader)
-		print(row_count)
+		print "printing row count"
+		print row_count
 
 		out_file = open(features_path,"a") #used to be "a" for append
 		writer = csv.writer(out_file)
 
 		print("Feature Extraction...")
 
-		#initialize header list
+
+		#initialize header list (add the first column which is patient num)
 		headers = []
+		headers.append("patient_num")
 
 		#create header list
+		# for all columns 
 		for i in range(row_count,len(combined)):
 			#transpose each n x 21 so each row is time series points (columns) of 1 electrode (row)
 			transposed = np.transpose(combined[i]) 
+			#print "Transposed shape"
+			#print(transposed.shape) Shape is (21, 60) 
 			#add another dimension in each row to make it 5 bands x n
+			# for each electrode 
 			for j in range(len(transposed)):
 				if (i==0):
 					bands = splitbands(transposed[j])
 				#squish each band of raw points into n feature values
 				for k in range(len(bands)): #bands[j] = band of raw data
 					if (j==0):
-						bandfeatures = extractFeatures(bands[k])
+						bandfeatures = function(bands[k])
 					#adding headers
 					if (i == 0):
-						featureHeaders = ["patient num"]
-						for h in range(len(bandfeatures)):
-							featureHeaders.append(("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1)))
+						# Shouldn't be printing out patient num here
+						featureHeaders = []
+						# This gets repeated for each band
+						for h in range(len(bandfeatures)):		
+							featureHeaders.append("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1))
 						headers.extend(featureHeaders)
 
 		headers.append('class')
@@ -167,15 +176,8 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatures, n
 				bands = splitbands(transposed[j])
 				#squish each band of raw points into n feature values
 				for k in range(len(bands)): #bands[j] = band of raw data
-					bandfeatures = extractFeatures(bands[k])
+					bandfeatures = function(bands[k])
 					features.extend(bandfeatures)
-
-					#adding headers
-					if (i == 0):
-						featureHeaders = []
-						for h in range(len(bandfeatures)):
-							featureHeaders.append(("electrode"+str(j+1)+"band"+str(k+1)+"feature"+str(h+1)))
-						headers.extend(featureHeaders)
 
 			features.append(targets[i])
 			#Add feature values of each band from each electrode (per instance) to new array

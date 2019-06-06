@@ -3,12 +3,15 @@ import numpy as np
 import os
 import sys
 from BandPass1 import getBands
+
+
 from numpy import genfromtxt
 
 global_patient_num = 0
 global_instance_num = 0
 
-def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_instances, epochs_per_patient,num_timePoints,path,isBands=False):
+# def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compareElectrodes, num_epochs,num_timePoints,path,isBands=False):
+def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compareElectrodes, num_instances, epochs_per_patient,num_timePoints, path, isBands=False):
 	bands =['d','t','a','b','g']
 	global global_patient_num
 	global global_instance_num
@@ -21,9 +24,13 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 			with open(os.path.join(path, filename)) as f:
 				reader = csv.reader(f)
 				data = np.array(list(reader))
-				if needHeader:
-					num_electrodes = data.shape[1]
+
+################################################################################################# HEADERS 			
+				# if comparing electrodes: do this header
+				if needHeader and compareElectrodes:
+					num_electrodes = data.shape[1] # number of columns = number of electrodes
 					header = ['patient num','instance num']
+
 					if (isBands):
 						for band in bands:
 							for i in range(num_electrodes):
@@ -31,11 +38,27 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 									header.append(band+"_"+"e"+str(i+1) +"_e"+str(j+1))
 					else :
 						for i in range(num_electrodes):
-								for j in range(i+1,num_electrodes):
-									header.append("e"+str(i+1) +"_e"+str(j+1))
+							for j in range(i+1,num_electrodes):
+								header.append("e"+str(i+1) +"_e"+str(j+1))
 					header.append('class')
 					writer.writerow(header)
 					needHeader = False
+				# If getting a value per electrode: do this header 
+				elif needHeader: 
+					num_electrodes = data.shape[1] # number of columns = number of electrodes
+					header = ['patient num','instance num']
+					if (isBands):
+						for band in bands:
+							for i in range(num_electrodes):
+								header.append(band+"_"+"e"+str(i+1))
+					else :
+						for i in range(num_electrodes):
+							header.append("e"+str(i+1))
+
+					header.append('class')
+					writer.writerow(header)
+					needHeader = False
+#################################################################################################
 
 				#create bunches per patient
 				for bunch in range(num_instances*epochs_per_patient):
@@ -47,6 +70,7 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 					matrix = np.array(matrix,dtype=np.float) 
 					print global_instance_num, '  ', epochs_per_patient
 					featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
+
 					if(isBands):
 						transposed = np.transpose(matrix)
 						delta = np.empty(transposed.shape)
@@ -97,15 +121,18 @@ def writeFeatureSet(function,adhc, start_num, features_path, needHeader,num_inst
 				patient_num += 1
 				global_patient_num = patient_num
 
-#def createFSLFeatureSet(num_epochs, num_timePoints, extractFeatureFunc):
-def createMatrixFeatureSet(function,feature_name, num_instances, num_timePoints, epochs_per_patient,  path1, path2, features_path, recurr,):
-
-
+def createMatrixFeatureSet(function,feature_name, num_instances, num_timePoints, epochs_per_patient, path1, path2, features_path, recurr,):
 	print("feature set: " + features_path)
 
 	if not os.path.exists(features_path):
-		writeFeatureSet(function,0,1,features_path, True, num_instances, epochs_per_patient, num_timePoints, path1)
-		writeFeatureSet(function,1,global_patient_num,features_path, False, num_instances,epochs_per_patient ,num_timePoints, path2)
+		# if comparing electrodes
+		if (feature_name == 'FSL' or feature_name == 'Pearson' or feature_name == 'Granger'):
+			writeFeatureSet(function,0,1,features_path, True, True, num_instances, epochs_per_patient, num_timePoints,path1)
+			writeFeatureSet(function,1,global_patient_num,features_path, False, False, num_instances, epochs_per_patient, num_timePoints,path2)
+		else: # If getting a value per electrode
+			writeFeatureSet(function,0,1,features_path, True, False, num_instances, epochs_per_patient, num_timePoints,path1)
+			writeFeatureSet(function,1,global_patient_num,features_path, False, False, num_instances, epochs_per_patient, num_timePoints,path2)
+
 
 #createFSLFeatureSet(1,215)
 #minimum is about 215 raw points for extractFSLFeatures function
