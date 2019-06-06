@@ -28,6 +28,8 @@ featureName = ''
 data_type = ''
 num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
+num_instances = 0
+epochs_per_instance = 0
 startAtFS = False
 FS = True #feature selection
 RECURR = False
@@ -228,7 +230,10 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #xgboost = XGBClassifier() -> not working
 
 #loop through models and print accuracy for each
-models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+if (RECURR):
+	models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+else:
+	models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
