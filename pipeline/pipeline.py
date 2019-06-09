@@ -16,6 +16,7 @@ from granger_features import extractGrangerFeatures
 from domFreq_features import extractDomFreqFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
+from tsfresh_features import extractTsFreshFeatures
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
 import random
@@ -112,6 +113,8 @@ if not startAtFS:
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
+		elif featureName == 'TsFresh':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractTsFreshFeatures , featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -148,7 +151,7 @@ if not startAtFS:
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 21
 			
-		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'TsFresh'):
 			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
 			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
