@@ -16,6 +16,7 @@ from granger_features import extractGrangerFeatures
 from domFreq_features import extractDomFreqFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
+from tsfresh_features import extractTsFreshFeatures
 from nn_keras import nn_keras
 import random
 from sklearn.utils import shuffle
@@ -108,6 +109,8 @@ if not startAtFS:
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
+		elif featureName == 'TsFresh':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractTsFreshFeatures , featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -144,7 +147,7 @@ if not startAtFS:
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 21
 			
-		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'TsFresh'):
 			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
 			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
@@ -234,15 +237,3 @@ for i in range(0, len(clfs)):
 	print("\n")
 	for model in models:
 		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, features_path, featureName, data_type)
-
-# Megha's svm
-#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
-
-#nn_keras
-#nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
-
-#nn_Recurr
-# if (RECURR):
-	# nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
-	# 	n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
-
