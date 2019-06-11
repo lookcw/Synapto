@@ -187,7 +187,6 @@ if (FS):
 	print("Feature Selection...")
 	print("Input Shape:", X.shape)
 
-
 #  get x_reduced code from this file
 from get_XReduced import get_XReduced
 
@@ -201,6 +200,16 @@ x_reduced = []
 for clf in clfs:
 	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
 	x_reduced.append(get_XReduced(clf, X))
+
+
+# Select K Best - no feature importance 
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+# feature extraction
+X_new = SelectKBest(score_func=chi2, k=4).fit_transform(X, y)
+# clf = clf.fit(X, y)
+# x_reduced.append(get_XReduced(clf, X))
+
 ##################################################################################
 
 # learning model

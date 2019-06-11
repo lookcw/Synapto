@@ -33,7 +33,7 @@ def extractDomFreqFeatures(time_series):
 
 		print(freq.shape)
 		print("the max index is", max_index)
-		freqMax = freq[max_index]
+		freqMax = freq[max_index] # this is the dominant frequency 
 
 		features[featuresI] = freqMax
 		featuresI += 1

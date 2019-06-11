@@ -7,9 +7,7 @@ import csv
 
 def get_feature_importance(clf, X, y, num_features):
 	clf = clf.fit(X,y)
-	#print(clf)
 	# np.nan_to_num(X)
-
 
 	#plot feature importances (top 50)
 	feat_importances = pd.Series(clf.feature_importances_, index=X.columns)
@@ -17,7 +15,6 @@ def get_feature_importance(clf, X, y, num_features):
 
 	# Sort the feature importances in decreasing order (with the highest importance values at the top)
 	indices = np.argsort(feat_importances)[::-1]
-
 
 	o_filename = 'feature_importance_values.csv'
 
