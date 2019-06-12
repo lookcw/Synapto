@@ -5,6 +5,7 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+from keras.wrappers.scikit_learn import KerasClassifier
 import csv
 import os
 import math
@@ -79,12 +80,12 @@ def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cl
 	#shuffle(X_data)
 	#shuffle(Y_data)
 
-	#reshape to 3D input for LSTM
-	print X_data.shape
-	print n_timeSteps
-	print n_electrodes
-	X_data = np.reshape(X_data,(length, n_timeSteps, n_electrodes))
-	print X_data.shape
+	# #reshape to 3D input for LSTM
+	# print X_data.shape
+	# print n_timeSteps
+	# print n_electrodes
+	# X_data = np.reshape(X_data,(length, n_timeSteps, n_electrodes))
+	# print X_data.shape
 
 	X_data = np.array(X_data)
 	Y_data = np.array(Y_data)
@@ -92,7 +93,7 @@ def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cl
 	def create_network():
 		model = Sequential()
 
-		model.add(LSTM(neurons[0], input_shape=(n_timeSteps, n_electrodes)))
+		model.add(LSTM(neurons[0], input_shape=(instances, n_input)))
 
 		#hidden layers
 		for i in range(1,n_hlayers):

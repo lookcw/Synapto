@@ -17,12 +17,14 @@ from domFreq_features import extractDomFreqFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
 from nn_keras import nn_keras
+from nn_Recurr import nn_Recurr
 import random
 from sklearn.utils import shuffle
 import functools
 from feature_ranking import get_feature_importance
 from identifier import paramToFilename,recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
+from group import file_2_recurr_X
 #from nn_Recurr import nn_Recurr
 
 
@@ -228,7 +230,8 @@ nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n
 
 #nn_Recurr
 if (RECURR):
-	nn_recurr = nn_Recurr(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+	X_3D, y_ = file_2_recurr_X(features_path)
+	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
 #various sklearn models
 logreg = LogisticRegression() 
