@@ -5,7 +5,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 # Takes in a time series in the form of raw electrode data (takes in a matrix)
 
-def extractDomFreqFeatures(time_series):
+def getHeader(time_series):
+	numElectrodes = time_series.shape[1]
+	headers = []
+	for i in range(1,numElectrodes+1):
+		headers.append('e'+str(i))
+
+
+def extractFeatures(time_series):
 
 	numElectrodes = time_series.shape[1]
 	features = [None] * (numElectrodes)

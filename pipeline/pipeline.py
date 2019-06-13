@@ -11,10 +11,10 @@ from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
-from pearson_features import extractPearsonFeatures
-from granger_features import extractGrangerFeatures
-from domFreq_features import extractDomFreqFeatures
-from FSL_features import extractFSLFeatures
+import pearson_features
+import granger_features 
+import domFreq_features 
+import FSL_features
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
@@ -106,12 +106,14 @@ if not startAtFS:
 		elif featureName == 'FSL':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractFSLFeatures, featureName)
 		elif featureName == 'Pearson':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractPearsonFeatures, featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
 		elif featureName == 'Granger':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractGrangerFeatures, featureName)
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
+		elif featureName == 'TsFresh':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractTsFreshFeatures , featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -148,7 +150,7 @@ if not startAtFS:
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 21
 			
-		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'TsFresh'):
 			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
 			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
@@ -159,7 +161,7 @@ if not startAtFS:
 				data_folder_path1, data_folder_path2, data_type, RECURR)
 
 	else:
-		print("Feature set already exists")
+		print("Feature set already exists: " + features_path)
 
 	if (data_type == 'Brazil'):
 		num_electrodes = 21
