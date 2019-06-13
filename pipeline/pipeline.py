@@ -11,12 +11,11 @@ from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
-from pearson_features import extractPearsonFeatures
-from granger_features import extractGrangerFeatures
-from domFreq_features import extractDomFreqFeatures
-from FSL_features import extractFSLFeatures
+import pearson_features
+import granger_features 
+import domFreq_features 
+import FSL_features
 from compute_score import compute_group_score
-from tsfresh_features import extractTsFreshFeatures
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
 import random
@@ -107,7 +106,7 @@ if not startAtFS:
 		elif featureName == 'FSL':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractFSLFeatures, featureName)
 		elif featureName == 'Pearson':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractPearsonFeatures, featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
 		elif featureName == 'Granger':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractGrangerFeatures, featureName)
 		elif featureName == 'DomFreq':
