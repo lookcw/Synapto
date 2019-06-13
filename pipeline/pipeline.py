@@ -110,7 +110,7 @@ if not startAtFS:
 		elif featureName == 'Granger':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractGrangerFeatures, featureName)
 		elif featureName == 'DomFreq':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
 		elif featureName == 'TsFresh':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractTsFreshFeatures , featureName)

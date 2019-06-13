@@ -15,6 +15,6 @@ def file_2_recurr_X(features_path):
     print len(groups), ' ', len(patient_num),  ' ', len(y)
     return (patient_num,groups,y)
     
-file_2_recurr_X('FeatureSets/Brazil3instances_10_epochs4000_timepoints.csv')
+# file_2_recurr_X('FeatureSets/Brazil3instances_10_epochs4000_timepoints.csv')
 ## a test if you want to see how this function works
 # file_2_recurr_X('FeatureSets/Brazil3instances_10_epochs4000_timepoints.csv')
