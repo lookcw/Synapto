@@ -17,12 +17,14 @@ from domFreq_features import extractDomFreqFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
 from nn_keras import nn_keras
+from nn_Recurr import nn_Recurr
 import random
 from sklearn.utils import shuffle
 import functools
 from feature_ranking import get_feature_importance
 from identifier import paramToFilename,recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
+from group import file_2_recurr_X
 #from nn_Recurr import nn_Recurr
 
 
@@ -30,6 +32,8 @@ featureName = ''
 data_type = ''
 num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
+num_instances = 0
+epochs_per_instance = 0
 startAtFS = False
 FS = True #feature selection
 RECURR = False
@@ -199,7 +203,7 @@ clfs = [clf1, clf2, clf3]
 x_reduced = []
 
 for clf in clfs:
-	feat_importances_et = get_feature_importance(clf, X, y, 945) #top 50 features
+	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
 	x_reduced.append(get_XReduced(clf, X))
 ##################################################################################
 
@@ -216,6 +220,19 @@ num_folds = 10
 num_seeds = 10
 o_filename = 'output_pipeline.csv'
 
+
+# Megha's svm
+#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
+
+#nn_keras
+nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+
+
+#nn_Recurr
+if (RECURR):
+	X_3D, y_ = file_2_recurr_X(features_path)
+	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
 #various sklearn models
 logreg = LogisticRegression() 
 logreg_cv = LogisticRegressionCV()
@@ -226,23 +243,15 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 #xgboost = XGBClassifier() -> not working
 
 #loop through models and print accuracy for each
-models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+if (RECURR):
+	models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+else:
+	models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
 	print(format(clfs[i].__class__))
-	print("\n")
+	print("\n")	
 	for model in models:
 		write_accuracy_to_file(clfs[i], model, groups, x_reduced[i], X, y, num_folds, num_seeds, o_filename, features_path, featureName, data_type)
-
-# Megha's svm
-#svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
-
-#nn_keras
-#nn_keras(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
-
-#nn_Recurr
-# if (RECURR):
-	# nn_Recurr(X, y, n_hlayers = 3, neurons = [100, 100, 100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5, 
-	# 	n_electrodes = num_electrodes, n_timeSteps=num_timePoints)
 

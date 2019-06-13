@@ -121,7 +121,6 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 		return model
 
 	network = KerasClassifier(build_fn=create_network, epochs=50, batch_size=10, verbose=0)
-	#print(model)
 	#compute_group_score(clf = [], X = X_data, y = Y_data, num_folds = n_folds, groups = grps, scoring='accuracy', nn_model = model)
 
 	return network
@@ -231,14 +230,3 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 	# # r_file = open(results_file,'a')
 	# # writer = csv.writer(r_file,delimiter=',')
 	# # writer.writerow(results)
-
-n=1
-for argument in sys.argv[1:]:
-	if (argument == "-f"):
-		filename = sys.argv[n+1]
-	if argument == "-i":
-		iden = sys.argv[n+1]
-	n+=1
-
-#nn_keras(in_file = filename, identifier = "Brazil FFT_B", n_hlayers = 3, neurons = [50, 30, 10],learning_rate = 0.1,results_file = "../Results.csv",n_folds =2,n_classes = 2, seed = 5)
-
