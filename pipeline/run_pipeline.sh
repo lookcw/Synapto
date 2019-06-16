@@ -1,10 +1,11 @@
-is=( 1 2 4 )
-ts=(200000 100000 50000)
-features=('FSL' 'Wavelet' 'Pearson')
+is=( 1 1 1 )
+ts=(16000 10666 8000)
+es=(10 15 20)
+features=('FSL' 'Wavelet' 'Pearson' 'DomFreq')
 
 for feature in ${features[@]}; do
     for i in ${!is[@]}; do
-    echo  "python pipeline.py -d newBrazil -f $feature -i ${is[$i]} -t ${ts[$i]}"
-        python pipeline.py -d "newBrazil" -f $feature -i ${is[$i]} -t ${ts[$i]}
+    echo  "python pipeline.py -d Brazil -f $feature -i ${is[$i]} -t ${ts[$i]} -e ${es[$i]}"
+        python pipeline.py -d "Brazil" -f $feature -i ${is[$i]} -t ${ts[$i]} -e ${es[$i]}
     done
-done
+done:
