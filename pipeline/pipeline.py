@@ -104,16 +104,14 @@ if not startAtFS:
 		# elif featureName == 'Wavelet':
 			# extractFeatureFunc = extractWaveletFeatures
 		elif featureName == 'FSL':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractFSLFeatures, featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, FSL_features, featureName)
 		elif featureName == 'Pearson':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
 		elif featureName == 'Granger':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractGrangerFeatures, featureName)
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, granger_features, featureName)
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
-		elif featureName == 'TsFresh':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet,extractTsFreshFeatures , featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -159,7 +157,6 @@ if not startAtFS:
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
 				data_folder_path1, data_folder_path2, data_type, RECURR)
-
 	else:
 		print("Feature set already exists: " + features_path)
 
@@ -187,7 +184,7 @@ unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last, first, and 2nd columns (label, patient number, and instance number)
 X = data.drop([data.columns[-1],data.columns[0],data.columns[1]], axis=1)
 
-
+##################################################################################
 if (FS):
 	#### feature selection
 	print("Feature Selection...")

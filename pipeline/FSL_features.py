@@ -4,7 +4,7 @@ from subprocess import Popen, PIPE, call
 import numpy as np
 from headers import compareHeader
 
-def headersHeader(time_series_electrode):
+def getHeader(time_series_electrode):
     return compareHeader(time_series_electrode)
 
 def extractFeatures(time_series_electrode):
