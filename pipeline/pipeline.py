@@ -230,7 +230,7 @@ nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n
 
 #nn_Recurr
 if (RECURR):
-	X_3D, y_ = file_2_recurr_X(features_path)
+	patient_num, X_3D, y_ = file_2_recurr_X(features_path)
 	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
 #various sklearn models
