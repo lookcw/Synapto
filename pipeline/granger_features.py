@@ -12,9 +12,13 @@ from nitime.viz import drawmatrix_channels
 import csv
 import pandas as pd
 from pandas import DataFrame
+from headers import compareHeader
 # Takes in a time series in the form of raw electrode data (one column)
 
-def extractGrangerFeatures(time_series):
+def getHeaders(time_series_electrode):
+	return compareHeader(time_series_electrode)
+
+def extractFeatures(time_series):
 
 	print(time_series.shape)
 	TR = 1.89
