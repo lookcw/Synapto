@@ -37,6 +37,8 @@ epochs_per_instance = 0
 startAtFS = False
 FS = True #feature selection
 RECURR = False
+dataTypes = []
+
 
 for i in range(1,len(sys.argv),2):
 	if str(sys.argv[i]) == "-h":
@@ -138,6 +140,7 @@ if not startAtFS:
 			data_folder_path2 = 'BrazilRawData/ADF50'
 			num_electrodes = 21
 
+		#not ready yet
 		if (data_type == 'Greece'):
 			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
