@@ -72,11 +72,33 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 						
 					else:
 						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
-						featuresRow += (functionClass.extractFeatures(matrix))					
+						featuresRow += (functionClass.extractFeatures(matrix))	
+						if(adhc == 0):
+							summary_filename = '0_file.csv'
+						else:
+							summary_filename = '1_file.csv'
+						
+						
+					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######
+					toWrite = np.zeros((21,21))
+					# toWrite[np.triu_indices(21, 1)] = featuresRow
+					if(adhc == 0):
+						summary_filename = '0_file.csv'
+					else:
+						summary_filename = '1_file.csv'
+					exists = os.path.isfile(summary_filename)
+					if exists:
+						pearson_data = genfromtxt(summary_filename, delimiter=',')
+						pearson_data += toWrite
+						np.savetxt(summary_filename, pearson_data, delimiter=",")
+					else:
+						np.savetxt(summary_filename, toWrite, delimiter=",")				
 					featuresRow = np.array(featuresRow)
 					featuresRow = np.append(featuresRow,adhc)
 					writer.writerow(featuresRow)
 					global_instance_num+=1
+
+					
 
 				patient_num += 1
 				global_patient_num = patient_num
