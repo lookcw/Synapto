@@ -151,7 +151,7 @@ if not startAtFS:
 			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
-			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, data_type, RECURR)
 			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
@@ -256,7 +256,8 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 if (RECURR):
 	models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 else:
-	models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+	models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+	# models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):

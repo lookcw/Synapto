@@ -3,7 +3,7 @@ import numpy as np
 import os
 import sys
 from BandPass1 import getBands
-
+from identifier import paramToFilename
 from numpy import genfromtxt
 
 global_patient_num = 0
@@ -100,11 +100,12 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 				patient_num += 1
 				global_patient_num = patient_num
 
-def createMatrixFeatureSet(function,feature_name, num_electrodes, num_instances, num_timePoints, epochs_per_patient, path1, path2, features_path, recurr,):
+def createMatrixFeatureSet(function,feature_name, num_electrodes, num_instances, num_timePoints, epochs_per_patient, path1, path2, features_path, data_type, recurr,):
 	print("feature set: " + features_path)
 
 	if(feature_name == "DomFreqVar"):
-		function.extractFeatures(features_path, features_path, num_instances, epochs_per_patient, num_electrodes)
+		featuresRead_path = sys.path[0] + '/FeatureSets/'+  paramToFilename("DomFreq", data_type, num_instances ,num_timePoints, epochs_per_patient)
+		function.extractFeatures(featuresRead_path, features_path, num_instances, epochs_per_patient, num_electrodes)
 	else:
 		if not os.path.exists(features_path):
 			# if comparing electrodes
