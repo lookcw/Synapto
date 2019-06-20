@@ -9,35 +9,47 @@ import numpy as np
 
 # datafile = 'FeatureSets/DomFreq_Brazil1instances_4_epochs160_timepoints.csv'
 
-def getHeader(time_series):
-	numElectrodes = time_series.shape[1]
-	headers = []
-	for i in range(1,numElectrodes+1):
+def getHeader(num_electrodes):
+	headers = ['patient num']
+	for i in range(1,num_electrodes+1):
 		headers.append('e'+str(i))
 
 	return headers
 
-def extractFeatures(feature_path, num_instances, epochs_per_instance):
+def extractFeatures(featureRead_path, out_path, num_instances, epochs_per_instance, num_electrodes):
 	print "function called"
-	feature_path = '/Users/megha/Synapto/pipeline/FeatureSets/DomFreq_Brazil1instances_4_epochs160_timepoints.csv'
-	# with open(os.path.join(path, filename)) as f:
-	# 	reader = csv.reader(f)
-	# 	data = np.array(list(reader))
-	data = np.array(list(csv.reader(open(feature_path))))
+	featureRead_path = '/Users/megha/Synapto/pipeline/FeatureSets/DomFreq_Brazil1instances_4_epochs160_timepoints.csv'
+	
+	header = []
+	header += getHeader(num_electrodes)
+
+	out_file = open(out_path,"a") #used to be "a" for append
+	writer = csv.writer(out_file)	
+	header.append('class')
+	writer.writerow(header)
+
+	data = np.array(list(csv.reader(open(featureRead_path))))
 	# Get the data from the file 
 	data = data[1:, 2:-1]
 
 	# (2D array part: Number of rows (patients), columns), and epochs per patient 
 	# NOTE: this has to be done manually - requires that you know how many epochs there are per patient (will be instances * number of epochs)
 	epochs_per_patient = num_instances * epochs_per_instance
-	data3D = data.reshape(25, 21, epochs_per_patient)
+	data3D = data.reshape(25, num_electrodes, epochs_per_patient)
 
-	features = np.zeros(shape=(25,21))
+	features = np.zeros(shape=(25,num_electrodes))
+	adhc = 0
 	# For each 2D array (which has all the epochs), get the variance 
+	# where i is a patient and j is an electrode
 	for i in range(len(data3D)):
+		featuresRow = [i+1]
+		if(i >= 12):
+			adhc = 1
 		for j in range(len(data3D[i])):
-			# print np.var(data3D[i][j].astype(np.float))
-			features[i][j] = np.var(data3D[i][j].astype(np.float))
+			# print np.var(data3D[i][j].astype(np.float))	
+			featuresRow = np.append(featuresRow, np.var(data3D[i][j].astype(np.float)))
+		featuresRow = np.append(featuresRow,adhc)
+		writer.writerow(featuresRow)
 		# print "\n"
 
-	return features
+	# return features

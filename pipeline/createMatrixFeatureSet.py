@@ -4,7 +4,6 @@ import os
 import sys
 from BandPass1 import getBands
 
-
 from numpy import genfromtxt
 
 global_patient_num = 0
@@ -27,7 +26,6 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 				data = np.array(list(reader))
 
 ################################################ HEADERS #################################################		
-				# if comparing electrodes: do this header
 				if global_patient_num == 0:
 					num_electrodes = data.shape[1] # number of columns = number of electrodes
 					header = ['patient num','instance num']
@@ -102,12 +100,15 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 				patient_num += 1
 				global_patient_num = patient_num
 
-def createMatrixFeatureSet(function,feature_name, num_instances, num_timePoints, epochs_per_patient, path1, path2, features_path, recurr,):
+def createMatrixFeatureSet(function,feature_name, num_electrodes, num_instances, num_timePoints, epochs_per_patient, path1, path2, features_path, recurr,):
 	print("feature set: " + features_path)
 
-	if not os.path.exists(features_path):
-		# if comparing electrodes
-		writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
-		writeFeatureSet(function,1,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path2)
+	if(feature_name == "DomFreqVar"):
+		function.extractFeatures(features_path, features_path, num_instances, epochs_per_patient, num_electrodes)
+	else:
+		if not os.path.exists(features_path):
+			# if comparing electrodes
+			writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
+			writeFeatureSet(function,1,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path2)
 #createFSLFeatureSet(1,215)
 #minimum is about 215 raw points for extractFSLFeatures function
