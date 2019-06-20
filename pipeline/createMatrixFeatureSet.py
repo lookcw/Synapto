@@ -41,7 +41,7 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 					header.append('class')
 					writer.writerow(header)
 #################################################################################################
-
+				
 				#create bunches per patient
 				for bunch in range(num_instances*epochs_per_patient):
 					index = int(bunch*(len(data)/(num_instances*epochs_per_patient)))
@@ -52,6 +52,7 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 					matrix = np.array(matrix,dtype=np.float) 
 					print global_instance_num, '  ', epochs_per_patient
 					featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
+
 					if(isBands):
 						transposed = np.transpose(matrix)
 						delta = np.empty(transposed.shape)
@@ -69,7 +70,6 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 						allBands = [delta,theta,alpha,beta,gamma]
 						for i in range(len(allBands)):
 							featuresRow.append(functionClass.extractFeatures(np.transpose(allBands[i]).astype('str')))	
-						
 					else:
 						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
 						featuresRow += (functionClass.extractFeatures(matrix))

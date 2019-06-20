@@ -10,7 +10,7 @@ def getHeader(time_series):
 	headers = []
 	for i in range(1,numElectrodes+1):
 		headers.append('e'+str(i))
-
+	return headers
 
 def extractFeatures(time_series):
 

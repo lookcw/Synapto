@@ -10,10 +10,7 @@ elec = [0,1,2,3,4,5,6,7,8,9,15,16,17,18,19,20]
 
 def getHeader(time_series_electrode):
    return compareHeader(time_series_electrode)
-
-
-
-
+   
 
 def extractFeatures(time_series_electrode):
     eegMat = pd.DataFrame(data = time_series_electrode)
