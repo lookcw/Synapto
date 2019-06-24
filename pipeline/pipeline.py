@@ -156,7 +156,7 @@ if not startAtFS:
 			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
-			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, data_type, RECURR)
 			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
@@ -240,7 +240,7 @@ o_filename = 'output_pipeline.csv'
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
 #nn_keras
-nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+# nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
 
 
 #nn_Recurr
@@ -261,7 +261,8 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 if (RECURR):
 	models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 else:
-	models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+	models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
+	# models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 # models = [svc]
 # Get and write accuracies to an output csv file
 for i in range(0, len(clfs)):
