@@ -11,6 +11,7 @@ from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
+from createMatrixFeatureSet import createMatrixFeatureSet2
 import pearson_features
 import granger_features 
 import domFreq_features 
@@ -50,7 +51,7 @@ for i in range(1,len(sys.argv),2):
 	
 	elif str(sys.argv[i]) == "-d":
 		data_type = sys.argv[i+1]
-		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
+		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
 			print("Invalid type of data. Choose from list in help documentation")
 			sys.exit()
 	elif str(sys.argv[i]) == "-e":
@@ -86,7 +87,7 @@ if not startAtFS:
 	if data_type == '':
 		print("Did not input data type. Choose from list in help documentation")
 		sys.exit()
-	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
+	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
 		print("Invalid type of data. Choose from list in help documentation")
 		sys.exit()
 	if not RECURR:
@@ -100,23 +101,39 @@ if not startAtFS:
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
 	if not RECURR:
-		if featureName == 'ASD':
-			extractFeatureFunc = extractASDFeatures
-		# elif featureName == 'Wavelet':
-			# extractFeatureFunc = extractWaveletFeatures
-		elif featureName == 'FSL':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, FSL_features, featureName)
-		elif featureName == 'Pearson':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
-		elif featureName == 'Granger':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, granger_features, featureName)
-		elif featureName == 'DomFreq':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
-		elif featureName == 'DomFreqVar':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreqVar_features, featureName)
+		# Calls a different function that handles 3 classes if DLB data is included 
+		if (data_type == 'Newcastle'):
+			if featureName == 'FSL':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, FSL_features, featureName)
+			elif featureName == 'Pearson':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, pearson_features, featureName)
+			elif featureName == 'Granger':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, granger_features, featureName)
+			elif featureName == 'DomFreq':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, domFreq_features, featureName)
+			elif featureName == 'DomFreqVar':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, domFreqVar_features, featureName)
+			else:
+				print("Invalid feature name. Choose from list in help documentation")
+				sys.exit()
 		else:
-			print("Invalid feature name. Choose from list in help documentation")
-			sys.exit()
+			if featureName == 'ASD':
+				extractFeatureFunc = extractASDFeatures
+			# elif featureName == 'Wavelet':
+				# extractFeatureFunc = extractWaveletFeatures
+			elif featureName == 'FSL':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet, FSL_features, featureName)
+			elif featureName == 'Pearson':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
+			elif featureName == 'Granger':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet, granger_features, featureName)
+			elif featureName == 'DomFreq':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
+			elif featureName == 'DomFreqVar':
+				extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreqVar_features, featureName)
+			else:
+				print("Invalid feature name. Choose from list in help documentation")
+				sys.exit()
 
 	#feature extraction
 	print("Creating Feature Set...")
@@ -128,7 +145,6 @@ if not startAtFS:
 		features_path = sys.path[0] + '/FeatureSets/'+  paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
 		
 	#define features and reduced_features paths
-	
 	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+ paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
 	
 	#create feature set if does not exist in Feature Sets folder
@@ -154,16 +170,25 @@ if not startAtFS:
 			data_folder_path1 = 'BrazilRawData/HC_AR'
 			data_folder_path2 = 'BrazilRawData/HC_AR'
 			num_electrodes = 21
-			
-		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
-			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, data_type, RECURR)
-			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
-		elif (RECURR):
-			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
-				data_folder_path1, data_folder_path2, data_type, RECURR)
-		else:
-			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-				data_folder_path1, data_folder_path2, data_type, RECURR)
+
+		if (data_type == 'Newcastle'): # Going into Brazil folder for now
+			data_folder_path1 = 'BrazilRawData/HCF50'
+			data_folder_path2 = 'BrazilRawData/HCF50'
+			data_folder_path3 = 'BrazilRawData/ADF50'
+			num_electrodes = 21
+		
+		if(data_type == 'Newcastle'):
+			if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
+				extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
+		else:	
+			if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
+				extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, data_type, RECURR)
+			elif (RECURR):
+				createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+					data_folder_path1, data_folder_path2, data_type, RECURR)
+			else:
+				createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
+					data_folder_path1, data_folder_path2, data_type, RECURR)
 	else:
 		print("Feature set already exists: " + features_path)
 

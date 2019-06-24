@@ -111,5 +111,17 @@ def createMatrixFeatureSet(function,feature_name, num_electrodes, num_instances,
 			# if comparing electrodes
 			writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
 			writeFeatureSet(function,1,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path2)
-#createFSLFeatureSet(1,215)
-#minimum is about 215 raw points for extractFSLFeatures function
+
+def createMatrixFeatureSet2(function,feature_name, num_electrodes, num_instances, num_timePoints, epochs_per_patient, path1, path2, path3, features_path, data_type, recurr,):
+	print("feature set: " + features_path)
+
+	if(feature_name == "DomFreqVar"):
+		featuresRead_path = sys.path[0] + '/FeatureSets/'+  paramToFilename("DomFreq", data_type, num_instances ,num_timePoints, epochs_per_patient)
+		function.extractFeatures(featuresRead_path, features_path, num_instances, epochs_per_patient, num_electrodes)
+	else:
+		if not os.path.exists(features_path):
+			# if comparing electrodes
+			writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
+			writeFeatureSet(function,1,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path2)
+			writeFeatureSet(function,2,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path3)
+
