@@ -149,6 +149,11 @@ if not startAtFS:
 			data_folder_path1 = 'BrazilRawData/HCF50_new'
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 21
+
+		if (data_type == 'AR'):
+			data_folder_path1 = 'BrazilRawData/HC_AR'
+			data_folder_path2 = 'BrazilRawData/HC_AR'
+			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
 			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
