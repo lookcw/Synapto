@@ -11,7 +11,6 @@ from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
-from createMatrixFeatureSet import createMatrixFeatureSet2
 import pearson_features
 import granger_features 
 import domFreq_features 
@@ -138,21 +137,25 @@ if not startAtFS:
 		if (data_type == 'Brazil'):
 			data_folder_path1 = 'BrazilRawData/HCF50'
 			data_folder_path2 = 'BrazilRawData/ADF50'
+			data_folder_path3 = None
 			num_electrodes = 21
 
 		if (data_type == 'Greece'):
 			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
 			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
+			data_folder_path3 = None
 			num_electrodes = 8
 
 		if (data_type == 'newBrazil'):
 			data_folder_path1 = 'BrazilRawData/HCF50_new'
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
+			data_folder_path3 = None
 			num_electrodes = 21
 
 		if (data_type == 'AR'):
 			data_folder_path1 = 'BrazilRawData/HC_AR'
 			data_folder_path2 = 'BrazilRawData/HC_AR'
+			data_folder_path3 = None
 			num_electrodes = 21
 
 		if (data_type == 'Newcastle'): # Going into Brazil folder for now
@@ -161,18 +164,14 @@ if not startAtFS:
 			data_folder_path3 = 'BrazilRawData/ADF50'
 			num_electrodes = 21
 		
-		if(data_type == 'Newcastle'):
-			if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
-				extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
-		else:	
-			if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
-				extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, data_type, RECURR)
-			elif (RECURR):
-				createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
-					data_folder_path1, data_folder_path2, data_type, RECURR)
-			else:
-				createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-					data_folder_path1, data_folder_path2, data_type, RECURR)
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
+			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
+		elif (RECURR):
+			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+				data_folder_path1, data_folder_path2, data_folder_path3, data_type, RECURR)
+		else:
+			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
+				data_folder_path1, data_folder_path2, data_folder_path3, data_type, RECURR)
 	else:
 		print("Feature set already exists: " + features_path)
 
