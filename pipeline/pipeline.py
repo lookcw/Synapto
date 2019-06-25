@@ -101,39 +101,23 @@ if not startAtFS:
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
 	if not RECURR:
-		# Calls a different function that handles 3 classes if DLB data is included 
-		if (data_type == 'Newcastle'):
-			if featureName == 'FSL':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, FSL_features, featureName)
-			elif featureName == 'Pearson':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, pearson_features, featureName)
-			elif featureName == 'Granger':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, granger_features, featureName)
-			elif featureName == 'DomFreq':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, domFreq_features, featureName)
-			elif featureName == 'DomFreqVar':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet2, domFreqVar_features, featureName)
-			else:
-				print("Invalid feature name. Choose from list in help documentation")
-				sys.exit()
+		if featureName == 'ASD':
+			extractFeatureFunc = extractASDFeatures
+		# elif featureName == 'Wavelet':
+			# extractFeatureFunc = extractWaveletFeatures
+		elif featureName == 'FSL':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, FSL_features, featureName)
+		elif featureName == 'Pearson':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
+		elif featureName == 'Granger':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, granger_features, featureName)
+		elif featureName == 'DomFreq':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
+		elif featureName == 'DomFreqVar':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreqVar_features, featureName)
 		else:
-			if featureName == 'ASD':
-				extractFeatureFunc = extractASDFeatures
-			# elif featureName == 'Wavelet':
-				# extractFeatureFunc = extractWaveletFeatures
-			elif featureName == 'FSL':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet, FSL_features, featureName)
-			elif featureName == 'Pearson':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
-			elif featureName == 'Granger':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet, granger_features, featureName)
-			elif featureName == 'DomFreq':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
-			elif featureName == 'DomFreqVar':
-				extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreqVar_features, featureName)
-			else:
-				print("Invalid feature name. Choose from list in help documentation")
-				sys.exit()
+			print("Invalid feature name. Choose from list in help documentation")
+			sys.exit()
 
 	#feature extraction
 	print("Creating Feature Set...")
