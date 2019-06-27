@@ -31,6 +31,9 @@ from group import file_2_recurr_X
 
 featureName = ''
 data_type = ''
+hc = False
+ad = False
+dlb = False
 num_epochs = 0 #per patient
 num_timePoints = 0 #per instance
 num_instances = 0
@@ -43,7 +46,7 @@ for i in range(1,len(sys.argv),2):
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
 		'\n-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
-		'\n-nfs: no feature selection\n-recurr: use LSTM' +
+		'\n-nfs: no feature selection\n-recurr: use LSTM' + '\n-c1: class (HC, AD, DLB)' + '\n-c2: class (HC, AD, DLB)' +
 		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
 		sys.exit()
@@ -53,6 +56,22 @@ for i in range(1,len(sys.argv),2):
 		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
 			print("Invalid type of data. Choose from list in help documentation")
 			sys.exit()
+	elif str(sys.argv[i]) == "-c1":
+		classification = sys.argv[i+1]
+		if classification == 'HC':
+			hc = True
+		elif classification == 'AD':
+			ad = True
+		elif classification == 'DLB':
+			dlb = True
+	elif str(sys.argv[i]) == "-c2":
+		classification = sys.argv[i+1]
+		if classification == 'HC':
+			hc = True
+		elif classification == 'AD':
+			ad = True
+		elif classification == 'DLB':
+			dlb = True
 	elif str(sys.argv[i]) == "-e":
 		epochs_per_instance = int(sys.argv[i+1])
 
@@ -159,9 +178,22 @@ if not startAtFS:
 			num_electrodes = 21
 
 		if (data_type == 'Newcastle'): # Going into Brazil folder for now
-			data_folder_path1 = 'BrazilRawData/HCF50'
-			data_folder_path2 = 'BrazilRawData/HCF50'
-			data_folder_path3 = 'BrazilRawData/ADF50'
+			if hc == True and ad == True and dlb != True:
+				data_folder_path1 = 'BrazilRawData/HCF50'
+				data_folder_path2 = 'BrazilRawData/ADF50'
+				data_folder_path3 = None
+			elif hc == True and dlb == True and ad != True:
+				data_folder_path1 = 'BrazilRawData/HCF50'
+				data_folder_path2 = None
+				data_folder_path3 = 'BrazilRawData/ADF50' # Replace w DLB
+			elif ad == True and dlb == True and hc != True:
+				data_folder_path1 = None
+				data_folder_path2 = 'BrazilRawData/ADF50'
+				data_folder_path3 = 'BrazilRawData/ADF50' # Replace w DLB
+			else:
+				data_folder_path1 = 'BrazilRawData/HCF50'
+				data_folder_path2 = 'BrazilRawData/ADF50'
+				data_folder_path3 = 'BrazilRawData/ADF50' # Replace w DLB
 			num_electrodes = 21
 		
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):

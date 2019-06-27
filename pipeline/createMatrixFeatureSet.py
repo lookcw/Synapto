@@ -110,6 +110,14 @@ def createMatrixFeatureSet(function,feature_name, num_electrodes, num_instances,
 		if not os.path.exists(features_path):
 			writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
 			writeFeatureSet(function,1,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path2)
+	elif (path2 == None):
+		if not os.path.exists(features_path):
+			writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
+			writeFeatureSet(function,2,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path3)
+	elif (path1 == None):
+		if not os.path.exists(features_path):
+			writeFeatureSet(function,1,1,features_path, num_instances, epochs_per_patient, num_timePoints,path2)
+			writeFeatureSet(function,2,global_patient_num,features_path, num_instances, epochs_per_patient, num_timePoints,path3)
 	else:
 		if not os.path.exists(features_path):
 			writeFeatureSet(function,0,1,features_path, num_instances, epochs_per_patient, num_timePoints,path1)
