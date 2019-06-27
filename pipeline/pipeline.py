@@ -26,6 +26,7 @@ import raw_features
 import FSL_features
 import raw_features
 #import pac_features
+>>>>>>> updating neuronetrix lstm
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
@@ -118,6 +119,7 @@ num_epochs = num_instances * epochs_per_instance
 
 # If starting at the beginning - at feature set creation
 if not startAtFS:
+<<<<<<< HEAD
     if data_type == '' and not data_folder_path1 and not data_folder_path2:
         print("Did not input data type. Choose from list in help documentation")
         sys.exit()
@@ -262,6 +264,117 @@ else:  # starting pipeline with feature selection
     data = pd.read_csv(features_path, header='infer')
 
 # shuffle rows of dataframe
+=======
+	if data_type == '':
+		print("Did not input data type. Choose from list in help documentation")
+		sys.exit()
+	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'Neuronetrix':
+		print("Invalid type of data. Choose from list in help documentation")
+		sys.exit()
+	if not RECURR:
+		if featureName == '':
+			print("Did not input feature name argument (-f)")
+			#sys.exit()
+	if num_epochs == 0:
+		print("Did not input instances per patient argument (-i)")
+		#sys.exit()
+	if num_timePoints == 0:
+		print("Did not input time points argument (-t)\nUse -h for help.")
+		sys.exit()
+	if featureName == 'Raw':
+		extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractRawFeatures, featureName)
+	if not RECURR:
+		if featureName == 'ASD':
+			extractFeatureFunc = extractASDFeatures
+		# elif featureName == 'Wavelet':
+			# extractFeatureFunc = extractWaveletFeatures
+		elif featureName == 'FSL':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, FSL_features, featureName)
+		elif featureName == 'Pearson':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, pearson_features, featureName)
+		elif featureName == 'Granger':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, granger_features, featureName)
+		elif featureName == 'DomFreq':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
+			# extractFeatureFunc = extractDomFreqFeatures
+		elif featureName == 'Raw':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
+		else:
+			print("Invalid feature name. Choose from list in help documentation")
+			sys.exit()
+
+	#feature extraction
+	print("Creating Feature Set...")
+
+	if (RECURR):
+		features_path = sys.path[0] + '/FeatureSets/' + recurrParamToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
+	else:
+		#unique identifier for different input parameters
+		features_path = sys.path[0] + '/FeatureSets/'+  paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
+		
+	#define features and reduced_features paths
+	
+	reduced_features_path = sys.path[0] + '/ReducedFeatureSets/'+ paramToFilename(featureName, data_type, num_instances ,num_timePoints, epochs_per_instance)
+	
+	#create feature set if does not exist in Feature Sets folder
+	if not os.path.exists(features_path):
+		print("feature file dne, making it now")
+		#3rd parameter is extractFeature function of choice
+		if (data_type == 'Brazil'):
+			data_folder_path1 = 'BrazilRawData/HCF50'
+			data_folder_path2 = 'BrazilRawData/ADF50'
+			num_electrodes = 21
+
+		if (data_type == 'Greece'):
+			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
+			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
+			num_electrodes = 8
+
+		if (data_type == 'newBrazil'):
+			data_folder_path1 = 'BrazilRawData/HCF50_new'
+			data_folder_path2 = 'BrazilRawData/ADF50_new'
+			num_electrodes = 21
+
+		if (data_type == 'Greece'):
+			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
+			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
+			num_electrodes = 8
+
+		if (data_type == 'Neuronetrix'):
+			data_folder_path1 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/AD'
+			data_folder_path2 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/HC'
+			num_electrodes = 21
+			
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'TsFresh'):
+			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
+		elif (RECURR):
+			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			#createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+			#	data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
+		else:
+			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
+<<<<<<< HEAD
+				data_folder_path1, data_folder_path2, data_type, RECURR)
+=======
+				data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
+
+>>>>>>> updating neuronetrix lstm
+	else:
+		print("Feature set already exists: " + features_path)
+
+	if (data_type == 'Brazil'):
+		num_electrodes = 21
+	if (data_type == 'Greece'):
+		num_electrodes = 8
+	
+	print(features_path)
+	data = pd.read_csv(features_path, header = 'infer', delimiter=',')
+else: #starting pipeline with feature selection
+	data = pd.read_csv(features_path, header = 'infer')
+
+#shuffle rows of dataframe
+>>>>>>> updating neuronetrix lstm
 data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 # obtain Y using last column

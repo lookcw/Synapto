@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from headers import compareHeader
 from headers import linearHeader
 import numpy as np
@@ -12,3 +13,9 @@ def extractFeatures(time_series_electrode):
    return list(time_series_electrode[0])
    #flat = time_series_electrode.flatten()
    #return flat
+=======
+
+
+def extractRawFeatures(time_series):
+    return time_series
+>>>>>>> updating neuronetrix lstm
