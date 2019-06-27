@@ -14,6 +14,7 @@ from createMatrixFeatureSet import createMatrixFeatureSet
 from pearson_features import extractPearsonFeatures
 from granger_features import extractGrangerFeatures
 from domFreq_features import extractDomFreqFeatures
+from raw_features import extractRawFeatures
 from FSL_features import extractFSLFeatures
 from compute_score import compute_group_score
 from nn_keras import nn_keras
@@ -49,7 +50,7 @@ for i in range(1,len(sys.argv),2):
 	
 	elif str(sys.argv[i]) == "-d":
 		data_type = sys.argv[i+1]
-		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
+		if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'Neuronetrix':
 			print("Invalid type of data. Choose from list in help documentation")
 			sys.exit()
 	elif str(sys.argv[i]) == "-e":
@@ -85,7 +86,7 @@ if not startAtFS:
 	if data_type == '':
 		print("Did not input data type. Choose from list in help documentation")
 		sys.exit()
-	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil':
+	if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'Neuronetrix':
 		print("Invalid type of data. Choose from list in help documentation")
 		sys.exit()
 	if not RECURR:
@@ -98,6 +99,8 @@ if not startAtFS:
 	if num_timePoints == 0:
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
+	if featureName == 'Raw':
+		extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractRawFeatures, featureName)
 	if not RECURR:
 		if featureName == 'ASD':
 			extractFeatureFunc = extractASDFeatures
@@ -112,6 +115,8 @@ if not startAtFS:
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
+		elif featureName == 'Raw':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -147,16 +152,27 @@ if not startAtFS:
 			data_folder_path1 = 'BrazilRawData/HCF50_new'
 			data_folder_path2 = 'BrazilRawData/ADF50_new'
 			num_electrodes = 21
+
+		if (data_type == 'Greece'):
+			data_folder_path1 = '.../PathToGreeceHC_DataFolder'
+			data_folder_path2 = '.../PathToGreeceMCI_DataFolder'
+			num_electrodes = 8
+
+		if (data_type == 'Neuronetrix'):
+			data_folder_path1 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/AD'
+			data_folder_path2 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/HC'
+			num_electrodes = 21
 			
 		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq'):
 			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
 			# extractFeatureFunc(num_epochs, num_timePoints, data_folder_path1, data_folder_path2, data_type, RECURR)
 		elif (RECURR):
-			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
-				data_folder_path1, data_folder_path2, data_type, RECURR)
+			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			#createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+			#	data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-				data_folder_path1, data_folder_path2, data_type, RECURR)
+				data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
 
 	else:
 		print("Feature set already exists")
@@ -166,6 +182,7 @@ if not startAtFS:
 	if (data_type == 'Greece'):
 		num_electrodes = 8
 	
+	print(features_path)
 	data = pd.read_csv(features_path, header = 'infer', delimiter=',')
 else: #starting pipeline with feature selection
 	data = pd.read_csv(features_path, header = 'infer')
