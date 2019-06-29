@@ -22,15 +22,17 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 	if callable(invert_op):
 		isPredictProba = True
 	gkf = GroupKFold(n_splits=num_folds)
-	y_true = np.array(np.zeros(len(y)))
-	y_pred = np.array(np.zeros(len(y)))
+	y_true = np.array(np.zeros(10*len(y)))
+	y_pred = np.array(np.zeros(10*len(y)))
 	y_scores = None
 	if isPredictProba:
-		y_scores = np.array(np.zeros((len(y),2)))
+		y_scores = np.array(np.zeros((10*len(y),2)))
 	count = 0
 	print "groups: ",groups.shape
 	if nn_model == []:
 		for train, test in gkf.split(X, y, groups=groups):
+			test = train
+			print(len(test))
 			# print(X[train])
 			#print(y[train])
 			try:
@@ -50,6 +52,8 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 				y_scores[count:count+len(test)] = clf.predict_proba(X[test])
 			clf = clone(clf)
 			count += len(test)
+		print("y_true:" + str(y_true))
+		print("y_pred:" + str(y_pred))
 		(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = metrics(y_true,y_pred,y_scores)
 		print("Test accuracy",accuracy)
 		print("Test f1",f1)
@@ -65,6 +69,7 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 		#serialize initial model weights
 		nn_model.save_weights("initial_model.h5")
 		for train, test in gkf.split(X, y, groups=groups):
+			train = test
 			# print "Fold Number: " + str(fold_num)
 			nn_model.fit(X[train], y[train], epochs = 100, batch_size = 10)
 			trainscores = nn_model.evaluate(X[train], y[train])
