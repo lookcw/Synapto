@@ -26,7 +26,7 @@ from feature_ranking import get_feature_importance
 from identifier import paramToFilename,recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
-from shuffle_y import shuffle_y
+from shuffle_data import shuffle_data
 #from nn_Recurr import nn_Recurr
 
 
@@ -174,7 +174,7 @@ if not startAtFS:
 
 		if (data_type == 'AR'):
 			data_folder_path1 = 'BrazilRawData/HC_AR'
-			data_folder_path2 = 'BrazilRawData/HC_AR'
+			data_folder_path2 = 'BrazilRawData/AD_AR'
 			data_folder_path3 = None
 			num_electrodes = 21
 
@@ -223,7 +223,9 @@ data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
 # Function that randomly shuffles y
-# y = shuffle_y(y)
+print y
+np.random.shuffle(y)
+print y
 
 groups = data['patient num']
 
