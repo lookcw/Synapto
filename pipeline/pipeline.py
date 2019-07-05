@@ -26,6 +26,7 @@ from feature_ranking import get_feature_importance
 from identifier import paramToFilename,recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
+from shuffle_y import shuffle_y
 #from nn_Recurr import nn_Recurr
 
 
@@ -221,6 +222,8 @@ data = shuffle(data)
 data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
+# Function that randomly shuffles y
+# y = shuffle_y(y)
 
 groups = data['patient num']
 
@@ -249,16 +252,10 @@ x_reduced = []
 
 for clf in clfs:
 	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
+	# print clf
+	# print feat_importances_et
+	# print "\n\n\n"
 	x_reduced.append(get_XReduced(clf, X))
-
-
-# Select K Best - no feature importance 
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-# feature extraction
-X_new = SelectKBest(score_func=chi2, k=4).fit_transform(X, y)
-# clf = clf.fit(X, y)
-# x_reduced.append(get_XReduced(clf, X))
 
 ##################################################################################
 
@@ -281,7 +278,6 @@ o_filename = 'output_pipeline.csv'
 
 #nn_keras
 # nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
-
 
 #nn_Recurr
 if (RECURR):
