@@ -223,9 +223,7 @@ data.sample(frac=1).reset_index(drop=True)
 #### obtain Y using last column
 y = data.iloc[:,-1].values
 # Function that randomly shuffles y
-print y
-np.random.shuffle(y)
-print y
+# y = shuffle_data(y)
 
 groups = data['patient num']
 
@@ -235,6 +233,8 @@ print groups
 unique, counts = np.unique(groups, return_counts=True)
 #### obtain X by dropping last, first, and 2nd columns (label, patient number, and instance number)
 X = data.drop([data.columns[-1],data.columns[0],data.columns[1]], axis=1)
+# Function that randomly shuffles X (if you want to create randomized data)
+# X = shuffle_data(X)
 
 ##################################################################################
 if (FS):
