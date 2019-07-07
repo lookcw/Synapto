@@ -11,11 +11,19 @@ from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
+<<<<<<< HEAD
 import pearson_features
 import granger_features 
 import domFreq_features 
 import raw_features
 import FSL_features
+=======
+from pearson_features import extractPearsonFeatures
+from granger_features import extractGrangerFeatures
+from domFreq_features import extractDomFreqFeatures
+from raw_features import extractRawFeatures
+from FSL_features import extractFSLFeatures
+>>>>>>> d01c140f700c4ba4fc9247af9e051f562fea5a25
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
@@ -100,7 +108,11 @@ if not startAtFS:
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
 	if featureName == 'Raw':
+<<<<<<< HEAD
 		extractFeatureFunc = functools.partial(createMatrixFeatureSet, raw_features, featureName)
+=======
+		extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractRawFeatures, featureName)
+>>>>>>> d01c140f700c4ba4fc9247af9e051f562fea5a25
 	if not RECURR:
 		if featureName == 'ASD':
 			extractFeatureFunc = extractASDFeatures
@@ -115,6 +127,8 @@ if not startAtFS:
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
+		elif featureName == 'Raw':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
