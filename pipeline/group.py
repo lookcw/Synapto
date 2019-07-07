@@ -7,7 +7,7 @@ def file_2_recurr_X(features_path):
     instance_nums = df['instance num']
     max_instance = int(instance_nums.iloc[-1])
     epochs_per_instance = len(df.loc[df['instance num'] == 1])
-    groups = np.zeros((75,epochs_per_instance,len(df.columns) - 3))
+    groups = np.zeros((170,epochs_per_instance,len(df.columns) - 3))
     y = df.groupby(['instance num']).first()['class']
     patient_num = df.groupby(['instance num']).first()['patient num']
     for i in range(1,max_instance+1):
