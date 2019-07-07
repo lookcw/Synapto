@@ -33,6 +33,9 @@ import granger_features
 import domFreq_features 
 import raw_features
 import FSL_features
+<<<<<<< HEAD
+>>>>>>> fixing LSTM
+=======
 >>>>>>> fixing LSTM
 from compute_score import compute_group_score
 from nn_keras import nn_keras
