@@ -18,6 +18,7 @@ from ASD_features import extractASDFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
 import pearson_features
+<<<<<<< HEAD
 import granger_features
 import domFreq_features
 import domFreqVar_features
@@ -27,6 +28,12 @@ import FSL_features
 import raw_features
 #import pac_features
 >>>>>>> updating neuronetrix lstm
+=======
+import granger_features 
+import domFreq_features 
+import raw_features
+import FSL_features
+>>>>>>> fixing LSTM
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
@@ -282,7 +289,7 @@ else:  # starting pipeline with feature selection
 		print("Did not input time points argument (-t)\nUse -h for help.")
 		sys.exit()
 	if featureName == 'Raw':
-		extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractRawFeatures, featureName)
+		extractFeatureFunc = functools.partial(createMatrixFeatureSet, raw_features, featureName)
 	if not RECURR:
 		if featureName == 'ASD':
 			extractFeatureFunc = extractASDFeatures
@@ -297,8 +304,6 @@ else:  # starting pipeline with feature selection
 		elif featureName == 'DomFreq':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
 			# extractFeatureFunc = extractDomFreqFeatures
-		elif featureName == 'Raw':
-			extractFeatureFunc = functools.partial(createMatrixFeatureSet, extractDomFreqFeatures, featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -354,12 +359,8 @@ else:  # starting pipeline with feature selection
 			#	data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
 		else:
 			createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes, 
-<<<<<<< HEAD
-				data_folder_path1, data_folder_path2, data_type, RECURR)
-=======
 				data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
 
->>>>>>> updating neuronetrix lstm
 	else:
 		print("Feature set already exists: " + features_path)
 
@@ -437,10 +438,14 @@ nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n
 # nn_Recurr
 if (RECURR):
 	print(features_path)
+<<<<<<< HEAD
 	SVD_features_path = features_path.split('.')[0] + '_SVD.' + features_path.split('.')[1]
 	from SVD import svd
 	svd(features_path, 2)
 	patient_num, X_3D, y_ = file_2_recurr_X(SVD_features_path)
+=======
+	patient_num, X_3D, y_ = file_2_recurr_X(features_path)
+>>>>>>> fixing LSTM
 	#print("SHAPE")
 	#print(X_3D.shape)
 	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,50,20],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
