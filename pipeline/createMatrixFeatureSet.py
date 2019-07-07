@@ -72,7 +72,8 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 						
 					else:
 						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
-						featuresRow += (functionClass.extractFeatures(matrix))
+						print(type(functionClass.extractFeatures(matrix)))
+						featuresRow += list(functionClass.extractFeatures(matrix))
 						if(adhc == 0):
 							summary_filename = '0_file.csv'
 						else:
