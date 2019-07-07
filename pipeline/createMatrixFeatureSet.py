@@ -69,19 +69,9 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 						for i in range(len(allBands)):
 							featuresRow.append(functionClass.extractFeatures(np.transpose(allBands[i]).astype('str')))	
 					else:
-<<<<<<< HEAD
 						instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
 						featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
 						featuresRow += functionClass.extractFeatures(matrix)
-=======
-						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
-						print(type(functionClass.extractFeatures(matrix)))
-						featuresRow += list(functionClass.extractFeatures(matrix))
-						if(adhc == 0):
-							summary_filename = '0_file.csv'
-						else:
-							summary_filename = '1_file.csv'
->>>>>>> fixing LSTM
 						
 						
 					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######
