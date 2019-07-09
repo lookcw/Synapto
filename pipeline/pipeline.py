@@ -15,6 +15,7 @@ import pearson_features
 import granger_features 
 import domFreq_features 
 import domFreqVar_features
+import features_steepness
 import FSL_features
 from compute_score import compute_group_score
 from nn_keras import nn_keras
@@ -46,7 +47,7 @@ RECURR = False
 for i in range(1,len(sys.argv),2):
 	if str(sys.argv[i]) == "-h":
 		helpString = ('Run pipeline starting from beginning:\nInput arguments:\n-d: data type (choices: Brazil, Greece)' +
-		'\n-f: feature name (choices: ASD, Wavelet, FSL)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
+		'\n-f: feature name (choices: ASD, Wavelet, FSL, Steepness)\n-i: instances per patient (ex: 1)\n-t: number of time points per instance (ex: 60)' +
 		'\n-nfs: no feature selection\n-recurr: use LSTM' + '\n-c1: class (HC, AD, DLB)' + '\n-c2: class (HC, AD, DLB)' +
 		'\n\nRun Pipeline With Existing Feature Set:\nInput arguments:\n-fs: feature set (.../PathToFeatureSetFile)')
 		print(helpString)
@@ -134,6 +135,8 @@ if not startAtFS:
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreq_features, featureName)
 		elif featureName == 'DomFreqVar':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreqVar_features, featureName)
+		elif featureName == 'Steepness':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, feature_steepness, featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -197,7 +200,7 @@ if not startAtFS:
 				data_folder_path3 = 'BrazilRawData/ADF50' # Replace w DLB
 			num_electrodes = 21
 		
-		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh' or featureName == 'Steepness'):
 			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
