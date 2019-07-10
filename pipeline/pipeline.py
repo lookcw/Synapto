@@ -254,9 +254,6 @@ x_reduced = []
 
 for clf in clfs:
 	feat_importances_et = get_feature_importance(clf, X, y, 50) #top 50 features
-	# print clf
-	# print feat_importances_et
-	# print "\n\n\n"
 	x_reduced.append(get_XReduced(clf, X))
 
 ##################################################################################
