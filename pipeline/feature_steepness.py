@@ -5,6 +5,10 @@ import scipy.signal
 import peakutils
 import matplotlib.pyplot as plt
 import pandas as pd
+from headers import compareHeader
+
+def getHeader(time_series_electrode):
+    compareHeader(time_series_electrode)
 
 def extractSteepnessFeatures(time_series_electrode):
     ts_electrode = pd.DataFrame(time_series_electrode) #convert to pd dataframe to get each electrode (column)

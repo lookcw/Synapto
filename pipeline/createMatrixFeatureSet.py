@@ -24,15 +24,15 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 			with open(os.path.join(path, filename)) as f:
 				reader = csv.reader(f)
 				data = np.array(list(reader))
-
+				
 ################################################ HEADERS #################################################		
 				if global_patient_num == 0:
 					num_electrodes = data.shape[1] # number of columns = number of electrodes
-					header = ['patient num','instance num']
+					header = ['instance code', 'patient num', 'instance num']
 
 					if (isBands):
 						for band in bands:
-							header += map(lambda x: band + '_' + x,functionClass.getHeader(data)) #appending band number onto header names
+							header += map(lambda x: band + '_' + x, functionClass.getHeader(data)) #appending band number onto header names
 					else :
 						header += functionClass.getHeader(data)
 
@@ -69,12 +69,9 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 						for i in range(len(allBands)):
 							featuresRow.append(functionClass.extractFeatures(np.transpose(allBands[i]).astype('str')))	
 					else:
-						featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
+						instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
+						featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
 						featuresRow += (functionClass.extractFeatures(matrix))
-						if(adhc == 0):
-							summary_filename = '0_file.csv'
-						else:
-							summary_filename = '1_file.csv'
 						
 						
 					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######

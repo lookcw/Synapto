@@ -1,6 +1,6 @@
-is=(1 1 1)
-ts=(16000 10666 8000)
-es=(10 15 20)
+is=(1 1)
+ts=(160000 80000)
+es=(1 2)
 features=('FSL' 'Wavelet' 'Pearson' 'DomFreq')
 
 for feature in ${features[@]}; do
