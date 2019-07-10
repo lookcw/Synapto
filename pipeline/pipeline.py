@@ -15,7 +15,7 @@ import pearson_features
 import granger_features 
 import domFreq_features 
 import domFreqVar_features
-import features_steepness
+import feature_steepness
 import FSL_features
 from compute_score import compute_group_score
 from nn_keras import nn_keras
