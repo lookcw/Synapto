@@ -69,7 +69,7 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 						for i in range(len(allBands)):
 							featuresRow.append(functionClass.extractFeatures(np.transpose(allBands[i]).astype('str')))	
 					else:
-						instanceCode = filename.replace('.csv','') + '_' + global_instance_num
+						instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
 						featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
 						featuresRow += (functionClass.extractFeatures(matrix))
 						
