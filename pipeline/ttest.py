@@ -5,7 +5,7 @@ import scipy
 from scipy import stats
 
 data_path = 'FeatureSets'
-filename = 'DomFreq_Brazil1instances_1_epochs16000_timepoints.csv'
+filename = 'DomFreq_Brazil_1_instances_1_epochs_16000_timepoints.csv'
 time_series_brazil = np.array(list(csv.reader(open(os.path.join(data_path, filename)))))
 filename = 'DomFreq_AR_1_instances_1_epochs_16000_timepoints.csv'
 time_series_ar = np.array(list(csv.reader(open(os.path.join(data_path, filename)))))
