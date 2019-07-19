@@ -6,6 +6,8 @@ import peakutils
 import matplotlib.pyplot as plt
 import pandas as pd
 from headers import compareHeader
+import csv
+import os
 
 def getHeader(time_series_electrode):
     compareHeader(time_series_electrode)
@@ -42,3 +44,8 @@ def extractSteepnessFeatures(time_series_electrode):
         steepness_array.append(steepness_ratio)
     return steepness_array
 
+# data_path = 'BrazilRawData/ADF50'
+# filename = 'AD_50lp01.csv'
+# time_series = np.array(list(csv.reader(open(os.path.join(data_path, filename)))))
+# getHeader(time_series)
+# extractSteepnessFeatures(time_series)

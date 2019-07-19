@@ -17,11 +17,10 @@ def extractFeatures(time_series):
 	numElectrodes = time_series.shape[1]
 	features = [None] * (numElectrodes)
 	featuresI = 0
+	Fs = 250.0;  # sampling rate
+	T = 1/Fs; # sampling interval
 
-	for electrode in range(time_series.shape[1]):
-
-		Fs = 250.0;  # sampling rate
-		T = 1/Fs; # sampling interval
+	for electrode in range(time_series.shape[1]):	
 
 		time_series_electrode = time_series[:,electrode]
 		time_series_electrode = time_series_electrode.astype(np.float)
