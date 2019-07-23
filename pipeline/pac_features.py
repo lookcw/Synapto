@@ -3,7 +3,7 @@ from scipy.signal import hilbert
 import sys
 sys.path.append('pacpy/pacpy')
 from pacpy.pac import plv, mi_tort, mi_canolty, glm, ozkurt
-from BandPass1 import band_pass, runB, runG
+from BandPass1 import runB, runG
 import csv
 import os
 

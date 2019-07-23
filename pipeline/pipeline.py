@@ -21,7 +21,7 @@ import pearson_features
 import granger_features
 import domFreq_features
 import domFreqVar_features
-import feature_steepness
+# import feature_steepness
 import FSL_features
 import pac_features
 from compute_score import compute_group_score
@@ -65,6 +65,10 @@ for i in range(1, len(sys.argv), 2):
         if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
             print("Invalid type of data. Choose from list in help documentation")
             sys.exit()
+    elif str(sys.argv[i]) == "-p":
+        data_folder_path2 = sys.argv[i+1]
+    elif str(sys.argv[i]) == "-n":
+        data_folder_path1 = sys.argv[i+1]
     elif str(sys.argv[i]) == "-c1":
         classification = sys.argv[i+1]
         if classification == 'HC':
@@ -104,6 +108,7 @@ for i in range(1, len(sys.argv), 2):
         filename = features_path.split('/')[-1]
         startAtFS = True
     else:
+        print(sys.argv[i])
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
 
@@ -111,12 +116,16 @@ num_epochs = num_instances * epochs_per_instance
 
 # If starting at the beginning - at feature set creation
 if not startAtFS:
-    if data_type == '':
+    if data_type == '' and not data_folder_path1 and not data_folder_path2:
         print("Did not input data type. Choose from list in help documentation")
         sys.exit()
-    if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
+    if data_type != '' and  data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
         print("Invalid type of data. Choose from list in help documentation")
         sys.exit()
+    if data_type == '' and data_folder_path1 and data_folder_path2:
+        num_electrodes = 21
+        data_folder_path3 = None
+        data_type = data_folder_path1.split('/')[-1] + '-' + data_folder_path2.split('/')[-1]
     if not RECURR:
         if featureName == '':
             print("Did not input feature name argument (-f)")
@@ -199,6 +208,7 @@ if not startAtFS:
             data_folder_path2 = 'BrazilRawData/AD_AR'
             data_folder_path3 = None
             num_electrodes = 21
+        
 
         if (data_type == 'Newcastle'):  # Going into Brazil folder for now
             if hc == True and ad == True and dlb != True:
@@ -255,7 +265,7 @@ print groups
 
 unique, counts = np.unique(groups, return_counts=True)
 # obtain X by dropping last, first, and 2nd columns (label, patient number, and instance number)
-X = data.drop([data.columns[-1], data.columns[0], data.columns[1]], axis=1)
+X = data.drop(['patient num', 'instance num','instance code', 'class'], axis=1)
 # Function that randomly shuffles X (if you want to create randomized data)
 # X = shuffle_data(X)
 
@@ -316,7 +326,7 @@ kneighbors = KNeighborsClassifier(n_neighbors=5)
 
 # loop through models and print accuracy for each
 if (RECURR):
-    models = [nn, nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
+    models = [nn_recurr, logreg, logreg_cv, rf, gboost, svc, kneighbors]
 else:
     models = [logreg, logreg_cv, rf, gboost, svc, kneighbors]
     # models = [nn, logreg, logreg_cv, rf, gboost, svc, kneighbors]
