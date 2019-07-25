@@ -34,7 +34,10 @@ from feature_ranking import get_feature_importance
 from identifier import paramToFilename, recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
+<<<<<<< HEAD
 from shuffle_data import shuffle_data
+=======
+>>>>>>> parent of 1d9b413... adding SVD
 #from nn_Recurr import nn_Recurr
 
 
@@ -302,17 +305,34 @@ o_filename = 'output_pipeline.csv'
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
+<<<<<<< HEAD
 # nn_keras
 # nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+=======
+#nn_keras
+nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+
+>>>>>>> parent of 1d9b413... adding SVD
 
 # nn_Recurr
 if (RECURR):
+<<<<<<< HEAD
     X_3D, y_ = file_2_recurr_X(features_path)
     nn_recurr = nn_Recurr(X_3D, y, n_hlayers=3, neurons=[
                           100, 100, 100], learning_rate=0.1, n_folds=2, n_classes=2, seed=5)
 
 # various sklearn models
 logreg = LogisticRegression()
+=======
+	print(features_path)
+	patient_num, X_3D, y_ = file_2_recurr_X(features_path)
+	#print("SHAPE")
+	#print(X_3D.shape)
+	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,50,20],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
+
+#various sklearn models
+logreg = LogisticRegression() 
+>>>>>>> parent of 1d9b413... adding SVD
 logreg_cv = LogisticRegressionCV()
 rf = RandomForestClassifier()
 gboost = GradientBoostingClassifier()

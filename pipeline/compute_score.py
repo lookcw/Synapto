@@ -12,10 +12,6 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 	# print(X.shape)
 	# print(y.shape)
 
-	binary = False
-	if len(np.unique(y)) == 2:
-		binary = True
-
 	if "keras" in str(clf):
 		# print("yes")
 		y = y.astype(int)
@@ -38,15 +34,10 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 			# print(X[train])
 			#print(y[train])
 			try:
-				try:
-					clf.fit(X[train],y[train])
-				except ValueError:
-					print("EXCEPT")
-					clf = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =180,n_classes = 2, seed = 5, grps = groups)
-					clf.fit(X[train],y[train])
-			except:
-				print("Possibly using binary classifier for multiclass problem")
-				sys.exit()
+				clf.fit(X[train],y[train])
+			except ValueError:
+				clf = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+				clf.fit(X[train],y[train])
 
 			y_pred[count:count+len(test)] = clf.predict(X[test])
 
