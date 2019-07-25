@@ -10,7 +10,7 @@ def getHeader(time_series):
 	headers = []
 	for i in range(1,numElectrodes+1):
 		headers.append('e'+str(i))
-
+	return headers
 
 def extractFeatures(time_series):
 
@@ -40,7 +40,7 @@ def extractFeatures(time_series):
 
 		print(freq.shape)
 		print("the max index is", max_index)
-		freqMax = freq[max_index]
+		freqMax = freq[max_index] # this is the dominant frequency 
 
 		features[featuresI] = freqMax
 		featuresI += 1
