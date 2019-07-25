@@ -26,6 +26,7 @@ from feature_ranking import get_feature_importance
 from identifier import paramToFilename,recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
+from SVD import svd
 #from nn_Recurr import nn_Recurr
 
 
@@ -240,13 +241,15 @@ o_filename = 'output_pipeline.csv'
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
 #nn_keras
-nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
+nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =180,n_classes = 2, seed = 5, grps = groups)
 
 
 #nn_Recurr
 if (RECURR):
 	print(features_path)
-	patient_num, X_3D, y_ = file_2_recurr_X(features_path)
+	svd(features_path, 2)
+	SVD_features_path = features_path.split('.')[0] + '_SVD.' + features_path.split('.')[1]
+	patient_num, X_3D, y_ = file_2_recurr_X(SVD_features_path)
 	#print("SHAPE")
 	#print(X_3D.shape)
 	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,50,20],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
