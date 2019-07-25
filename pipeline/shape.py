@@ -49,6 +49,8 @@ def findpt(x, rejects, f_osc, Fs=512., w=3, boundary=0):
     # Filter in narrow band
     #from pacpy.filt import firf
     #from utils import firf
+
+    # xn is the time-series I think
     xn = firf(x, f_osc, Fs, w=w, rmvedge=False)
 
     # Find zero crosses

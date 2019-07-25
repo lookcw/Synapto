@@ -15,6 +15,7 @@ import pearson_features
 import granger_features 
 import domFreq_features 
 import domFreqVar_features
+import sharpnessratio_features
 import feature_steepness
 import FSL_features
 from compute_score import compute_group_score
@@ -137,6 +138,8 @@ if not startAtFS:
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, domFreqVar_features, featureName)
 		elif featureName == 'Steepness':
 			extractFeatureFunc = functools.partial(createMatrixFeatureSet, feature_steepness, featureName)
+		elif featureName == 'Sharpness':
+			extractFeatureFunc = functools.partial(createMatrixFeatureSet, sharpnessratio_features, featureName)
 		else:
 			print("Invalid feature name. Choose from list in help documentation")
 			sys.exit()
@@ -200,7 +203,7 @@ if not startAtFS:
 				data_folder_path3 = 'BrazilRawData/ADF50' # Replace w DLB
 			num_electrodes = 21
 		
-		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh' or featureName == 'Steepness'):
+		if (featureName == 'FSL' or featureName == 'Pearson' or featureName == 'Granger' or featureName == 'DomFreq' or featureName == 'DomFreqVar' or featureName == 'TsFresh' or featureName == 'Steepness' or featureName == 'Sharpness'):
 			extractFeatureFunc(num_electrodes, num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
 		elif (RECURR):
 			createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 

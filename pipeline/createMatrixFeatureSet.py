@@ -12,6 +12,7 @@ global_instance_num = 0
 #TODO
 # def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compareElectrodes, num_epochs,num_timePoints,path,isBands=False):
 def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances, epochs_per_patient,num_timePoints, path, isBands=False):
+	# isBands = 1
 	bands =['d','t','a','b','g']
 	global global_patient_num
 	global global_instance_num

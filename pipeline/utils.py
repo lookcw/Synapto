@@ -1,3 +1,4 @@
+
 """
 util.py
 Some functions for analyzing data in this repo
@@ -9,6 +10,8 @@ import scipy as sp
 from scipy import io
 from scipy import signal
 import os
+import sys
+
 #import pacpy
 
 
@@ -102,6 +105,8 @@ def measure_shape(eeg, rejects, boundaryS=100, ampPC=0, widthS=3, esrmethod='agg
     6. Rise-to-decay ratio(RDR)
     """
     Fs, t, S, Sc, flo, fhi = loadmeta()
+    print(S)
+    sys.stdout.flush()
     
     from shape import findpt, ex_sharp, esr, rd_steep, rdsr    
     pks = _blankeeg()
@@ -117,6 +122,7 @@ def measure_shape(eeg, rejects, boundaryS=100, ampPC=0, widthS=3, esrmethod='agg
     
     #calculate for off group
     for s in range(S):
+        print(pks)
         pks['off'][s], trs['off'][s] = findpt(eeg['off'][s],rejects['off'][s], flo, Fs=Fs, boundary=boundaryS)
         pksharp['off'][s] = ex_sharp(eeg['off'][s], pks['off'][s], widthS, ampPC=ampPC, Fs=Fs, fosc=flo)
         trsharp['off'][s] = ex_sharp(eeg['off'][s], trs['off'][s], widthS, ampPC=ampPC, Fs=Fs, fosc=flo)

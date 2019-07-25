@@ -20,7 +20,7 @@ def extractFeatures(time_series):
 	Fs = 250.0;  # sampling rate
 	T = 1/Fs; # sampling interval
 
-	for electrode in range(time_series.shape[1]):	
+	for electrode in range(numElectrodes):	
 
 		time_series_electrode = time_series[:,electrode]
 		time_series_electrode = time_series_electrode.astype(np.float)
@@ -45,3 +45,9 @@ def extractFeatures(time_series):
 		featuresI += 1
 		
 	return features
+
+data_path = 'BrazilRawData/ADF50'
+filename = 'AD_50lp01.csv'
+time_series = np.array(list(csv.reader(open(os.path.join(data_path, filename)))))
+# time_series = np.random.randint(-2, 2, (10, 10))
+extractFeatures(time_series)
