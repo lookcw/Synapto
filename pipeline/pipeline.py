@@ -23,7 +23,8 @@ import domFreq_features
 import domFreqVar_features
 # import feature_steepness
 import FSL_features
-import pac_features
+import raw_features
+#import pac_features
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
@@ -34,10 +35,7 @@ from feature_ranking import get_feature_importance
 from identifier import paramToFilename, recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
-<<<<<<< HEAD
 from shuffle_data import shuffle_data
-=======
->>>>>>> parent of 1d9b413... adding SVD
 #from nn_Recurr import nn_Recurr
 
 
@@ -65,7 +63,7 @@ for i in range(1, len(sys.argv), 2):
 
     elif str(sys.argv[i]) == "-d":
         data_type = sys.argv[i+1]
-        if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
+        if data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle' and data_type != 'Neuronetrix':
             print("Invalid type of data. Choose from list in help documentation")
             sys.exit()
     elif str(sys.argv[i]) == "-p":
@@ -122,7 +120,7 @@ if not startAtFS:
     if data_type == '' and not data_folder_path1 and not data_folder_path2:
         print("Did not input data type. Choose from list in help documentation")
         sys.exit()
-    if data_type != '' and  data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
+    if data_type != '' and  data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle' and data_type != 'Neuronetrix':
         print("Invalid type of data. Choose from list in help documentation")
         sys.exit()
     if not RECURR:
@@ -135,6 +133,8 @@ if not startAtFS:
     if num_timePoints == 0:
         print("Did not input time points argument (-t)\nUse -h for help.")
         sys.exit()
+	if featureName == 'Raw':
+		extractFeatureFunc = functools.partial(createMatrixFeatureSet, raw_features, featureName)
     if not RECURR:
         if featureName == 'ASD':
             extractFeatureFunc = extractASDFeatures
@@ -161,6 +161,9 @@ if not startAtFS:
         elif featureName == 'PAC':
             extractFeatureFunc = functools.partial(
                 createMatrixFeatureSet, pac_features, featureName)
+        elif featureName == 'Raw':
+            extractFeatureFunc = functools.partial(
+                createMatrixFeatureSet, raw_features, featureName)
         else:
             print("Invalid feature name. Choose from list in help documentation")
             sys.exit()
@@ -207,7 +210,11 @@ if not startAtFS:
             data_folder_path2 = 'BrazilRawData/AD_AR'
             data_folder_path3 = None
             num_electrodes = 21
-        
+
+        if (data_type == 'Neuronetrix'):
+			data_folder_path1 = '/Neuronetrix/AD'
+			data_folder_path2 = '/Neuronetrix/HC'
+			num_electrodes = 21
 
         if (data_type == 'Newcastle'):  # Going into Brazil folder for now
             if hc == True and ad == True and dlb != True:
@@ -232,8 +239,9 @@ if not startAtFS:
             extractFeatureFunc(num_electrodes, num_instances, num_timePoints, epochs_per_instance,
                                data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
         elif (RECURR):
-            createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes,
-                             data_folder_path1, data_folder_path2, data_folder_path3, data_type, RECURR)
+			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			#createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+			#	data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
         else:
             createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes,
                              data_folder_path1, data_folder_path2, data_folder_path3, data_type, RECURR)
@@ -305,34 +313,23 @@ o_filename = 'output_pipeline.csv'
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
-<<<<<<< HEAD
-# nn_keras
-# nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
-=======
 #nn_keras
 nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
 
->>>>>>> parent of 1d9b413... adding SVD
 
 # nn_Recurr
 if (RECURR):
-<<<<<<< HEAD
-    X_3D, y_ = file_2_recurr_X(features_path)
-    nn_recurr = nn_Recurr(X_3D, y, n_hlayers=3, neurons=[
-                          100, 100, 100], learning_rate=0.1, n_folds=2, n_classes=2, seed=5)
-
-# various sklearn models
-logreg = LogisticRegression()
-=======
 	print(features_path)
-	patient_num, X_3D, y_ = file_2_recurr_X(features_path)
+	SVD_features_path = features_path.split('.')[0] + '_SVD.' + features_path.split('.')[1]
+	from SVD import svd
+	svd(SVD_features_path, 2)
+	patient_num, X_3D, y_ = file_2_recurr_X(SVD_features_path)
 	#print("SHAPE")
 	#print(X_3D.shape)
 	nn_recurr = nn_Recurr(X_3D, y, n_hlayers = 3, neurons = [100,50,20],learning_rate = 0.1,n_folds =2,n_classes = 2, seed = 5)
 
 #various sklearn models
 logreg = LogisticRegression() 
->>>>>>> parent of 1d9b413... adding SVD
 logreg_cv = LogisticRegressionCV()
 rf = RandomForestClassifier()
 gboost = GradientBoostingClassifier()
