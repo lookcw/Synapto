@@ -71,7 +71,11 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 					else:
 						instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
 						featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
+<<<<<<< HEAD
 						featuresRow += functionClass.extractFeatures(matrix)
+=======
+						featuresRow += (functionClass.extractFeatures(matrix))
+>>>>>>> Fixing Anoop branch
 						
 						
 					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######
