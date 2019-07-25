@@ -21,6 +21,7 @@ import pearson_features
 import granger_features
 import domFreq_features
 import domFreqVar_features
+import raw_features
 # import feature_steepness
 import FSL_features
 import raw_features
