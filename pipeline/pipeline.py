@@ -122,6 +122,10 @@ if not startAtFS:
     if data_type != '' and  data_type != 'Brazil' and data_type != 'Greece' and data_type != 'newBrazil' and data_type != 'AR' and data_type != 'Newcastle':
         print("Invalid type of data. Choose from list in help documentation")
         sys.exit()
+    if data_type == '' and data_folder_path1 and data_folder_path2:
+        num_electrodes = 21
+        data_folder_path3 = None
+        data_type = data_folder_path1.split('/')[-1] + '-' + data_folder_path2.split('/')[-1]
     if not RECURR:
         if featureName == '':
             print("Did not input feature name argument (-f)")
