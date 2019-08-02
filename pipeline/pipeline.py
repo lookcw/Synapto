@@ -134,8 +134,8 @@ if not startAtFS:
     if num_timePoints == 0:
         print("Did not input time points argument (-t)\nUse -h for help.")
         sys.exit()
-	if featureName == 'Raw':
-		extractFeatureFunc = functools.partial(createMatrixFeatureSet, raw_features, featureName)
+    if featureName == 'Raw':
+        extractFeatureFunc = functools.partial(createMatrixFeatureSet, raw_features, featureName)
     if not RECURR:
         if featureName == 'ASD':
             extractFeatureFunc = extractASDFeatures
@@ -213,8 +213,9 @@ if not startAtFS:
             num_electrodes = 21
 
         if (data_type == 'Neuronetrix'):
-			data_folder_path1 = '/Neuronetrix/AD'
-			data_folder_path2 = '/Neuronetrix/HC'
+			data_folder_path1 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/AD'
+			data_folder_path2 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/HC'
+			data_folder_path3 = None
 			num_electrodes = 21
 
         if (data_type == 'Newcastle'):  # Going into Brazil folder for now
@@ -240,10 +241,12 @@ if not startAtFS:
             extractFeatureFunc(num_electrodes, num_instances, num_timePoints, epochs_per_instance,
                                data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
         elif (RECURR):
-			extractFeatureFunc(num_instances ,num_timePoints, epochs_per_instance, data_folder_path1, data_folder_path2, features_path, RECURR)
+			extractFeatureFunc(num_electrodes, num_instances, num_timePoints, epochs_per_instance,
+                               data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
 			#createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
-			#	data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
+				#data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
         else:
+			#remove this conditional when ASD/Wavelet extractFeatureFunc is updated
             createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes,
                              data_folder_path1, data_folder_path2, data_folder_path3, data_type, RECURR)
     else:
@@ -323,7 +326,7 @@ if (RECURR):
 	print(features_path)
 	SVD_features_path = features_path.split('.')[0] + '_SVD.' + features_path.split('.')[1]
 	from SVD import svd
-	svd(SVD_features_path, 2)
+	svd(features_path, 2)
 	patient_num, X_3D, y_ = file_2_recurr_X(SVD_features_path)
 	#print("SHAPE")
 	#print(X_3D.shape)

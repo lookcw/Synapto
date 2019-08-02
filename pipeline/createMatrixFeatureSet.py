@@ -71,7 +71,7 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 					else:
 						instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
 						featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
-						featuresRow += (functionClass.extractFeatures(matrix))
+						featuresRow += list(functionClass.extractFeatures(matrix))
 						
 						
 					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######
