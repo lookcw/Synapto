@@ -16,8 +16,11 @@ def file_2_recurr_X(features_path):
     return (patient_num,groups,y)
     
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 file_2_recurr_X('FeatureSets/Brazil3instances_10_epochs4000_timepoints.csv')
 >>>>>>> Fixing Anoop branch
+=======
+>>>>>>> fixed Anoop branch
 ## a test if you want to see how this function works
 # file_2_recurr_X('FeatureSets/Brazil3instances_10_epochs4000_timepoints.csv')
