@@ -22,9 +22,9 @@ import granger_features
 import domFreq_features
 import domFreqVar_features
 import raw_features
-# import feature_steepness
+import feature_steepness
 import FSL_features
-#import pac_features
+import pac_features
 from compute_score import compute_group_score
 from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
@@ -216,10 +216,10 @@ if not startAtFS:
             num_electrodes = 21
 
         if (data_type == 'Neuronetrix'):
-			data_folder_path1 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/AD'
-			data_folder_path2 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/HC'
-			data_folder_path3 = None
-			num_electrodes = 21
+            data_folder_path1 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/AD'
+            data_folder_path2 = '/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix/HC'
+            data_folder_path3 = None
+            num_electrodes = 21
 
         if (data_type == 'Newcastle'):  # Going into Brazil folder for now
             if hc == True and ad == True and dlb != True:
@@ -244,12 +244,12 @@ if not startAtFS:
             extractFeatureFunc(num_electrodes, num_instances, num_timePoints, epochs_per_instance,
                                data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
         elif (RECURR):
-			extractFeatureFunc(num_electrodes, num_instances, num_timePoints, epochs_per_instance,
+            extractFeatureFunc(num_electrodes, num_instances, num_timePoints, epochs_per_instance,
                                data_folder_path1, data_folder_path2, data_folder_path3, features_path, data_type, RECURR)
-			#createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
-				#data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
+            #createFeatureSet(num_epochs, num_timePoints, '', '', num_electrodes, 
+                #data_folder_path1, data_folder_path2, data_type, features_path, RECURR)
         else:
-			#remove this conditional when ASD/Wavelet extractFeatureFunc is updated
+            #remove this conditional when ASD/Wavelet extractFeatureFunc is updated
             createFeatureSet(num_epochs, num_timePoints, featureName, extractFeatureFunc, num_electrodes,
                              data_folder_path1, data_folder_path2, data_folder_path3, data_type, RECURR)
     else:
@@ -274,8 +274,8 @@ y = data.iloc[:, -1].values
 
 groups = data['patient num']
 
-print "groups.shape :" + str(groups.shape)
-print groups
+print("groups.shape :" + str(groups.shape))
+print(groups)
 
 unique, counts = np.unique(groups, return_counts=True)
 # obtain X by dropping last, first, and 2nd columns (label, patient number, and instance number)

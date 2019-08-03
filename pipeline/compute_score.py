@@ -28,7 +28,7 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 	if isPredictProba:
 		y_scores = np.array(np.zeros((len(y),2)))
 	count = 0
-	print "groups: ",groups.shape
+	print("groups: ",groups.shape)
 	if nn_model == []:
 		for train, test in gkf.split(X, y, groups=groups):
 			# print(X[train])
