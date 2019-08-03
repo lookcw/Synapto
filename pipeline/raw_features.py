@@ -9,6 +9,6 @@ def extractFeatures(time_series_electrode):
    print("SHAPE")
 
    print(time_series_electrode.shape)
-   return time_series_electrode[0]
+   return list(time_series_electrode[0])
    #flat = time_series_electrode.flatten()
    #return flat
