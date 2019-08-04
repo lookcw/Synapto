@@ -13,13 +13,13 @@ import random
 
 def svm_func(X, y, seeds, folds, o_filename):
 
-	print "Number folds: " + str(folds)
-	print "Number seeds: " + str(seeds)
+	print("Number folds: " + str(folds))
+	print("Number seeds: " + str(seeds))
 
 	accuracies = 0
 
 	for seed in range(0, seeds, 1):
-		print "Seed number: " + str(seed)
+		print("Seed number: " + str(seed))
 		r1 = random.Random(seed)
 
 		# For leave one out, number of splits is 25 - can change this number if different number of folds is needed
@@ -35,9 +35,9 @@ def svm_func(X, y, seeds, folds, o_filename):
 			X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 			clf.fit(X_train, y_train)
 			y_pred = clf.predict(X_test) # Predict on test set - store in y_pred
-			print "Prediction: "+ str(y_pred) 
-			print "Actual: " + str(y_test)	
-			print str(accuracy_score(y_test, y_pred)) # Get accuracy by comparing prediction to actual 
+			print("Prediction: "+ str(y_pred))
+			print("Actual: " + str(y_test))
+			print(str(accuracy_score(y_test, y_pred))) # Get accuracy by comparing prediction to actual 
 			scores.append(accuracy_score(y_test, y_pred))
 
 		scores = np.array(scores)
@@ -48,7 +48,7 @@ def svm_func(X, y, seeds, folds, o_filename):
 
 	#all_score = compute_score(model, X, y, num_folds, scoring='accuracy')
 	final_accuracy = accuracies/seeds
-	print str(final_accuracy)
+	print(str(final_accuracy))
 	
 	# Only write header once
 	try:

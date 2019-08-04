@@ -6,7 +6,7 @@ import pandas as pd
 from BandPass1 import splitbands
 
 
-def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_electrodes, path1, path2, data_type, recurr):
+def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_electrodes, path1, path2, data_type, f_path, recurr):
 
 	#extract from path to first patient group folder
 	# HC
@@ -94,10 +94,10 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_elec
 	#print(combined.shape) #25000x631
 
 	if (recurr):
-		identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
-		features_path = sys.path[0] + '/FeatureSets/'+data_type+'Recurr'+identifier+'.csv'
-		if not os.path.exists(features_path):
-			out_file = open(features_path,"w")
+		#identifier = str(num_epochs) + 'epochs_' + str(num_timePoints) + 'timepoints'
+		#features_path = sys.path[0] + '/FeatureSets/'+data_type+'Recurr'+identifier+'.csv'
+		if not os.path.exists(f_path):
+			out_file = open(f_path,"w")
 			writer = csv.writer(out_file)
 			for i in range(len(combined)):
 				writer.writerow(combined[i])

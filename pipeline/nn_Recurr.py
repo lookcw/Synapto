@@ -37,7 +37,11 @@ def nn_Recurr(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cl
 	X_data = np.array(X)
 	array_Y = np.array(y)
 
+	#print("SHAPE")
+
 	length, instances, n_input = X_data.shape
+	#print(length, instances, n_input)
+	#sys.exit()
 
 	# #training set
 	# array_Y = []

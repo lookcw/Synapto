@@ -13,7 +13,7 @@ import sys
 #from compute_score import compute_group_score
 from keras.wrappers.scikit_learn import KerasClassifier
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2' #hide warnings
-print "starting"
+print("starting")
 # Network Parameters
 
 from numpy.random import seed
@@ -26,19 +26,19 @@ set_random_seed(2)
 def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_classes = 0, seed = 5, grps = []):
 	
 	if n_hlayers == 0:
-		print "did not set n_hlayers to hiddle layers"
+		print("did not set n_hlayers to hiddle layers")
 		sys.exit(1)
 	if neurons == 0:
-		print "did not set neurons array"
+		print("did not set neurons array")
 		sys.exit(1)
 	if n_folds == 0:
-		print "did not set number of folds"
+		print("did not set number of folds")
 		sys.exit(1)
 	if learning_rate == 0:
-		print "did not set learning rate"
+		print("did not set learning rate")
 		sys.exit(1)
 	if seed == 0:
-		print "did not set seed"
+		print("did not set seed")
 		sys.exit(1)
 
 	X_data = np.array(X)
