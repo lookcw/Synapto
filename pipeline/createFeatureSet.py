@@ -27,11 +27,11 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_elec
 				total = np.empty((num_epochs,len(array[0])*num_timePoints+2)) #1000x210
 				for bunch in range(num_epochs):
 					index = int(bunch*(len(array)/num_epochs))
-					#print index
+					#print(index)
 					row = data[index]
 					for i in range(1,num_timePoints):
 						row = np.append(row, data[index+i])
-					#print row
+					#print(row)
 					row = np.append(row,[0])
 					total[bunch][0] = patient_num
 					total[bunch][1:] = row

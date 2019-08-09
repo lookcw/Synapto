@@ -13,7 +13,7 @@ def getHeader(num_electrodes):
 
 
 def extractFeatures(featureRead_path, out_path, num_instances, epochs_per_instance, num_electrodes):
-	print "function called"
+	print("function called")
 	
 	out_file = open(out_path,"a") #used to be "a" for append
 	writer = csv.writer(out_file)	
@@ -39,8 +39,8 @@ def extractFeatures(featureRead_path, out_path, num_instances, epochs_per_instan
 		if(i >= 12):
 			adhc = 1
 		for j in range(len(data3D[i])):
-			# print np.var(data3D[i][j].astype(np.float))	
+			# print(np.var(data3D[i][j].astype(np.float)))	
 			featuresRow = np.append(featuresRow, np.var(data3D[i][j].astype(np.float)))
 		featuresRow = np.append(featuresRow,adhc)
 		writer.writerow(featuresRow)
-		# print "\n"
+		# print("\n")

@@ -65,14 +65,14 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 		#serialize initial model weights
 		nn_model.save_weights("initial_model.h5")
 		for train, test in gkf.split(X, y, groups=groups):
-			# print "Fold Number: " + str(fold_num)
+			# print("Fold Number: " + str(fold_num))
 			nn_model.fit(X[train], y[train], epochs = 100, batch_size = 10)
 			trainscores = nn_model.evaluate(X[train], y[train])
 			train_acc = trainscores[1]*100
-			# print "nn_model group k-fold train acc: " + str(train_acc)
+			# print("nn_model group k-fold train acc: " + str(train_acc))
 			testscores = nn_model.evaluate(X[test], y[test])
 			test_acc = testscores[1]*100
-			#print "nn_model group k-fold test acc: " + str(test_acc)
+			#print("nn_model group k-fold test acc: " + str(test_acc))
 
 			y_pred[count:count+len(test)] = nn_model.predict(X[test])[:,1]
 			y_true[count:count+len(test)] = y[test][:,1]

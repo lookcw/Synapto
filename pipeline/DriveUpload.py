@@ -13,7 +13,7 @@ def upload2Drive():
 	# Make sure you use the right name here.
 	# sheet = client.open_by_key("1dVWTJy_9UpKwfmbVs6RajNohwYTuGxyZBBAVzm_VefA")
 	# worksheet =sheet.get_worksheet(0)
-	# print type(worksheet)
+	# print(type(worksheet))
 	spreadsheet_id = '1dVWTJy_9UpKwfmbVs6RajNohwYTuGxyZBBAVzm_VefA'
 	# Extract and print all of the values
 	#list_of_hashes = sheet.get_all_values()
@@ -34,9 +34,9 @@ def upload2Drive():
 
     # TODO: Add desired entries to the request body.
 	}
-	print len(results_lines[0])
+	print(len(results_lines[0]))
 	#k=f.read()
-	#print k
+	#print(k)
 	#client.import_csv("1ZRhTB_t_9cpjtdUhUpY5TkSPqHxrZ3fItpI2BIp8tvo",k)
 	request = service.spreadsheets().values().batchUpdate(spreadsheetId=spreadsheet_id, body=batch_update_values_request_body)
 	response = request.execute()

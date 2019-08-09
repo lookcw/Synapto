@@ -23,8 +23,8 @@ for col in range(2, num_cols-1):
 	twosample_results_hc = scipy.stats.ttest_ind(hc_brazil, hc_ar)
 	twosample_results_ad = scipy.stats.ttest_ind(ad_brazil, ad_ar)
 	
-	print twosample_results_hc
-	print twosample_results_ad
+	print(twosample_results_hc)
+	print(twosample_results_ad)
 
 	
 
