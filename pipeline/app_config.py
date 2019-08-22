@@ -1,0 +1,2 @@
+STARTER_COLUMNS = ['instance code','patient num', 'instance num',]
+RESULTS_HEADER = ['Date','filename', 'Feature', 'Data', 'Classifier', 'num_features', 'Num Folds', 'Accuracy','F-score','True Negative']

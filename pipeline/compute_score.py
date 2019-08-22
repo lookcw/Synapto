@@ -5,9 +5,85 @@ from metrics import metrics
 import numpy as np
 import sys
 from nn_keras import nn_keras
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import roc_auc_score
+from sklearn.metrics import f1_score
+import csv
+import time
 
-#define function to compute cross validation score
-def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_model = []):
+
+RESULTS_HEADER = ['Date', 'filename', 'Feature', 'Data', 'Classifier',
+				  'num_features', 'Num Folds', 'Accuracy', 'F-score', 'True Negative']
+
+
+def _metrics(y_true, y_pred, y_scores):
+
+	L = float(len(y_true))
+	tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
+	roc_auc = -1
+	if y_scores is not None:
+		# y_conf = list(map(lambda x: max(x), y_scores))
+		y_conf = y_scores[:, 1]
+		roc_auc = roc_auc_score(y_true, y_conf)
+	accuracy = accuracy_score(y_true, y_pred)
+	f1 = f1_score(y_true, y_pred)
+	return {
+		'accuracy': accuracy,
+		'f1': f1,
+		'sensitivity': tp / (fn + tp),
+		'specificity': tn / (tn + fp),
+		'roc_auc': accuracy
+	}
+
+
+def write_metrics_to_results_file(clf, df, results_filename, metrics, feature_filename, feature_name, data_type, num_folds):
+	(X, y, groups) = _split_dataframe(df)
+	num_patient = max(groups)
+	try:
+		with open(results_filename, 'r+') as csvfile:
+			pass
+	except IOError as e:
+		with open(results_filename, 'a') as csvfile:
+			writer = csv.DictWriter(csvfile, fieldnames=RESULTS_HEADER)
+			writer.writeheader()
+	# Record the number of features that were reduced
+	with open(results_filename, 'a') as f:
+		writer = csv.writer(f)
+		metrics = [metrics['accuracy'], metrics['f1'],
+				   metrics['sensitivity'], metrics['specificity'], metrics['roc_auc']]
+		writer.writerow([time.strftime("%m/%d/%Y"), feature_filename, feature_name, data_type, format(model.__class__), format(clf.__class__),
+						 X.shape, num_folds, num_seeds] + metrics)
+
+
+def _split_dataframe(df):
+	X = df.drop(['patient num', 'instance num',
+				 'instance code', 'class'], axis=1)
+	y = df['class']
+	groups = df['patient num']
+	instance_nums = df['instane num']
+	return (X, y, groups, instance_nums)
+
+
+def get_results(clf, df, num_folds, feature_name, data_type, epochs_per_patient, time_points_per_epoch, feature_path):
+	metrics = compute_group_score(clf, df, num_folds)
+	(X, y, groups, instance_num) = _split_dataframe(df)
+	num_patients = max(groups)
+	results = dict(metrics)
+	results.update({
+		'num_folds': num_folds,
+		'feature_name': feature_name,
+		'data_type': data_type,
+		'epochs_per_patient': epochs_per_patient,
+		'time_points_per_epoch': time_points_per_epoch,
+		'feature_path': feature_path
+	})
+	return results
+
+
+# define function to compute cross validation score
+def compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
+	(X, y, groups) = _split_dataframe(df)
 
 	# print(X.shape)
 	# print(y.shape)
@@ -26,18 +102,19 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 	y_pred = np.array(np.zeros(len(y)))
 	y_scores = None
 	if isPredictProba:
-		y_scores = np.array(np.zeros((len(y),2)))
+		y_scores = np.array(np.zeros((len(y), 2)))
 	count = 0
-	print("groups: ",groups.shape)
+	print("groups: ", groups.shape)
 	if nn_model == []:
 		for train, test in gkf.split(X, y, groups=groups):
 			# print(X[train])
-			#print(y[train])
+			# print(y[train])
 			try:
-				clf.fit(X[train],y[train])
+				clf.fit(X[train], y[train])
 			except ValueError:
-				clf = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
-				clf.fit(X[train],y[train])
+				clf = nn_keras(X, y, n_hlayers=3, neurons=[
+					100, 100, 100], learning_rate=0.1, n_folds=3, n_classes=2, seed=5, grps=groups)
+				clf.fit(X[train], y[train])
 
 			y_pred[count:count+len(test)] = clf.predict(X[test])
 
@@ -50,34 +127,23 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 				y_scores[count:count+len(test)] = clf.predict_proba(X[test])
 			clf = clone(clf)
 			count += len(test)
-		(accuracy,f1, tnP,fpP,fnP,tpP,roc_auc) = metrics(y_true,y_pred,y_scores)
-		print("Test accuracy",accuracy)
-		print("Test f1",f1)
-		# print("Test tnP",tnP)
-		# print("Test fnP",fnP)
-		# print("Test fpP",fpP)
-		# print("Test tpP",tpP)
-		print("Test roc_auc",roc_auc)
-		return (accuracy,f1, tnP,fpP,fnP,tpP,roc_auc)
+		return _metrics(y_true, y_pred, y_scores)
+
 	else:
 		fold_num = 1
 		count = 0
-		#serialize initial model weights
+		# serialize initial model weights
 		nn_model.save_weights("initial_model.h5")
 		for train, test in gkf.split(X, y, groups=groups):
-			# print "Fold Number: " + str(fold_num)
-			nn_model.fit(X[train], y[train], epochs = 100, batch_size = 10)
+			nn_model.fit(X[train], y[train], epochs=100, batch_size=10)
 			trainscores = nn_model.evaluate(X[train], y[train])
 			train_acc = trainscores[1]*100
-			# print "nn_model group k-fold train acc: " + str(train_acc)
 			testscores = nn_model.evaluate(X[test], y[test])
 			test_acc = testscores[1]*100
-			#print "nn_model group k-fold test acc: " + str(test_acc)
 
-			y_pred[count:count+len(test)] = nn_model.predict(X[test])[:,1]
-			y_true[count:count+len(test)] = y[test][:,1]
+			y_pred[count:count+len(test)] = nn_model.predict(X[test])[:, 1]
+			y_true[count:count+len(test)] = y[test][:, 1]
 
-			#reset model parameters
 			nn_model.load_weights("initial_model.h5")
 
 			fold_num += 1
@@ -85,11 +151,6 @@ def compute_group_score(clf, X, y, num_folds, groups, scoring='accuracy', nn_mod
 
 		y_pred = np.where(y_pred > 0.5, 1, 0)
 		y_true = np.where(y_true > 0.5, 1, 0)
-		(accuracy,f1,tnP,fpP,fnP,tpP,roc_auc) = metrics(y_true,y_pred, None)
-		print("Test accuracy",accuracy)
-		# print("Test f1",f1)
-		# print("Test tnP",tnP)
-		# print("Test fnP",fnP)
-		# print("Test fpP",fpP)
-		# print("Test tpP",tpP)
-		print("Test roc_auc",roc_auc)
+		return _metrics(y_true, y_pred, y_scores)
+		print("Test accuracy", accuracy)
+		print("Test roc_auc", roc_auc)
