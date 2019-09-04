@@ -3,7 +3,6 @@ import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.mlab import csv2rec
 import nitime
 import nitime.analysis as nta
 import nitime.timeseries as ts

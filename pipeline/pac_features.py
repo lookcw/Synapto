@@ -3,7 +3,7 @@ from scipy.signal import hilbert
 import sys
 sys.path.append('pacpy/pacpy')
 from pacpy.pac import plv, mi_tort, mi_canolty, glm, ozkurt
-from BandPass1 import runB, runG
+from BandPass1 import beta_band_pass, gamma_band_pass
 import csv
 import os
 
@@ -24,8 +24,8 @@ def extractFeatures(time_series_electrodes):
     return feature
 
 def __extractFeatures(time_series):
-    lo = runB(time_series)
-    hi = runG(time_series)
+    lo = beta_band_pass(time_series)
+    hi = gamma_band_pass(time_series)
     return[
         plv(lo, hi, (4,8), (80,120), fs=250),
         mi_tort(lo, hi, (4,8), (80,150), fs=250),
