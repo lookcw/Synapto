@@ -122,6 +122,7 @@ def _split_dataframe(df):
 def get_results(clf, df, num_folds, feature_name, data_type, num_instances, epochs_per_instance, time_points_per_epoch, features_filename):
     metrics = _compute_group_score(clf, df, num_folds)
     (X, y, groups, instance_num) = _split_dataframe(df)
+    print(groups)
     num_patients = max(groups)
     results = dict(metrics)
     results.update({
@@ -142,6 +143,7 @@ def get_results(clf, df, num_folds, feature_name, data_type, num_instances, epoc
 # define function to compute cross validation score
 def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     (X, y, groups, instance_num) = _split_dataframe(df)
+    print(X.shape)
     if "keras" in str(clf):
         y = y.astype(int)
         y = np.eye(2)[y]

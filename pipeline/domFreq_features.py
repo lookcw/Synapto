@@ -30,16 +30,12 @@ def extractFeatures(time_series):
 		N = time_series_electrode.shape[-1] # number of timepoints in electrode
 
 		yf = fft(y)
-		yf = yf[0:(N/2)] # get useable half of the fft vector
-		print(yf.shape)
-
+		yf = yf[0:int((N+1)/2)] # get useable half of the fft vector
 		freq = np.arange(0,Fs/2,Fs/N)
 		yf = yf[freq>=1] # get fft value when freq is greater than 1
 
 		max_index = np.argmax(yf)
 
-		print(freq.shape)
-		print("the max index is", max_index)
 		freqMax = freq[max_index] # this is the dominant frequency 
 
 		features[featuresI] = freqMax

@@ -64,7 +64,7 @@ MODELS = [
     LogisticRegressionCV(),
     RandomForestClassifier(),
     GradientBoostingClassifier(),
-    SVC(),
+    SVC(kernel="rbf",C=5.0),
     KNeighborsClassifier(n_neighbors=5)
 ]
 
@@ -85,7 +85,7 @@ num_epochs = 1  # per patient
 time_points_per_epoch = 160000  # per instance
 num_instances = 1
 epochs_per_instance = 1
-num_folds = 4
+num_folds = 10
 identifier_func = paramToFilename
 
 ############################################## PARAMETER READING & SETTING ##############################################
@@ -146,8 +146,6 @@ if not startAtFS:
         sys.exit()
     if data_type == '' and positive_folder_path and negative_folder_path:
         data_folder_path3 = None
-        data_type = negative_folder_path.split(
-            '/')[-1] + '-' + positive_folder_path.split('/')[-1]
     if not RECURR:
         extractFeatureFunc = functools.partial( 
             create_feature_set, feature_func )
