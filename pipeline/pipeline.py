@@ -36,6 +36,7 @@ from identifier import paramToFilename, recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
+from SVD import svd
 #from nn_Recurr import nn_Recurr
 
 
@@ -45,12 +46,13 @@ hc = False
 ad = False
 dlb = False
 num_epochs = 0  # per patient
-num_timePoints = 0  # per instance
-num_instances = 0
-epochs_per_instance = 0
+num_timePoints = 160000 # per instance
+num_instances = 1
+epochs_per_instance = 1
 startAtFS = False
 FS = True  # feature selection
 RECURR = False
+svd_bool = False
 
 for i in range(1, len(sys.argv), 2):
     if str(sys.argv[i]) == "-h":
@@ -108,6 +110,8 @@ for i in range(1, len(sys.argv), 2):
         features_path = sys.argv[i+1]
         filename = features_path.split('/')[-1]
         startAtFS = True
+    elif str(sys.argv[i]) == "-svd":
+        svd_bool = True
     else:
         print(sys.argv[i])
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
@@ -320,6 +324,13 @@ o_filename = 'output_pipeline.csv'
 # Megha's svm
 #svm_func(X_reduced,y,num_seeds, num_folds, 'output_pipeline.csv')
 
+#SVD
+if svd_bool:
+	SVD_features_path = features_path.split('.')[0] + '_SVD.' + features_path.split('.')[1]
+	svd(features_path, 2)
+	data = pd.read_csv(SVD_features_path, header='infer')
+	X = data.drop(['patient num', 'instance num','instance code', 'class'], axis=1)
+
 #nn_keras
 nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n_folds =3,n_classes = 2, seed = 5, grps = groups)
 
@@ -328,8 +339,7 @@ nn = nn_keras(X, y, n_hlayers = 3, neurons = [100,100,100],learning_rate = 0.1,n
 if (RECURR):
 	print(features_path)
 	SVD_features_path = features_path.split('.')[0] + '_SVD.' + features_path.split('.')[1]
-	from SVD import svd
-	svd(features_path, 2)
+	svd(features_path, 300)
 	patient_num, X_3D, y_ = file_2_recurr_X(SVD_features_path)
 	#print("SHAPE")
 	#print(X_3D.shape)
