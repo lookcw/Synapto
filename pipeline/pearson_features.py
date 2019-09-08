@@ -16,7 +16,7 @@ def extractFeatures(time_series_electrode):
     eegMat = pd.DataFrame(data = time_series_electrode)
 #     pctChange = eegMat.pct_change()
     numElectrodes = len(eegMat.columns)
-    features = [None] * (numElectrodes * (numElectrodes -1)/2)
+    features = [None] * int(numElectrodes * (numElectrodes -1)/2)
     featuresI = 0
     for i in range(numElectrodes):
 #     for i in range(numElectrodes):
