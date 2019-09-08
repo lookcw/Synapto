@@ -170,7 +170,7 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 	# 	test_Y = Ydata[first_index:second_index]
 
 	# 	if(len(test_X) == 0):
-	# 		print "fold number too high or not enough instances to test on."
+	# 		print("fold number too high or not enough instances to test on.")
 	# 		sys.exit(1)
 	# 	index = [];
 	# 	for n in range(first_index,second_index):
@@ -178,19 +178,19 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 		
 	# 	Xdata = np.delete(Xdata,index,axis=0)
 	# 	Ydata = np.delete(Ydata,index,axis=0)
-	# 	print len(test_X)
+	# 	print(len(test_X))
 	# 	train_X = Xdata
 	# 	train_Y = Ydata
 		
 	# 	#Fit model
-	# 	print "training..."
+	# 	print("training...")
 	# 	print(train_X.shape)
 	# 	print(train_Y.shape)
 
 	# 	model.fit(train_X, train_Y, epochs = 21, batch_size = 10)
 
 	# 	# evaluate the model
-	# 	print "testing..."
+	# 	print("testing...")
 	# 	trainscores = model.evaluate(train_X, train_Y)
 	# 	train_acc = trainscores[1]*100
 	# 	total_trainAccuracy = total_trainAccuracy + train_acc
@@ -222,9 +222,9 @@ def nn_keras(X, y,n_hlayers = 0,neurons = [],n_folds = 0,learning_rate = 0,n_cla
 	# #print("Overall ROC AUC:", total_AUC)
 
 	# total_trainAccuracy = total_trainAccuracy/n_folds
-	# print "Overall Train Accuracy", total_trainAccuracy
+	# print("Overall Train Accuracy", total_trainAccuracy)
 	# total_testAccuracy = total_testAccuracy/n_folds
-	# print "Overall Test Accuracy", total_testAccuracy
+	# print("Overall Test Accuracy", total_testAccuracy)
 
 	# # results = [datetime.datetime.now(),iden,filename,total_trainAccuracy,total_testAccuracy,total_FN,total_FP,total_TP,total_TN,total_Fmeasure,total_AUC,n_hlayers,neurons,learning_rate,n_folds,n_classes,seed]
 	# # r_file = open(results_file,'a')

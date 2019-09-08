@@ -12,7 +12,7 @@ def file_2_recurr_X(features_path):
     patient_num = df.groupby(['instance num']).first()['patient num']
     for i in range(1,max_instance+1):
         groups[i-1] = df.loc[df['instance num'] == i].drop(columns = ['instance code', 'patient num','class','instance num']).values
-    print len(groups), ' ', len(patient_num),  ' ', len(y)
+    print(len(groups), ' ', len(patient_num),  ' ', len(y))
     return (patient_num,groups,y)
     
 ## a test if you want to see how this function works

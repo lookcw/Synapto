@@ -9,17 +9,38 @@ from numpy import genfromtxt
 global_patient_num = 0
 global_instance_num = 0
 
+def append_bandsName(features_path):
+	bands =['Delta','Theta','Alpha','Beta','Gamma']
+	paths = []
+
+	components = features_path.split("_")
+
+	for band in range(len(bands)):
+		paths.append(features_path.replace(components[1], components[1]+bands[band]))
+
+	return paths
+
 #TODO
 # def writeFeatureSet(function,adhc, start_num, features_path, needHeader, compareElectrodes, num_epochs,num_timePoints,path,isBands=False):
-def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances, epochs_per_patient,num_timePoints, path, isBands=False):
+def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances, epochs_per_patient,num_timePoints, path, isBands=True):
 	bands =['d','t','a','b','g']
 	global global_patient_num
 	global global_instance_num
-	out_file = open(features_path,"a") #used to be "a" for append
-	writer = csv.writer(out_file)
+
+	writers = []
+	if(isBands):
+		for path_band in append_bandsName(features_path):
+			out_file = open(path_band,"a") #used to be "a" for append
+			writer = csv.writer(out_file)
+			writers.append(writer)
+	else:
+		out_file = open(features_path,"a") #used to be "a" for append
+		writer = csv.writer(out_file)
+		writers.append(writer)
+	
 	patient_num = start_num
 	for filename in os.listdir(path):
-		print "patient num: " + str(patient_num)
+		print("patient num: " + str(patient_num))
 		if filename.endswith('.csv'):
 			with open(os.path.join(path, filename)) as f:
 				reader = csv.reader(f)
@@ -28,16 +49,22 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 ################################################ HEADERS #################################################		
 				if global_patient_num == 0:
 					num_electrodes = data.shape[1] # number of columns = number of electrodes
-					header = ['instance code', 'patient num', 'instance num']
 
 					if (isBands):
+						headers = []
 						for band in bands:
+							header = ['instance code', 'patient num', 'instance num']
 							header += map(lambda x: band + '_' + x, functionClass.getHeader(data)) #appending band number onto header names
+							header.append('class')
+					
+							headers.append(header)
 					else :
+						header = ['instance code', 'patient num', 'instance num']
 						header += functionClass.getHeader(data)
-
-					header.append('class')
-					writer.writerow(header)
+						header.append('class')
+					
+					for i in range(len(writers)):
+						writers[i].writerow(headers[i])
 #################################################################################################
 				
 				#create bunches per patient
@@ -48,7 +75,7 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 					for i in range(1,num_timePoints):
 						matrix.append(data[index+i])
 					matrix = np.array(matrix,dtype=np.float) 
-					print global_instance_num, '  ', epochs_per_patient
+					print(global_instance_num, '  ', epochs_per_patient)
 					featuresRow = [patient_num, int(global_instance_num/epochs_per_patient) + 1]
 
 					if(isBands):
@@ -66,13 +93,22 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 							beta[i] = bands[3]
 							gamma[i] = bands[4]
 						allBands = [delta,theta,alpha,beta,gamma]
+
+						featuresRows = []
 						for i in range(len(allBands)):
-							featuresRow.append(functionClass.extractFeatures(np.transpose(allBands[i]).astype('str')))	
+							instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
+							featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
+							featuresRow += functionClass.extractFeatures(np.transpose(allBands[i]).astype('str'))
+							featuresRow = np.array(featuresRow)
+							featuresRow = np.append(featuresRow,adhc)
+	
+							featuresRows.append(featuresRow)
 					else:
 						instanceCode = filename.replace('.csv','') + '_' + str(global_instance_num)
 						featuresRow = [instanceCode, patient_num, int(global_instance_num/epochs_per_patient) + 1]
 						featuresRow += functionClass.extractFeatures(matrix)
-						
+						featuresRow = np.array(featuresRow)
+						featuresRow = np.append(featuresRow,adhc)
 						
 					###### TO SAVE SUMMARY STATISTICS ABOUT PEARSON #######
 					# toWrite = np.zeros((21,21))
@@ -89,9 +125,9 @@ def writeFeatureSet(functionClass, adhc, start_num, features_path, num_instances
 					# else:
 					# 	np.savetxt(summary_filename, toWrite, delimiter=",")
 					
-					featuresRow = np.array(featuresRow)
-					featuresRow = np.append(featuresRow,adhc)
-					writer.writerow(featuresRow)
+					for i in range(len(writers)):
+						writers[i].writerow(featuresRows[i])
+					
 					global_instance_num+=1
 
 				patient_num += 1

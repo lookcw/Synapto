@@ -17,7 +17,7 @@ def butter_bandpass_filter(data, lowcut, highcut, fs, order=6):
     return y
 
 # Delta
-def runD(x):
+def delta_band_pass(x):
     fs = 250.0
     lowcut = 0.5 
     highcut = 3.0
@@ -25,7 +25,7 @@ def runD(x):
     return butter_bandpass_filter(x, lowcut, highcut, fs, order=6)
 
 # Theta
-def runT(x):
+def theta_band_pass(x):
 
     fs = 250.0
     lowcut = 3.0
@@ -34,7 +34,7 @@ def runT(x):
     return butter_bandpass_filter(x, lowcut, highcut, fs, order=6)
 
 # Alpha
-def runA(x):
+def alpha_band_pass(x):
 
     fs = 250.0
     lowcut = 8.0 
@@ -43,7 +43,7 @@ def runA(x):
     return butter_bandpass_filter(x, lowcut, highcut, fs, order=6)
 
 # Beta
-def runB(x):
+def beta_band_pass(x):
 
     fs = 250.0
     lowcut = 12.0 
@@ -52,7 +52,7 @@ def runB(x):
     return butter_bandpass_filter(x, lowcut, highcut, fs, order=6)
 
 # Gamma
-def runG(x):
+def gamma_band_pass(x):
 
     fs = 250.0
     lowcut = 38.0 
