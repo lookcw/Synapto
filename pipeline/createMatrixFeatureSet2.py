@@ -34,16 +34,16 @@ def get_labels_from_folder(data_folder,functionClass, time_points_per_epoch):
     epoch_data_set = whole_data_set[0:time_points_per_epoch]
     return functionClass.getHeader(epoch_data_set)
 
-def _get_features_for_folder(data_folder, patient_count, instance_count, functionClass, num_instances, epochs_per_instance, time_points_per_epoch, data_class, bands_func):
+def _get_features_for_folder(CONFIG, data_folder, patient_count, functionClass, data_class, bands_func):
     filenames = [filename for filename in os.listdir(data_folder)]
     folder_features_with_filenames = [
         _extract_feature_for_one_patient(
             functionClass,
             filename,
             genfromtxt(os.path.join(data_folder,filename), delimiter=','),
-            num_instances,
-            epochs_per_instance,
-            time_points_per_epoch,
+            CONFIG['num_instances'],
+            CONFIG['epochs_per_instance'],
+            CONFIG['time_points_per_epoch'],
             bands_func
         )
         for filename in os.listdir(data_folder) if filename.endswith('.csv')
@@ -51,6 +51,24 @@ def _get_features_for_folder(data_folder, patient_count, instance_count, functio
     folder_features = [folder_feature[0] for folder_feature in folder_features_with_filenames]
     filenames = [folder_feature[1] for folder_feature in folder_features_with_filenames]
     return _unpack_add_groups(folder_features, filenames, patient_count, instance_count, data_class)
+
+# def _get_features_for_folder(data_folder, patient_count, instance_count, functionClass, num_instances, epochs_per_instance, time_points_per_epoch, data_class, bands_func):
+#     filenames = [filename for filename in os.listdir(data_folder)]
+#     folder_features_with_filenames = [
+#         _extract_feature_for_one_patient(
+#             functionClass,
+#             filename,
+#             genfromtxt(os.path.join(data_folder,filename), delimiter=','),
+#             num_instances,
+#             epochs_per_instance,
+#             time_points_per_epoch,
+#             bands_func
+#         )
+#         for filename in os.listdir(data_folder) if filename.endswith('.csv')
+#     ]
+#     folder_features = [folder_feature[0] for folder_feature in folder_features_with_filenames]
+#     filenames = [folder_feature[1] for folder_feature in folder_features_with_filenames]
+#     return _unpack_add_groups(folder_features, filenames, patient_count, instance_count, data_class)
 
 
 def _unpack_add_groups(X, filenames, patient_count, instance_count, data_class):

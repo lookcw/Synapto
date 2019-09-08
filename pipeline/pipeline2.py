@@ -10,7 +10,7 @@ import numpy as np
 import csv
 from BandPass1 import delta_band_pass, theta_band_pass, alpha_band_pass, beta_band_pass, gamma_band_pass
 import time
-from ASD_features import extractASDFeatures
+# from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createMatrixFeatureSet2 import create_feature_set, write_feature_set
 import pearson_features
@@ -31,6 +31,21 @@ from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, Gradi
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 #from nn_Recurr import nn_Recurr
+
+CONFIG = {
+    'data_type': '',
+    'epochs_per_instance': 0,
+    'positive_folder_path': '',
+    'negative_folder_path': '',
+    'feature_name': '',
+    'feature_func': '',
+    'num_instances': 0,
+    'time_points_per_epoch': 0,
+    'startAtFS': False,
+    'is_force_overwrite': True,
+    'identifier_func': '',
+    'isBands': False
+}
 
 BANDS = [
     alpha_band_pass,
@@ -103,34 +118,49 @@ for i in range(1, len(sys.argv), 2):
     elif str(sys.argv[i]) == "-d":
         negative_folder_path = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][0]
         positive_folder_path = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][1]
+        CONFIG['data_type'] = sys.argv[i+1]
         data_type = sys.argv[i+1]
     elif str(sys.argv[i]) == "-p":
+        CONFIG['positive_folder_path'] = sys.argv[i+1]
         positive_folder_path = sys.argv[i+1]
     elif str(sys.argv[i]) == "-n":
+        CONFIG['negative_folder_path'] = sys.argv[i+1]
         negative_folder_path = sys.argv[i+1]
     elif str(sys.argv[i]) == "-e":
+        CONFIG['epochs_per_instance'] = int(sys.argv[i+1])
         epochs_per_instance = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-f":
+        CONFIG['feature_name'] = sys.argv[i+1]
         feature_name = sys.argv[i+1]
+        CONFIG['feature_func'] = FEATURE_NAMES_TO_FUNC[sys.argv[i+1]]
         feature_func = FEATURE_NAMES_TO_FUNC[sys.argv[i+1]]
     elif str(sys.argv[i]) == "-i":
+        CONFIG['num_instances'] = int(sys.argv[i+1])
         num_instances = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-t":
+        CONFIG['time_points_per_epoch'] = int(sys.argv[i+1])
         time_points_per_epoch = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-fs":
+        CONFIG['filename'] = sys.argv[i+1].split('/')[-1]
         filename = sys.argv[i+1].split('/')[-1]
+        CONFIG['startAtFS'] = True
         startAtFS = True
     elif str(sys.argv[i]) == "-overwrite":
+        CONFIG['is_force_overwrite'] = True
         is_force_overwrite = True
     elif str(sys.argv[i]) == "-recurr":
+        CONFIG['RECURR'] = True
         RECURR = True
+        CONFIG['identifier_func'] = recurrParamToFilename
         identifier_func = recurrParamToFilename
     elif str(sys.argv[i]) == "-bands":
+        CONFIG['is_bands'] = True
         is_bands = True
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
-if data_type == '':
+if CONFIG['data_type'] == '':
+    CONFIG['data_type'] = negative_folder_path.split['/'][-1] + '-' + positive_folder_path.split['/'][-1]
     data_type = negative_folder_path.split['/'][-1] + '-' + positive_folder_path.split['/'][-1]
 features_filename = identifier_func(
     feature_name, data_type, num_instances, time_points_per_epoch, epochs_per_instance)
