@@ -49,6 +49,14 @@ FEATURE_NAMES_TO_FUNC = {
     'DomFreqVar': domFreqVar_features
 }
 
+# FEATURE_CONFIGS = {
+#     'FSL': FSL_config_array,
+#     'PAC': PAC_config_array,
+#     'DomFreq': DomFreq_config_array,
+#     'Pearson': Pearson_config_array,
+#     'Granger': Granger_config_array,
+# }
+
 DATA_TYPE_TO_FOLDERS = {
     'Brazil': ('BrazilRawData/HCF50', 'BrazilRawData/ADF50'),
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
@@ -92,22 +100,22 @@ CONFIG = {
     'num_folds': 4
 }
 
-feature_name = ''
-data_type = ''
-hc = False
-ad = False
-dlb = False
-is_bands = False
-is_force_overwrite = False
-startAtFS = False
-RECURR = False
+# feature_name = ''
+# data_type = ''
+# hc = False
+# ad = False
+# dlb = False
+# is_bands = False
+# is_force_overwrite = False
+# startAtFS = False
+# RECURR = False
 
-num_epochs = 1  # per patient
-time_points_per_epoch = 160000  # per instance
-num_instances = 1
-epochs_per_instance = 1
-num_folds = 10
-identifier_func = paramToFilename
+# num_epochs = 1  # per patient
+# time_points_per_epoch = 160000  # per instance
+# num_instances = 1
+# epochs_per_instance = 1
+# num_folds = 4
+# identifier_func = paramToFilename
 
 ############################################## PARAMETER READING & SETTING ##############################################
 
@@ -171,10 +179,10 @@ if not CONFIG['startAtFS']:
         data_folder_path3 = None
         CONFIG['data_type'] = CONFIG['negative_folder_path'].split(
             '/')[-1] + '-' + CONFIG['positive_folder_path'].split('/')[-1]
-    if not RECURR:
+    if not CONFIG['RECURR']:
         extractFeatureFunc = functools.partial( 
             create_feature_set, CONFIG['feature_func'] )
-    if is_bands:
+    if CONFIG['is_bands']:
         feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
         # feature_sets = [extractFeatureFunc(positive_folder_path, negative_folder_path, num_instances,
         #                                    epochs_per_instance, time_points_per_epoch, bands_func) for bands_func in BANDS]
