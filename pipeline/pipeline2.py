@@ -32,21 +32,6 @@ from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 #from nn_Recurr import nn_Recurr
 
-CONFIG = {
-    'data_type': '',
-    'epochs_per_instance': 0,
-    'positive_folder_path': '',
-    'negative_folder_path': '',
-    'feature_name': '',
-    'feature_func': '',
-    'num_instances': 0,
-    'time_points_per_epoch': 0,
-    'startAtFS': False,
-    'is_force_overwrite': True,
-    'identifier_func': '',
-    'isBands': False
-}
-
 BANDS = [
     alpha_band_pass,
     beta_band_pass,
@@ -85,6 +70,27 @@ MODELS = [
 
 ################################################### DEFAULT SETTINGS ###################################################
 
+CONFIG = {
+    'data_type': '',
+    'positive_folder_path': '',
+    'negative_folder_path': '',
+    'feature_name': '',
+    'feature_func': '',
+    'identifier_func': paramToFilename,
+    'isBands': False,
+    'hc': False,
+    'ad': False,
+    'dlb': False,
+    'is_bands': False,
+    'is_force_overwrite': False,
+    'startAtFS': False,
+    'RECURR': False,
+    'num_epochs': 1,  # per patient
+    'time_points_per_epoch': 160000,  # per instance
+    'num_instances': 1,
+    'epochs_per_instance': 1,
+    'num_folds': 4
+}
 
 feature_name = ''
 data_type = ''
@@ -116,75 +122,66 @@ for i in range(1, len(sys.argv), 2):
         sys.exit()
 
     elif str(sys.argv[i]) == "-d":
-        negative_folder_path = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][0]
-        positive_folder_path = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][1]
+        CONFIG['negative_folder_path'] = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][0]
+        CONFIG['positive_folder_path'] = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][1]
         CONFIG['data_type'] = sys.argv[i+1]
-        data_type = sys.argv[i+1]
     elif str(sys.argv[i]) == "-p":
         CONFIG['positive_folder_path'] = sys.argv[i+1]
-        positive_folder_path = sys.argv[i+1]
     elif str(sys.argv[i]) == "-n":
         CONFIG['negative_folder_path'] = sys.argv[i+1]
-        negative_folder_path = sys.argv[i+1]
     elif str(sys.argv[i]) == "-e":
         CONFIG['epochs_per_instance'] = int(sys.argv[i+1])
-        epochs_per_instance = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-f":
         CONFIG['feature_name'] = sys.argv[i+1]
-        feature_name = sys.argv[i+1]
         CONFIG['feature_func'] = FEATURE_NAMES_TO_FUNC[sys.argv[i+1]]
-        feature_func = FEATURE_NAMES_TO_FUNC[sys.argv[i+1]]
     elif str(sys.argv[i]) == "-i":
         CONFIG['num_instances'] = int(sys.argv[i+1])
-        num_instances = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-t":
         CONFIG['time_points_per_epoch'] = int(sys.argv[i+1])
-        time_points_per_epoch = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-fs":
         CONFIG['filename'] = sys.argv[i+1].split('/')[-1]
-        filename = sys.argv[i+1].split('/')[-1]
         CONFIG['startAtFS'] = True
-        startAtFS = True
     elif str(sys.argv[i]) == "-overwrite":
         CONFIG['is_force_overwrite'] = True
-        is_force_overwrite = True
     elif str(sys.argv[i]) == "-recurr":
         CONFIG['RECURR'] = True
-        RECURR = True
         CONFIG['identifier_func'] = recurrParamToFilename
-        identifier_func = recurrParamToFilename
     elif str(sys.argv[i]) == "-bands":
         CONFIG['is_bands'] = True
-        is_bands = True
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
 if CONFIG['data_type'] == '':
-    CONFIG['data_type'] = negative_folder_path.split['/'][-1] + '-' + positive_folder_path.split['/'][-1]
-    data_type = negative_folder_path.split['/'][-1] + '-' + positive_folder_path.split['/'][-1]
-features_filename = identifier_func(
-    feature_name, data_type, num_instances, time_points_per_epoch, epochs_per_instance)
+    CONFIG['data_type'] = CONFIG['negative_folder_path'].split['/'][-1] + '-' + CONFIG['positive_folder_path'].split['/'][-1]
+    CONFIG['data_type'] = CONFIG['negative_folder_path'].split['/'][-1] + '-' + CONFIG['positive_folder_path'].split['/'][-1]
+# Does this work: 
+features_filename = CONFIG['identifier_func'](CONFIG)
+
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
-    startAtFS = True
+    CONFIG['startAtFS'] = True
 
 ############################################## FEATURE SET CREATION/ READING ##############################################
-if not startAtFS:
-    if not positive_folder_path or not negative_folder_path:
+if not CONFIG['startAtFS']:
+    if not CONFIG['positive_folder_path'] or not CONFIG['negative_folder_path']:
         print("Did not input data type. Choose from list in help documentation")
         sys.exit()
-    if data_type == '' and positive_folder_path and negative_folder_path:
+    if CONFIG['data_type'] == '' and CONFIG['positive_folder_path'] and CONFIG['negative_folder_path']:
         data_folder_path3 = None
+        CONFIG['data_type'] = CONFIG['negative_folder_path'].split(
+            '/')[-1] + '-' + CONFIG['positive_folder_path'].split('/')[-1]
     if not RECURR:
         extractFeatureFunc = functools.partial( 
-            create_feature_set, feature_func )
+            create_feature_set, CONFIG['feature_func'] )
     if is_bands:
-        feature_sets = [extractFeatureFunc(positive_folder_path, negative_folder_path, num_instances,
-                                           epochs_per_instance, time_points_per_epoch, bands_func) for bands_func in BANDS]
+        feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
+        # feature_sets = [extractFeatureFunc(positive_folder_path, negative_folder_path, num_instances,
+        #                                    epochs_per_instance, time_points_per_epoch, bands_func) for bands_func in BANDS]
     else:
-        feature_sets = [extractFeatureFunc(
-            positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
+        feature_sets = [extractFeatureFunc(CONFIG)]
+        # feature_sets = [extractFeatureFunc(
+        #     positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
 else:
     feature_sets = [pd.read_csv(features_path, header='infer')]
 

@@ -13,18 +13,14 @@ def write_feature_set(feature_path, feature_set_df):
     feature_set_df.to_csv(feature_path, index=False)
 
 
-def create_feature_set(functionClass, positive_data_folder, negative_data_folder,
-                       num_instances, epochs_per_instance, time_points_per_epoch, bands_func=   None):
+def create_feature_set(functionClass, CONFIG, bands_func=   None):
     print('starting feature set creation')
-    (positive_features, patient_count, instance_count) = _get_features_for_folder(positive_data_folder,
-                                                                                  0, 0, functionClass, num_instances,
-                                                                                  epochs_per_instance,
-                                                                                  time_points_per_epoch, 1, bands_func)
-    (negative_features, patient_count, instance_count) = _get_features_for_folder(negative_data_folder, patient_count, instance_count,
-                                                 functionClass, num_instances, epochs_per_instance,
-                                                 time_points_per_epoch, 0, bands_func)
+    (positive_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['positive_folder_path'],
+                                                                                  0, functionClass, 1, bands_func)
+    (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count,
+                                                                                    functionClass, 0, bands_func)
     labels = STARTER_COLUMNS + \
-        get_labels_from_folder(positive_data_folder, functionClass, time_points_per_epoch)\
+        get_labels_from_folder(CONFIG['positive_folder_path'], functionClass, CONFIG['time_points_per_epoch'])\
          + CLASS_COLUMN
     data = np.array(positive_features + negative_features)
     return pd.DataFrame(data=data,  columns = labels)
