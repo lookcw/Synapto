@@ -16,9 +16,9 @@ def write_feature_set(feature_path, feature_set_df):
 def create_feature_set(functionClass, CONFIG, bands_func=   None):
     print('starting feature set creation')
     (positive_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['positive_folder_path'],
-                                                                                  0, functionClass, 1, bands_func)
-    (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count,
-                                                                                    functionClass, 0, bands_func)
+                                                                                  0, 0, functionClass, 1, bands_func)
+    (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count, 
+                                                                                  instance_count, functionClass, 0, bands_func)
     labels = STARTER_COLUMNS + \
         get_labels_from_folder(CONFIG['positive_folder_path'], functionClass, CONFIG['time_points_per_epoch'])\
          + CLASS_COLUMN
@@ -30,7 +30,7 @@ def get_labels_from_folder(data_folder,functionClass, time_points_per_epoch):
     epoch_data_set = whole_data_set[0:time_points_per_epoch]
     return functionClass.getHeader(epoch_data_set)
 
-def _get_features_for_folder(CONFIG, data_folder, patient_count, functionClass, data_class, bands_func):
+def _get_features_for_folder(CONFIG, data_folder, patient_count, instance_count, functionClass, data_class, bands_func):
     filenames = [filename for filename in os.listdir(data_folder)]
     folder_features_with_filenames = [
         _extract_feature_for_one_patient(
