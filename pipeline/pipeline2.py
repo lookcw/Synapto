@@ -19,6 +19,7 @@ import domFreq_features
 import domFreqVar_features
 # import feature_steepness
 import FSL_features
+from Feature_settings import fsl_features
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
 from nn_keras import nn_keras
@@ -100,6 +101,10 @@ CONFIG = {
     'num_folds': 4
 }
 
+CONFIG_FEATURES = {
+    'FSL': fsl_features()
+}
+
 # feature_name = ''
 # data_type = ''
 # hc = False
@@ -162,9 +167,8 @@ for i in range(1, len(sys.argv), 2):
 if CONFIG['data_type'] == '':
     CONFIG['data_type'] = CONFIG['negative_folder_path'].split['/'][-1] + '-' + CONFIG['positive_folder_path'].split['/'][-1]
     CONFIG['data_type'] = CONFIG['negative_folder_path'].split['/'][-1] + '-' + CONFIG['positive_folder_path'].split['/'][-1]
-# Does this work: 
-features_filename = CONFIG['identifier_func'](CONFIG)
 
+features_filename = CONFIG['identifier_func'](CONFIG) # Get filename
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
