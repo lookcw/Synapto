@@ -53,7 +53,8 @@ DATA_TYPE_TO_FOLDERS = {
     'Brazil': ('BrazilRawData/HCF50', 'BrazilRawData/ADF50'),
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
-    'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD')
+    'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
+    'Brazil_SVD': ('BrazilRawData_SVD/HC', 'BrazilRawData_SVD/AD')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'

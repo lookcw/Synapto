@@ -32,28 +32,26 @@ def svd(raw_data_path, n):
         os.mkdir(raw_data_path + '_SVD/HC')
         os.mkdir(raw_data_path + '_SVD/AD')
     #HC
-    for filename in os.listdir(raw_data_path + '/HC'):
-        print(filename)
-        df = pd.read_csv(raw_data_path + '/HC/' + filename)
-        X = df.values
-        svd = TruncatedSVD(n_components=n, n_iter=7, random_state=42)
-        X_trans = svd.fit_transform(X)
-        print(X_trans.shape)
-        df_SVD = pd.DataFrame(X_trans)
-        print(df_SVD)
-        raw_SVD_path = raw_data_path + '_SVD/HC/'
-        df_SVD.to_csv(raw_SVD_path + filename, header = False, index=False)
+    for filename in os.listdir(raw_data_path + '/HCF50'):
+        if filename.endswith(".csv"):
+            print(filename)
+            df = pd.read_csv(raw_data_path + '/HCF50/' + filename)
+            X = df.values
+            svd = TruncatedSVD(n_components=n, n_iter=7, random_state=42)
+            X_trans = svd.fit_transform(X)
+            df_SVD = pd.DataFrame(X_trans)
+            raw_SVD_path = raw_data_path + '_SVD/HC/'
+            df_SVD.to_csv(raw_SVD_path + filename, header = False, index=False)
     #AD
-    for filename in os.listdir(raw_data_path + '/AD'):
-        print(filename)
-        df = pd.read_csv(raw_data_path + '/AD/' + filename)
-        X = df.values
-        svd = TruncatedSVD(n_components=n, n_iter=7, random_state=42)
-        X_trans = svd.fit_transform(X)
-        print(X_trans.shape)
-        df_SVD = pd.DataFrame(X_trans)
-        print(df_SVD)
-        raw_SVD_path = raw_data_path + '_SVD/AD/'
-        df_SVD.to_csv(raw_SVD_path + filename, header = False, index=False)
+    for filename in os.listdir(raw_data_path + '/ADF50'):
+        if filename.endswith(".csv"):
+            print(filename)
+            df = pd.read_csv(raw_data_path + '/ADF50/' + filename)
+            X = df.values
+            svd = TruncatedSVD(n_components=n, n_iter=7, random_state=42)
+            X_trans = svd.fit_transform(X)
+            df_SVD = pd.DataFrame(X_trans)
+            raw_SVD_path = raw_data_path + '_SVD/AD/'
+            df_SVD.to_csv(raw_SVD_path + filename, header = False, index=False)
 
-svd('/Users/Anoop/Documents/Synapto/pipeline/Neuronetrix', 2)
+svd('/Users/Anoop/Documents/Synapto/pipeline/BrazilRawData', 18)
