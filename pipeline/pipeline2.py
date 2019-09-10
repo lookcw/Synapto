@@ -26,7 +26,7 @@ from nn_Recurr import nn_Recurr
 import random
 from sklearn.utils import shuffle
 import functools
-from identifier import paramToFilename, recurrParamToFilename
+from identifier import paramToFilename, recurrParamToFilename, curry_param_to_filename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
@@ -50,10 +50,11 @@ FEATURE_NAMES_TO_FUNC = {
 }
 
 DATA_TYPE_TO_FOLDERS = {
-    'Brazil': ('BrazilRawData/HCF50', 'BrazilRawData/ADF50'),
+    'Brazil': ('BrazilRawData/HCF1-50', 'BrazilRawData/ADF1-50'),
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
-    'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD')
+    'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
+    'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -118,7 +119,7 @@ for i in range(1, len(sys.argv), 2):
     elif str(sys.argv[i]) == "-t":
         time_points_per_epoch = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-fs":
-        filename = sys.argv[i+1].split('/')[-1]
+        features_filename = sys.argv[i+1].split('/')[-1]
         startAtFS = True
     elif str(sys.argv[i]) == "-overwrite":
         is_force_overwrite = True
@@ -130,10 +131,11 @@ for i in range(1, len(sys.argv), 2):
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
-if data_type == '':
-    data_type = negative_folder_path.split['/'][-1] + '-' + positive_folder_path.split['/'][-1]
-features_filename = identifier_func(
-    feature_name, data_type, num_instances, time_points_per_epoch, epochs_per_instance)
+if not startAtFS:
+    if data_type == '':
+        data_type = negative_folder_path.split('/')[-1] + '-' + positive_folder_path.split('/')[-1]
+    features_filename = identifier_func(
+        feature_name, '', data_type, num_instances, time_points_per_epoch, epochs_per_instance)
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
@@ -157,6 +159,8 @@ if not startAtFS:
             positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
 else:
     feature_sets = [pd.read_csv(features_path, header='infer')]
+
+features_path_func = curry_param_to_filename(data_type, num_instances, time_points_per_epoch, epochs_per_instance)
 
 [write_feature_set(features_path, feature_set) for feature_set in feature_sets]
 

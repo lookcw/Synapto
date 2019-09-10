@@ -14,7 +14,7 @@ from pandas import DataFrame
 from headers import compareHeader
 # Takes in a time series in the form of raw electrode data (one column)
 
-def getHeaders(time_series_electrode):
+def getHeader(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
 def extractFeatures(time_series):
@@ -41,7 +41,7 @@ def extractFeatures(time_series):
 
 	# place feature values in matrix and return the linearlized form of it
 	numElectrodes = time_series.shape[1]
-	features = [None] * (numElectrodes * (numElectrodes -1)/2)
+	features = [None] * int(numElectrodes * (numElectrodes -1)/2)
 	featuresI = 0
 
 	for i in range(len(g1)):

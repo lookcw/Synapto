@@ -18,7 +18,7 @@ def upload2Drive():
 	# Extract and print all of the values
 	#list_of_hashes = sheet.get_all_values()
 	#print(list_of_hashes)
-	f = open("output_pipeline.csv",'r')
+	f = open("pipeline_results.csv",'r')
 	results_reader=csv.reader(f,delimiter=',')
 	results_lines=list(results_reader)
 	batch_update_values_request_body = {

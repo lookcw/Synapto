@@ -13,7 +13,7 @@ def append_bandsName(features_path):
 	bands =['Delta','Theta','Alpha','Beta','Gamma']
 	paths = []
 
-	components = features_path.split("_")
+	components = features_path.split("_")	
 
 	for band in range(len(bands)):
 		paths.append(features_path.replace(components[1], components[1]+bands[band]))

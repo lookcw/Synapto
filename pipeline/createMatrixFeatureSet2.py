@@ -14,7 +14,7 @@ def write_feature_set(feature_path, feature_set_df):
 
 
 def create_feature_set(functionClass, positive_data_folder, negative_data_folder,
-                       num_instances, epochs_per_instance, time_points_per_epoch, bands_func=   None):
+                       num_instances, epochs_per_instance, time_points_per_epoch, bands_func=None):
     print('starting feature set creation')
     (positive_features, patient_count, instance_count) = _get_features_for_folder(positive_data_folder,
                                                                                   0, 0, functionClass, num_instances,
