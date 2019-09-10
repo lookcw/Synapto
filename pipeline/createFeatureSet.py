@@ -124,8 +124,8 @@ def createFeatureSet(num_epochs, num_timePoints, featureName, function, num_elec
 		read_file = open(features_path,"r")
 		reader = csv.reader(read_file)
 		row_count = sum(1 for row in reader)
-		print "printing row count"
-		print row_count
+		print("printing row count")
+		print(row_count)
 
 		out_file = open(features_path,"a") #used to be "a" for append
 		writer = csv.writer(out_file)
