@@ -7,4 +7,4 @@ def recurrParamToFilename(feature_name, datatype, num_instances ,num_timePoints,
 def filenameToParam(filename):
     line = filename.split('_')
     #feature_name, datatype, num_instances, epochs,timepoints
-    return ('_'.join(line[:-7]),line[-7],line[-6],line[-4],line[-2])
+    return ('_'.join(line[:-7]),line[-7],int(line[-6]),int(line[-4]),int(line[-2]))

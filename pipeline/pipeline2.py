@@ -61,12 +61,13 @@ RESULTS_FILENAME = 'pipeline_results.csv'
 FEATURE_SET_FOLDER = 'FeatureSets/'
 
 MODELS = [
-    LogisticRegression(),
-    LogisticRegressionCV(),
-    RandomForestClassifier(),
-    GradientBoostingClassifier(),
-    SVC(kernel="rbf",C=5.0),
-    KNeighborsClassifier(n_neighbors=5)
+    LogisticRegression(max_iter=1000, penalty='l2', C=10, solver='liblinear'),
+    RandomForestClassifier(
+        n_estimators=200, min_samples_split=0.1, min_samples_leaf=0.1,),
+    GradientBoostingClassifier(
+        n_estimators=100, max_depth=64, min_samples_split=1.0, min_samples_leaf=0.1),
+    SVC(kernel="rbf", C=5.0),
+    KNeighborsClassifier(n_neighbors=3)
 ]
 
 ################################################### DEFAULT SETTINGS ###################################################
@@ -133,13 +134,15 @@ for i in range(1, len(sys.argv), 2):
         sys.exit()
 if not startAtFS:
     if data_type == '':
-        data_type = negative_folder_path.split('/')[-1] + '-' + positive_folder_path.split('/')[-1]
+        data_type = negative_folder_path.split(
+            '/')[-1] + '-' + positive_folder_path.split('/')[-1]
     features_filename = identifier_func(
         feature_name, '', data_type, num_instances, time_points_per_epoch, epochs_per_instance)
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
     startAtFS = True
+
 
 ############################################## FEATURE SET CREATION/ READING ##############################################
 if not startAtFS:
@@ -149,8 +152,8 @@ if not startAtFS:
     if data_type == '' and positive_folder_path and negative_folder_path:
         data_folder_path3 = None
     if not RECURR:
-        extractFeatureFunc = functools.partial( 
-            create_feature_set, feature_func )
+        extractFeatureFunc = functools.partial(
+            create_feature_set, feature_func)
     if is_bands:
         feature_sets = [extractFeatureFunc(positive_folder_path, negative_folder_path, num_instances,
                                            epochs_per_instance, time_points_per_epoch, bands_func) for bands_func in BANDS]
@@ -160,7 +163,8 @@ if not startAtFS:
 else:
     feature_sets = [pd.read_csv(features_path, header='infer')]
 
-features_path_func = curry_param_to_filename(data_type, num_instances, time_points_per_epoch, epochs_per_instance)
+features_path_func = curry_param_to_filename(
+    data_type, num_instances, time_points_per_epoch, epochs_per_instance)
 
 [write_feature_set(features_path, feature_set) for feature_set in feature_sets]
 
