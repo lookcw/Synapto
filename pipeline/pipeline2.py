@@ -204,11 +204,12 @@ if not CONFIG['startAtFS']:
                 config_features_bands.append(copy_config_feature)
 
         feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_feature_bands]
-        
+        zip(feature_filenames, feature_sets)
         # CONFIG_FEATURES['bands_func'] = bands_func for bands_func in BANDS
         # feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
     else:
         feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_features]
+        zip(feature_filenames, feature_sets)
         # feature_sets = [extractFeatureFunc(
         #     positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
 else:
