@@ -172,10 +172,10 @@ if CONFIG['data_type'] == '':
     CONFIG['data_type'] = CONFIG['negative_folder_path'].split('/')[-1] + '-' + CONFIG['positive_folder_path'].split('/')[-1]
 
 features_filename = CONFIG['identifier_func'](CONFIG) # Get filename
-feature_filenames = []
-for config_feature in config_features:
-    feature_filenames.append(features_filename + CONFIG['feature_class'].config_to_filename(config_feature))
-print(feature_filenames)
+if CONFIG['is_bands'] == False:
+    feature_filenames = [features_filename + CONFIG['feature_class'].config_to_filename(config_feature) for config_feature in config_features]
+    print(feature_filenames)
+
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
@@ -195,15 +195,15 @@ if not CONFIG['startAtFS']:
             create_feature_set)
     if CONFIG['is_bands']:
         # [CONFIG_FEATURE['bands_func'] = bands_func for config_feature in CONFIG_FEATURES for bands_func in BANDS]
-
-        config_features_bands = []
+        config_feature_bands = []
         for config_feature in config_features:
             for bands_func in BANDS:
                 copy_config_feature = copy.deepcopy(config_feature)
                 copy_config_feature['bands_func'] = bands_func
-                config_features_bands.append(copy_config_feature)
-
+                config_feature_bands.append(copy_config_feature)
         feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_feature_bands]
+        feature_filenames = [features_filename + CONFIG['feature_class'].config_to_filename(config_feature) for config_feature in config_feature_bands]
+        print(feature_filenames)
         zip(feature_filenames, feature_sets)
         # CONFIG_FEATURES['bands_func'] = bands_func for bands_func in BANDS
         # feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
