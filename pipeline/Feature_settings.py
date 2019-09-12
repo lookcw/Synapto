@@ -9,7 +9,15 @@ def fsl_settings():
         'x': 200,
         'w': 2000
     }
-    return [FSL_1]
+    FSL_2 = {
+        'l': 1,
+        'm': 5,
+        'p': 0.049,
+        's': 2,
+        'x': 199,
+        'w': 1999
+    }
+    return [FSL_1, FSL_2]
 
 def pearson_settings():
     PEARSON_1 = {

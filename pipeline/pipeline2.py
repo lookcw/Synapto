@@ -174,7 +174,8 @@ if CONFIG['data_type'] == '':
 features_filename = CONFIG['identifier_func'](CONFIG) # Get filename
 feature_filenames = []
 for config_feature in config_features:
-    features_filename + CONFIG['feature_class'].config_to_filename(config_feature)
+    feature_filenames.append(features_filename + CONFIG['feature_class'].config_to_filename(config_feature))
+print(feature_filenames)
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
