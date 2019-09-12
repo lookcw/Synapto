@@ -19,7 +19,7 @@ import domFreq_features
 import domFreqVar_features
 # import feature_steepness
 import FSL_features
-from Feature_settings import fsl_features
+from Feature_settings import fsl_settings, pearson_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
 from nn_keras import nn_keras
@@ -31,6 +31,7 @@ from identifier import paramToFilename, recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
+import copy
 #from nn_Recurr import nn_Recurr
 
 BANDS = [
@@ -41,7 +42,7 @@ BANDS = [
     gamma_band_pass,
 ]
 
-FEATURE_NAMES_TO_FUNC = {
+FEATURE_NAMES_TO_CLASS = {
     'FSL': FSL_features,
     'PAC': pac_features,
     'DomFreq': domFreq_features,
@@ -84,13 +85,13 @@ CONFIG = {
     'positive_folder_path': '',
     'negative_folder_path': '',
     'feature_name': '',
-    'feature_func': '',
+    'feature_class': '',
+    'data_folder': '',
     'identifier_func': paramToFilename,
-    'isBands': False,
+    'is_bands': False,
     'hc': False,
     'ad': False,
     'dlb': False,
-    'is_bands': False,
     'is_force_overwrite': False,
     'startAtFS': False,
     'RECURR': False,
@@ -102,7 +103,8 @@ CONFIG = {
 }
 
 CONFIG_FEATURES = {
-    'FSL': fsl_features()
+    'FSL': fsl_settings(),
+    'Pearson': pearson_settings()
 }
 
 # feature_name = ''
@@ -146,7 +148,8 @@ for i in range(1, len(sys.argv), 2):
         CONFIG['epochs_per_instance'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-f":
         CONFIG['feature_name'] = sys.argv[i+1]
-        CONFIG['feature_func'] = FEATURE_NAMES_TO_FUNC[sys.argv[i+1]]
+        CONFIG['feature_class'] = FEATURE_NAMES_TO_CLASS[sys.argv[i+1]]
+        config_features = CONFIG_FEATURES[sys.argv[i+1]]
     elif str(sys.argv[i]) == "-i":
         CONFIG['num_instances'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-t":
@@ -165,10 +168,14 @@ for i in range(1, len(sys.argv), 2):
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
 if CONFIG['data_type'] == '':
-    CONFIG['data_type'] = CONFIG['negative_folder_path'].split['/'][-1] + '-' + CONFIG['positive_folder_path'].split['/'][-1]
-    CONFIG['data_type'] = CONFIG['negative_folder_path'].split['/'][-1] + '-' + CONFIG['positive_folder_path'].split['/'][-1]
+    CONFIG['data_type'] = CONFIG['negative_folder_path'].split('/')[-1] + '-' + CONFIG['positive_folder_path'].split('/')[-1]
+    CONFIG['data_type'] = CONFIG['negative_folder_path'].split('/')[-1] + '-' + CONFIG['positive_folder_path'].split('/')[-1]
 
 features_filename = CONFIG['identifier_func'](CONFIG) # Get filename
+# feature_filenames = []
+# for config_feature in config_features:
+
+# features_filename + CONFIG['feature_class'].config_to_filename(config_features)
 features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
 if os.path.exists(features_path) and not is_force_overwrite:
     print("feature file already exists... skipping featureset creation")
@@ -185,13 +192,23 @@ if not CONFIG['startAtFS']:
             '/')[-1] + '-' + CONFIG['positive_folder_path'].split('/')[-1]
     if not CONFIG['RECURR']:
         extractFeatureFunc = functools.partial( 
-            create_feature_set, CONFIG['feature_func'] )
+            create_feature_set)
     if CONFIG['is_bands']:
-        feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
-        # feature_sets = [extractFeatureFunc(positive_folder_path, negative_folder_path, num_instances,
-        #                                    epochs_per_instance, time_points_per_epoch, bands_func) for bands_func in BANDS]
+        # [CONFIG_FEATURE['bands_func'] = bands_func for config_feature in CONFIG_FEATURES for bands_func in BANDS]
+
+        config_features_bands = []
+        for config_feature in config_features:
+            for bands_func in BANDS:
+                copy_config_feature = copy.deepcopy(config_feature)
+                copy_config_feature['bands_func'] = bands_func
+                config_features_bands.append(copy_config_feature)
+
+        feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_feature_bands]
+        
+        # CONFIG_FEATURES['bands_func'] = bands_func for bands_func in BANDS
+        # feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
     else:
-        feature_sets = [extractFeatureFunc(CONFIG)]
+        feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_features]
         # feature_sets = [extractFeatureFunc(
         #     positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
 else:

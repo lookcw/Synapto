@@ -7,7 +7,7 @@ from headers import compareHeader
 def getHeader(time_series_electrode):
     return compareHeader(time_series_electrode)
 
-def extractFeatures(time_series_electrode):
+def extractFeatures(time_series_electrode, config_feature):
     time_series_electrode = time_series_electrode.astype(str)
     if "TERM_PROGRAM" in os.environ:
         p = Popen(["./FSL_mac", "-l", "1", "-m", "10", "-p", "0.049", "-s",
@@ -27,3 +27,6 @@ def extractFeatures(time_series_electrode):
             if j > i:  # gets upper triangular matrix
                 vec.append(mat[i][j])
     return list(map(float, vec))
+
+def config_to_filename(config_feature):
+    print(config_feature)

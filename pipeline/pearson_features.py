@@ -12,7 +12,7 @@ def getHeader(time_series_electrode):
    return compareHeader(time_series_electrode)
    
 
-def extractFeatures(time_series_electrode):
+def extractFeatures(time_series_electrode, config_feature):
     eegMat = pd.DataFrame(data = time_series_electrode)
 #     pctChange = eegMat.pct_change()
     numElectrodes = len(eegMat.columns)
@@ -25,3 +25,6 @@ def extractFeatures(time_series_electrode):
             features[featuresI] = eegMat.iloc[:,i].corr(eegMat.iloc[:,j])
             featuresI += 1
     return features
+
+def config_to_filename(config_feature):
+    print(config_feature)
