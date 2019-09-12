@@ -13,34 +13,31 @@ def write_feature_set(feature_path, feature_set_df):
     feature_set_df.to_csv(feature_path, index=False)
 
 
-def create_feature_set(functionClass, CONFIG, bands_func=   None):
+def create_feature_set(CONFIG, config_feature=None):
     print('starting feature set creation')
     (positive_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['positive_folder_path'],
-                                                                                  0, 0, functionClass, 1, bands_func)
+                                                                                  0, 0, 1, config_feature)
     (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count, 
-                                                                                  instance_count, functionClass, 0, bands_func)
+                                                                                  instance_count, 0, config_feature)
     labels = STARTER_COLUMNS + \
-        get_labels_from_folder(CONFIG['positive_folder_path'], functionClass, CONFIG['time_points_per_epoch'])\
+        get_labels_from_folder(CONFIG)\
          + CLASS_COLUMN
     data = np.array(positive_features + negative_features)
     return pd.DataFrame(data=data,  columns = labels)
 
-def get_labels_from_folder(data_folder,functionClass, time_points_per_epoch):
-    whole_data_set = genfromtxt(os.path.join(data_folder, os.listdir(data_folder)[0]), delimiter=',')
-    epoch_data_set = whole_data_set[0:time_points_per_epoch]
-    return functionClass.getHeader(epoch_data_set)
+def get_labels_from_folder(CONFIG):
+    whole_data_set = genfromtxt(os.path.join(CONFIG['positive_folder_path'], os.listdir(CONFIG['positive_folder_path'])[0]), delimiter=',')
+    epoch_data_set = whole_data_set[0:CONFIG['time_points_per_epoch']]
+    return CONFIG['feature_class'].getHeader(epoch_data_set)
 
-def _get_features_for_folder(CONFIG, data_folder, patient_count, instance_count, functionClass, data_class, bands_func):
+def _get_features_for_folder(CONFIG, data_folder, patient_count, instance_count, data_class, config_feature=None):
     filenames = [filename for filename in os.listdir(data_folder)]
     folder_features_with_filenames = [
         _extract_feature_for_one_patient(
-            functionClass,
             filename,
             genfromtxt(os.path.join(data_folder,filename), delimiter=','),
-            CONFIG['num_instances'],
-            CONFIG['epochs_per_instance'],
-            CONFIG['time_points_per_epoch'],
-            bands_func
+            CONFIG,
+            config_feature
         )
         for filename in os.listdir(data_folder) if filename.endswith('.csv')
     ]
@@ -87,7 +84,7 @@ def _unpack_add_groups(X, filenames, patient_count, instance_count, data_class):
     return (two_d_array, patient_count, instance_count)
 
 
-def _extract_feature_for_one_patient(functionClass, filename, patient_data_set, num_instances, epochs_per_instance, time_points_per_epoch, bandsFunc=None):
+def _extract_feature_for_one_patient(filename, patient_data_set, CONFIG, config_feature=None):
     """applys the extractFeatures function of function class onto one patient's dataset
 
     Arguments:
@@ -95,7 +92,7 @@ def _extract_feature_for_one_patient(functionClass, filename, patient_data_set, 
         data_set {np.array} -- 2d numpy array where number of columns is number of electrodes
         num_instances {int} -- number of instances per patient
         epochs_per_instance {int} -- epochs per instance
-        time_points_per_epoch {int} -- time points per epoch
+        time_points_per_epoch {int} -- time points per epoch`
 
     Keyword Arguments:
         bandsFunc {function} -- A function to apply to each electrode, supposed to be a band pass function (default: {None})
@@ -104,22 +101,23 @@ def _extract_feature_for_one_patient(functionClass, filename, patient_data_set, 
         3d numpy array -- 3d array, where first dimension is across instances, 2nd is across epochs, 3rd is across time points
     """
     print(f'extracting features for {filename}')
-    if(bandsFunc):
+
+    if CONFIG['is_bands']:
         transposed_data_set = np.transpose(patient_data_set)
-        transposed_filtered = [bandsFunc(time_series)
+        transposed_filtered = [config_feature['bands_func'](time_series)
                                for time_series in transposed_data_set]
         patient_data_set = np.transpose(transposed_filtered)
     features = []
 
     count = 0
-    for _ in range(num_instances):
+    for _ in range(CONFIG['num_instances']):
         instance_features = []
-        for _ in range(epochs_per_instance):
-            feature_row = functionClass.extractFeatures(
-                patient_data_set[count*time_points_per_epoch:(count+1) * time_points_per_epoch])
+        for _ in range(CONFIG['epochs_per_instance']):
+            feature_row = CONFIG['feature_class'].extractFeatures(
+                patient_data_set[count*CONFIG['time_points_per_epoch']:(count+1) * CONFIG['time_points_per_epoch']], config_feature)
             instance_features.append(feature_row)
             count += 1
         features.append(instance_features)
-    if hasattr(functionClass, 'apply_after'):
-        features = functionClass.apply_after(features)
+    if hasattr(CONFIG['feature_class'], 'apply_after'):
+        features = CONFIG['feature_class'].apply_after(features)
     return (np.array(features), filename)
