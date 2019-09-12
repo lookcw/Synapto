@@ -176,10 +176,11 @@ if CONFIG['is_bands'] == False:
     feature_filenames = [features_filename + CONFIG['feature_class'].config_to_filename(config_feature) for config_feature in config_features]
     print(feature_filenames)
 
-features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
-if os.path.exists(features_path) and not is_force_overwrite:
-    print("feature file already exists... skipping featureset creation")
-    CONFIG['startAtFS'] = True
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, feature_filename) for feature_filename in feature_filenames]
+    for feature_path in feature_paths:
+        if os.path.exists(feature_path) and not is_force_overwrite:
+            print("feature file already exists... skipping featureset creation")
+            CONFIG['startAtFS'] = True
 
 ############################################## FEATURE SET CREATION/ READING ##############################################
 if not CONFIG['startAtFS']:
@@ -203,19 +204,23 @@ if not CONFIG['startAtFS']:
                 config_feature_bands.append(copy_config_feature)
         feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_feature_bands]
         feature_filenames = [features_filename + CONFIG['feature_class'].config_to_filename(config_feature) for config_feature in config_feature_bands]
+        feature_paths = [os.path.join(FEATURE_SET_FOLDER, feature_filename) for feature_filename in feature_filenames]
+        
         print(feature_filenames)
         zip(feature_filenames, feature_sets)
         # CONFIG_FEATURES['bands_func'] = bands_func for bands_func in BANDS
         # feature_sets = [extractFeatureFunc(CONFIG, bands_func) for bands_func in BANDS]
     else:
         feature_sets = [extractFeatureFunc(CONFIG, config_feature) for config_feature in config_features]
+        
         zip(feature_filenames, feature_sets)
         # feature_sets = [extractFeatureFunc(
         #     positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
 else:
     feature_sets = [pd.read_csv(features_path, header='infer')]
 
-[write_feature_set(features_path, feature_set) for feature_set in feature_sets]
+for feature_path in feature_paths:
+    [write_feature_set(features_path, feature_set) for feature_set in feature_sets]
 
 
 ######################################################## PREDICTION ########################################################
