@@ -66,7 +66,7 @@ MODELS = [
         n_estimators=200, min_samples_split=0.1, min_samples_leaf=0.1,),
     GradientBoostingClassifier(
         n_estimators=100, max_depth=64, min_samples_split=1.0, min_samples_leaf=0.1),
-    SVC(kernel="rbf", C=5.0),
+    SVC(kernel="rbf", C=15),
     KNeighborsClassifier(n_neighbors=3)
 ]
 
