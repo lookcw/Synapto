@@ -3,6 +3,7 @@ import csv
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 # Takes in a time series in the form of raw electrode data (takes in a matrix)
 
 def getHeader(time_series):
@@ -30,16 +31,14 @@ def extractFeatures(time_series):
 		N = time_series_electrode.shape[-1] # number of timepoints in electrode
 
 		yf = fft(y)
-		yf = yf[0:(N/2)] # get useable half of the fft vector
-		print(yf.shape)
-
+		yf = yf[0:int((N+1)/2)] # get useable half of the fft vector
 		freq = np.arange(0,Fs/2,Fs/N)
-		yf = yf[freq>=1] # get fft value when freq is greater than 1
+		yf_above1 = yf[freq>=1] # get fft value when freq is greater than 1
 
-		max_index = np.argmax(yf)
+		#max_index = np.argmax(yf_above1)
 
-		print(freq.shape)
-		print("the max index is", max_index)
+		max_yf = max(yf_above1)
+		max_index = np.where(yf == max_yf)[0][0]
 		freqMax = freq[max_index] # this is the dominant frequency 
 
 		features[featuresI] = freqMax
