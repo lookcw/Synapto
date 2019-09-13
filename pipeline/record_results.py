@@ -35,6 +35,7 @@ PRINT_RESULTS_HEADER = [
     'Feature',
     'Data Type',
     'Model',
+    'Bands',
     'ROC AUC',
     'Accuracy',
     'F-score',
@@ -76,6 +77,7 @@ def print_results(results_list):
             result['feature_name'],
             result['data_type'],
             result['model'],
+            result['bands_func'],
             round(result['roc_auc'], 2),
             round(result['accuracy'], 2),
             round(result['f1'], 2),
@@ -94,6 +96,7 @@ def write_result_list_to_results_file(results_filename, results_list):
                 time.strftime("%m/%d/%Y"),
                 result['feature_name'],
                 result['data_type'],
+                result['bands_func'],
                 result['model'],
                 result['num_patients'],
                 result['num_features'],
@@ -119,20 +122,21 @@ def _split_dataframe(df):
     return (X, y, groups, instance_nums)
 
 
-def get_results(clf, df, num_folds, feature_name, data_type, num_instances, epochs_per_instance, time_points_per_epoch, features_filename):
-    metrics = _compute_group_score(clf, df, num_folds)
+def get_results(clf, df, config, config_features):
+    metrics = _compute_group_score(clf, df, config['num_folds'])
     (X, y, groups, instance_num) = _split_dataframe(df)
     print(groups)
     num_patients = max(groups)
     results = dict(metrics)
     results.update({
-        'num_folds': num_folds,
-        'feature_name': feature_name,
-        'data_type': data_type,
-        'instances_per_patient': num_instances,
-        'epochs_per_instance': epochs_per_instance,
-        'time_points_per_epoch': time_points_per_epoch,
-        'feature_filename': features_filename.split('/')[-1],
+        'num_folds': config['num_folds'],
+        'feature_name': config['feature_name'],
+        'data_type': config['data_type'],
+        'bands_func':  (config_features['bands_func'].__name__ if 'bands_func' in config_features else 'none'),
+        'instances_per_patient': config['num_instances'],
+        'epochs_per_instance': config['epochs_per_instance'],
+        'time_points_per_epoch': config['time_points_per_epoch'],
+        'feature_filename': config['num_folds'],
         'num_patients': num_patients,
         'model': format(clf.__class__).split('.')[-1].replace('\'>', ''),
         'num_features': len(df.columns) - 4
@@ -142,6 +146,7 @@ def get_results(clf, df, num_folds, feature_name, data_type, num_instances, epoc
 
 # define function to compute cross validation score
 def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
+    print(df['e1_e2'])
     (X, y, groups, instance_num) = _split_dataframe(df)
     print(X.shape)
     if "keras" in str(clf):
