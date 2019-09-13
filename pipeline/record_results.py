@@ -5,10 +5,7 @@ from metrics import metrics
 import numpy as np
 import sys
 from nn_keras import nn_keras
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import roc_auc_score
-from sklearn.metrics import f1_score
+from sklearn.metrics import confusion_matrix, accuracy_score, roc_auc_score, f1_score, roc_curve
 import csv
 import time
 import os
@@ -35,6 +32,7 @@ PRINT_RESULTS_HEADER = [
     'Feature',
     'Data Type',
     'Model',
+    'Bands',
     'ROC AUC',
     'Accuracy',
     'F-score',
@@ -47,11 +45,12 @@ def _metrics(y_true, y_pred, y_scores):
 
     L = float(len(y_true))
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
-    roc_auc = -1
+    (roc_auc, fpr, tpr) = (-1,[],[])
     if y_scores is not None:
         # y_conf = list(map(lambda x: max(x), y_scores))
         y_conf = y_scores[:, 1]
         roc_auc = roc_auc_score(y_true, y_conf)
+        fpr, tpr, thresholds = roc_curve(y_true, y_conf, pos_label=2)
     accuracy = accuracy_score(y_true, y_pred)
     f1 = f1_score(y_true, y_pred)
     return {
@@ -59,7 +58,8 @@ def _metrics(y_true, y_pred, y_scores):
         'f1': f1,
         'sensitivity': tp / (fn + tp),
         'specificity': tn / (tn + fp),
-        'roc_auc': roc_auc
+        'roc_auc': roc_auc,
+        'roc_vars': (fpr, tpr)
     }
 
 
@@ -76,12 +76,21 @@ def print_results(results_list):
             result['feature_name'],
             result['data_type'],
             result['model'],
+            result['bands_func'],
             round(result['roc_auc'], 2),
             round(result['accuracy'], 2),
             round(result['f1'], 2),
             round(result['sensitivity'], 2),
             round(result['specificity'], 2),
         ])
+
+
+def write_roc(results_list):
+    with open('rocs.csv', 'a') as csvfile:
+        writer = csv.Writer(csvfile, delimiter=',')
+        for results in results_list:
+            write.writerow([results['feature_filename'],
+                            results['roc'][0], results['roc'][1]])
 
 
 def write_result_list_to_results_file(results_filename, results_list):
@@ -94,6 +103,7 @@ def write_result_list_to_results_file(results_filename, results_list):
                 time.strftime("%m/%d/%Y"),
                 result['feature_name'],
                 result['data_type'],
+                result['bands_func'],
                 result['model'],
                 result['num_patients'],
                 result['num_features'],
@@ -119,20 +129,21 @@ def _split_dataframe(df):
     return (X, y, groups, instance_nums)
 
 
-def get_results(clf, df, num_folds, feature_name, data_type, num_instances, epochs_per_instance, time_points_per_epoch, features_filename):
-    metrics = _compute_group_score(clf, df, num_folds)
+def get_results(clf, df, config, config_features, feature_filename):
+    metrics = _compute_group_score(clf, df, config['num_folds'])
     (X, y, groups, instance_num) = _split_dataframe(df)
     print(groups)
     num_patients = max(groups)
     results = dict(metrics)
     results.update({
-        'num_folds': num_folds,
-        'feature_name': feature_name,
-        'data_type': data_type,
-        'instances_per_patient': num_instances,
-        'epochs_per_instance': epochs_per_instance,
-        'time_points_per_epoch': time_points_per_epoch,
-        'feature_filename': features_filename.split('/')[-1],
+        'num_folds': config['num_folds'],
+        'feature_name': config['feature_name'],
+        'data_type': config['data_type'],
+        'bands_func':  (config_features['bands_func'].__name__ if 'bands_func' in config_features else 'none'),
+        'instances_per_patient': config['num_instances'],
+        'epochs_per_instance': config['epochs_per_instance'],
+        'time_points_per_epoch': config['time_points_per_epoch'],
+        'feature_filename': feature_filename,
         'num_patients': num_patients,
         'model': format(clf.__class__).split('.')[-1].replace('\'>', ''),
         'num_features': len(df.columns) - 4

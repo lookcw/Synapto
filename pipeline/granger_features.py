@@ -17,12 +17,16 @@ from headers import compareHeader
 def getHeaders(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
-def extractFeatures(time_series):
+def extractFeatures(time_series, config_features):
 
 	print(time_series.shape)
+	TR = config_features['TR']
+	f_ub = config_features['f_ub']
+	f_lb = config_features['f_lb']
 	TR = 1.89
 	f_ub = 0.15
 	f_lb = 0.02
+
 
 	# normalize data to be in terms of percent change
 	pdata = tsu.percent_change(time_series.transpose())
@@ -41,7 +45,7 @@ def extractFeatures(time_series):
 
 	# place feature values in matrix and return the linearlized form of it
 	numElectrodes = time_series.shape[1]
-	features = [None] * (numElectrodes * (numElectrodes -1)/2)
+	features = [None] * int(numElectrodes * (numElectrodes -1)/2)
 	featuresI = 0
 
 	for i in range(len(g1)):

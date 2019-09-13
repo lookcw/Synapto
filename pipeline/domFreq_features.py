@@ -13,7 +13,7 @@ def getHeader(time_series):
 		headers.append('e'+str(i))
 	return headers
 
-def extractFeatures(time_series):
+def extractFeatures(time_series, config_feature):
 
 	numElectrodes = time_series.shape[1]
 	features = [None] * (numElectrodes)
@@ -45,3 +45,6 @@ def extractFeatures(time_series):
 		featuresI += 1
 		
 	return features
+
+def config_to_filename(config_feature):
+	return ''
