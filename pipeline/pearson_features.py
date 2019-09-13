@@ -28,7 +28,4 @@ def extractFeatures(time_series_electrode, config_feature):
 
 # TEMPORARY: THESE ARE THE FEATURES FOR FSL
 def config_to_filename(config_feature):
-    if 'bands_func' in config_feature:
-        return config_feature['bands_func'] + "_band_" + str(config_feature['l']) + "_l_" + str(config_feature['m']) + "_m_" + str(config_feature['p']) + '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x']) + '_x_' + str(config_feature['w']) + '_w_.csv'
-    else:
-        return str(config_feature['l']) + "_l_" + str(config_feature['m']) + "_m_" + str(config_feature['p']) + '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x']) + '_x_' + str(config_feature['w']) + '_w_.csv'
+    return ''
