@@ -13,7 +13,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import time
-from ASD_features import extractASDFeatures
+# from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createFeatureSet import createFeatureSet
 from createMatrixFeatureSet import createMatrixFeatureSet
@@ -22,7 +22,7 @@ import granger_features
 import domFreq_features
 import domFreqVar_features
 import raw_features
-import feature_steepness
+# import feature_steepness
 import FSL_features
 import pac_features
 from compute_score import compute_group_score

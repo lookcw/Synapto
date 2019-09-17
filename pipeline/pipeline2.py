@@ -10,7 +10,7 @@ import numpy as np
 import csv
 from BandPass1 import delta_band_pass, theta_band_pass, alpha_band_pass, beta_band_pass, gamma_band_pass
 import time
-from ASD_features import extractASDFeatures
+# from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
 from createMatrixFeatureSet2 import create_feature_set, write_feature_set
 import pearson_features
@@ -19,6 +19,7 @@ import domFreq_features
 import domFreqVar_features
 # import feature_steepness
 import FSL_features
+from Feature_settings import fsl_settings, pearson_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
 from nn_keras import nn_keras
@@ -30,17 +31,17 @@ from identifier import paramToFilename, recurrParamToFilename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
+import copy
 #from nn_Recurr import nn_Recurr
 
 BANDS = [
     alpha_band_pass,
     beta_band_pass,
-    delta_band_pass,
     theta_band_pass,
     gamma_band_pass,
 ]
 
-FEATURE_NAMES_TO_FUNC = {
+FEATURE_NAMES_TO_CLASS = {
     'FSL': FSL_features,
     'PAC': pac_features,
     'DomFreq': domFreq_features,
@@ -49,20 +50,32 @@ FEATURE_NAMES_TO_FUNC = {
     'DomFreqVar': domFreqVar_features
 }
 
+# FEATURE_configS = {
+#     'FSL': FSL_config_array,
+#     'PAC': PAC_config_array,
+#     'DomFreq': DomFreq_config_array,
+#     'Pearson': Pearson_config_array,
+#     'Granger': Granger_config_array,
+# }
+
 DATA_TYPE_TO_FOLDERS = {
     'Brazil': ('BrazilRawData/HCF50', 'BrazilRawData/ADF50'),
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
     'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
+<<<<<<< HEAD
     'Brazil_SVD': ('BrazilRawData_SVD/HC', 'BrazilRawData_SVD/AD')
+=======
+    'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean')
+>>>>>>> e8236e582c25523248f188a308092874b4f53f6e
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
 FEATURE_SET_FOLDER = 'FeatureSets/'
 
 MODELS = [
-    LogisticRegression(),
-    LogisticRegressionCV(),
+    # LogisticRegression(),
+    # LogisticRegressionCV(),
     RandomForestClassifier(),
     GradientBoostingClassifier(),
     SVC(kernel="rbf",C=5.0),
@@ -71,23 +84,33 @@ MODELS = [
 
 ################################################### DEFAULT SETTINGS ###################################################
 
+config = {
+    'data_type': '',
+    'positive_folder_path': '',
+    'negative_folder_path': '',
+    'feature_name': '',
+    'feature_class': '',
+    'data_folder': '',
+    'identifier_func': paramToFilename,
+    'is_bands': False,
+    'hc': False,
+    'ad': False,
+    'dlb': False,
+    'force_overwrite': False,
+    'skip_fs_creation': False,
+    'RECURR': False,
+    'num_epochs': 1,  # per patient
+    'time_points_per_epoch': 160000,  # per instance
+    'num_instances': 1,
+    'epochs_per_instance': 1,
+    'num_folds': 4
+}
 
-feature_name = ''
-data_type = ''
-hc = False
-ad = False
-dlb = False
-is_bands = False
-is_force_overwrite = False
-startAtFS = False
-RECURR = False
-
-num_epochs = 1  # per patient
-time_points_per_epoch = 160000  # per instance
-num_instances = 1
-epochs_per_instance = 1
-num_folds = 10
-identifier_func = paramToFilename
+CONFIG_FEATURES = {
+    'FSL': fsl_settings(),
+    'Pearson': pearson_settings(),
+    'DomFreq': [{}],
+}
 
 ############################################## PARAMETER READING & SETTING ##############################################
 
@@ -102,64 +125,80 @@ for i in range(1, len(sys.argv), 2):
         sys.exit()
 
     elif str(sys.argv[i]) == "-d":
-        negative_folder_path = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][0]
-        positive_folder_path = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][1]
-        data_type = sys.argv[i+1]
+        config['negative_folder_path'] = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][0]
+        config['positive_folder_path'] = DATA_TYPE_TO_FOLDERS[sys.argv[i+1]][1]
+        config['data_type'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-p":
-        positive_folder_path = sys.argv[i+1]
+        config['positive_folder_path'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-n":
-        negative_folder_path = sys.argv[i+1]
+        config['negative_folder_path'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-e":
-        epochs_per_instance = int(sys.argv[i+1])
+        config['epochs_per_instance'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-f":
-        feature_name = sys.argv[i+1]
-        feature_func = FEATURE_NAMES_TO_FUNC[sys.argv[i+1]]
+        config['feature_name'] = sys.argv[i+1]
+        config['feature_class'] = FEATURE_NAMES_TO_CLASS[sys.argv[i+1]]
+        config_features = CONFIG_FEATURES[sys.argv[i+1]]
     elif str(sys.argv[i]) == "-i":
-        num_instances = int(sys.argv[i+1])
+        config['num_instances'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-t":
-        time_points_per_epoch = int(sys.argv[i+1])
+        config['time_points_per_epoch'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-fs":
-        filename = sys.argv[i+1].split('/')[-1]
-        startAtFS = True
+        config['filename'] = sys.argv[i+1].split('/')[-1]
+        config['skip_fs_creation'] = True
     elif str(sys.argv[i]) == "-overwrite":
-        is_force_overwrite = True
+        config['force_overwrite'] = True
     elif str(sys.argv[i]) == "-recurr":
-        RECURR = True
-        identifier_func = recurrParamToFilename
+        config['RECURR'] = True
+        config['identifier_func'] = recurrParamToFilename
     elif str(sys.argv[i]) == "-bands":
-        is_bands = True
+        config['is_bands'] = True
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
-if data_type == '':
-    data_type = negative_folder_path.split['/'][-1] + '-' + positive_folder_path.split['/'][-1]
-features_filename = identifier_func(
-    feature_name, data_type, num_instances, time_points_per_epoch, epochs_per_instance)
-features_path = os.path.join(FEATURE_SET_FOLDER, features_filename)
-if os.path.exists(features_path) and not is_force_overwrite:
-    print("feature file already exists... skipping featureset creation")
-    startAtFS = True
+if config['data_type'] == '':
+    config['data_type'] = config['negative_folder_path'].split(
+        '/')[-1] + '-' + config['positive_folder_path'].split('/')[-1]
+    config['data_type'] = config['negative_folder_path'].split(
+        '/')[-1] + '-' + config['positive_folder_path'].split('/')[-1]
+
+# features_filename = config['identifier_func'](config) # Get filename
+if not config['skip_fs_creation']:
+    if config['is_bands']:
+        config_feature_bands = []
+        for config_feature in config_features:
+            for bands_func in BANDS:
+                copy_config_feature = copy.deepcopy(config_feature)
+                copy_config_feature['bands_func'] = bands_func
+                config_feature_bands.append(copy_config_feature)
+        print (config_feature_bands)
+        config_features = config_feature_bands
+    
+    feature_filenames = [config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
+    config_feature) + '.csv' for config_feature in config_features]
+[print(feature_filename) for feature_filename in feature_filenames]
+feature_paths = [os.path.join(FEATURE_SET_FOLDER, feature_filename)
+                 for feature_filename in feature_filenames]
+for feature_path in feature_paths:
+    if os.path.exists(feature_path) and not config['force_overwrite']:
+        print("feature file already exists... skipping featureset creation")
+        config['skip_fs_creation'] = True
 
 ############################################## FEATURE SET CREATION/ READING ##############################################
-if not startAtFS:
-    if not positive_folder_path or not negative_folder_path:
+if not config['skip_fs_creation']:
+    if not config['positive_folder_path'] or not config['negative_folder_path']:
         print("Did not input data type. Choose from list in help documentation")
         sys.exit()
-    if data_type == '' and positive_folder_path and negative_folder_path:
+    if config['data_type'] == '' and config['positive_folder_path'] and config['negative_folder_path']:
         data_folder_path3 = None
-    if not RECURR:
-        extractFeatureFunc = functools.partial( 
-            create_feature_set, feature_func )
-    if is_bands:
-        feature_sets = [extractFeatureFunc(positive_folder_path, negative_folder_path, num_instances,
-                                           epochs_per_instance, time_points_per_epoch, bands_func) for bands_func in BANDS]
-    else:
-        feature_sets = [extractFeatureFunc(
-            positive_folder_path, negative_folder_path, num_instances, epochs_per_instance, time_points_per_epoch)]
+        config['data_type'] = config['negative_folder_path'].split('/')[-1] + \
+        '-' + config['positive_folder_path'].split('/')[-1]
+    print(config_features)
+    print(config['is_bands'])
+    feature_sets = [create_feature_set(config, config_feature) for config_feature in config_features]
+    [write_feature_set(feature_path, feature_set) for (feature_set, feature_path) in zip(feature_sets, feature_paths)]
 else:
-    feature_sets = [pd.read_csv(features_path, header='infer')]
-
-[write_feature_set(features_path, feature_set) for feature_set in feature_sets]
+    feature_sets = [pd.read_csv(feature_path, header='infer')
+                    for feature_path in feature_paths]
 
 
 ######################################################## PREDICTION ########################################################
@@ -167,7 +206,7 @@ else:
 
 # shuffle rows of dataframe
 feature_sets = [shuffle(feature_set) for feature_set in feature_sets]
-results = [get_results(model, feature_set, num_folds, feature_name, data_type, num_instances, epochs_per_instance,
-                       time_points_per_epoch, features_path) for feature_set in feature_sets for model in MODELS]
+results = [get_results(model, feature_set, config, config_feature) for (
+    feature_set, feature_filename, config_feature) in zip(feature_sets, feature_filenames, config_features) for model in MODELS]
 print_results(results)
 write_result_list_to_results_file(RESULTS_FILENAME, results)
