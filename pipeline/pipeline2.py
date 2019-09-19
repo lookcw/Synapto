@@ -64,6 +64,8 @@ DATA_TYPE_TO_FOLDERS = {
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
     'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
     'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean')
+    'DLB-AD': ('New_Castle_Data/DLB_clean', 'New_Castle_Data/AD_clean')
+    'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
