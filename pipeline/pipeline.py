@@ -1,4 +1,4 @@
-from sklearn.neighbors import KNeighborsClassifier
+pfrom sklearn.neighbors import KNeighborsClassifier
 from write_accuracy_to_file import write_accuracy_to_file
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV

@@ -136,7 +136,7 @@ def get_results(clf, df, config, config_features):
         'instances_per_patient': config['num_instances'],
         'epochs_per_instance': config['epochs_per_instance'],
         'time_points_per_epoch': config['time_points_per_epoch'],
-        'feature_filename': config['num_folds'],
+        'feature_filename': config_features['filename'],
         'num_patients': num_patients,
         'model': format(clf.__class__).split('.')[-1].replace('\'>', ''),
         'num_features': len(df.columns) - 4
@@ -146,9 +146,7 @@ def get_results(clf, df, config, config_features):
 
 # define function to compute cross validation score
 def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
-    print(df['e1_e2'])
     (X, y, groups, instance_num) = _split_dataframe(df)
-    print(X.shape)
     if "keras" in str(clf):
         y = y.astype(int)
         y = np.eye(2)[y]
