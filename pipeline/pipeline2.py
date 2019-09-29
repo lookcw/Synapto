@@ -106,6 +106,7 @@ CONFIG_FEATURES = {
     'FSL': fsl_settings(),
     'Pearson': pearson_settings(),
     'DomFreq': [{}],
+    'Granger': [{}]
 }
 
 ############################################## PARAMETER READING & SETTING ##############################################
