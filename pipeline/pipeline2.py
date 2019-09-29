@@ -33,6 +33,7 @@ from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 import copy
 #from nn_Recurr import nn_Recurr
+from gridsearch import gridsearch
 
 BANDS = [
     alpha_band_pass,
@@ -63,11 +64,7 @@ DATA_TYPE_TO_FOLDERS = {
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
     'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
-<<<<<<< HEAD
-    'Brazil_SVD': ('BrazilRawData_SVD/HC', 'BrazilRawData_SVD/AD')
-=======
     'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean')
->>>>>>> e8236e582c25523248f188a308092874b4f53f6e
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -81,6 +78,10 @@ MODELS = [
     SVC(kernel="rbf",C=5.0),
     KNeighborsClassifier(n_neighbors=5)
 ]
+
+GRIDSEARCH_MODELS = []
+for model in MODELS:
+    GRIDSEARCH_MODELS.append(gridsearch(model))
 
 ################################################### DEFAULT SETTINGS ###################################################
 
@@ -207,6 +208,6 @@ else:
 # shuffle rows of dataframe
 feature_sets = [shuffle(feature_set) for feature_set in feature_sets]
 results = [get_results(model, feature_set, config, config_feature) for (
-    feature_set, feature_filename, config_feature) in zip(feature_sets, feature_filenames, config_features) for model in MODELS]
+    feature_set, feature_filename, config_feature) in zip(feature_sets, feature_filenames, config_features) for model in GRIDSEARCH_MODELS]
 print_results(results)
 write_result_list_to_results_file(RESULTS_FILENAME, results)
