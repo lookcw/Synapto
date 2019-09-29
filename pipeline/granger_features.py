@@ -17,7 +17,7 @@ from headers import compareHeader
 def getHeaders(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
-def extractFeatures(time_series):
+def extractFeatures(time_series, config_feature):
 
 	print(time_series.shape)
 	TR = 1.89
@@ -51,6 +51,8 @@ def extractFeatures(time_series):
 
 	return features
 
-
+# TEMPORARY: THESE ARE THE FEATURES FOR FSL
+def config_to_filename(config_feature):
+    return ''
 	
 
