@@ -52,7 +52,7 @@ def extractFeatures(time_series, config_feature):
 	featuresI = 0
 
 	# Prints out None if the you're comparing 1 and 1 
-	print(g1)
+	# print(g1)
 	for i in range(len(g1)):
 		features[featuresI] = coh[i][i]
 	# print(features)

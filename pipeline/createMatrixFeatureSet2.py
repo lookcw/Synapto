@@ -26,7 +26,9 @@ def create_feature_set(CONFIG, config_feature=None):
     return pd.DataFrame(data=data,  columns = labels)
 
 def get_labels_from_folder(CONFIG):
+    print(CONFIG['positive_folder_path'])
     whole_data_set = genfromtxt(os.path.join(CONFIG['positive_folder_path'], os.listdir(CONFIG['positive_folder_path'])[0]), delimiter=',')
+    # print(whole_data_set)
     epoch_data_set = whole_data_set[0:CONFIG['time_points_per_epoch']]
     return CONFIG['feature_class'].getHeader(epoch_data_set)
 
