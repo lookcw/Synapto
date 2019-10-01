@@ -17,7 +17,7 @@ from headers import compareHeader
 def getHeaders(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
-def extractFeatures(time_series):
+def extractFeatures(time_series, config_features):
 
 	print(time_series.shape)
 	TR = 1.89
@@ -41,7 +41,7 @@ def extractFeatures(time_series):
 
 	# place feature values in matrix and return the linearlized form of it
 	numElectrodes = time_series.shape[1]
-	features = [None] * (numElectrodes * (numElectrodes -1)/2)
+	features = [None] * int(numElectrodes * (numElectrodes -1)/2)
 	featuresI = 0
 
 	for i in range(len(g1)):
@@ -54,3 +54,5 @@ def extractFeatures(time_series):
 
 	
 
+def config_to_filename(config_feature):
+	return ''

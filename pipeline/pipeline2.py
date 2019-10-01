@@ -101,13 +101,15 @@ config = {
     'time_points_per_epoch': 160000,  # per instance
     'num_instances': 1,
     'epochs_per_instance': 1,
-    'num_folds': 4
+    'num_folds': 4,
+    'concat_type': 'vertical'
 }
 
 CONFIG_FEATURES = {
     'FSL': fsl_settings(),
     'Pearson': pearson_settings(),
     'DomFreq': [{}],
+    'Granger': [{}],
 }
 
 ############################################## PARAMETER READING & SETTING ##############################################
@@ -148,6 +150,8 @@ for i in range(1, len(sys.argv), 2):
     elif str(sys.argv[i]) == "-recurr":
         config['RECURR'] = True
         config['identifier_func'] = recurrParamToFilename
+    elif str(sys.argv[i]) == "-concat":
+        config['concat_type'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-bands":
         config['is_bands'] = True
     else:
