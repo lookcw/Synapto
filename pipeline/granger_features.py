@@ -20,8 +20,8 @@ def getHeaders(time_series_electrode):
 def extractFeatures(time_series, config_feature):
 	
 	print(time_series.shape)
-	Fs = 250.0;  # sampling rate
-	T = 1/Fs; # sampling interval
+	Fs = 250.0  # sampling rate
+	T = 1/Fs # sampling interval
 	# TR = 1.89
 	f_ub = 30
 	f_lb = 0.5
