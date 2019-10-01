@@ -146,7 +146,7 @@ def get_results(clf, df, config, config_features):
 
 # define function to compute cross validation score
 def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
-    print(df['e1_e2'])
+    #print(df['e1_e2'])
     (X, y, groups, instance_num) = _split_dataframe(df)
     print(X.shape)
     if "keras" in str(clf):
