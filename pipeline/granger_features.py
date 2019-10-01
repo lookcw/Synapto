@@ -14,15 +14,15 @@ from pandas import DataFrame
 from headers import compareHeader
 # Takes in a time series in the form of raw electrode data (one column)
 
-def getHeaders(time_series_electrode):
+def getHeader(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
-def extractFeatures(time_series, config_features):
+def extractFeatures(time_series, config_feature):
 
 	print(time_series.shape)
 	TR = 1.89
-	f_ub = 0.15
-	f_lb = 0.02
+	f_ub = 30
+	f_lb = 0.5
 
 	# normalize data to be in terms of percent change
 	pdata = tsu.percent_change(time_series.transpose())
@@ -51,7 +51,9 @@ def extractFeatures(time_series, config_features):
 
 	return features
 
-
+# TEMPORARY: THESE ARE THE FEATURES FOR FSL
+def config_to_filename(config_feature):
+    return ''
 	
 
 def config_to_filename(config_feature):
