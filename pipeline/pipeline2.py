@@ -214,6 +214,6 @@ else:
 # shuffle rows of dataframe
 feature_sets = [shuffle(feature_set) for feature_set in feature_sets]
 results = [get_results(model, feature_set, config, config_feature) for (
-    feature_set, feature_filename, config_feature) in zip(feature_sets, feature_filenames, config_features) for model in GRIDSEARCH_MODELS]
+    feature_set, config_feature) in zip(feature_sets, config_features) for model in GRIDSEARCH_MODELS]
 print_results(results)
 write_result_list_to_results_file(RESULTS_FILENAME, results)

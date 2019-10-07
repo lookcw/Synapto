@@ -16,7 +16,7 @@ def keras_to_sklearn(neurons = [],n_classes = 0):
 
 	def create_network():
 		model = Sequential()
-		model.add(Dense(neurons[0], kernel_initializer='random_uniform',  activation = 'relu', input_dim = n_input))
+		model.add(Dense(neurons[0], kernel_initializer='random_uniform',  activation = 'relu', input_dim = 21))
 
 		for i in range(1,len(neurons)):
 			model.add(Dense(neurons[i], activation = 'relu'))
