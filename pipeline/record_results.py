@@ -4,7 +4,7 @@ from sklearn.base import clone
 from metrics import metrics
 import numpy as np
 import sys
-from nn_keras import nn_keras
+#from nn_keras import nn_keras
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import roc_auc_score
@@ -29,7 +29,8 @@ RESULTS_HEADER = [
     'filename',
     'Num Folds',
     'Epochs Per Instances',
-    'Instances Per Patient'
+    'Instances Per Patient',
+    'Best Parameters'
 ]
 PRINT_RESULTS_HEADER = [
     'Feature',
@@ -84,6 +85,7 @@ def print_results(results_list):
             round(result['sensitivity'], 2),
             round(result['specificity'], 2),
         ])
+        print(result['best_params'])
 
 
 def write_result_list_to_results_file(results_filename, results_list):
@@ -108,7 +110,8 @@ def write_result_list_to_results_file(results_filename, results_list):
                 result['feature_filename'],
                 result['num_folds'],
                 result['epochs_per_instance'],
-                result['instances_per_patient']
+                result['instances_per_patient'],
+                result['best_params']
             ]
             writer.writerow(result_array)
 
@@ -139,7 +142,8 @@ def get_results(clf, df, config, config_features):
         'feature_filename': config['num_folds'],
         'num_patients': num_patients,
         'model': format(clf.__class__).split('.')[-1].replace('\'>', ''),
-        'num_features': len(df.columns) - 4
+        'num_features': len(df.columns) - 4,
+        'best_params' : clf.best_params_
     })
     return results
 
@@ -209,4 +213,4 @@ def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
 
         y_pred = np.where(y_pred > 0.5, 1, 0)
         y_true = np.where(y_true > 0.5, 1, 0)
-        return _metrics(y_true, y_pred, y_scores)
+        return _metrics(y_true, y_pred, y_scores) , clf.best_params_

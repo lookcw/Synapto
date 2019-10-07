@@ -57,6 +57,8 @@ kneighbors_params = {'n_neighbors': [3] }
 
 adaboost_params = {'n_estimators' : [10] }
 
+keras_params = {}
+
 def gridsearch(clf):
     tuned_parameters = class_config[clf.__class__.__name__]
     grid_clf = GridSearchCV(clf, tuned_parameters, cv=5)
@@ -70,5 +72,6 @@ class_config = {
     'LogisticRegression':log_regression_params,
     'KNeighborsClassifier': kneighbors_params,
     'AdaBoostClassifier': adaboost_params,
+    'KerasClassifier': keras_params,
 }
 
