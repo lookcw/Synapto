@@ -14,7 +14,7 @@ from pandas import DataFrame
 from headers import compareHeader
 # Takes in a time series in the form of raw electrode data (one column)
 
-def getHeaders(time_series_electrode):
+def getHeader(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
 def extractFeatures(time_series, config_feature):
@@ -57,10 +57,10 @@ def extractFeatures(time_series, config_feature):
 		features[featuresI] = coh[i][i]
 	# print(features)
 
-	# for i in range(len(g1)):
-	# 	for j in range(i+1, len(g1)):
-	# 		features[featuresI] = g1[i][j]
-	# 		featuresI += 1
+	for i in range(len(g1)):
+		for j in range(i+1, len(g1)):
+			features[featuresI] = g1[i][j]
+			featuresI += 1
 
 	# roi_names = ['electrode1','electrode2','electrode3','electrode4','electrode5','electrode6','electrode7','electrode8','electrode9','electrode10','electrode11','electrode12','electrode13','electrode14','electrode15','electrode16','electrode17','electrode18','electrode19','electrode20','electrode21']
 	# fig01 = drawmatrix_channels(g1, roi_names, size=[10., 10.], color_anchor=0)

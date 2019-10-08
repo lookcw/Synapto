@@ -12,7 +12,7 @@ from BandPass1 import delta_band_pass, theta_band_pass, alpha_band_pass, beta_ba
 import time
 # from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
-from createMatrixFeatureSet2 import create_feature_set, write_feature_set
+from createMatrixFeatureSet2 import create_feature_set, write_feature_set, get_labels_from_folder
 import pearson_features
 import granger_features
 import domFreq_features
@@ -179,7 +179,7 @@ for feature_path in feature_paths:
     if os.path.exists(feature_path) and not config['force_overwrite']:
         print("feature file already exists... skipping featureset creation")
         config['skip_fs_creation'] = True
-
+print(get_labels_from_folder(config))
 ############################################## FEATURE SET CREATION/ READING ##############################################
 if not config['skip_fs_creation']:
     if not config['positive_folder_path'] or not config['negative_folder_path']:
