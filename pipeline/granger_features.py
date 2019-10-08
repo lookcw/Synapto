@@ -18,14 +18,11 @@ def getHeader(time_series_electrode):
 	return compareHeader(time_series_electrode)
 
 def extractFeatures(time_series, config_feature):
-	
+
 	print(time_series.shape)
-	Fs = 250.0  # sampling rate
-	T = 1/Fs # sampling interval
-	# TR = 1.89
+	TR = 1/256.0
 	f_ub = 30
 	f_lb = 0.5
-
 
 	# normalize data to be in terms of percent change
 	pdata = tsu.percent_change(time_series.transpose())
@@ -71,9 +68,3 @@ def extractFeatures(time_series, config_feature):
 # TEMPORARY: THESE ARE THE FEATURES FOR FSL
 def config_to_filename(config_feature):
     return ''
-
-# data_path = 'SampleDataTesting'
-# filename = 'AD_50lp01_short1.csv'
-# time_series = np.array(list(csv.reader(open(os.path.join(data_path, filename))))).astype(np.float)
-# extractFeatures(time_series)
-

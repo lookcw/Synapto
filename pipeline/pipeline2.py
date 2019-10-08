@@ -63,7 +63,9 @@ DATA_TYPE_TO_FOLDERS = {
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
     'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
-    'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean')
+    'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean'),
+    'DLB-AD': ('New_Castle_Data/DLB_clean', 'New_Castle_Data/AD_clean'),
+    'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -74,7 +76,7 @@ MODELS = [
     # LogisticRegressionCV(),
     RandomForestClassifier(),
     GradientBoostingClassifier(),
-    SVC(kernel="rbf",C=5.0),
+    SVC(kernel="rbf", C=5.0),
     KNeighborsClassifier(n_neighbors=5)
 ]
 
@@ -167,14 +169,12 @@ if not config['skip_fs_creation']:
                 copy_config_feature = copy.deepcopy(config_feature)
                 copy_config_feature['bands_func'] = bands_func
                 config_feature_bands.append(copy_config_feature)
-        print (config_feature_bands)
         config_features = config_feature_bands
-    
-    feature_filenames = [config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
-    config_feature) + '.csv' for config_feature in config_features]
-[print(feature_filename) for feature_filename in feature_filenames]
-feature_paths = [os.path.join(FEATURE_SET_FOLDER, feature_filename)
-                 for feature_filename in feature_filenames]
+    for config_feature in config_features:
+        config_feature['filename'] = config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
+            config_feature) + '.csv'
+feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename'])
+                 for config_feature in config_features]
 for feature_path in feature_paths:
     if os.path.exists(feature_path) and not config['force_overwrite']:
         print("feature file already exists... skipping featureset creation")
@@ -188,11 +188,11 @@ if not config['skip_fs_creation']:
     if config['data_type'] == '' and config['positive_folder_path'] and config['negative_folder_path']:
         data_folder_path3 = None
         config['data_type'] = config['negative_folder_path'].split('/')[-1] + \
-        '-' + config['positive_folder_path'].split('/')[-1]
-    print(config_features)
-    print(config['is_bands'])
-    feature_sets = [create_feature_set(config, config_feature) for config_feature in config_features]
-    [write_feature_set(feature_path, feature_set) for (feature_set, feature_path) in zip(feature_sets, feature_paths)]
+            '-' + config['positive_folder_path'].split('/')[-1]
+    feature_sets = [create_feature_set(
+        config, config_feature) for config_feature in config_features]
+    [write_feature_set(feature_path, feature_set) for (
+        feature_set, feature_path) in zip(feature_sets, feature_paths)]
 else:
     feature_sets = [pd.read_csv(feature_path, header='infer')
                     for feature_path in feature_paths]
@@ -204,6 +204,6 @@ else:
 # shuffle rows of dataframe
 feature_sets = [shuffle(feature_set) for feature_set in feature_sets]
 results = [get_results(model, feature_set, config, config_feature) for (
-    feature_set, feature_filename, config_feature) in zip(feature_sets, feature_filenames, config_features) for model in MODELS]
+    feature_set, config_feature) in zip(feature_sets, config_features) for model in MODELS]
 print_results(results)
 write_result_list_to_results_file(RESULTS_FILENAME, results)
