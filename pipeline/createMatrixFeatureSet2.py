@@ -19,9 +19,10 @@ def create_feature_set(CONFIG, config_feature=None):
                                                                                   0, 0, 1, config_feature)
     (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count, 
                                                                                   instance_count, 0, config_feature)
-    labels = STARTER_COLUMNS + \
-        get_labels_from_folder(CONFIG)\
-         + CLASS_COLUMN
+    header = get_labels_from_folder(CONFIG)
+    if CONFIG['concat_type'] == 'horizontal' and CONFIG['epochs_per_instance'] > 1 :
+        header = [ (f'{col}_ep_{i}') for i in range(1,CONFIG['epochs_per_instance'] + 1) for col in header ]
+    labels = STARTER_COLUMNS + header + CLASS_COLUMN
     data = np.array(positive_features + negative_features)
     return pd.DataFrame(data=data,  columns = labels)
 
@@ -106,6 +107,7 @@ def _extract_feature_for_one_patient(filename, patient_data_set, CONFIG, config_
     """
     print(f'extracting features for {filename}')
 
+
     if CONFIG['is_bands']:
         transposed_data_set = np.transpose(patient_data_set)
         transposed_filtered = [config_feature['bands_func'](time_series)
@@ -117,11 +119,19 @@ def _extract_feature_for_one_patient(filename, patient_data_set, CONFIG, config_
     for _ in range(CONFIG['num_instances']):
         instance_features = []
         for _ in range(CONFIG['epochs_per_instance']):
+            if (count+1) * CONFIG['time_points_per_epoch'] > patient_data_set.shape[0]:
+                raise IndexError('timepoints_per_epochs value too high')
             feature_row = CONFIG['feature_class'].extractFeatures(
                 patient_data_set[count*CONFIG['time_points_per_epoch']:(count+1) * CONFIG['time_points_per_epoch']], config_feature)
-            instance_features.append(feature_row)
+            if CONFIG['concat_type'] == 'vertical':
+                instance_features.append(feature_row)
+            if CONFIG['concat_type'] == 'horizontal':
+                instance_features += feature_row
             count += 1
-        features.append(instance_features)
+        if CONFIG['concat_type'] == 'vertical':
+            features.append(instance_features)
+        elif CONFIG['concat_type'] == 'horizontal':
+            features.append([instance_features])
     if hasattr(CONFIG['feature_class'], 'apply_after'):
         features = CONFIG['feature_class'].apply_after(features)
     return (np.array(features), filename)

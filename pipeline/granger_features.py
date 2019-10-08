@@ -68,3 +68,10 @@ def extractFeatures(time_series, config_feature):
 # TEMPORARY: THESE ARE THE FEATURES FOR FSL
 def config_to_filename(config_feature):
     return ''
+<<<<<<< HEAD
+=======
+	
+
+def config_to_filename(config_feature):
+	return ''
+>>>>>>> e3f2a7c59bc6bf71d503ed70e0aad32a294c96dd
