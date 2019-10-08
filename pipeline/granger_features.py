@@ -20,7 +20,7 @@ def getHeader(time_series_electrode):
 def extractFeatures(time_series, config_feature):
 
 	print(time_series.shape)
-	TR = 1.89
+	TR = 1/256.0
 	f_ub = 30
 	f_lb = 0.5
 
