@@ -8,10 +8,12 @@ from nn_keras import nn_keras
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import roc_auc_score
+from sklearn.metrics import roc_curve
 from sklearn.metrics import f1_score
 import csv
 import time
 import os
+import matplotlib.pyplot as plt
 
 
 RESULTS_HEADER = [
@@ -49,10 +51,14 @@ def _metrics(y_true, y_pred, y_scores):
     L = float(len(y_true))
     tn, fp, fn, tp = confusion_matrix(y_true, y_pred).ravel()
     roc_auc = -1
+    fpr, tpr = [], []
     if y_scores is not None:
         # y_conf = list(map(lambda x: max(x), y_scores))
         y_conf = y_scores[:, 1]
         roc_auc = roc_auc_score(y_true, y_conf)
+        fpr, tpr, thresholds = roc_curve(y_true, y_conf)
+        plt.plot(fpr,tpr)
+        plt.show()
     accuracy = accuracy_score(y_true, y_pred)
     f1 = f1_score(y_true, y_pred)
     return {
@@ -60,7 +66,8 @@ def _metrics(y_true, y_pred, y_scores):
         'f1': f1,
         'sensitivity': tp / (fn + tp),
         'specificity': tn / (tn + fp),
-        'roc_auc': roc_auc
+        'roc_auc': roc_auc,
+        'roc_curve': [fpr,tpr]
     }
 
 
@@ -71,7 +78,6 @@ def _write_result_header(results_filename):
 
 
 def print_results(results_list):
-    print(PRINT_RESULTS_HEADER)
     for result in results_list:
         print([
             result['feature_name'],
@@ -108,7 +114,8 @@ def write_result_list_to_results_file(results_filename, results_list):
                 result['feature_filename'],
                 result['num_folds'],
                 result['epochs_per_instance'],
-                result['instances_per_patient']
+                result['instances_per_patient'],
+                result['roc_curve']
             ]
             writer.writerow(result_array)
 
@@ -125,7 +132,6 @@ def _split_dataframe(df):
 def get_results(clf, df, config, config_features):
     metrics = _compute_group_score(clf, df, config['num_folds'])
     (X, y, groups, instance_num) = _split_dataframe(df)
-    print(groups)
     num_patients = max(groups)
     results = dict(metrics)
     results.update({

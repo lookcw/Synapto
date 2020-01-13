@@ -99,3 +99,26 @@ Date,Feature,Data Type,Classifier,Num Patients,Num Features,ROC AUC,Accuracy,F-s
 10/08/2019,Granger,Brazil,none,GradientBoostingClassifier,9,210,0.55,0.6190476190476191,0.6923076923076923,0.8181818181818182,0.4,4,4,1,1
 10/08/2019,Granger,Brazil,none,SVC,9,210,-1,0.38095238095238093,0.5185185185185185,0.6363636363636364,0.1,4,4,1,1
 10/08/2019,Granger,Brazil,none,KNeighborsClassifier,9,210,0.35454545454545455,0.42857142857142855,0.25000000000000006,0.18181818181818182,0.7,4,4,1,1
+12/18/2019,Pearson,NCClean,none,RandomForestClassifier,49,210,0.7899305555555555,0.72,0.78125,0.78125,0.6111111111111112,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,GradientBoostingClassifier,49,210,0.6137152777777778,0.68,0.7575757575757576,0.78125,0.5,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,SVC,49,210,-1,0.68,0.8,1.0,0.1111111111111111,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,KNeighborsClassifier,49,210,0.7482638888888888,0.72,0.8055555555555555,0.90625,0.3888888888888889,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,RandomForestClassifier,49,210,0.7899305555555555,0.72,0.78125,0.78125,0.6111111111111112,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,GradientBoostingClassifier,49,210,0.6137152777777778,0.68,0.7575757575757576,0.78125,0.5,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,SVC,49,210,-1,0.68,0.8,1.0,0.1111111111111111,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,KNeighborsClassifier,49,210,0.7482638888888888,0.72,0.8055555555555555,0.90625,0.3888888888888889,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1
+12/18/2019,Pearson,NCClean,none,RandomForestClassifier,49,210,0.7899305555555555,0.72,0.78125,0.78125,0.6111111111111112,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1,"[array([0.        , 0.        , 0.        , 0.22222222, 0.22222222,
+       0.38888889, 0.38888889, 0.55555556, 0.83333333, 0.94444444,
+       1.        ]), array([0.     , 0.09375, 0.3125 , 0.5    , 0.71875, 0.78125, 0.90625,
+       0.9375 , 0.9375 , 0.96875, 1.     ])]"
+12/18/2019,Pearson,NCClean,none,GradientBoostingClassifier,49,210,0.6137152777777778,0.68,0.7575757575757576,0.78125,0.5,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1,"[array([0.        , 0.        , 0.05555556, 0.05555556, 0.11111111,
+       0.16666667, 0.22222222, 0.22222222, 0.27777778, 0.27777778,
+       0.33333333, 0.33333333, 0.38888889, 0.38888889, 0.44444444,
+       0.44444444, 0.5       , 0.5       , 0.72222222, 0.77777778,
+       0.77777778, 0.88888889, 0.88888889, 0.88888889, 1.        ]), array([0.     , 0.03125, 0.09375, 0.15625, 0.21875, 0.21875, 0.25   ,
+       0.28125, 0.3125 , 0.40625, 0.40625, 0.53125, 0.53125, 0.5625 ,
+       0.5625 , 0.71875, 0.71875, 0.8125 , 0.8125 , 0.84375, 0.875  ,
+       0.875  , 0.9375 , 1.     , 1.     ])]"
+12/18/2019,Pearson,NCClean,none,SVC,49,210,-1,0.68,0.8,1.0,0.1111111111111111,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1,"[[], []]"
+12/18/2019,Pearson,NCClean,none,KNeighborsClassifier,49,210,0.7482638888888888,0.72,0.8055555555555555,0.90625,0.3888888888888889,Pearson-_NCClean_1_instances_23000_epochs_1_timepoints_.csv,4,1,1,"[array([0.        , 0.11111111, 0.22222222, 0.61111111, 0.77777778,
+       1.        ]), array([0.     , 0.28125, 0.6875 , 0.90625, 0.9375 , 1.     ])]"
