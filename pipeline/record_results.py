@@ -14,6 +14,7 @@ import csv
 import time
 import os
 import matplotlib.pyplot as plt
+from dataset_functions import split_dataframe
 
 
 RESULTS_HEADER = [
@@ -120,15 +121,6 @@ def write_result_list_to_results_file(results_filename, results_list):
             writer.writerow(result_array)
 
 
-def _split_dataframe(df):
-    X = df.drop(['patient num', 'instance num',
-                 'instance code', 'class'], axis=1).values
-    y = df['class'].values
-    groups = df['patient num'].values
-    instance_nums = df['instance num'].values
-    return (X, y, groups, instance_nums)
-
-
 def get_results(clf, df, config, config_features):
     metrics = _compute_group_score(clf, df, config['num_folds'])
     (X, y, groups, instance_num) = _split_dataframe(df)
@@ -169,17 +161,9 @@ def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
         y_scores = np.array(np.zeros((len(y), 2)))
     count = 0
     if nn_model == []:
-        for train, test in gkf.split(X, y, groups=groups):
-            # try:
+        for train, test in gkf.split(X, y, groups=groups)
             clf.fit(X[train], y[train])
-            # except ValueError:
-            # continue
-            # clf = nn_keras(X, y, n_hlayers=3, neurons=[
-            # 	100, 100, 100], learning_rate=0.1, n_folds=3, n_classes=2, seed=5, grps=groups)
-            # clf.fit(X[train], y[train])
-
             y_pred[count:count+len(test)] = clf.predict(X[test])
-
             if "keras" in str(clf):
                 y_true[count:count+len(test)] = np.argmax(y[test], axis=1)
             else:

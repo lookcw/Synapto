@@ -1,7 +1,5 @@
 import os
 import sys
-from subprocess import Popen, PIPE, call
-import numpy as np
 import pandas as pd
 from pandas import DataFrame
 from headers import compareHeader
