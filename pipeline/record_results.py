@@ -165,6 +165,7 @@ def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     if nn_model == []:
         for train, test in gkf.split(X, y, groups=groups):
             # try:
+            print(train)
             clf.fit(X[train], y[train])
             # except ValueError:
             # continue

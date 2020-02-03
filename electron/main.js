@@ -18,7 +18,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
-
+  mainWindow.loadFile('frame.html')
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -29,13 +29,21 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
+app.on('ready', createWindow, () => {
+  // const mainWindow = new BrowserWindow({width: 800, height: 600, frame: false});
+  const { Tray } = require('electron')
+  const appIcon = new Tray('/Users/megha/Downloads/groupBrick.jpeg');
+  console.log(appIcon)
 
+  // Do stuff with mainWindow...
+});
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar

@@ -20,8 +20,8 @@ def create_feature_set(CONFIG, config_feature=None):
     (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count, 
                                                                                   instance_count, 0, config_feature)
     header = get_labels_from_folder(CONFIG)
-    if CONFIG['concat_type'] == 'horizontal' and CONFIG['epochs_per_instance'] > 1 :
-        header = [ (f'{col}_ep_{i}') for i in range(1,CONFIG['epochs_per_instance'] + 1) for col in header ]
+    if CONFIG['concat_type'] == 'horizontal' and CONFIG['epochs_per_instance'] > 1:
+        header = [ (f"{col}_ep_{i}") for i in range(1,CONFIG['epochs_per_instance'] + 1) for col in header ]
     labels = STARTER_COLUMNS + header + CLASS_COLUMN
     data = np.array(positive_features + negative_features)
     return pd.DataFrame(data=data,  columns = labels)
@@ -105,7 +105,7 @@ def _extract_feature_for_one_patient(filename, patient_data_set, CONFIG, config_
     Returns:
         3d numpy array -- 3d array, where first dimension is across instances, 2nd is across epochs, 3rd is across time points
     """
-    print(f'extracting features for {filename}')
+    print(f"extracting features for {filename}")
 
 
     if CONFIG['is_bands']:
