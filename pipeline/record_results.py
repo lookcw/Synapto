@@ -15,6 +15,7 @@ import time
 import os
 import matplotlib.pyplot as plt
 from dataset_functions import split_dataframe
+import pandas as pd
 
 
 RESULTS_HEADER = [
@@ -55,10 +56,10 @@ def _metrics(y_true, y_pred, y_scores):
     fpr, tpr = [], []
     if y_scores is not None:
         # y_conf = list(map(lambda x: max(x), y_scores))
-        y_conf = y_scores[:, 1]
+        y_conf = y_scores[:,1]
         roc_auc = roc_auc_score(y_true, y_conf)
         fpr, tpr, thresholds = roc_curve(y_true, y_conf)
-        plt.plot(fpr,tpr)
+        plt.plot(fpr, tpr)
         plt.show()
     accuracy = accuracy_score(y_true, y_pred)
     f1 = f1_score(y_true, y_pred)
@@ -68,7 +69,7 @@ def _metrics(y_true, y_pred, y_scores):
         'sensitivity': tp / (fn + tp),
         'specificity': tn / (tn + fp),
         'roc_auc': roc_auc,
-        'roc_curve': [fpr,tpr]
+        'roc_curve': [fpr, tpr]
     }
 
 
@@ -122,8 +123,9 @@ def write_result_list_to_results_file(results_filename, results_list):
 
 
 def get_results(clf, df, config, config_features):
-    metrics = _compute_group_score(clf, df, config['num_folds'])
-    (X, y, groups, instance_num) = _split_dataframe(df)
+    metrics = _compute_group_score(
+        clf, df, config['num_folds'], config['is_voted_instances'])
+    (X, y, groups, instance_num) = split_dataframe(df)
     num_patients = max(groups)
     results = dict(metrics)
     results.update({
@@ -142,9 +144,40 @@ def get_results(clf, df, config, config_features):
     return results
 
 
-# define function to compute cross validation score
-def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
-    (X, y, groups, instance_num) = _split_dataframe(df)
+"""
+This function returns the metrics for predictions predicted by _compute_group_pred
+
+Raises:
+    Exception: [description]
+
+Returns:
+    [type] -- [description]
+"""
+def _compute_group_score(clf, df, num_folds, is_voted_instances, scoring='accuracy', nn_model=[]):
+
+    if is_voted_instances:
+        (y_true, y_pred, y_scores, groups) = _compute_group_pred(
+            clf, df, num_folds, is_voted_instances)
+        pred_dict = {'y_pred': y_pred, 'groups': groups, 'y_true': y_true}
+        df = pd.DataFrame(pred_dict)
+        df['vote'] = df.groupby(['groups']).transform(
+            lambda x: x.value_counts().index[0])['y_pred']
+        df['conf'] = y_scores[:, 0]
+        print(df.sort_values(by=['groups']))
+        voted = df.groupby(['groups']).mean()
+        print(voted)
+        inv_conf = 1 - df['conf']
+        voted_scores = np.array(list(zip(df['conf'],inv_conf)))
+        print(_metrics(df['y_true'],df['y_pred'], voted_scores))
+        raise Exception('this is supposed to happen dw')
+
+    else:
+        return _metrics(y_true, y_pred, y_scores)
+
+
+def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
+    (X, y, groups, instance_num) = split_dataframe(df)
+    print(sorted(list(zip(groups, y)), key=lambda x: x[0]))
     if "keras" in str(clf):
         y = y.astype(int)
         y = np.eye(2)[y]
@@ -156,14 +189,16 @@ def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     gkf = GroupKFold(n_splits=num_folds)
     y_true = np.array(np.zeros(len(y)))
     y_pred = np.array(np.zeros(len(y)))
+    y_groups = np.array(np.zeros(len(y)))
     y_scores = None
     if isPredictProba:
         y_scores = np.array(np.zeros((len(y), 2)))
     count = 0
     if nn_model == []:
-        for train, test in gkf.split(X, y, groups=groups)
+        for train, test in gkf.split(X, y, groups=groups):
             clf.fit(X[train], y[train])
             y_pred[count:count+len(test)] = clf.predict(X[test])
+            y_groups[count:count+len(test)] = groups[test]
             if "keras" in str(clf):
                 y_true[count:count+len(test)] = np.argmax(y[test], axis=1)
             else:
@@ -173,7 +208,8 @@ def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
                 y_scores[count:count+len(test)] = clf.predict_proba(X[test])
             clf = clone(clf)
             count += len(test)
-        return _metrics(y_true, y_pred, y_scores)
+        print(sorted(list(zip(groups, y_true)), key=lambda x: x[0]))
+        return (y_true, y_pred, y_scores, y_groups)
 
     else:
         fold_num = 1
@@ -197,4 +233,4 @@ def _compute_group_score(clf, df, num_folds, scoring='accuracy', nn_model=[]):
 
         y_pred = np.where(y_pred > 0.5, 1, 0)
         y_true = np.where(y_true > 0.5, 1, 0)
-        return _metrics(y_true, y_pred, y_scores)
+        return (y_true, y_pred, y_scores, groups)
