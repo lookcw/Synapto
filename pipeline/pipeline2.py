@@ -104,7 +104,8 @@ config = {
     'num_instances': 1,
     'epochs_per_instance': 1,
     'num_folds': 4,
-    'concat_type': 'vertical'
+    'concat_type': 'vertical',
+    'is_voted_instances': False
 }
 
 CONFIG_FEATURES = {
@@ -144,6 +145,8 @@ for i in range(1, len(sys.argv), 2):
         config['num_instances'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-t":
         config['time_points_per_epoch'] = int(sys.argv[i+1])
+    elif str(sys.argv[i]) == "-v":
+        config['is_voted_instances'] = True
     elif str(sys.argv[i]) == "-fs":
         config['filename'] = sys.argv[i+1].split('/')[-1]
         config['skip_fs_creation'] = True
