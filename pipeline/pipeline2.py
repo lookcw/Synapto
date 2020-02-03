@@ -64,6 +64,8 @@ DATA_TYPE_TO_FOLDERS = {
     'AR': ('BrazilRawData/HC_AR', 'BrazilRawData/AD_AR'),
     'Test': ('BrazilRawData/TestHC', 'BrazilRawData/TestAD'),
     'NCClean': ('New_Castle_Data/HC_clean', 'New_Castle_Data/AD_clean'),
+    'NCF50': ('New_Castle_Data/HCF50', 'New_Castle_Data/ADF50'),
+    'NCFN50': ('New_Castle_Data/HCFN50', 'New_Castle_Data/ADFN50'),
     'DLB-AD': ('New_Castle_Data/DLB_clean', 'New_Castle_Data/AD_clean'),
     'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean')
 }
