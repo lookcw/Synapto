@@ -103,7 +103,7 @@ config = {
     'time_points_per_epoch': 160000,  # per instance
     'num_instances': 1,
     'epochs_per_instance': 1,
-    'num_folds': 4,
+    'num_folds': 10,
     'concat_type': 'vertical',
     'is_voted_instances': False
 }
