@@ -67,7 +67,12 @@ DATA_TYPE_TO_FOLDERS = {
     'NCF50': ('New_Castle_Data/HCF50', 'New_Castle_Data/ADF50'),
     'NCFN50': ('New_Castle_Data/HCFN50', 'New_Castle_Data/ADFN50'),
     'DLB-AD': ('New_Castle_Data/DLB_clean', 'New_Castle_Data/AD_clean'),
-    'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean')
+    'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean'),
+    'NC_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADFN50_alpha'),
+    'NC_beta': ('New_Castle_Data/HCFN50_beta', 'New_Castle_Data/ADFN50_beta'),
+    'NC_gamma': ('New_Castle_Data/HCFN50_gamma', 'New_Castle_Data/ADFN50_gamma'),
+    'NC_delta': ('New_Castle_Data/HCFN50_delta', 'New_Castle_Data/ADFN50_delta'),
+    'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
