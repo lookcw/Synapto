@@ -24,6 +24,19 @@ def extractFeatures(time_series_electrode, config_feature):
     
     return list(map(float, vec))
 
+
+    # Instead of getting the upper triangular matrix, get average value for each electrode (avoid comparing same electrode but get value for everything else)
+    # After getting the electrode values for each comparision, get the mean and append this value to vec which holds the feature values of interest
+    vec = []
+    for i in range(len(mat)):
+        avg_elec = []
+        for j in range(len(mat[0])):
+            if i not j:
+                avg_elec.append(mat[i][j])
+        vec.append(np.mean(avg_elec))
+    return list(map(float, vec))
+
+
 def config_to_filename(config_feature):
     return str(config_feature['l']) + "_l_" + str(config_feature['m']) + "_m_" + str(config_feature['p']) + '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x']) + '_x_' + str(config_feature['w']) + '_w_.csv'
     

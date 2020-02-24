@@ -32,5 +32,6 @@ def average_features(set_averages):
 
     # os.path.join(AVERAGE_FEATURE_SET_FOLDER, name_csv)
 
+# How do I do a set that doesn't reset everytime its run? (or how to do a static set)
 set_features = []
 average_features(set_features)
