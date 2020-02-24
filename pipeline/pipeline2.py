@@ -34,6 +34,8 @@ from shuffle_data import shuffle_data
 import copy
 #from nn_Recurr import nn_Recurr
 
+AVERAGE_FILES_SET = []
+
 BANDS = [
     alpha_band_pass,
     beta_band_pass,
@@ -93,6 +95,7 @@ config = {
     'data_folder': '',
     'identifier_func': paramToFilename,
     'is_bands': False,
+    'avg_features': False,
     'hc': False,
     'ad': False,
     'dlb': False,
@@ -156,6 +159,8 @@ for i in range(1, len(sys.argv), 2):
         config['concat_type'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-bands":
         config['is_bands'] = True
+    elif str(sys.argv[i]) == "-avg_features":
+        config['avg_features'] = True
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
