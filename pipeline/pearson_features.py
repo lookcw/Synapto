@@ -3,7 +3,8 @@ import sys
 import pandas as pd
 import numpy as np
 from pandas import DataFrame
-from headers import compareHeader, linearHeader
+from headers import compareHeader, linearHeader, regionHeader
+from average_heatmap import average_heatmap
 
 import numpy
 
@@ -13,6 +14,8 @@ elec = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19, 20]
 def getHeader(time_series_electrode, config_feature):
     if config_feature['compress']:
         return linearHeader(time_series_electrode)
+    if config_feature['regions']:
+        return regionHeader(5)
     else:
         return compareHeader(time_series_electrode)
 
@@ -33,6 +36,10 @@ def extractFeatures(time_series_electrode, config_feature):
     if config_feature['compress']:
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(corr_mat,axis=1) - 1)/numElectrodes
+    elif config_feature['regions']:
+        region_corr_mat = average_heatmap(corr_mat)
+        region_corr_mat = np.array(region_corr_mat)
+        return region_corr_mat[np.triu_indices(5, 1)]
     else:
         return corr_mat[np.triu_indices(numElectrodes, 1)]
 

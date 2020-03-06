@@ -2,12 +2,14 @@ import os
 import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
-from headers import compareHeader, linearHeader
+from headers import compareHeader, linearHeader, regionHeader
 
 
 def getHeader(time_series_electrode, config_feature):
     if config_feature['compress']:
         return linearHeader(time_series_electrode)
+    elif config_feature['regions']:
+        return regionHeader(5)
     else:
         return compareHeader(time_series_electrode)
 
@@ -34,12 +36,13 @@ def extractFeatures(time_series_electrode, config_feature):
     if config_feature['compress']:
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(mat, axis=1) - 1)/numElectrodes
+    elif config_feature['regions']:
+        region_corr_mat = average_heatmap(corr_mat)
+        region_corr_mat = np.array(region_corr_mat)
+        return region_corr_mat[np.triu_indices(5, 1)]
     else:
         return mat[np.triu_indices(numElectrodes, 1)]
 
 
 def config_to_filename(config_feature):
-    return str(config_feature['l']) + "_l_" + str(config_feature['m']) + "_m_" + str(config_feature['p']) + \
-        '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x']
-                                                       ) + '_x_' + str(config_feature['w']) + '_w_' \
-        + str(config_feature['compress'])+'_compress'
+    return str(config_feature)[1:-1].replace(' ','').replace('\'','')
