@@ -23,7 +23,7 @@ def fsl_settings():
 
 def pearson_settings():
     PEARSON_1 = {
-        'compress': True,
-        'regions': False
+        'compress': False,
+        'regions': True
     }
     return [PEARSON_1]
