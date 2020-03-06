@@ -1,34 +1,43 @@
 import os
 import sys
 import pandas as pd
+import numpy as np
 from pandas import DataFrame
-from headers import compareHeader
+from headers import compareHeader, linearHeader
+
 import numpy
 
 elec = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 15, 16, 17, 18, 19, 20]
 
 
-def getHeader(time_series_electrode):
-    return compareHeader(time_series_electrode)
+def getHeader(time_series_electrode, config_feature):
+    if config_feature['compress']:
+        return linearHeader(time_series_electrode)
+    else:
+        return compareHeader(time_series_electrode)
 
 
 def extractFeatures(time_series_electrode, config_feature):
     eegMat = pd.DataFrame(data=time_series_electrode)
-    numpy.savetxt("pearson_example.csv", eegMat, delimiter=",")
 #     pctChange = eegMat.pct_change()
     numElectrodes = len(eegMat.columns)
-    features = [None] * int(numElectrodes * (numElectrodes - 1)/2)
-    featuresI = 0
+    corr_mat = np.zeros((numElectrodes, numElectrodes))
     for i in range(numElectrodes):
         #     for i in range(numElectrodes):
         # for j in range(i+1,numElectrodes):
+        corr_mat[i][i] = 1
         for j in range(i+1, numElectrodes):
-            features[featuresI] = eegMat.iloc[:, i].corr(eegMat.iloc[:, j])
-            featuresI += 1
-    return features
+            corr = eegMat.iloc[:, i].corr(eegMat.iloc[:, j])
+            corr_mat[i][j] = corr
+            corr_mat[j][i] = corr
+    if config_feature['compress']:
+        # subtracting 2 because every electrode always has a 1 in its column
+        return (np.sum(corr_mat,axis=1) - 1)/numElectrodes
+    else:
+        return corr_mat[np.triu_indices(numElectrodes, 1)]
 
 # TEMPORARY: THESE ARE THE FEATURES FOR FSL
 
 
 def config_to_filename(config_feature):
-    return ''
+    return str(config_feature)[1:-1].replace(' ','').replace('\'','')

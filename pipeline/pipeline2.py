@@ -192,7 +192,6 @@ for feature_path in feature_paths:
     if os.path.exists(feature_path) and not config['force_overwrite']:
         print("feature file already exists... skipping featureset creation")
         config['skip_fs_creation'] = True
-print(get_labels_from_folder(config))
 ############################################## FEATURE SET CREATION/ READING ##############################################
 if not config['skip_fs_creation']:
     if not config['positive_folder_path'] or not config['negative_folder_path']:
