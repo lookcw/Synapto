@@ -33,11 +33,11 @@ def extractFeatures(time_series, config_feature):
 		yf = fft(y)
 		yf = yf[0:int((N+1)/2)] # get useable half of the fft vector
 		freq = np.arange(0,Fs/2,Fs/N)
-		yf_above1 = yf[freq>=2] # get fft value when freq is greater than 1
+		yf_between = yf[(freq>=3.5) & (freq <= 14)] # get fft value when freq is greater than 1
 
 		#max_index = np.argmax(yf_above1)
 
-		max_yf = max(yf_above1)
+		max_yf = max(yf_between)
 		max_index = np.where(yf == max_yf)[0][0]
 		freqMax = freq[max_index] # this is the dominant frequency 
 
