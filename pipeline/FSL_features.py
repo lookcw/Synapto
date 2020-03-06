@@ -40,6 +40,6 @@ def extractFeatures(time_series_electrode, config_feature):
 
 def config_to_filename(config_feature):
     return str(config_feature['l']) + "_l_" + str(config_feature['m']) + "_m_" + str(config_feature['p']) + \
-    '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x'] \
-                                                   ) + '_x_' + str(config_feature['w']) + '_w_' \
-    + str(config_feature['compress'])+'_compress.csv'
+        '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x']
+                                                       ) + '_x_' + str(config_feature['w']) + '_w_' \
+        + str(config_feature['compress'])+'_compress'

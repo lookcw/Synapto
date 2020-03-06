@@ -83,7 +83,6 @@ MODELS = [
     # LogisticRegressionCV(),
     RandomForestClassifier(),
     GradientBoostingClassifier(),
-    SVC(kernel="rbf", C=5.0),
     KNeighborsClassifier(n_neighbors=5)
 ]
 
@@ -119,6 +118,7 @@ CONFIG_FEATURES = {
     'DomFreq': [{}],
     'Granger': [{}],
 }
+config_features = [{}]
 
 ############################################## PARAMETER READING & SETTING ##############################################
 
@@ -186,8 +186,10 @@ if not config['skip_fs_creation']:
     for config_feature in config_features:
         config_feature['filename'] = config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
             config_feature) + '.csv'
-feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename'])
-                 for config_feature in config_features]
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename']) for config_feature in config_features]
+else:
+    config_features[0]['filename'] = config['filename']
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config['filename'])]
 for feature_path in feature_paths:
     if os.path.exists(feature_path) and not config['force_overwrite']:
         print("feature file already exists... skipping featureset creation")

@@ -69,7 +69,7 @@ def _metrics(y_true, y_pred, y_scores):
         'sensitivity': tp / (fn + tp),
         'specificity': tn / (tn + fp),
         'roc_auc': roc_auc,
-        'roc_curve': [fpr, tpr]
+        'roc_curve': list(map(list,[fpr, tpr]))
     }
 
 
