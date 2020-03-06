@@ -2,12 +2,14 @@ import os
 import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
-from headers import compareHeader, linearHeader
+from headers import compareHeader, linearHeader, regionHeader
 
 
 def getHeader(time_series_electrode, config_feature):
     if config_feature['compress']:
         return linearHeader(time_series_electrode)
+    elif config_feature['regions']:
+        return regionHeader(5)
     else:
         return compareHeader(time_series_electrode)
 

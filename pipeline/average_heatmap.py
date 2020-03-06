@@ -15,7 +15,7 @@ def average_heatmap(matrix):
         for j in range(i+1,len(regions)):
             _add_correlation(i, j, matrix, regions, region_matrix)
 
-    print(region_matrix)
+    #print(region_matrix)
     return region_matrix
 
 
