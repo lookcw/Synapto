@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from pandas import DataFrame
 from headers import compareHeader, linearHeader
+from average_heatmap import average_heatmap
 
 import numpy
 
@@ -33,6 +34,9 @@ def extractFeatures(time_series_electrode, config_feature):
     if config_feature['compress']:
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(corr_mat,axis=1) - 1)/numElectrodes
+    elif config_feature['regions']:
+        region_corr_mat = average_heatmap(corr_mat)
+        return region_corr_mat[np.triu_indices(numElectrodes, 1)]
     else:
         return corr_mat[np.triu_indices(numElectrodes, 1)]
 
