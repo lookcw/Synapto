@@ -3,6 +3,7 @@ import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
 from headers import compareHeader, linearHeader, regionHeader
+from average_heatmap import average_heatmap
 
 
 def getHeader(time_series_electrode, config_feature):
@@ -20,7 +21,7 @@ def extractFeatures(time_series_electrode, config_feature):
     if "TERM_PROGRAM" in os.environ:
         p = Popen(["./FSL_mac", "-l", "1", "-m", "10", "-p", "0.049", "-s",
                    "1", "-x", "200", "-w", "2000"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        inMat = "\n".join([','.join(x)
+        inMat = "\n".join([' '.join(x)
                            for x in time_series_electrode]).encode('utf-8')
         output, err = p.communicate(input=inMat)
         mat = [s.strip().split(' ')
@@ -37,8 +38,9 @@ def extractFeatures(time_series_electrode, config_feature):
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(mat, axis=1) - 1)/numElectrodes
     elif config_feature['regions']:
-        region_corr_mat = average_heatmap(corr_mat)
-        region_corr_mat = np.array(region_corr_mat)
+        mat = [[float(n) for n in lst] for lst in mat]
+        region_corr_mat = average_heatmap(mat)
+        region_corr_mat = np.array(mat)
         return region_corr_mat[np.triu_indices(5, 1)]
     else:
         return mat[np.triu_indices(numElectrodes, 1)]
