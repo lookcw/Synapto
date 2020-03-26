@@ -1,37 +1,33 @@
 import os
+import sys
 import pandas as pd
 import argparse
 import seaborn as sns
 import matplotlib.pyplot as plt 
 from identifier import filenameToParam
 
-# AVERAGE_FEATURE_SET_FOLDER = '/Users/megha/Synapto/pipeline/AverageFeatures/'
+# Takes in a set which contains names of files (feature averages that already exist)
+def average_features(features_file):
+    
+    feature_name = features_file.split('.')[0]
+    feature_avg_filename = feature_name + "_averages.csv"
+    print(feature_avg_filename)
 
-def average_features(set_averages):
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i", help="input feature file to save model for")
-    args = parser.parse_args()
-    in_filename = args.i
-    feature_name = filenameToParam(in_filename)[0].split('/')[1]
-    print(feature_name)
+    # if feature_avg_filename not in set_averages:
+    if not os.path.exists(feature_avg_filename):
+        # set_averages.append(feature_avg_filename)
 
-    if feature_name not in set_averages:
-
-        set_averages.append(feature_name)
-       
-        dataset = pd.read_csv(in_filename).drop(columns=['instance code','patient num','instance num'])
+        dataset = pd.read_csv(features_file).drop(columns=['instance code','patient num','instance num'])
         meaned = dataset.groupby(['class']).mean()
         data = meaned
         data.insert(0, "name_of_feature", feature_name)
         print(data)
-        name_csv = feature_name + "_averages.csv"
-        
-        # name_csv = AVERAGE_FEATURE_SET_FOLDER + feature_name + "_averages.csv"
-        # setting the csv file 
-        data.to_csv(name_csv)
 
-    # os.path.join(AVERAGE_FEATURE_SET_FOLDER, name_csv)
+        data.to_csv(feature_avg_filename)
+    else:
+        print("File for those feature averages already exists!")
 
-# How do I do a set that doesn't reset everytime its run? (or how to do a static set)
-set_features = []
-average_features(set_features)
+if __name__ == "__main__":
+    # set_averages = []
+    features_file = sys.argv[1]
+    average_features(features_file)
