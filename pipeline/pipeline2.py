@@ -69,7 +69,12 @@ DATA_TYPE_TO_FOLDERS = {
     'NCF50': ('New_Castle_Data/HCF50', 'New_Castle_Data/ADF50'),
     'NCFN50': ('New_Castle_Data/HCFN50', 'New_Castle_Data/ADFN50'),
     'DLB-AD': ('New_Castle_Data/DLB_clean', 'New_Castle_Data/AD_clean'),
-    'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean')
+    'HC-DLB': ('New_Castle_Data/HC_clean', 'New_Castle_Data/DLB_clean'),
+    'NC_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADFN50_alpha'),
+    'NC_beta': ('New_Castle_Data/HCFN50_beta', 'New_Castle_Data/ADFN50_beta'),
+    'NC_gamma': ('New_Castle_Data/HCFN50_gamma', 'New_Castle_Data/ADFN50_gamma'),
+    'NC_delta': ('New_Castle_Data/HCFN50_delta', 'New_Castle_Data/ADFN50_delta'),
+    'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -80,7 +85,6 @@ MODELS = [
     # LogisticRegressionCV(),
     RandomForestClassifier(),
     GradientBoostingClassifier(),
-    SVC(kernel="rbf", C=5.0),
     KNeighborsClassifier(n_neighbors=5)
 ]
 
@@ -106,8 +110,9 @@ config = {
     'time_points_per_epoch': 160000,  # per instance
     'num_instances': 1,
     'epochs_per_instance': 1,
-    'num_folds': 4,
-    'concat_type': 'vertical'
+    'num_folds': 10,
+    'concat_type': 'vertical',
+    'is_voted_instances': False
 }
 
 CONFIG_FEATURES = {
@@ -116,6 +121,7 @@ CONFIG_FEATURES = {
     'DomFreq': [{}],
     'Granger': [{}],
 }
+config_features = [{}]
 
 ############################################## PARAMETER READING & SETTING ##############################################
 
@@ -147,6 +153,8 @@ for i in range(1, len(sys.argv), 2):
         config['num_instances'] = int(sys.argv[i+1])
     elif str(sys.argv[i]) == "-t":
         config['time_points_per_epoch'] = int(sys.argv[i+1])
+    elif str(sys.argv[i]) == "-v":
+        config['is_voted_instances'] = True
     elif str(sys.argv[i]) == "-fs":
         config['filename'] = sys.argv[i+1].split('/')[-1]
         config['skip_fs_creation'] = True
@@ -183,13 +191,14 @@ if not config['skip_fs_creation']:
     for config_feature in config_features:
         config_feature['filename'] = config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
             config_feature) + '.csv'
-feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename'])
-                 for config_feature in config_features]
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename']) for config_feature in config_features]
+else:
+    config_features[0]['filename'] = config['filename']
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config['filename'])]
 for feature_path in feature_paths:
     if os.path.exists(feature_path) and not config['force_overwrite']:
         print("feature file already exists... skipping featureset creation")
         config['skip_fs_creation'] = True
-print(get_labels_from_folder(config))
 ############################################## FEATURE SET CREATION/ READING ##############################################
 if not config['skip_fs_creation']:
     if not config['positive_folder_path'] or not config['negative_folder_path']:

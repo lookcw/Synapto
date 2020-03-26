@@ -11,7 +11,7 @@ def metrics(y_true,y_pred,y_scores):
 	roc_auc = -1
 	if y_scores is not None:
 		# y_conf = list(map(lambda x: max(x), y_scores))
-		y_conf = y_scores[:,1]
+		y_conf = y_scores[:,y_pred]
 		roc_auc = roc_auc_score(y_true, y_conf)
 	accuracy = accuracy_score(y_true, y_pred)
 	f1 = f1_score(y_true,y_pred)

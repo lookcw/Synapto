@@ -69,7 +69,7 @@ def _metrics(y_true, y_pred, y_scores):
         'sensitivity': tp / (fn + tp),
         'specificity': tn / (tn + fp),
         'roc_auc': roc_auc,
-        'roc_curve': [fpr, tpr]
+        'roc_curve': list(map(list,[fpr, tpr]))
     }
 
 
@@ -154,30 +154,37 @@ Returns:
     [type] -- [description]
 """
 def _compute_group_score(clf, df, num_folds, is_voted_instances, scoring='accuracy', nn_model=[]):
+    (y_true, y_pred, y_scores, groups) = _compute_group_pred(
+        clf, df, num_folds, is_voted_instances)
+    pd.set_option('display.max_rows', 150)
 
-    if is_voted_instances:
-        (y_true, y_pred, y_scores, groups) = _compute_group_pred(
-            clf, df, num_folds, is_voted_instances)
+
+
+    if is_voted_instances and y_scores is not None:
+        pred_dict = {'groups': groups, 'y_true': y_true,'conf':y_scores[:, 1]}
+        df = pd.DataFrame(pred_dict)
+        voted = df.groupby(['groups']).mean()
+        voted['y_pred'] = np.where(voted['conf']>.5, 1, 0)        
+        inv_conf = 1 - df['conf']
+        voted_scores = np.array(list(zip(inv_conf,voted['conf'])))
+        return _metrics(voted['y_true'],voted['y_pred'], voted_scores)
+
+
+    elif is_voted_instances and y_scores is None:
         pred_dict = {'y_pred': y_pred, 'groups': groups, 'y_true': y_true}
         df = pd.DataFrame(pred_dict)
         df['vote'] = df.groupby(['groups']).transform(
             lambda x: x.value_counts().index[0])['y_pred']
-        df['conf'] = y_scores[:, 0]
-        print(df.sort_values(by=['groups']))
-        voted = df.groupby(['groups']).mean()
-        print(voted)
-        inv_conf = 1 - df['conf']
-        voted_scores = np.array(list(zip(df['conf'],inv_conf)))
-        print(_metrics(df['y_true'],df['y_pred'], voted_scores))
-        raise Exception('this is supposed to happen dw')
+        return _metrics(df['y_true'],df['vote'], None)
 
     else:
+        (y_true, y_pred, y_scores, groups) = _compute_group_pred(
+            clf, df, num_folds, is_voted_instances)
         return _metrics(y_true, y_pred, y_scores)
 
 
 def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     (X, y, groups, instance_num) = split_dataframe(df)
-    print(sorted(list(zip(groups, y)), key=lambda x: x[0]))
     if "keras" in str(clf):
         y = y.astype(int)
         y = np.eye(2)[y]
@@ -208,7 +215,6 @@ def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
                 y_scores[count:count+len(test)] = clf.predict_proba(X[test])
             clf = clone(clf)
             count += len(test)
-        print(sorted(list(zip(groups, y_true)), key=lambda x: x[0]))
         return (y_true, y_pred, y_scores, y_groups)
 
     else:
