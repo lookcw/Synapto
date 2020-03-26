@@ -7,7 +7,9 @@ def fsl_settings():
         'p': 0.3,
         's': 1,
         'x': 10,
-        'w': 256
+        'w': 256,
+        'compress':True,
+        'regions': False
     }
     FSL_2 = {
         'l': 1,
@@ -17,9 +19,11 @@ def fsl_settings():
         'x': 100,
         'w': 500
     }
-    return [FSL_1, FSL_2]
+    return [FSL_1]
 
 def pearson_settings():
     PEARSON_1 = {
+        'compress': False,
+        'regions': True
     }
     return [PEARSON_1]

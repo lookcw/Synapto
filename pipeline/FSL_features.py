@@ -2,33 +2,47 @@ import os
 import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
-from headers import compareHeader
+from headers import compareHeader, linearHeader, regionHeader
 
-def getHeader(time_series_electrode):
-    return compareHeader(time_series_electrode)
+
+def getHeader(time_series_electrode, config_feature):
+    if config_feature['compress']:
+        return linearHeader(time_series_electrode)
+    elif config_feature['regions']:
+        return regionHeader(5)
+    else:
+        return compareHeader(time_series_electrode)
+
 
 def extractFeatures(time_series_electrode, config_feature):
     time_series_electrode = time_series_electrode.astype(str)
+    numElectrodes = len(time_series_electrode[0])
     if "TERM_PROGRAM" in os.environ:
         p = Popen(["./FSL_mac", "-l", "1", "-m", "10", "-p", "0.049", "-s",
                    "1", "-x", "200", "-w", "2000"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        inMat = "\n".join([','.join(x) for x in time_series_electrode]).encode('utf-8')
+        inMat = "\n".join([','.join(x)
+                           for x in time_series_electrode]).encode('utf-8')
         output, err = p.communicate(input=inMat)
-        mat = [s.strip().split(' ') for s in output.decode().strip().split('\n')]
+        mat = [s.strip().split(' ')
+               for s in output.decode().strip().split('\n')]
     else:
         p = Popen(["./FSL_linux", "-l", "1", "-m", "10", "-p", "0.049", "-s",
                    "1", "-x", "200", "-w", "2000"], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        inMat = "\n".join([','.join(x) for x in time_series_electrode]).encode('utf-8')
+        inMat = "\n".join([','.join(x)
+                           for x in time_series_electrode]).encode('utf-8')
         output, err = p.communicate(input=inMat)
-        mat = [s.strip().split(' ') for s in output.decode().strip().split('\n')]
-    vec = []
-    for i in range(len(mat)):
-        for j in range(len(mat[0])):
-            if j > i:  # gets upper triangular matrix
-                vec.append(mat[i][j])
-    return list(map(float, vec))
+        mat = np.array([s.strip().split(' ')
+                        for s in output.decode().strip().split('\n')]).astype(float)
+    if config_feature['compress']:
+        # subtracting 2 because every electrode always has a 1 in its column
+        return (np.sum(mat, axis=1) - 1)/numElectrodes
+    elif config_feature['regions']:
+        region_corr_mat = average_heatmap(corr_mat)
+        region_corr_mat = np.array(region_corr_mat)
+        return region_corr_mat[np.triu_indices(5, 1)]
+    else:
+        return mat[np.triu_indices(numElectrodes, 1)]
+
 
 def config_to_filename(config_feature):
-    return str(config_feature['l']) + "_l_" + str(config_feature['m']) + "_m_" + str(config_feature['p']) + '_p_' + str(config_feature['s']) + '_s_' + str(config_feature['x']) + '_x_' + str(config_feature['w']) + '_w_.csv'
-    
-    
+    return str(config_feature)[1:-1].replace(' ','').replace('\'','')
