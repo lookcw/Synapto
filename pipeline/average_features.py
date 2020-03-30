@@ -9,7 +9,8 @@ from identifier import filenameToParam
 # Takes in a set which contains names of files (feature averages that already exist)
 def average_features(features_file):
     
-    feature_name = features_file.split('.')[0]
+    # Feaature name = Get name before the ".csv"
+    feature_name = features_file.split('.')[0] 
     feature_avg_filename = feature_name + "_averages.csv"
     print(feature_avg_filename)
 
