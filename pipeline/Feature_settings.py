@@ -8,8 +8,8 @@ def fsl_settings():
         's': 1,
         'x': 10,
         'w': 256,
-        'compress':True,
-        'regions': False
+        'compress':False,
+        'regions': True
     }
     FSL_2 = {
         'l': 1,
