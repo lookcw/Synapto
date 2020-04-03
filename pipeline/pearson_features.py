@@ -37,7 +37,6 @@ def extractFeatures(time_series_electrode, config_feature):
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(corr_mat,axis=1) - 1)/numElectrodes
     elif config_feature['regions']:
-        print(corr_mat)
         region_corr_mat = average_heatmap(corr_mat)
         region_corr_mat = np.array(region_corr_mat)
         return region_corr_mat[np.triu_indices(5, 1)]

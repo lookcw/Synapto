@@ -72,7 +72,8 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_beta': ('New_Castle_Data/HCFN50_beta', 'New_Castle_Data/ADFN50_beta'),
     'NC_gamma': ('New_Castle_Data/HCFN50_gamma', 'New_Castle_Data/ADFN50_gamma'),
     'NC_delta': ('New_Castle_Data/HCFN50_delta', 'New_Castle_Data/ADFN50_delta'),
-    'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta')
+    'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
+    'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -109,7 +110,8 @@ config = {
     'epochs_per_instance': 1,
     'num_folds': 10,
     'concat_type': 'vertical',
-    'is_voted_instances': False
+    'is_voted_instances': False,
+    'save_fig': True
 }
 
 CONFIG_FEATURES = {
