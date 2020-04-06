@@ -33,6 +33,8 @@ from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 import copy
 #from nn_Recurr import nn_Recurr
+from get_models import get_models
+from model_settings import model_settings
 
 AVERAGE_FILES_SET = []
 
@@ -80,13 +82,9 @@ DATA_TYPE_TO_FOLDERS = {
 RESULTS_FILENAME = 'pipeline_results.csv'
 FEATURE_SET_FOLDER = 'FeatureSets/'
 
-MODELS = [
-    # LogisticRegression(),
-    # LogisticRegressionCV(),
-    RandomForestClassifier(),
-    GradientBoostingClassifier(),
-    KNeighborsClassifier(n_neighbors=5)
-]
+model_config = model_settings()
+
+MODELS = get_models(model_config)
 
 ################################################### DEFAULT SETTINGS ###################################################
 
