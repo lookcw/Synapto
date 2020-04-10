@@ -188,15 +188,20 @@ if not config['skip_fs_creation']:
     for config_feature in config_features:
         config_feature['filename'] = config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
             config_feature) + '.csv'
-    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename']) for config_feature in config_features]
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename'])
+                     for config_feature in config_features]
 else:
     config_features[0]['filename'] = config['filename']
     feature_paths = [os.path.join(FEATURE_SET_FOLDER, config['filename'])]
-for feature_path in feature_paths:
-    if os.path.exists(feature_path) and not config['force_overwrite']:
-        print("feature file already exists... skipping featureset creation")
-        config['skip_fs_creation'] = True
+feature_paths_to_read = [
+    feature_path for feature_path in feature_paths if os.path.exists(feature_path)]
+config_features_to_make = [config_feature for config_feature in config_features if not os.path.exists(
+    os.path.join(FEATURE_SET_FOLDER, config_feature['filename']))]
+print(f'feature files to make:{[config_feature["filename"] for config_feature in config_features_to_make]}')
+if not feature_paths:
+    print('no feature files to create, moving to prediction')
 ############################################## FEATURE SET CREATION/ READING ##############################################
+feature_sets = []
 if not config['skip_fs_creation']:
     if not config['positive_folder_path'] or not config['negative_folder_path']:
         print("Did not input data type. Choose from list in help documentation")
@@ -206,12 +211,12 @@ if not config['skip_fs_creation']:
         config['data_type'] = config['negative_folder_path'].split('/')[-1] + \
             '-' + config['positive_folder_path'].split('/')[-1]
     feature_sets = [create_feature_set(
-        config, config_feature) for config_feature in config_features]
+        config, config_feature) for config_feature in config_features_to_make]
     [write_feature_set(feature_path, feature_set) for (
         feature_set, feature_path) in zip(feature_sets, feature_paths)]
-else:
-    feature_sets = [pd.read_csv(feature_path, header='infer')
-                    for feature_path in feature_paths]
+if feature_paths_to_read:
+    feature_sets += [pd.read_csv(feature_path, header='infer')
+                    for feature_path in feature_paths_to_read]
 
 
 ######################################################## PREDICTION ########################################################

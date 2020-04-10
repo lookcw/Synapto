@@ -1,25 +1,40 @@
 
 
 def fsl_settings():
-    FSL_1 = {
-        'l': 1,
-        'm': 10,
-        'p': 0.3,
-        's': 1,
-        'x': 10,
-        'w': 256,
-        'compress':False,
-        'regions': True
-    }
-    FSL_2 = {
-        'l': 1,
-        'm': 5,
-        'p': 0.3,
-        's': 2,
-        'x': 100,
-        'w': 500
-    }
-    return [FSL_1]
+    return [
+        {
+            'l': 1,
+            'm': 10,
+            'p': 0.3,
+            's': 1,
+            'x': 10,
+            'w': 256,
+            'compress': False,
+            'regions': True
+        },
+        {
+            'l': 1,
+            'm': 5,
+            'p': 0.3,
+            's': 2,
+            'x': 100,
+            'w': 500,
+            'compress': False,
+            'regions': True
+        },
+        {
+            'l': 2,
+            'm': 5,
+            'p': 0.049,
+            's': 2,
+            'x': 100,
+            'w': 500,
+            'compress': False,
+            'regions': True
+        }
+
+    ]
+
 
 def pearson_settings():
     PEARSON_1 = {

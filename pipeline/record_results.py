@@ -47,6 +47,7 @@ PRINT_RESULTS_HEADER = [
     'Specificity',
 ]
 
+ROC_FOLDER = 'RocCurves'
 
 def _metrics(y_true, y_pred, y_scores):
 
@@ -93,9 +94,9 @@ def print_results(results_list):
             round(result['specificity'], 2),
         ])
 
-def save_roc_curve(feature_set_name,metrics):
+def save_roc_curve(clf,feature_set_name,metrics):
     plt.plot(metrics['roc_curve'][0],metrics['roc_curve'][1])
-    plt.savefig(feature_set_name+'.png')
+    plt.savefig(f'{ROC_FOLDER}/{feature_set_name}_{get_model_name(clf)}.png')
 
 
 
@@ -126,11 +127,13 @@ def write_result_list_to_results_file(results_filename, results_list):
             ]
             writer.writerow(result_array)
 
+def get_model_name(clf):
+    return format(clf.__class__).split('.')[-1].replace('\'>', '')
 
 def get_results(clf, df, config, config_features):
     metrics = _compute_group_score(
         clf, df, config['num_folds'], config['is_voted_instances'])
-    save_roc_curve(config_features['filename'],metrics)
+    save_roc_curve(clf,config_features['filename'].replace('.csv',''),metrics)
     (X, y, groups, instance_num) = split_dataframe(df)
     num_patients = max(groups)
     results = dict(metrics)
@@ -144,7 +147,7 @@ def get_results(clf, df, config, config_features):
         'time_points_per_epoch': config['time_points_per_epoch'],
         'feature_filename': config_features['filename'],
         'num_patients': num_patients,
-        'model': format(clf.__class__).split('.')[-1].replace('\'>', ''),
+        'model': get_model_name(clf),
         'num_features': len(df.columns) - 4
     })
     return results
