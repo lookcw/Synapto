@@ -95,7 +95,7 @@ def _extract_feature_for_one_patient(filename, patient_data_set, CONFIG, config_
     Returns:
         3d numpy array -- 3d array, where first dimension is across instances, 2nd is across epochs, 3rd is across time points
     """
-    print(f'extracting features for {filename}')
+    print(f"extracting features for {filename}")
 
     if CONFIG['is_bands']:
         transposed_data_set = np.transpose(patient_data_set)

@@ -33,6 +33,10 @@ from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 import copy
 #from nn_Recurr import nn_Recurr
+from get_models import get_models
+from model_settings import model_settings
+
+AVERAGE_FILES_SET = []
 
 BANDS = [
     alpha_band_pass,
@@ -79,13 +83,9 @@ DATA_TYPE_TO_FOLDERS = {
 RESULTS_FILENAME = 'pipeline_results.csv'
 FEATURE_SET_FOLDER = 'FeatureSets/'
 
-MODELS = [
-    # LogisticRegression(),
-    # LogisticRegressionCV(),
-    RandomForestClassifier(),
-    GradientBoostingClassifier(),
-    KNeighborsClassifier(n_neighbors=5)
-]
+model_config = model_settings()
+
+MODELS = get_models(model_config)
 
 ################################################### DEFAULT SETTINGS ###################################################
 
@@ -98,6 +98,7 @@ config = {
     'data_folder': '',
     'identifier_func': paramToFilename,
     'is_bands': False,
+    'avg_features': False,
     'hc': False,
     'ad': False,
     'dlb': False,
@@ -166,6 +167,8 @@ for i in range(1, len(sys.argv), 2):
         config['concat_type'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-bands":
         config['is_bands'] = True
+    elif str(sys.argv[i]) == "-avg_features":
+        config['avg_features'] = True
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
