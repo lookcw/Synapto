@@ -2,7 +2,7 @@ import os
 import sys
 import pandas as pd
 import argparse
-import seaborn as sns
+# import seaborn as sns
 import matplotlib.pyplot as plt 
 from identifier import filenameToParam
 
