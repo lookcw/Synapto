@@ -22,7 +22,7 @@ def regionalize_average_features(features_file):
     }
 
     if not os.path.exists(feature_avg_filename):
-        
+
         dataset = pd.read_csv(features_file).drop(columns=['instance code','patient num','instance num'])
         data = dataset.loc[:,'class'].to_frame() 
         # data.insert(0, "name_of_feature", feature_name) #Can add in feature names as a column if necessary
