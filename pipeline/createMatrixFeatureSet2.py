@@ -3,7 +3,7 @@ import sys
 import os
 from numpy import genfromtxt
 import pandas as pd
-
+from config import FEATURE_SET_FOLDER
 
 STARTER_COLUMNS = ['instance code', 'patient num', 'instance num', ]
 CLASS_COLUMN = ['class']
@@ -14,7 +14,7 @@ def write_feature_set(feature_path, feature_set_df):
     feature_set_df.to_csv(feature_path, index=False)
 
 
-def create_feature_set(CONFIG, config_feature=None):
+def create_feature_set(CONFIG, config_feature):
     print('starting feature set creation')
     (positive_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['positive_folder_path'],
                                                                                   0, 0, 1, config_feature)
@@ -26,7 +26,10 @@ def create_feature_set(CONFIG, config_feature=None):
             1, CONFIG['epochs_per_instance'] + 1) for col in header]
     labels = STARTER_COLUMNS + header + CLASS_COLUMN
     data = np.array(positive_features + negative_features)
-    return pd.DataFrame(data=data,  columns=labels)
+    df = pd.DataFrame(data=data,  columns=labels)
+    if CONFIG['write_in_cfs']:
+        write_feature_set(FEATURE_SET_FOLDER + '/' + config_feature['filename'],df)
+    return df
 
 
 def get_labels_from_folder(CONFIG, config_feature):
