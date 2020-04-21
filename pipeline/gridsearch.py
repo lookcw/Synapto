@@ -9,23 +9,23 @@ random_forest_params = {'bootstrap': [True, False],
                     'max_features': ['auto', 'sqrt'],
                     'min_samples_leaf': [1, 4],
                     'min_samples_split': [2, 10],
-                    'n_estimators': [100, 600, 1800]}
+                    'n_estimators': [100, 600]}
 
 gradient_boosting_params = {
     "loss":["deviance"],
-    "learning_rate": [0.01, 0.025, 0.05, 0.075, 0.1, 0.15, 0.2],
-    "min_samples_split": np.linspace(0.1, 0.5, 12),
-    "min_samples_leaf": np.linspace(0.1, 0.5, 12),
+    "learning_rate": [0.01, 0.05, 0.2],
+    "min_samples_split": np.linspace(0.1, 0.5, 2),
+    "min_samples_leaf": np.linspace(0.1, 0.5, 2),
     "max_depth":[3,5,8],
     "max_features":["log2","sqrt"],
     "criterion": ["friedman_mse",  "mae"],
-    "subsample":[0.5, 0.618, 0.8, 0.85, 0.9, 0.95, 1.0],
+    "subsample":[0.5, 0.618, 0.8, 1.0],
     "n_estimators":[10] 
 }
 
 log_regression_params = {'max_iter': [1000],'penalty': ['l2'], 'C': [5,10], 'solver': 'liblinear'}
 
-kneighbors_params = {'n_neighbors': [3,10,20,50] }
+kneighbors_params = {'n_neighbors': [3,10,20] }
 
 adaboost_params = {'n_estimators' : [10,30,50] }
 

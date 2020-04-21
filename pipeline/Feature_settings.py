@@ -1,13 +1,14 @@
 import numpy as np
 
+
 def fsl_settings():
     ls = range(2, 10, 5)
     ps = np.arange(0.049, .4, .1)
     ms = [10]
     ss = [1]
     windows = list(zip(range(10, 300, 100), range(100, 1000, 400)))
-    regions = [True,False]
-    configs=[]
+    regions = [True, False]
+    configs = []
     for l in ls:
         for p in ps:
             for m in ms:
@@ -23,6 +24,17 @@ def fsl_settings():
                             'compress': False,
                             'regions': True
                         })
+    optimal = [{
+        'l': 2,
+        'm': 10,
+        'p': 0.49,
+        's': 1,
+        'x': 110,
+        'w': 500,
+        'compress': False,
+        'regions': True
+    }
+    ]
     return configs
 
     # return [
@@ -71,7 +83,7 @@ def fsl_settings():
 
 
 def pearson_settings():
-    PEARSON_1={
+    PEARSON_1 = {
         'compress': False,
         'regions': True
     }
