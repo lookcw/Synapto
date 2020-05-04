@@ -15,15 +15,17 @@ def regionalize_average_features(features_file):
 
     # Electrodes corresponding to regions
     regions = {
-        "Temporal/Left": [0,1,2,4,6],
-        "Central": [3,8,13],
-        "Temporal/Right": [5,9,10,11,15],
+        "Anterior": [0,1,2,4,6],
+        "Temporal/Left": [3,8,13],
+        "Central": [5,9,10,11,15],
+        "Temporal/Right": [7,12,17],
         "Posterior": [14,16,18,19,20]
     }
 
     if not os.path.exists(feature_avg_filename):
 
         dataset = pd.read_csv(features_file).drop(columns=['instance code','patient num','instance num'])
+        # dataset = pd.read_csv(features_file).drop(columns=['patient num'])
         data = dataset.loc[:,'class'].to_frame() 
         # data.insert(0, "name_of_feature", feature_name) #Can add in feature names as a column if necessary
         

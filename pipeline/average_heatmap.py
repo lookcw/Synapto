@@ -1,6 +1,6 @@
 
 def average_heatmap(matrix):
-    # Temporal/Left, Central, Temporal/Right, Posterior
+    # Anterior, Temporal/Left, Central, Temporal/Right, Posterior
     regions = [[0,1,2,4,6],[3,8,13],[5,9,10,11,15],[7,12,17],[14,16,18,19,20]]
 
     region_matrix = []
