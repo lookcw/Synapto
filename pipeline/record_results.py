@@ -128,7 +128,10 @@ def write_result_list_to_results_file(results_filename, results_list):
             writer.writerow(result_array)
 
 def get_model_name(clf):
-    return format(clf.__class__).split('.')[-1].replace('\'>', '')
+    model_name =  format(clf.__class__).split('.')[-1].replace('\'>', '')
+    if model_name == 'GridSearchCV':
+        model_name = format(clf.estimator.__class__).split('.')[-1].replace('\'>', '')
+    return str(model_name)
 
 def get_results(clf, df, config, config_features):
     metrics = _compute_group_score(
