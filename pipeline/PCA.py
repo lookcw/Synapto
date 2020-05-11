@@ -4,14 +4,34 @@ import os
 from pandas import read_csv
 import pandas as pd
 from sklearn.decomposition import PCA
-# feature extraction
+import sys
 
-def pca(X, num_components, class_num):
+def pca(folder_name, features_file, num_components, class_num):
+  
+    # Feaature name = Get name before the ".csv"
+    # feature_name = features_file.split('.')[0]
+    # print(feature_name)
+    # feature = feature_name.split('/')[1]
+    # root = feature_name.split('/')[0]
+    # print(root)
+
+    # feature_pca_folder = root + "_pca/"
+    # feature_avg_filename = feature_pca_folder + feature + "_pca.csv"
+    # print(feature_avg_filename)
+
+    # if not os.path.exists(feature_pca_folder):
+    #     os.makedirs(feature_pca_folder)
 
     # Feaature name = Get name before the ".csv"
-    feature_name = features_file.split('.')[0] 
-    feature_avg_filename = feature_name + "_pca.csv"
+    feature_name = features_file.split('.')[0]
+    folder_pca = folder_name + "_pca/"
+    original_file = folder_name + "/" + features_file
+    feature_avg_filename = folder_pca + feature_name + "_pca.csv"
+
     print(feature_avg_filename)
+
+    if not os.path.exists(folder_pca):
+        os.makedirs(folder_pca)
 
     # Electrodes corresponding to regions
     regions = {
@@ -24,18 +44,22 @@ def pca(X, num_components, class_num):
 
     if not os.path.exists(feature_avg_filename):
 
-        dataset = pd.read_csv(features_file)
+        dataset = pd.read_csv(original_file)
         # dataset = pd.read_csv(features_file).drop(columns=['patient num'])
-        data = dataset.loc[:,'class'].to_frame() 
-        
+        # data = dataset.iloc[:, 0].to_frame() 
+        numCols = len(regions)
+        numRows = len(dataset)
+        data = pd.DataFrame(index=range(numRows))
+
         # Select the columns identified as the regions and average them horizontally 
         for region_name in regions:
             X = dataset.iloc[:,regions[region_name]]
-            print(X.shape)
 
             pca = PCA(n_components=num_components)
             fit = pca.fit(X)
             X_reduced = fit.transform(X)
+            print(X_reduced.shape)
+            # data['class'] = class_num
             data[region_name] = X_reduced
 
             # summarize components
@@ -49,8 +73,17 @@ def pca(X, num_components, class_num):
 
 
 if __name__ == "__main__":
-    # features_file = sys.argv[1]
+    
+    # TO RUN: python PCA.py folder_name 
+    # This will iterate through all the files in a given folder 
+
+    # If you do NOT want to iterate through all the filenames in a folder, need to do 
+    # a separate command that only takes in a filename 
     num_components = 1
-    features_file = "FeatureSets/DomFreq-_Brazil_1_instances_1602_epochs_1_timepoints_{}.csv"
-    pca(features_file, num_components)
+    class_num = 0
+    folder_name = sys.argv[1]
+    
+    for filename in os.listdir(folder_name):
+        if filename.endswith(".csv"):
+            pca(folder_name, filename, num_components, class_num)
     
