@@ -3,7 +3,7 @@ import sys
 import os
 from numpy import genfromtxt
 import pandas as pd
-
+from config import FEATURE_SET_FOLDER
 
 STARTER_COLUMNS = ['instance code', 'patient num', 'instance num', ]
 CLASS_COLUMN = ['class']
@@ -14,7 +14,7 @@ def write_feature_set(feature_path, feature_set_df):
     feature_set_df.to_csv(feature_path, index=False)
 
 
-def create_feature_set(CONFIG, config_feature=None):
+def create_feature_set(CONFIG, config_feature):
     print('starting feature set creation')
     (positive_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['positive_folder_path'],
                                                                                   0, 0, 1, config_feature)
@@ -26,7 +26,10 @@ def create_feature_set(CONFIG, config_feature=None):
             1, CONFIG['epochs_per_instance'] + 1) for col in header]
     labels = STARTER_COLUMNS + header + CLASS_COLUMN
     data = np.array(positive_features + negative_features)
-    return pd.DataFrame(data=data,  columns=labels)
+    df = pd.DataFrame(data=data,  columns=labels)
+    if CONFIG['write_in_cfs']:
+        write_feature_set(FEATURE_SET_FOLDER + '/' + config_feature['filename'],df)
+    return df
 
 
 def get_labels_from_folder(CONFIG, config_feature):
@@ -57,25 +60,6 @@ def _get_features_for_folder(CONFIG, data_folder, patient_count, instance_count,
     filenames = [folder_feature[1]
                  for folder_feature in folder_features_with_filenames]
     return _unpack_add_groups(folder_features, filenames, patient_count, instance_count, data_class)
-
-# def _get_features_for_folder(data_folder, patient_count, instance_count, functionClass, num_instances, epochs_per_instance, time_points_per_epoch, data_class, bands_func):
-#     filenames = [filename for filename in os.listdir(data_folder)]
-#     folder_features_with_filenames = [
-#         _extract_feature_for_one_patient(
-#             functionClass,
-#             filename,
-#             genfromtxt(os.path.join(data_folder,filename), delimiter=','),
-#             num_instances,
-#             epochs_per_instance,
-#             time_points_per_epoch,
-#             bands_func
-#         )
-#         for filename in os.listdir(data_folder) if filename.endswith('.csv')
-#     ]
-#     folder_features = [folder_feature[0] for folder_feature in folder_features_with_filenames]
-#     filenames = [folder_feature[1] for folder_feature in folder_features_with_filenames]
-#     return _unpack_add_groups(folder_features, filenames, patient_count, instance_count, data_class)
-
 
 def _unpack_add_groups(X, filenames, patient_count, instance_count, data_class):
     """Turns 4d array of patients to 2d    

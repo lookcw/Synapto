@@ -35,8 +35,11 @@ import copy
 #from nn_Recurr import nn_Recurr
 from get_models import get_models
 from model_settings import model_settings
+from config import FEATURE_SET_FOLDER
 
 AVERAGE_FILES_SET = []
+
+MATLAB_FEATURE_FOLDER = 'MatlabFeatureSets'
 
 BANDS = [
     alpha_band_pass,
@@ -76,15 +79,14 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_beta': ('New_Castle_Data/HCFN50_beta', 'New_Castle_Data/ADFN50_beta'),
     'NC_gamma': ('New_Castle_Data/HCFN50_gamma', 'New_Castle_Data/ADFN50_gamma'),
     'NC_delta': ('New_Castle_Data/HCFN50_delta', 'New_Castle_Data/ADFN50_delta'),
-    'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta')
+    'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
+    'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
-FEATURE_SET_FOLDER = 'FeatureSets/'
 
-model_config = model_settings()
 
-MODELS = get_models(model_config)
+
 
 ################################################### DEFAULT SETTINGS ###################################################
 
@@ -97,7 +99,7 @@ config = {
     'data_folder': '',
     'identifier_func': paramToFilename,
     'is_bands': False,
-    'avg_features': False,
+    'write_in_cfs': True,
     'hc': False,
     'ad': False,
     'dlb': False,
@@ -110,8 +112,11 @@ config = {
     'epochs_per_instance': 1,
     'num_folds': 10,
     'concat_type': 'vertical',
-    'is_voted_instances': False
+    'is_voted_instances': False,
+    'save_fig': True,
+    'gridsearch': False
 }
+
 
 CONFIG_FEATURES = {
     'FSL': fsl_settings(),
@@ -154,6 +159,7 @@ for i in range(1, len(sys.argv), 2):
     elif str(sys.argv[i]) == "-v":
         config['is_voted_instances'] = True
     elif str(sys.argv[i]) == "-fs":
+        config['file_path'] = sys.argv[i+1]
         config['filename'] = sys.argv[i+1].split('/')[-1]
         config['skip_fs_creation'] = True
     elif str(sys.argv[i]) == "-overwrite":
@@ -167,6 +173,8 @@ for i in range(1, len(sys.argv), 2):
         config['is_bands'] = True
     elif str(sys.argv[i]) == "-avg_features":
         config['avg_features'] = True
+    elif str(sys.argv[i]) == "-gs":
+        config['gridsearch'] = True
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
@@ -175,6 +183,10 @@ if config['data_type'] == '':
         '/')[-1] + '-' + config['positive_folder_path'].split('/')[-1]
     config['data_type'] = config['negative_folder_path'].split(
         '/')[-1] + '-' + config['positive_folder_path'].split('/')[-1]
+
+
+MODELS = get_models(config)
+
 
 # features_filename = config['identifier_func'](config) # Get filename
 if not config['skip_fs_creation']:
@@ -189,15 +201,22 @@ if not config['skip_fs_creation']:
     for config_feature in config_features:
         config_feature['filename'] = config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
             config_feature) + '.csv'
-    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename']) for config_feature in config_features]
+    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename'])
+                     for config_feature in config_features]
 else:
     config_features[0]['filename'] = config['filename']
-    feature_paths = [os.path.join(FEATURE_SET_FOLDER, config['filename'])]
-for feature_path in feature_paths:
-    if os.path.exists(feature_path) and not config['force_overwrite']:
-        print("feature file already exists... skipping featureset creation")
-        config['skip_fs_creation'] = True
+    feature_paths = [config['file_path']]
+    print(feature_paths)
+feature_paths_to_read = [
+feature_path for feature_path in feature_paths if os.path.exists(feature_path)]
+config_features_to_make = [config_feature for config_feature in config_features if not os.path.exists(os.path.join(FEATURE_SET_FOLDER, config_feature['filename']))
+ and not os.path.exists(os.path.join(MATLAB_FEATURE_FOLDER, config_feature['filename']))]
+print(f'feature files to make:{[config_feature["filename"] for config_feature in config_features_to_make]}')
+print(f'feature files to read:{[feature_path for feature_path in feature_paths_to_read]}')
+if not feature_paths:
+    print('no feature files to create, moving to prediction')
 ############################################## FEATURE SET CREATION/ READING ##############################################
+feature_sets = []
 if not config['skip_fs_creation']:
     if not config['positive_folder_path'] or not config['negative_folder_path']:
         print("Did not input data type. Choose from list in help documentation")
@@ -207,12 +226,12 @@ if not config['skip_fs_creation']:
         config['data_type'] = config['negative_folder_path'].split('/')[-1] + \
             '-' + config['positive_folder_path'].split('/')[-1]
     feature_sets = [create_feature_set(
-        config, config_feature) for config_feature in config_features]
+        config, config_feature) for config_feature in config_features_to_make]
     [write_feature_set(feature_path, feature_set) for (
         feature_set, feature_path) in zip(feature_sets, feature_paths)]
-else:
-    feature_sets = [pd.read_csv(feature_path, header='infer')
-                    for feature_path in feature_paths]
+if feature_paths_to_read:
+    feature_sets += [pd.read_csv(feature_path, header='infer')
+                    for feature_path in feature_paths_to_read]
 
 
 ######################################################## PREDICTION ########################################################

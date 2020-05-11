@@ -47,6 +47,7 @@ PRINT_RESULTS_HEADER = [
     'Specificity',
 ]
 
+ROC_FOLDER = 'RocCurves'
 
 def _metrics(y_true, y_pred, y_scores):
 
@@ -59,8 +60,8 @@ def _metrics(y_true, y_pred, y_scores):
         y_conf = y_scores[:,1]
         roc_auc = roc_auc_score(y_true, y_conf)
         fpr, tpr, thresholds = roc_curve(y_true, y_conf)
-        plt.plot(fpr, tpr)
-        plt.show()
+        # plt.plot(fpr, tpr)
+        # plt.show()
     accuracy = accuracy_score(y_true, y_pred)
     f1 = f1_score(y_true, y_pred)
     return {
@@ -93,6 +94,11 @@ def print_results(results_list):
             round(result['specificity'], 2),
         ])
 
+def save_roc_curve(clf,feature_set_name,metrics):
+    plt.plot(metrics['roc_curve'][0],metrics['roc_curve'][1])
+    plt.savefig(f'{ROC_FOLDER}/{feature_set_name}_{get_model_name(clf)}.png')
+
+
 
 def write_result_list_to_results_file(results_filename, results_list):
     if not os.path.exists(results_filename):
@@ -121,10 +127,16 @@ def write_result_list_to_results_file(results_filename, results_list):
             ]
             writer.writerow(result_array)
 
+def get_model_name(clf):
+    model_name =  format(clf.__class__).split('.')[-1].replace('\'>', '')
+    if model_name == 'GridSearchCV':
+        model_name = format(clf.estimator.__class__).split('.')[-1].replace('\'>', '')
+    return str(model_name)
 
 def get_results(clf, df, config, config_features):
     metrics = _compute_group_score(
         clf, df, config['num_folds'], config['is_voted_instances'])
+    save_roc_curve(clf,config_features['filename'].replace('.csv',''),metrics)
     (X, y, groups, instance_num) = split_dataframe(df)
     num_patients = max(groups)
     results = dict(metrics)
@@ -138,7 +150,7 @@ def get_results(clf, df, config, config_features):
         'time_points_per_epoch': config['time_points_per_epoch'],
         'feature_filename': config_features['filename'],
         'num_patients': num_patients,
-        'model': format(clf.__class__).split('.')[-1].replace('\'>', ''),
+        'model': get_model_name(clf),
         'num_features': len(df.columns) - 4
     })
     return results
@@ -213,7 +225,6 @@ def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
 
             if isPredictProba:
                 y_scores[count:count+len(test)] = clf.predict_proba(X[test])
-            clf = clone(clf)
             count += len(test)
         return (y_true, y_pred, y_scores, y_groups)
 
