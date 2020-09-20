@@ -9,7 +9,7 @@ import sys
 
 
 def getHeader(time_series,config_feature):
-    return linearHeader
+    return linearHeader(time_series)
 
 
 def extractFeatures(time_series, config_feature):
@@ -20,7 +20,7 @@ def extractFeatures(time_series, config_feature):
 
     for electrode in range(time_series.shape[1]):
 
-        Fs = 250.0  # sampling rate
+        Fs = 1024  # sampling rate
         T = 1/Fs  # sampling interval
 
         time_series_electrode = time_series[:, electrode]
@@ -34,7 +34,7 @@ def extractFeatures(time_series, config_feature):
         yf = yf[0:int((N+1)/2)]  # get useable half of the fft vector
         freq = np.arange(0, Fs/2, Fs/N)
         # get fft value when freq is greater than 1
-        yf_between = yf[(freq >= 3.5) & (freq <= 14)]
+        yf_between = yf[(freq >= 3) & (freq <= 14)]
 
         #max_index = np.argmax(yf_above1)
 
@@ -49,4 +49,4 @@ def extractFeatures(time_series, config_feature):
 
 
 def config_to_filename(config_feature):
-    return str(config_feature)
+    return str(config_feature)[1:-1].replace(' ', '').replace('\'', '')

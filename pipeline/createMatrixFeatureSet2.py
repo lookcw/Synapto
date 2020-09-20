@@ -21,6 +21,7 @@ def create_feature_set(CONFIG, config_feature):
     (negative_features, patient_count, instance_count) = _get_features_for_folder(CONFIG, CONFIG['negative_folder_path'], patient_count,
                                                                                   instance_count, 0, config_feature)
     header = get_labels_from_folder(CONFIG, config_feature)
+    print(header)
     if CONFIG['concat_type'] == 'horizontal' and CONFIG['epochs_per_instance'] > 1:
         header = [(f'{col}_ep_{i}') for i in range(
             1, CONFIG['epochs_per_instance'] + 1) for col in header]

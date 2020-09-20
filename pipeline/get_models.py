@@ -8,9 +8,10 @@ from gridsearch import gridsearch
 def get_models(config):
 
     MODELS = [
-        RandomForestClassifier(),
-        GradientBoostingClassifier(),
-        KNeighborsClassifier(n_neighbors=5)
+        # RandomForestClassifier(),
+        # GradientBoostingClassifier(),
+        # KNeighborsClassifier(n_neighbors=5),
+        SVC(C=10,gamma = 1,probability=True)
     ]
 
 

@@ -80,7 +80,9 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_gamma': ('New_Castle_Data/HCFN50_gamma', 'New_Castle_Data/ADFN50_gamma'),
     'NC_delta': ('New_Castle_Data/HCFN50_delta', 'New_Castle_Data/ADFN50_delta'),
     'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
-    'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20')
+    'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20'),
+    'NC_PCA': ('New_Castle_Data/HCFN50_pca', 'New_Castle_Data/ADFN50_pca'),
+    '1024': ('New_Castle_Data/HC_1024','New_Castle_Data/AD_1024')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -95,7 +97,7 @@ config = {
     'positive_folder_path': '',
     'negative_folder_path': '',
     'feature_name': '',
-    'feature_class': '',
+    'feature_class': None,
     'data_folder': '',
     'identifier_func': paramToFilename,
     'is_bands': False,

@@ -22,20 +22,22 @@ def fsl_settings():
                             'x': window[0],
                             'w': window[1],
                             'compress': False,
-                            'regions': True
+                            'regions': False
                         })
     optimal = [{
-        'l': 2,
+        'l': 4,
         'm': 10,
-        'p': 0.49,
+        'p': 0.049,
         's': 1,
-        'x': 110,
-        'w': 500,
+        'x': 200,
+        'w': 2000,
         'compress': False,
         'regions': True
     }
     ]
-    return configs
+    return optimal
+
+# FSL-None_NCFN50_1_instances_23808_epochs_1_timepoints_l:2,m:10,p:0.049,s:1,x:110,w:500,compress:False,regions:True.csv
 
     # return [
     #     {
@@ -85,6 +87,6 @@ def fsl_settings():
 def pearson_settings():
     PEARSON_1 = {
         'compress': False,
-        'regions': True
+        'regions': False
     }
     return [PEARSON_1]

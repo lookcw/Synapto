@@ -33,7 +33,8 @@ RESULTS_HEADER = [
     'filename',
     'Num Folds',
     'Epochs Per Instances',
-    'Instances Per Patient'
+    'Instances Per Patient',
+    'gridsearch'
 ]
 PRINT_RESULTS_HEADER = [
     'Feature',
@@ -95,6 +96,8 @@ def print_results(results_list):
         ])
 
 def save_roc_curve(clf,feature_set_name,metrics):
+    # plt.clf()
+    print('save roc_curve')
     plt.plot(metrics['roc_curve'][0],metrics['roc_curve'][1])
     plt.savefig(f'{ROC_FOLDER}/{feature_set_name}_{get_model_name(clf)}.png')
 
@@ -123,7 +126,8 @@ def write_result_list_to_results_file(results_filename, results_list):
                 result['num_folds'],
                 result['epochs_per_instance'],
                 result['instances_per_patient'],
-                result['roc_curve']
+                result['roc_curve'],
+                result['gridsearch']
             ]
             writer.writerow(result_array)
 
@@ -151,7 +155,8 @@ def get_results(clf, df, config, config_features):
         'feature_filename': config_features['filename'],
         'num_patients': num_patients,
         'model': get_model_name(clf),
-        'num_features': len(df.columns) - 4
+        'num_features': len(df.columns) - 4,
+        'gridsearch': config['gridsearch']
     })
     return results
 
@@ -200,7 +205,6 @@ def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     if "keras" in str(clf):
         y = y.astype(int)
         y = np.eye(2)[y]
-
     isPredictProba = False
     invert_op = getattr(clf, "predict_proba", None)
     if callable(invert_op):
