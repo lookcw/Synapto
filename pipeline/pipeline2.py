@@ -2,7 +2,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
-from svm import svm_func
 import os
 import sys
 import pandas as pd
@@ -22,8 +21,6 @@ import FSL_features
 from Feature_settings import fsl_settings, pearson_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
-from nn_keras import nn_keras
-from nn_Recurr import nn_Recurr
 import random
 from sklearn.utils import shuffle
 import functools
@@ -116,7 +113,8 @@ config = {
     'concat_type': 'vertical',
     'is_voted_instances': False,
     'save_fig': True,
-    'gridsearch': False
+    'gridsearch': False,
+    'regionalization':''
 }
 
 
@@ -177,6 +175,8 @@ for i in range(1, len(sys.argv), 2):
         config['avg_features'] = True
     elif str(sys.argv[i]) == "-gs":
         config['gridsearch'] = True
+    elif str(sys.argv[i]) == "-r":
+        config['regionalization'] = sys.argv[i+1]
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()

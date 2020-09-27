@@ -4,7 +4,6 @@ from sklearn.base import clone
 from metrics import metrics
 import numpy as np
 import sys
-from nn_keras import nn_keras
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import roc_auc_score
@@ -96,8 +95,6 @@ def print_results(results_list):
         ])
 
 def save_roc_curve(clf,feature_set_name,metrics):
-    # plt.clf()
-    print('save roc_curve')
     plt.plot(metrics['roc_curve'][0],metrics['roc_curve'][1])
     plt.savefig(f'{ROC_FOLDER}/{feature_set_name}_{get_model_name(clf)}.png')
 

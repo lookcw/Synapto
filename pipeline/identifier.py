@@ -9,7 +9,8 @@ def paramToFilename(config, config_feature):
         str(config['data_type']) + "_" + \
         str(config['num_instances']) + '_instances_' + \
         str(config['time_points_per_epoch']) + '_epochs_' + \
-        str(config['epochs_per_instance']) + '_timepoints_'
+        str(config['epochs_per_instance']) + '_timepoints_'+ \
+        str(config['regionalization'])
 
 def recurrParamToFilename(config):
     return config['feature_name'] + \

@@ -2,9 +2,8 @@ import numpy as np
 from sklearn.model_selection import GridSearchCV
 from statistics import mode
 
-svc_params = {'kernel': ['rbf'], 'gamma': [100,10,1,1e-1,1e-2],
-                     'C': [0.1,1, 10],
-                     'degree':[1,2,3,4],
+svc_params = {'kernel': ['rbf'], 'gamma': [10,1,1e-1,1e-2],
+                     'C': [0.1,2,5, 10],
                      'probability':[True]
                      }
 
