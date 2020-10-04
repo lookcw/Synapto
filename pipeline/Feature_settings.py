@@ -32,7 +32,7 @@ def fsl_settings():
         'x': 200,
         'w': 2000,
         'compress': False,
-        'regions': True
+        'pairwise_regionalization': 'synchrony'
     }
     ]
     return optimal

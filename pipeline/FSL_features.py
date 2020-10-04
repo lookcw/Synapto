@@ -3,14 +3,14 @@ import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
 from headers import compareHeader, linearHeader, regionHeader
-from average_heatmap import average_heatmap
+from average_heatmap import average_heatmap, regions_header
 
 
 def getHeader(time_series_electrode, config_feature):
     if config_feature['compress']:
         return linearHeader(time_series_electrode)
-    elif config_feature['regions']:
-        return regionHeader(5)
+    elif config_feature['pairwise_regionalization']:
+        return regions_header(config_feature['pairwise_regionalization'])
     else:
         return compareHeader(time_series_electrode)
 
@@ -45,11 +45,9 @@ def extractFeatures(time_series_electrode, config_feature):
     if config_feature['compress']:
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(mat, axis=1) - 1)/numElectrodes
-    elif config_feature['regions']:
+    elif config_feature['pairwise_regionalization']:
         mat=[[float(n) for n in lst] for lst in mat]
-        region_corr_mat=average_heatmap(mat)
-        region_corr_mat=np.array(mat)
-        return region_corr_mat[np.triu_indices(5, 1)]
+        return average_heatmap(np.array(mat),config_feature['pairwise_regionalization'])
     else:
         return mat[np.triu_indices(numElectrodes, 1)]
 

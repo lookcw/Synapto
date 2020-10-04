@@ -29,7 +29,7 @@ from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, Gradi
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 import copy
-#from nn_Recurr import nn_Recurr
+# from nn_Recurr import nn_Recurr
 from get_models import get_models
 from model_settings import model_settings
 from config import FEATURE_SET_FOLDER
@@ -79,12 +79,10 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
     'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20'),
     'NC_PCA': ('New_Castle_Data/HCFN50_pca', 'New_Castle_Data/ADFN50_pca'),
-    '1024': ('New_Castle_Data/HC_1024','New_Castle_Data/AD_1024')
+    '1024': ('New_Castle_Data/HC_1024', 'New_Castle_Data/AD_1024')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
-
-
 
 
 ################################################### DEFAULT SETTINGS ###################################################
@@ -114,7 +112,8 @@ config = {
     'is_voted_instances': False,
     'save_fig': True,
     'gridsearch': False,
-    'regionalization':''
+    'regionalization': '',
+    'pairwise_regionalization': ''
 }
 
 
@@ -177,6 +176,8 @@ for i in range(1, len(sys.argv), 2):
         config['gridsearch'] = True
     elif str(sys.argv[i]) == "-r":
         config['regionalization'] = sys.argv[i+1]
+    elif str(sys.argv[i]) == "-pr":
+        config['pairwise_regionalization'] = sys.argv[i+1]
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()
