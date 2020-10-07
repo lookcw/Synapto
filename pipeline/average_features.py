@@ -18,7 +18,7 @@ def average_features(features_file):
     if not os.path.exists(feature_avg_filename):
         # set_averages.append(feature_avg_filename)
 
-        dataset = pd.read_csv(features_file).drop(columns=['instance code','patient num','instance num'])
+        dataset = pd.read_csv(features_file).drop(columns=['instance code','patient num','instance num'], errors='ignore')
         meaned = dataset.groupby(['class']).mean()
         data = meaned
         data.insert(0, "name_of_feature", feature_name)

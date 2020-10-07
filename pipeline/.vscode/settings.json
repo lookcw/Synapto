@@ -1,5 +1,9 @@
 {
     "python.linting.pylintEnabled": true,
+<<<<<<< HEAD
     "python.linting.enabled": true,
     "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.6/bin/python3"
+=======
+    "python.linting.enabled": true
+>>>>>>> b37254aac61390174543f769e5e40d148ff32878
 }

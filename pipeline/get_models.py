@@ -9,8 +9,9 @@ def get_models(config):
 
     MODELS = [
         RandomForestClassifier(),
-        GradientBoostingClassifier(),
-        KNeighborsClassifier(n_neighbors=5)
+        # GradientBoostingClassifier(),
+        # KNeighborsClassifier(n_neighbors=5),
+        SVC(C=1,gamma = 0.1,probability=True)
     ]
 
 

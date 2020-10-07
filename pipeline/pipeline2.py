@@ -2,7 +2,6 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
-from svm import svm_func
 import os
 import sys
 import pandas as pd
@@ -23,8 +22,11 @@ import FSL_features
 from Feature_settings import fsl_settings, pearson_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
+<<<<<<< HEAD
 # from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
+=======
+>>>>>>> b37254aac61390174543f769e5e40d148ff32878
 import random
 from sklearn.utils import shuffle
 import functools
@@ -33,7 +35,7 @@ from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, Gradi
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
 import copy
-#from nn_Recurr import nn_Recurr
+# from nn_Recurr import nn_Recurr
 from get_models import get_models
 from model_settings import model_settings
 from config import FEATURE_SET_FOLDER
@@ -82,12 +84,12 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_gamma': ('New_Castle_Data/HCFN50_gamma', 'New_Castle_Data/ADFN50_gamma'),
     'NC_delta': ('New_Castle_Data/HCFN50_delta', 'New_Castle_Data/ADFN50_delta'),
     'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
-    'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20')
+    'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20'),
+    'NC_PCA': ('New_Castle_Data/HCFN50_pca', 'New_Castle_Data/ADFN50_pca'),
+    '1024': ('New_Castle_Data/HC_1024', 'New_Castle_Data/AD_1024')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
-
-
 
 
 ################################################### DEFAULT SETTINGS ###################################################
@@ -97,7 +99,7 @@ config = {
     'positive_folder_path': '',
     'negative_folder_path': '',
     'feature_name': '',
-    'feature_class': '',
+    'feature_class': None,
     'data_folder': '',
     'identifier_func': paramToFilename,
     'is_bands': False,
@@ -116,7 +118,9 @@ config = {
     'concat_type': 'vertical',
     'is_voted_instances': False,
     'save_fig': True,
-    'gridsearch': False
+    'gridsearch': False,
+    'regionalization': '',
+    'pairwise_regionalization': ''
 }
 
 
@@ -178,6 +182,10 @@ for i in range(1, len(sys.argv), 2):
         config['avg_features'] = True
     elif str(sys.argv[i]) == "-gs":
         config['gridsearch'] = True
+    elif str(sys.argv[i]) == "-r":
+        config['regionalization'] = sys.argv[i+1]
+    elif str(sys.argv[i]) == "-pr":
+        config['pairwise_regionalization'] = sys.argv[i+1]
     else:
         print("Wrong format. Remember header must precede argument provided.\nUse -h for help.")
         sys.exit()

@@ -2,7 +2,7 @@
 # as an input, compute nine different features for each time-series. 
 
 # from pyrqa.file_reader import FileReader
-from mne import connectivity
+# from mne import connectivity
 import numpy as np
 import csv
 import sys

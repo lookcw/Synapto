@@ -1,46 +1,49 @@
 import numpy as np
 from sklearn.model_selection import GridSearchCV
+from statistics import mode
 
-svc_params = {'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
-                     'C': [1, 10, 100, 1000]}
+svc_params = {'kernel': ['rbf'], 'gamma': [10,1,1e-1,1e-2],
+                     'C': [0.1,2,5, 10],
+                     'probability':[True]
+                     }
 
-# random_forest_params = {'bootstrap': [True, False],
-#                     'max_depth': [50,100, None],
-#                     'max_features': ['auto', 'sqrt'],
-#                     'min_samples_leaf': [1, 4],
-#                     'min_samples_split': [2, 10],
-#                     'n_estimators': [100, 600]}
+random_forest_params = {'bootstrap': [True, False],
+                    'max_depth': [50,100, None],
+                    'max_features': ['auto', 'sqrt'],
+                    'min_samples_leaf': [1, 4],
+                    'min_samples_split': [2, 10],
+                    'n_estimators': [100, 600]}
                     
-random_forest_params = {'bootstrap': [True],
-                    'max_depth': [50],
-                    'max_features': ['auto'],
-                    'min_samples_leaf': [1],
-                    'min_samples_split': [2],
-                    'n_estimators': [100]}
-
-# gradient_boosting_params = {
-#     "loss":["deviance"],
-#     "learning_rate": [0.01, 0.05, 0.2],
-#     "min_samples_split": np.linspace(0.1, 0.5, 2),
-#     "min_samples_leaf": np.linspace(0.1, 0.5, 2),
-#     "max_depth":[3,5,8],
-#     "max_features":["log2","sqrt"],
-#     "criterion": ["friedman_mse",  "mae"],
-#     "subsample":[0.5, 0.618, 0.8, 1.0],
-#     "n_estimators":[10] 
-# }
+# random_forest_params = {'bootstrap': [True],
+#                     'max_depth': [50],
+#                     'max_features': ['auto'],
+#                     'min_samples_leaf': [1],
+#                     'min_samples_split': [2],
+#                     'n_estimators': [100]}
 
 gradient_boosting_params = {
     "loss":["deviance"],
-    "learning_rate": [0.01],
-    "min_samples_split":np.linspace(0.1, 0.5, 2),
+    "learning_rate": [0.01, 0.05, 0.2],
+    "min_samples_split": np.linspace(0.1, 0.5, 2),
     "min_samples_leaf": np.linspace(0.1, 0.5, 2),
-    "max_depth":[3],
-    "max_features":["log2"],
-    "criterion": ["friedman_mse"],
-    "subsample":[0.5],
+    "max_depth":[3,5,8],
+    "max_features":["log2","sqrt"],
+    "criterion": ["friedman_mse",  "mae"],
+    "subsample":[0.5, 0.618, 0.8, 1.0],
     "n_estimators":[10] 
 }
+
+# gradient_boosting_params = {
+#     "loss":["deviance"],
+#     "learning_rate": [0.01],
+#     "min_samples_split":np.linspace(0.1, 0.5, 2),
+#     "min_samples_leaf": np.linspace(0.1, 0.5, 2),
+#     "max_depth":[3],
+#     "max_features":["log2"],
+#     "criterion": ["friedman_mse"],
+#     "subsample":[0.5],
+#     "n_estimators":[10] 
+# }
 
 log_regression_params = {'max_iter': [1000],'penalty': ['l2'], 'C': [5,10], 'solver': 'liblinear'}
 
@@ -62,4 +65,16 @@ class_config = {
     'KNeighborsClassifier': kneighbors_params,
     'AdaBoostClassifier': adaboost_params,
 }
+
+def get_best_param(arr):
+    if isinstance(arr[0],int) or isinstance(arr[0],float):
+        return sum(arr)/len(arr)
+    else:
+        return mode(arr)
+
+def get_best_params(params_list):
+    best = {}
+    for param in params_list[0]:
+        best[param] = get_best_param([params[param] for params in params_list])
+    return best
 
