@@ -17,12 +17,13 @@ import pearson_features
 import granger_features
 import domFreq_features
 import domFreqVar_features
+import phaselag_features
 # import feature_steepness
 import FSL_features
 from Feature_settings import fsl_settings, pearson_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
-from nn_keras import nn_keras
+# from nn_keras import nn_keras
 from nn_Recurr import nn_Recurr
 import random
 from sklearn.utils import shuffle
@@ -54,7 +55,8 @@ FEATURE_NAMES_TO_CLASS = {
     'DomFreq': domFreq_features,
     'Pearson': pearson_features,
     'Granger': granger_features,
-    'DomFreqVar': domFreqVar_features
+    'DomFreqVar': domFreqVar_features,
+    'PhaseLag': phaselag_features
 }
 
 # FEATURE_configS = {
@@ -123,6 +125,7 @@ CONFIG_FEATURES = {
     'Pearson': pearson_settings(),
     'DomFreq': [{}],
     'Granger': [{}],
+    'PhaseLag': [{}],
 }
 config_features = [{}]
 
