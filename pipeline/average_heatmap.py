@@ -11,7 +11,6 @@ def average_heatmap(correlation_matrix,regionalization):
     for i in range(len(sorted_region_names)):
         for j in range(len(sorted_region_names)):
             if i>=j:
-                print(sorted_region_names[i],' ',sorted_region_names[j])
                 avg = _add_correlation(corre_regions[sorted_region_names[i]],corre_regions[sorted_region_names[j]],correlation_matrix)
                 regionalized_matrix[i][j] = avg
                 regionalized_matrix[j][i] = avg

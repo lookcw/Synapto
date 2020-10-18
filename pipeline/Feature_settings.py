@@ -32,7 +32,7 @@ def fsl_settings():
         'x': 200,
         'w': 2000,
         'compress': False,
-        'pairwise_regionalization': 'synchrony'
+        'pairwise_regionalization': 'synchrony_128'
     }
     ]
     return optimal
@@ -90,3 +90,12 @@ def pearson_settings():
         'regions': False
     }
     return [PEARSON_1]
+
+def domfreq_settings():
+    lower_bounds = [2,4,5]
+    upper_bounds = [10,12,14,16]
+    configs = []
+    for lower_bound in lower_bounds:
+        for upper_bound in upper_bounds:
+            configs.append({'lower_bound':lower_bound,'upper_bound':upper_bound})
+    return configs

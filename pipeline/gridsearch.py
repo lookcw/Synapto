@@ -7,9 +7,9 @@ svc_params = {'kernel': ['rbf'], 'gamma': [10,1,1e-1,1e-2],
                      'probability':[True]
                      }
 
-random_forest_params = {'bootstrap': [True, False],
-                    'max_depth': [50,100, None],
-                    'max_features': ['auto', 'sqrt'],
+random_forest_params = {'bootstrap': [True],
+                    'max_depth': [None],
+                    'max_features': ['auto'],
                     'min_samples_leaf': [1, 4],
                     'min_samples_split': [2, 10],
                     'n_estimators': [100, 600]}

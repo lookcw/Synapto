@@ -18,7 +18,7 @@ import domFreq_features
 import domFreqVar_features
 # import feature_steepness
 import FSL_features
-from Feature_settings import fsl_settings, pearson_settings
+from Feature_settings import fsl_settings, pearson_settings, domfreq_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
 import random
@@ -79,7 +79,8 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
     'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20'),
     'NC_PCA': ('New_Castle_Data/HCFN50_pca', 'New_Castle_Data/ADFN50_pca'),
-    '1024': ('New_Castle_Data/HC_1024', 'New_Castle_Data/AD_1024')
+    '1024': ('New_Castle_Data/HC_1024', 'New_Castle_Data/AD_1024'),
+    'NC_128': ('New_Castle_Data/HC_128elec', 'New_Castle_Data/AD_128elec')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -120,7 +121,7 @@ config = {
 CONFIG_FEATURES = {
     'FSL': fsl_settings(),
     'Pearson': pearson_settings(),
-    'DomFreq': [{}],
+    'DomFreq': domfreq_settings(),
     'Granger': [{}],
 }
 config_features = [{}]

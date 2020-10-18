@@ -33,7 +33,7 @@ def extractFeatures(time_series, config_feature):
         yf = fft(y)
         yf = yf[0:int((N+1)/2)]  # get useable half of the fft vector
         freq = np.arange(0, Fs/2, Fs/N)
-        yf_between = yf[(freq >= 3) & (freq <= 14)]
+        yf_between = yf[(freq >= config_feature['lower_bound']) & (freq <= config_feature['upper_bound'])]
 
         #max_index = np.argmax(yf_above1)
 
