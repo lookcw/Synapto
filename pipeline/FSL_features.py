@@ -2,15 +2,13 @@ import os
 import sys
 from subprocess import Popen, PIPE, call
 import numpy as np
-from headers import compareHeader, linearHeader, regionHeader
+from headers import compareHeader, linearHeader
 from average_heatmap import average_heatmap, regions_header
 
 
 def getHeader(time_series_electrode, config_feature):
     if config_feature['compress']:
         return linearHeader(time_series_electrode)
-    elif config_feature['pairwise_regionalization']:
-        return regions_header(config_feature['pairwise_regionalization'])
     else:
         return compareHeader(time_series_electrode)
 
@@ -53,4 +51,5 @@ def extractFeatures(time_series_electrode, config_feature):
 
 
 def config_to_filename(config_feature):
-    return str(config_feature)[1:-1].replace(' ', '').replace('\'', '')
+    no_filename_config = {i:config_feature[i] for i in config_feature if 'file' not in i}
+    return str(no_filename_config)[1:-1].replace(' ', '').replace('\'', '')

@@ -1,0 +1,7 @@
+bands,Anterior,L-Temporal,Central,R-Temporal,Posterior
+Higuchi Fractal Dimension (Full band),0.893,0.931,0.891,0.987,1.174
+Delta,0.137,0.607,0.289,0.421,0.678
+Theta,0.554,0.198,0.4,0.149,0.484
+Alpha,-0.136,0.011,-0.073,-0.015,-0.037
+Beta,-0.25,-0.35,-0.225,-0.294,-0.445
+Gamma,0.726,0.708,0.473,0.612,0.567

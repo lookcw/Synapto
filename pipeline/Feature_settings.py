@@ -22,7 +22,7 @@ def fsl_settings():
                             'x': window[0],
                             'w': window[1],
                             'compress': False,
-                            'regions': False
+                            'pairwise_regionalization': 'synchrony_128'
                         })
     optimal = [{
         'l': 4,
@@ -35,54 +35,7 @@ def fsl_settings():
         'pairwise_regionalization': 'synchrony_128'
     }
     ]
-    return optimal
-
-# FSL-None_NCFN50_1_instances_23808_epochs_1_timepoints_l:2,m:10,p:0.049,s:1,x:110,w:500,compress:False,regions:True.csv
-
-    # return [
-    #     {
-    #         'l': 1,
-    #         'm': 10,
-    #         'p': 0.3,
-    #         's': 1,
-    #         'x': 10,
-    #         'w': 256,
-    #         'compress': False,
-    #         'regions': True
-    #     },
-    #     {
-    #         'l': 1,
-    #         'm': 5,
-    #         'p': 0.3,
-    #         's': 2,
-    #         'x': 100,
-    #         'w': 500,
-    #         'compress': False,
-    #         'regions': True
-    #     },
-    #     {
-    #         'l': 2,
-    #         'm': 5,
-    #         'p': 0.049,
-    #         's': 2,
-    #         'x': 100,
-    #         'w': 500,
-    #         'compress': False,
-    #         'regions': True
-    #     },
-    #             {
-    #         'l': 2,
-    #         'm': 5,
-    #         'p': 0.049,
-    #         's': 3,
-    #         'x': 100,
-    #         'w': 2000,
-    #         'compress': False,
-    #         'regions': True
-    #     },
-
-    # ]
-
+    return configs
 
 def pearson_settings():
     PEARSON_1 = {
@@ -92,8 +45,8 @@ def pearson_settings():
     return [PEARSON_1]
 
 def domfreq_settings():
-    lower_bounds = [2,4,5]
-    upper_bounds = [10,12,14,16]
+    lower_bounds = [2]
+    upper_bounds = [10]
     configs = []
     for lower_bound in lower_bounds:
         for upper_bound in upper_bounds:
