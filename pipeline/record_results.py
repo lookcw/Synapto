@@ -135,7 +135,6 @@ def get_model_name(clf):
     return str(model_name)
 
 def get_results(clf, df, config, config_features):
-    print(df)
     metrics = _compute_group_score(
         clf, df, config['num_folds'], config['is_voted_instances'])
     save_roc_curve(clf,config_features['filename'].replace('.csv',''),metrics)
@@ -217,7 +216,6 @@ def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     count = 0
     if nn_model == []:
         for train, test in gkf.split(X, y, groups=groups):
-            print(X[train])
             clf.fit(X[train], y[train])
             # print(clf.best_params_)
             y_pred[count:count+len(test)] = clf.predict(X[test])

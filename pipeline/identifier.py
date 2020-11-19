@@ -27,6 +27,10 @@ def param_to_regionalized_filename(config, config_feature):
         str(config['regionalization_type']) + '_' + \
         str(config['regionalization']+ '_')
 
+def regionalize_filename(filename,config):
+    return f'{filename.replace(".csv","")}_{config["regionalization_type"]}_{config["regionalization"]}.csv'
+
+
 def filenameToParam(filename):
     line=filename.split('_')
     # feature_name, datatype, num_instances, epochs,timepoints

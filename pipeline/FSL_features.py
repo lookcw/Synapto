@@ -43,9 +43,6 @@ def extractFeatures(time_series_electrode, config_feature):
     if config_feature['compress']:
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(mat, axis=1) - 1)/numElectrodes
-    elif config_feature['pairwise_regionalization']:
-        mat=[[float(n) for n in lst] for lst in mat]
-        return average_heatmap(np.array(mat),config_feature['pairwise_regionalization'])
     else:
         return mat[np.triu_indices(numElectrodes, 1)]
 

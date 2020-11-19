@@ -3,11 +3,11 @@ import numpy as np
 
 def fsl_settings():
     ls = range(2, 10, 5)
-    ps = np.arange(0.049, .4, .1)
+    ps = np.arange(0.49)
     ms = [10]
     ss = [1]
-    windows = list(zip(range(10, 300, 100), range(100, 1000, 400)))
-    regions = [True, False]
+    windows = [(10,100),(100,500)]
+    regions = [True]
     configs = []
     for l in ls:
         for p in ps:
@@ -21,8 +21,7 @@ def fsl_settings():
                             's': s,
                             'x': window[0],
                             'w': window[1],
-                            'compress': False,
-                            'pairwise_regionalization': 'synchrony_128'
+                            'compress': False
                         })
     optimal = [{
         'l': 4,
@@ -32,10 +31,9 @@ def fsl_settings():
         'x': 200,
         'w': 2000,
         'compress': False,
-        'pairwise_regionalization': 'synchrony_128'
     }
     ]
-    return configs
+    return optimal
 
 def pearson_settings():
     PEARSON_1 = {

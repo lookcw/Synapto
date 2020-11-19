@@ -34,9 +34,13 @@ def ordered_linear_region_header(region):
         return sorted(region.keys())
 
 
-def ordered_compare_region_header(region_name):
-    sorted_region_names = sorted(regions[region_name].keys())
+def ordered_compare_region_header(region):
+    if isinstance(region, str):
+        region_names = regions[region].keys()
+    elif isinstance(region, dict):
+        region_names = region.keys()
+    sorted_region_names = sorted(region_names)
     return [sorted_region_names[i]+'_'+sorted_region_names[j]
             for j in range(len(sorted_region_names))
             for i in range(len(sorted_region_names))
-            if i >= j]
+            if i > j]
