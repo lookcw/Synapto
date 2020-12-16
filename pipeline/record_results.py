@@ -217,6 +217,7 @@ def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
     if nn_model == []:
         for train, test in gkf.split(X, y, groups=groups):
             clf.fit(X[train], y[train])
+            # print(clf.best_params_)
             y_pred[count:count+len(test)] = clf.predict(X[test])
             y_groups[count:count+len(test)] = groups[test]
             if "keras" in str(clf):

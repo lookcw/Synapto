@@ -13,7 +13,7 @@ def getHeader(time_series,config_feature):
 
 
 def extractFeatures(time_series, config_feature):
-
+    print(time_series.shape)
     numElectrodes = time_series.shape[1]
     features = [None] * (numElectrodes)
     featuresI = 0
@@ -33,7 +33,7 @@ def extractFeatures(time_series, config_feature):
         yf = fft(y)
         yf = yf[0:int((N+1)/2)]  # get useable half of the fft vector
         freq = np.arange(0, Fs/2, Fs/N)
-        yf_between = yf[(freq >= 3) & (freq <= 14)]
+        yf_between = yf[(freq >= config_feature['lower_bound']) & (freq <= config_feature['upper_bound'])]
 
         #max_index = np.argmax(yf_above1)
 
@@ -48,4 +48,5 @@ def extractFeatures(time_series, config_feature):
 
 
 def config_to_filename(config_feature):
-    return str(config_feature)[1:-1].replace(' ', '').replace('\'', '')
+    no_filename_config = {i:config_feature[i] for i in config_feature if 'file' not in i}
+    return str(no_filename_config)[1:-1].replace(' ', '').replace('\'', '')

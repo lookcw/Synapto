@@ -11,7 +11,7 @@ from BandPass1 import delta_band_pass, theta_band_pass, alpha_band_pass, beta_ba
 import time
 # from ASD_features import extractASDFeatures
 # from WTcoef import extractWaveletFeatures
-from createMatrixFeatureSet2 import create_feature_set, write_feature_set, get_labels_from_folder
+from createMatrixFeatureSet2 import create_feature_set, get_labels_from_folder
 import pearson_features
 import granger_features
 import domFreq_features
@@ -19,13 +19,13 @@ import domFreqVar_features
 import phaselag_features
 # import feature_steepness
 import FSL_features
-from Feature_settings import fsl_settings, pearson_settings
+from Feature_settings import fsl_settings, pearson_settings, domfreq_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
 import random
 from sklearn.utils import shuffle
 import functools
-from identifier import paramToFilename, recurrParamToFilename
+from identifier import param_to_filename, param_to_regionalized_filename, regionalize_filename
 from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier, GradientBoostingClassifier
 from group import file_2_recurr_X
 from shuffle_data import shuffle_data
@@ -33,6 +33,9 @@ import copy
 # from nn_Recurr import nn_Recurr
 from get_models import get_models
 from model_settings import model_settings
+from run_regionalization import run_regionalization_from_path
+from file_helper import write_feature_set
+
 from config import FEATURE_SET_FOLDER
 
 AVERAGE_FILES_SET = []
@@ -81,7 +84,11 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_theta': ('New_Castle_Data/HCFN50_theta', 'New_Castle_Data/ADFN50_theta'),
     'NCFN50-20_alpha': ('New_Castle_Data/HCFN50_alpha', 'New_Castle_Data/ADalpha_above20'),
     'NC_PCA': ('New_Castle_Data/HCFN50_pca', 'New_Castle_Data/ADFN50_pca'),
-    '1024': ('New_Castle_Data/HC_1024', 'New_Castle_Data/AD_1024')
+    '1024': ('New_Castle_Data/HC_1024', 'New_Castle_Data/AD_1024'),
+    'NC_128': ('New_Castle_Data/HC_128elec', 'New_Castle_Data/AD_128elec'),
+    'NC_126': ('New_Castle_Data/HC_126elec_noM', 'New_Castle_Data/AD_126elec_noM'),
+    'NC_126_ica_spectral': ('New_Castle_Data/HC_126elec_noM_ica_spectral', 'New_Castle_Data/AD_126elec_noM_ica_spectral'),
+    'NC_126_ica_synchrony': ('New_Castle_Data/HC_126elec_noM_ica_SL', 'New_Castle_Data/HC_126elec_noM_ica_SL')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -96,7 +103,8 @@ config = {
     'feature_name': '',
     'feature_class': None,
     'data_folder': '',
-    'identifier_func': paramToFilename,
+    'identifier_func': param_to_filename,
+    'identifier_regionalized_func': param_to_regionalized_filename,
     'is_bands': False,
     'write_in_cfs': True,
     'hc': False,
@@ -115,19 +123,23 @@ config = {
     'save_fig': True,
     'gridsearch': False,
     'regionalization': '',
-    'pairwise_regionalization': ''
+    'regionalization_type': ''
 }
 
 
 CONFIG_FEATURES = {
     'FSL': fsl_settings(),
     'Pearson': pearson_settings(),
-    'DomFreq': [{}],
+    'DomFreq': domfreq_settings(),
     'Granger': [{}],
     'PhaseLag': [{}],
 }
-config_features = [{}]
 
+FEATURE_2_FEATURE_TYPE = {
+    'FSL': 'compare',
+    'DomFreq': 'linear'
+}
+config_features = [{}]
 ############################################## PARAMETER READING & SETTING ##############################################
 
 
@@ -179,6 +191,8 @@ for i in range(1, len(sys.argv), 2):
         config['gridsearch'] = True
     elif str(sys.argv[i]) == "-r":
         config['regionalization'] = sys.argv[i+1]
+    elif str(sys.argv[i]) == "-rt":
+        config['regionalization_type'] = sys.argv[i+1]
     elif str(sys.argv[i]) == "-pr":
         config['pairwise_regionalization'] = sys.argv[i+1]
     else:
@@ -189,7 +203,11 @@ if config['data_type'] == '':
         '/')[-1] + '-' + config['positive_folder_path'].split('/')[-1]
     config['data_type'] = config['negative_folder_path'].split(
         '/')[-1] + '-' + config['positive_folder_path'].split('/')[-1]
-
+if config['regionalization']:
+    if config['feature_name']:
+        config['feature_type'] = FEATURE_2_FEATURE_TYPE[config['feature_name']]
+    else: 
+        config['feature_type'] = 'linear'
 
 MODELS = get_models(config)
 
@@ -205,20 +223,25 @@ if not config['skip_fs_creation']:
                 config_feature_bands.append(copy_config_feature)
         config_features = config_feature_bands
     for config_feature in config_features:
-        config_feature['filename'] = config['identifier_func'](config, config_feature) + config['feature_class'].config_to_filename(
-            config_feature) + '.csv'
+        config_feature['filename'] = config['identifier_func'](
+            config, config_feature) + config['feature_class'].config_to_filename(config_feature) + '.csv'
+        config_feature['file_path'] = os.path.join(
+            FEATURE_SET_FOLDER, config_feature['filename'])
+
     feature_paths = [os.path.join(FEATURE_SET_FOLDER, config_feature['filename'])
                      for config_feature in config_features]
 else:
     config_features[0]['filename'] = config['filename']
+    config_features[0]['file_path'] = config['file_path']
     feature_paths = [config['file_path']]
-    print(feature_paths)
 feature_paths_to_read = [
-feature_path for feature_path in feature_paths if os.path.exists(feature_path)]
-config_features_to_make = [config_feature for config_feature in config_features if not os.path.exists(os.path.join(FEATURE_SET_FOLDER, config_feature['filename']))
- and not os.path.exists(os.path.join(MATLAB_FEATURE_FOLDER, config_feature['filename']))]
-print(f'feature files to make:{[config_feature["filename"] for config_feature in config_features_to_make]}')
-print(f'feature files to read:{[feature_path for feature_path in feature_paths_to_read]}')
+    feature_path for feature_path in feature_paths if os.path.exists(feature_path)]
+config_features_to_make = [config_feature for config_feature in config_features if not os.path.exists(config_feature['file_path'])
+                           and not os.path.exists(os.path.join(MATLAB_FEATURE_FOLDER, config_feature['file_path']))]
+print(
+    f'feature files to make:{[config_feature["filename"] for config_feature in config_features_to_make]}')
+print(
+    f'feature files to read:{[feature_path for feature_path in feature_paths_to_read]}')
 if not feature_paths:
     print('no feature files to create, moving to prediction')
 ############################################## FEATURE SET CREATION/ READING ##############################################
@@ -237,14 +260,44 @@ if not config['skip_fs_creation']:
         feature_set, feature_path) in zip(feature_sets, feature_paths)]
 if feature_paths_to_read:
     feature_sets += [pd.read_csv(feature_path, header='infer')
-                    for feature_path in feature_paths_to_read]
+                     for feature_path in feature_paths_to_read]
 
+############################################## REGIONALIZATION #########d#####################################
+if config['regionalization']:
+    print('performing regionalization')
+    for config_feature in config_features:
+        if not config['skip_fs_creation']:
+            config_feature['regionalized_filename'] = config['identifier_regionalized_func'](config, config_feature) + \
+                config['feature_class'].config_to_filename(config_feature) + '.csv'
+            config_feature['regionalized_filepath'] = os.path.join(
+                FEATURE_SET_FOLDER, config_feature['regionalized_filename'])
+        else:
+            config_features[0]['regionalized_filepath'] = regionalize_filename(config_features[0]['file_path'],config)
+
+        
+    regionalized_feature_paths = [(config_feature['file_path'], config_feature['regionalized_filepath'])
+                                  for config_feature in config_features]
+    regionalized_feature_paths_to_read = [
+        path for path in regionalized_feature_paths if os.path.exists(path[1])]
+    regionalized_feature_paths_to_make = [
+        path for path in regionalized_feature_paths if not os.path.exists(path[1])]
+    regionalized_feature_sets = [run_regionalization_from_path(feature_path[0], config['regionalization_type'],
+                                                               config['feature_type'], config['regionalization']) for feature_path in regionalized_feature_paths_to_make]
+    [write_feature_set(feature_path[1], feature_set) for (feature_set, feature_path) in zip(
+        regionalized_feature_sets, regionalized_feature_paths_to_make)]
+    regionalized_feature_sets += [pd.read_csv(feature_path[1], header='infer')
+                                  for feature_path in regionalized_feature_paths_to_read]
 
 ######################################################## PREDICTION ########################################################
-
-
 # shuffle rows of dataframe
+if config['regionalization']:
+    feature_sets += regionalized_feature_sets
 feature_sets = [shuffle(feature_set) for feature_set in feature_sets]
+
+# if regionalization, each feature config has 2 accuracies, normal and regionalized, need to duplicate them.
+if config['regionalization']:
+    config_features = [
+        config_feature for config_feature in config_features for _ in (0, 1)]
 results = [get_results(model, feature_set, config, config_feature) for (
     feature_set, config_feature) in zip(feature_sets, config_features) for model in MODELS]
 print_results(results)

@@ -1,3 +1,6 @@
+from regions import regions
+
+
 def compareHeader(time_series_electrode):
     num_cols = time_series_electrode.shape[1]
     header = []
@@ -15,12 +18,29 @@ def linearHeader(time_series_electrode):
     return header
 
 
-def regionHeader(num_regions):
-    header = []
-    # Anterior, Temporal/Left, Central, Temporal/Right, Posterior
-    regions = ['A', 'TL', 'C', 'TR', 'P']
-    for i in range(num_regions):
-        for j in range(i+1, num_regions):
-            header.append(f'{regions[i]}_{regions[j]}')
-    print(header)
-    return header
+def ordered_linear_region_header(region):
+    """Returns column headers of regionalized electrodes given region string
+
+    Args:
+        region_name (str): name of regionalization schema
+
+    Returns:
+        [str]: list of headers
+    """
+
+    if isinstance(region, str):
+        return sorted(regions[region].keys())
+    elif isinstance(region, dict):
+        return sorted(region.keys())
+
+
+def ordered_compare_region_header(region):
+    if isinstance(region, str):
+        region_names = regions[region].keys()
+    elif isinstance(region, dict):
+        region_names = region.keys()
+    sorted_region_names = sorted(region_names)
+    return [sorted_region_names[i]+'_'+sorted_region_names[j]
+            for j in range(len(sorted_region_names))
+            for i in range(len(sorted_region_names))
+            if i > j]
