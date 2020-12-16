@@ -41,6 +41,7 @@ def extractFeatures(time_series_electrode, config_feature):
         region_corr_mat = np.array(region_corr_mat)
         return region_corr_mat[np.triu_indices(5, 1)]
     else:
+        print(corr_mat[np.triu_indices(numElectrodes, 1)].shape)
         return corr_mat[np.triu_indices(numElectrodes, 1)]
 
 # TEMPORARY: THESE ARE THE FEATURES FOR FSL

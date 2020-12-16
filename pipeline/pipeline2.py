@@ -22,11 +22,6 @@ import FSL_features
 from Feature_settings import fsl_settings, pearson_settings
 import pac_features
 from record_results import get_results, write_result_list_to_results_file, print_results
-<<<<<<< HEAD
-# from nn_keras import nn_keras
-from nn_Recurr import nn_Recurr
-=======
->>>>>>> b37254aac61390174543f769e5e40d148ff32878
 import random
 from sklearn.utils import shuffle
 import functools
