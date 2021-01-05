@@ -2,12 +2,11 @@ import numpy as np
 
 
 def fsl_settings():
-    ls = range(2, 10, 5)
-    ps = np.arange(0.49)
+    ls = [4]
+    ps = [0.049]
     ms = [10]
     ss = [1]
-    windows = [(10,100),(100,500)]
-    regions = [True]
+    windows = [(10,200),(100,500)]
     configs = []
     for l in ls:
         for p in ps:
@@ -43,10 +42,11 @@ def pearson_settings():
     return [PEARSON_1]
 
 def domfreq_settings():
-    lower_bounds = [2]
-    upper_bounds = [10]
+    lower_bounds = [2,3,4]
+    upper_bounds = [10,11,14]
     configs = []
     for lower_bound in lower_bounds:
         for upper_bound in upper_bounds:
             configs.append({'lower_bound':lower_bound,'upper_bound':upper_bound})
-    return configs
+    optimal = [{'lower_bound':2,'upper_bound':14}]
+    return optimal

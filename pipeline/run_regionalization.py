@@ -2,9 +2,11 @@ import numpy as np
 from functools import reduce
 from statistics import mean
 from regions import regions
-from headers import ordered_linear_region_header, ordered_compare_region_header
+from headers import ordered_linear_region_header,\
+    ordered_compare_region_header,\
+    ordered_compare_region_pairs
 from math import sqrt
-from file_helper import split_df_from_file, rejoin_np_arr_with_df
+from file_helper import split_df_from_file, rejoin_np_arr_with_df, write_unmixing_matrix
 from sklearn.decomposition import FastICA
 
 
@@ -28,14 +30,17 @@ def _validate_regions(feature_set, feature_type, regions):
             "regionalization type does not match electrode set")
 
 
-def run_regionalization_from_path(feature_path, regionalization_type, feature_type, region_name):
+def run_regionalization_from_path(feature_path, config, config_feature):
     (feature_set, extra_cols) = split_df_from_file(feature_path)
     (regionalized, headers) = run_regionalization(
-        feature_set, regionalization_type, feature_type, region_name)
+        feature_set, config, config_feature)
     return rejoin_np_arr_with_df(extra_cols, regionalized, headers)
 
 
-def run_regionalization(feature_set, regionalization_type, feature_type, region_name):
+def run_regionalization(feature_set, config, config_feature):
+    regionalization_type = config['regionalization_type']
+    region_name = config['regionalization']
+    feature_type = config['feature_type']
     feature_set = np.array(feature_set)
     _validate_regions(feature_set, feature_type, regions[region_name])
     schema = regions[region_name]
@@ -46,20 +51,32 @@ def run_regionalization(feature_set, regionalization_type, feature_type, region_
         return (_compare_regionalize(feature_set, schema, _calc_avg),
                 ordered_compare_region_header(region_name))
     elif regionalization_type == 'ICA' and feature_type == 'linear':
-        return (_linear_regionalize(feature_set, schema, _calc_ica),
-                ordered_linear_region_header(region_name))
+        ((res, mixing_mat), header) = (_linear_regionalize(feature_set, schema, _calc_ica),
+                                       ordered_linear_region_header(region_name))
+        write_unmixing_matrix(ordered_linear_region_header(region_name),
+                              mixing_mat,
+                              config_feature['regionalized_filepath'])
+        return (res, header)
     elif regionalization_type == 'ICA' and feature_type == 'compare':
-        return (_compare_regionalize(feature_set, schema, _calc_ica),
-                ordered_compare_region_header(region_name))
+        ((res, mixing_mat), header) = (_compare_regionalize(feature_set, schema, _calc_ica),
+                                       ordered_compare_region_header(region_name))
+        write_unmixing_matrix(ordered_compare_region_header(region_name),
+                              mixing_mat,
+                              config_feature['regionalized_filepath'])
+        return (res, header)
 
 
 def _calc_ica(region_features):
-    ica = FastICA(n_components=1)
-    return ica.fit_transform(region_features)[:, 0]
+    ica = FastICA(n_components=1, whiten=True)
+    transformed = ica.fit_transform(region_features)[:, 0]
+    A_ = ica.mixing_.flatten()
+    return (transformed, A_)
 
 
 def _calc_avg(region_features):
-    return np.mean(region_features, axis=1)
+    num_features = region_features.shape[0]
+    mixing_mat = num_features * [1/num_features]
+    return (np.mean(region_features, axis=1),  mixing_mat)
 
 
 def _linear_regionalize(feature_set, regions, regionalization_func):
@@ -76,10 +93,13 @@ def _linear_regionalize(feature_set, regions, regionalization_func):
     """
     ordered_region_names = ordered_linear_region_header(regions)
     regionalized = np.zeros((feature_set.shape[0], len(regions)))
+    mixing_mat = []
     for (i, region) in enumerate(ordered_region_names):
         region_columns = feature_set[:, regions[region]]
-        regionalized[:, i] = regionalization_func(region_columns)
-    return np.array(regionalized)
+        regionalization_result = regionalization_func(region_columns)
+        regionalized[:, i] = regionalization_result[0]
+        mixing_mat.append((zip(regions[region], regionalization_result[1])))
+    return (np.array(regionalized), mixing_mat)
 
 
 def _compare_regionalize(feature_set, regions, regionalization_func):
@@ -95,19 +115,31 @@ def _compare_regionalize(feature_set, regions, regionalization_func):
         correlation_matrices[i][u_idx] = feature_set[i]
 
     num_regions = len(regions)
-    regionalized_matrix = np.ones((num_subjects,num_regions, num_regions))
+    regionalized_matrix = np.ones((num_subjects, num_regions, num_regions))
     ordered_region_names = ordered_linear_region_header(regions)
+    mixing_mat = []
+    i,j = 0,1 #first triangle index
+    for (region_name1, region_name2) in ordered_compare_region_pairs(regions):
+        region1 = np.array(regions[region_name1])
+        region2 = np.array(regions[region_name2])
+        region_features = correlation_matrices[:, region1[:, None], region2]
+        region_flattened = region_features.reshape(num_subjects, -1)
+        print(region_flattened.shape)
+        regionalized = regionalization_func(region_flattened)
+        regionalized_matrix[:, i, j] = regionalized[0]
+        regionalized_matrix[:, j, i] = regionalized[0]
+        i,j = increment_tri_inds(i,j,num_regions)
+        mixing_mat.append(regionalized[1])
+    return (regionalized_matrix[:, np.triu_indices(num_regions, 1)[0],
+                                np.triu_indices(num_regions, 1)[1]],
+            mixing_mat
+            )
 
-    for i in range(len(ordered_region_names)):
-        region1 = np.array(regions[ordered_region_names[i]])
-        for j in range(len(ordered_region_names)):
-            if i >= j:
-                region2 = np.array(regions[ordered_region_names[j]])
-                region_features = correlation_matrices[:,
-                                                     region1[:, None], region2]
-                region_flattened = region_features.reshape(num_subjects, -1)
-                regionalized = regionalization_func(region_flattened)
-                regionalized_matrix[:, i, j] = regionalized
-                regionalized_matrix[:, j, i] = regionalized
 
-    return regionalized_matrix[:, np.triu_indices(num_regions, 1)[0], np.triu_indices(num_regions, 1)[1]]
+def increment_tri_inds(i, j, length):
+    if j == length - 1:
+        i += 1
+        j = i+1
+    else:
+        j += 1
+    return (i,j)

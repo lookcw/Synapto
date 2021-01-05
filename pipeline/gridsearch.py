@@ -2,9 +2,9 @@ import numpy as np
 from sklearn.model_selection import GridSearchCV
 from statistics import mode
 
-svc_params = {'kernel': ['rbf'], 'gamma': [10,1,1e-1,1e-2],
-                     'C': [0.1,2,5, 10],
-                     'probability':[True]
+svc_params = {'kernel': ['rbf','linear'], 'gamma': [100,10,1,1e-1],
+                     'C': [0.1,1,2,5, 10,100],
+                     'probability':[True,False]
                      }
 
 random_forest_params = {'bootstrap': [True],

@@ -49,6 +49,7 @@ PRINT_RESULTS_HEADER = [
 
 ROC_FOLDER = 'RocCurves'
 
+
 def _metrics(y_true, y_pred, y_scores):
 
     L = float(len(y_true))
@@ -57,7 +58,7 @@ def _metrics(y_true, y_pred, y_scores):
     fpr, tpr = [], []
     if y_scores is not None:
         # y_conf = list(map(lambda x: max(x), y_scores))
-        y_conf = y_scores[:,1]
+        y_conf = y_scores[:, 1]
         roc_auc = roc_auc_score(y_true, y_conf)
         fpr, tpr, thresholds = roc_curve(y_true, y_conf)
         # plt.plot(fpr, tpr)
@@ -70,7 +71,7 @@ def _metrics(y_true, y_pred, y_scores):
         'sensitivity': tp / (fn + tp),
         'specificity': tn / (tn + fp),
         'roc_auc': roc_auc,
-        'roc_curve': list(map(list,[fpr, tpr]))
+        'roc_curve': list(map(list, [fpr, tpr]))
     }
 
 
@@ -94,10 +95,10 @@ def print_results(results_list):
             round(result['specificity'], 2),
         ])
 
-def save_roc_curve(clf,feature_set_name,metrics):
-    plt.plot(metrics['roc_curve'][0],metrics['roc_curve'][1])
-    plt.savefig(f'{ROC_FOLDER}/{feature_set_name}_{get_model_name(clf)}.png')
 
+def save_roc_curve(clf, feature_set_name, metrics):
+    plt.plot(metrics['roc_curve'][0], metrics['roc_curve'][1])
+    plt.savefig(f'{ROC_FOLDER}/{feature_set_name}_{get_model_name(clf)}.png')
 
 
 def write_result_list_to_results_file(results_filename, results_list):
@@ -128,17 +129,21 @@ def write_result_list_to_results_file(results_filename, results_list):
             ]
             writer.writerow(result_array)
 
+
 def get_model_name(clf):
-    model_name =  format(clf.__class__).split('.')[-1].replace('\'>', '')
+    model_name = format(clf.__class__).split('.')[-1].replace('\'>', '')
     if model_name == 'GridSearchCV':
-        model_name = format(clf.estimator.__class__).split('.')[-1].replace('\'>', '')
+        model_name = format(clf.estimator.__class__).split(
+            '.')[-1].replace('\'>', '')
     return str(model_name)
+
 
 def get_results(clf, df, config, config_features):
     metrics = _compute_group_score(
         clf, df, config['num_folds'], config['is_voted_instances'])
-    save_roc_curve(clf,config_features['filename'].replace('.csv',''),metrics)
-    (X, y, groups, instance_num) = split_dataframe(df)
+    save_roc_curve(
+        clf, config_features['filename'].replace('.csv', ''), metrics)
+    (X, y, groups, instance_num, _) = split_dataframe(df)
     num_patients = max(groups)
     results = dict(metrics)
     results.update({
@@ -167,29 +172,29 @@ Raises:
 Returns:
     [type] -- [description]
 """
+
+
 def _compute_group_score(clf, df, num_folds, is_voted_instances, scoring='accuracy', nn_model=[]):
     (y_true, y_pred, y_scores, groups) = _compute_group_pred(
         clf, df, num_folds, is_voted_instances)
     pd.set_option('display.max_rows', 150)
 
-
-
     if is_voted_instances and y_scores is not None:
-        pred_dict = {'groups': groups, 'y_true': y_true,'conf':y_scores[:, 1]}
+        pred_dict = {'groups': groups,
+                     'y_true': y_true, 'conf': y_scores[:, 1]}
         df = pd.DataFrame(pred_dict)
         voted = df.groupby(['groups']).mean()
-        voted['y_pred'] = np.where(voted['conf']>.5, 1, 0)        
+        voted['y_pred'] = np.where(voted['conf'] > .5, 1, 0)
         inv_conf = 1 - df['conf']
-        voted_scores = np.array(list(zip(inv_conf,voted['conf'])))
-        return _metrics(voted['y_true'],voted['y_pred'], voted_scores)
-
+        voted_scores = np.array(list(zip(inv_conf, voted['conf'])))
+        return _metrics(voted['y_true'], voted['y_pred'], voted_scores)
 
     elif is_voted_instances and y_scores is None:
         pred_dict = {'y_pred': y_pred, 'groups': groups, 'y_true': y_true}
         df = pd.DataFrame(pred_dict)
         df['vote'] = df.groupby(['groups']).transform(
             lambda x: x.value_counts().index[0])['y_pred']
-        return _metrics(df['y_true'],df['vote'], None)
+        return _metrics(df['y_true'], df['vote'], None)
 
     else:
         (y_true, y_pred, y_scores, groups) = _compute_group_pred(
@@ -198,7 +203,7 @@ def _compute_group_score(clf, df, num_folds, is_voted_instances, scoring='accura
 
 
 def _compute_group_pred(clf, df, num_folds, scoring='accuracy', nn_model=[]):
-    (X, y, groups, instance_num) = split_dataframe(df)
+    (X, y, groups, instance_num, _) = split_dataframe(df)
     if "keras" in str(clf):
         y = y.astype(int)
         y = np.eye(2)[y]

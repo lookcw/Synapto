@@ -44,3 +44,14 @@ def ordered_compare_region_header(region):
             for j in range(len(sorted_region_names))
             for i in range(len(sorted_region_names))
             if i > j]
+
+def ordered_compare_region_pairs(region):
+    if isinstance(region, str):
+        region_names = regions[region].keys()
+    elif isinstance(region, dict):
+        region_names = region.keys()
+    sorted_region_names = sorted(region_names)
+    return [(sorted_region_names[i],sorted_region_names[j])
+            for j in range(len(sorted_region_names))
+            for i in range(len(sorted_region_names))
+            if i > j]

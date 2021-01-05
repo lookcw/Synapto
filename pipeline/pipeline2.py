@@ -6,6 +6,7 @@ import os
 import sys
 import pandas as pd
 import numpy as np
+import copy
 import csv
 from BandPass1 import delta_band_pass, theta_band_pass, alpha_band_pass, beta_band_pass, gamma_band_pass
 import time
@@ -65,6 +66,7 @@ FEATURE_NAMES_TO_CLASS = {
 #     'Granger': Granger_config_array,
 # }
 
+
 DATA_TYPE_TO_FOLDERS = {
     'Brazil': ('BrazilRawData/HCF50', 'BrazilRawData/ADF50'),
     'newBrazil': ('BrazilRawData/HCF50_new', 'BrazilRawData/ADF50_new'),
@@ -86,7 +88,7 @@ DATA_TYPE_TO_FOLDERS = {
     'NC_128': ('New_Castle_Data/HC_128elec', 'New_Castle_Data/AD_128elec'),
     'NC_126': ('New_Castle_Data/HC_126elec_noM', 'New_Castle_Data/AD_126elec_noM'),
     'NC_126_ica_spectral': ('New_Castle_Data/HC_126elec_noM_ica_spectral', 'New_Castle_Data/AD_126elec_noM_ica_spectral'),
-    'NC_126_ica_synchrony': ('New_Castle_Data/HC_126elec_noM_ica_SL', 'New_Castle_Data/HC_126elec_noM_ica_SL')
+    'NC_126_ica_synchrony': ('New_Castle_Data/HC_126elec_noM_ica_SL', 'New_Castle_Data/AD_126elec_noM_ica_SL')
 }
 
 RESULTS_FILENAME = 'pipeline_results.csv'
@@ -277,9 +279,10 @@ if config['regionalization']:
     regionalized_feature_paths_to_read = [
         path for path in regionalized_feature_paths if os.path.exists(path[1])]
     regionalized_feature_paths_to_make = [
-        path for path in regionalized_feature_paths if not os.path.exists(path[1])]
-    regionalized_feature_sets = [run_regionalization_from_path(feature_path[0], config['regionalization_type'],
-                                                               config['feature_type'], config['regionalization']) for feature_path in regionalized_feature_paths_to_make]
+        path for path in regionalized_feature_paths #if not os.path.exists(path[1])
+        ]
+    regionalized_feature_sets = [run_regionalization_from_path(feature_path[0], config,config_feature)
+                                 for feature_path in regionalized_feature_paths_to_make]
     [write_feature_set(feature_path[1], feature_set) for (feature_set, feature_path) in zip(
         regionalized_feature_sets, regionalized_feature_paths_to_make)]
     regionalized_feature_sets += [pd.read_csv(feature_path[1], header='infer')
@@ -295,7 +298,11 @@ feature_sets = [shuffle(feature_set) for feature_set in feature_sets]
 if config['regionalization']:
     config_features = [
         config_feature for config_feature in config_features for _ in (0, 1)]
+    for i in range(len(config_features)):
+        if i % 2 == 1:
+            config_features[i] = copy.deepcopy(config_features[i])
+            config_features[i]['filename'] = config_features[i]['regionalized_filename']
 results = [get_results(model, feature_set, config, config_feature) for (
     feature_set, config_feature) in zip(feature_sets, config_features) for model in MODELS]
 print_results(results)
-write_result_list_to_results_file(RESULTS_FILENAME, results)
+# write_result_list_to_results_file(RESULTS_FILENAME, results)
