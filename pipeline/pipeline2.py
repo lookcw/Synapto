@@ -17,6 +17,7 @@ import pearson_features
 import granger_features
 import domFreq_features
 import domFreqVar_features
+import phaselag_features
 # import feature_steepness
 import FSL_features
 from Feature_settings import fsl_settings, pearson_settings, domfreq_settings
@@ -55,7 +56,8 @@ FEATURE_NAMES_TO_CLASS = {
     'DomFreq': domFreq_features,
     'Pearson': pearson_features,
     'Granger': granger_features,
-    'DomFreqVar': domFreqVar_features
+    'DomFreqVar': domFreqVar_features,
+    'PhaseLag': phaselag_features
 }
 
 # FEATURE_configS = {
@@ -132,6 +134,7 @@ CONFIG_FEATURES = {
     'Pearson': pearson_settings(),
     'DomFreq': domfreq_settings(),
     'Granger': [{}],
+    'PhaseLag': [{}],
 }
 
 FEATURE_2_FEATURE_TYPE = {

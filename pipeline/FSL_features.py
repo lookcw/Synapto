@@ -44,6 +44,7 @@ def extractFeatures(time_series_electrode, config_feature):
         # subtracting 2 because every electrode always has a 1 in its column
         return (np.sum(mat, axis=1) - 1)/numElectrodes
     else:
+        # 0 includes diagnonal, numElectrodes = n (in nxn)
         return mat[np.triu_indices(numElectrodes, 1)]
 
 
