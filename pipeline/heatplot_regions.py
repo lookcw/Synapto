@@ -4,20 +4,24 @@ import matplotlib.pyplot as plt
 import sys
 from regions import regions
 
+# Specify filename and type of regions that you want to extract (find names of regions in regions.py - spectral_126, spectral_128, etc.)
 filename = sys.argv[1]
 region_name = sys.argv[2]
+
+# Extract indices (a dictionary) that contains information about electrodes contained in each region 
 indices = regions[region_name]
 
+# Extract data from csv
 data = pd.read_csv(filename)
 data = data.drop(columns=['instance num','instance code','class','patient num'], errors='ignore')
 
 for region_name, col_indices in indices.items():
 
     print(col_indices)
-    # region_data = pd.DataFrame(data, index=col_indices, columns=col_indices)
-    region_data = data.iloc[:, col_indices]
-    # print(region_data)
+    # Extract columns from particular region 
+    region_data = data.iloc[:, col_indices] 
 
+    # Plot correlation heatmap for region 
     corr = region_data.corr()
     ax = sns.heatmap(
         corr, 
