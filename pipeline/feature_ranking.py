@@ -43,20 +43,19 @@ def _get_output_filename(feature_filepath):
 
 def correlate_feature_importance(filename_feat1, filename_feat2):
 	df_1 = pd.read_csv(filename_feat1)
-	# df_2 = pd.read_csv(filename_feat2)
-	print(df_1)
-	feature_1 = df_1[1,:].values()
-	# feature_2 = df_2.loc[0,:]
-	# r = np.corrcoef(feature_1, feature_2)
-	print(feature_1)
-	r = "hi"
-	# r = scipy.stats.pearsonr(feature_1, feature_2)[0]
-	return r
+	df_2 = pd.read_csv(filename_feat2)
+
+	feature_1 = df_1.iloc[0,:]
+	feature_2 = df_2.iloc[0,:]
+	
+	pearson_coeff = feature_1.corr(feature_2)
+	
+	return pearson_coeff
 
 if __name__ == "__main__":
 	# write_feature_importance()
 	# print()
 	f1 = open("FeatureImportances/Hig_1.csv")
 	f2 = open("FeatureImportances/DF_1.csv")
-	r = correlate_feature_importance(f1, f2)
-	print(r)
+	pearson_coeff = correlate_feature_importance(f1, f2)
+	print(pearson_coeff)
