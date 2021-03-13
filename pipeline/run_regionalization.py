@@ -8,6 +8,7 @@ from headers import ordered_linear_region_header,\
 from math import sqrt
 from file_helper import split_df_from_file, rejoin_np_arr_with_df, write_unmixing_matrix
 from sklearn.decomposition import FastICA
+import click
 
 
 def _validate_regions(feature_set, feature_type, regions):
@@ -20,6 +21,7 @@ def _validate_regions(feature_set, feature_type, regions):
         to list of electrode indices
     """
     if feature_type == 'linear':
+        print(feature_set)
         num_electrodes = feature_set.shape[1]
     elif feature_type == 'compare':
         num_electrodes = int((1 + sqrt(1+8*feature_set.shape[1])) / 2)
@@ -118,7 +120,7 @@ def _compare_regionalize(feature_set, regions, regionalization_func):
     regionalized_matrix = np.ones((num_subjects, num_regions, num_regions))
     ordered_region_names = ordered_linear_region_header(regions)
     mixing_mat = []
-    i,j = 0,1 #first triangle index
+    i, j = 0, 1  # first triangle index
     for (region_name1, region_name2) in ordered_compare_region_pairs(regions):
         region1 = np.array(regions[region_name1])
         region2 = np.array(regions[region_name2])
@@ -128,7 +130,7 @@ def _compare_regionalize(feature_set, regions, regionalization_func):
         regionalized = regionalization_func(region_flattened)
         regionalized_matrix[:, i, j] = regionalized[0]
         regionalized_matrix[:, j, i] = regionalized[0]
-        i,j = increment_tri_inds(i,j,num_regions)
+        i, j = increment_tri_inds(i, j, num_regions)
         mixing_mat.append(regionalized[1])
     return (regionalized_matrix[:, np.triu_indices(num_regions, 1)[0],
                                 np.triu_indices(num_regions, 1)[1]],
@@ -142,4 +144,26 @@ def increment_tri_inds(i, j, length):
         j = i+1
     else:
         j += 1
-    return (i,j)
+    return (i, j)
+
+
+@click.command()
+@click.option('-in', '--input_file')
+@click.option('-rt', '--regionalization_type')
+@click.option('-r', '--regionalization')
+@click.option('-ft', '--feature_type')
+@click.option('-out', '--output_file')
+def main(input_file, regionalization_type, regionalization, feature_type, output_file):
+    config = {
+        'regionalization_type': regionalization_type,
+        'regionalization': regionalization,
+        'feature_type': feature_type
+    }
+    config_feature = {
+        'regionalized_filepath': output_file}
+    run_regionalization_from_path(input_file, config, config_feature).to_csv(output_file, index=False)
+
+
+
+if __name__ == '__main__':
+    main()

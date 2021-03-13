@@ -1,0 +1,472 @@
+﻿<!--
+AQUA Travel Advisor Itinerary Generator
+AQUA Server version: 20.2.0.7
+AQUA Server .NET Library version: 20.2.0.2
+AQUA Server Instance: 7561
+GDS: Sabre
+Created: 2020-12-28 19:36:11Z
+Options: 4|0|CWT
+-->
+<html>
+  <head>
+    <title>Your Itinerary</title>
+    <style type="text/css">
+	        A IMG {border-style:none; border-width:0;}
+            .topHeaderLargeStrong {font-size:10pt;color:#000000;font-family:Verdana;font-weight:bold;text-align: center;}
+            .topHeader {font-size:7.5pt;color:#404040;font-family:Verdana;font-weight:normal;text-align: center;padding:0px 0px 2px 0px;}
+            .headerTitle {font-size:12pt;color:#000000;font-family:Verdana;font-weight:normal;text-align: left;}
+            .headerNormal {font-size:8pt;color:#000000;font-family:Verdana;font-weight:normal;}
+            .headerStrong {font-size:8pt;color:#000000;font-family:Verdana;font-weight:bold;}
+            .headerLight {font-size:8pt;color:#404040;font-family:Verdana;font-weight:normal;}
+            .headerItinLink {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:bold;text-align:center;color:#FF0000;}
+            .headerDetailsKey {font-size:7.5pt;color:#404040;font-family:Verdana;font-weight:normal;padding:0px 6px 2px 6px;}
+            .headerDetailsValue {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:normal;padding:0px 6px 2px 6px;}
+            .headerDetailsStrongValue {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:bold;padding:0px 6px 2px 6px;}
+            .headerDetailsSpacer {font-size:3pt;color:#000000;font-family:Verdana;font-weight:normal;padding:0px 6px 0px 6px;}
+            .headerDate {font-size:10pt;color:#FF694B;font-family:Verdana;font-weight:bold;}
+            .segmentHeader {font-size:8pt;color:#000000;background-color:#E6E6E6;font-family:Verdana;font-weight:normal;}
+            .segmentHeaderStrong {font-size:8pt;color:#000000;background-color:#E6E6E6;font-family:Verdana;font-weight:bold;}
+            .segmentHeaderLight {font-size:8pt;color:#404040;background-color:#E6E6E6;font-family:Verdana;font-weight:normal;}
+            .segmentHeaderLargeStrong {font-size:10pt;color:#000000;font-family:Verdana;font-weight:bold;}
+            .segmentDetailsKey {font-size:7.5pt;color:#404040;font-family:Verdana;font-weight:normal;padding:0px 6px 2px 49px;vertical-align: top;}
+            .segmentDetailsValue {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:normal;padding:0px 6px 2px 6px;vertical-align: top;}
+            .segmentDetailsSpacer {font-size:3pt;color:#000000;font-family:Verdana;font-weight:normal;padding:0px 6px 0px 6px;}
+            .invoiceHeader {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:normal;text-align: right;text-decoration: underline;padding:0px 0px 6px 0px;}
+            .invoiceDetails {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:normal;text-align: right;padding:0px 0px 2px 0px;}
+            .invoiceDetailsStrong {font-size:7.5pt;color:#000000;font-family:Verdana;font-weight:bold;text-align: right;padding:0px 0px 2px 0px;}
+            .invoiceDetailsSpacer {font-size:3pt;color:#000000;font-family:Verdana;font-weight:normal;padding:0px 6px 0px 6px;}
+            .bottomFooter {font-size:7.5pt;color:#404040;font-family:Verdana;font-weight:normal;text-align:left;padding:0px 0px 2px 0px;}
+            .bottomFooterCopyright {font-size:7.5pt;color:#404040;font-family:Verdana;font-weight:normal;text-align:left;padding:0px 0px 2px 0px;white-space:nowrap;}
+            .bottomFooterCopyrightSpacer {font-size:7.5pt;color:#404040;font-family:Verdana;font-weight:normal;text-align:left;padding:0px 3px 2px 3px;white-space:nowrap;}
+            
+       </style>
+  </head>
+  <body style="padding: 24px">
+    <!--TOP HEADER-->
+    <div id="TopHeaderSection" style="padding: 0px; margin: 0px; width: 600px;">
+      <table style="width:100%; margin-bottom: 6px;" cellpadding="0px" cellspacing="0px">
+        <tr>
+          <td class="topHeaderLargeStrong">Please do not reply to this email.</td>
+        </tr>
+      </table>
+    </div>
+    <!--LOGO-->
+    <div id="LogoWithLinkSection" style="padding: 0px; margin: 0px; width: 600px;">
+      <table style="width:100%;" cellpadding="0px" cellspacing="0px">
+        <tr>
+          <td>
+            <a id="LogoLink" href="https://www.mycwt.com" target="_blank">
+              <img id="LogoImage" alt="" src="http://extranet.carlsonwagonlit.com/AQUA/MyCWTLogo_600.png" />
+            </a>
+          </td>
+        </tr>
+      </table>
+      <table style="width:100%;" cellpadding="0px" cellspacing="0px">
+        <tr>
+          <td style="width: 100%;" class="headerTitle"></td>
+        </tr>
+      </table>
+    </div>
+    <!--TOP AD-->
+    <!--HEADER-->
+    <div id="HeaderSection" style="padding: 0px; margin: 0px; width: 600px;">
+      <table style="border-style: solid; border-width: 0px 0px 1px 0px; border-color: #000000; width:100%; margin-bottom: 6px;" cellpadding="6px" cellspacing="0">
+        <tr>
+          <td width="204px" class="headerDate">Trip on Jan 16, 2021</td>
+          <td width="100px" align="right" class="headerNormal">Locator:</td>
+          <td width="100px" class="headerStrong" style="padding-left: 0px">UFJGLZ</td>
+          <td align="right" class="headerNormal">Date:</td>
+          <td width="100px" class="headerStrong" style="padding-left: 0px">Dec 28, 2020</td>
+        </tr>
+      </table>
+      <table style="border-color: #404040; width:100%; margin-bottom: 6px;" cellspacing="0px">
+        <tr>
+          <td width="110px" class="headerDetailsKey">Traveler</td>
+          <td class="headerDetailsStrongValue">CHRISTOPHER LOOK</td>
+        </tr>
+        <tr>
+          <td class="headerDetailsSpacer"> </td>
+        </tr>
+        <tr>
+          <td width="110px" class="headerDetailsKey"></td>
+          <td class="headerDetailsValue">AMAZON</td>
+        </tr>
+        <tr>
+          <td width="110px" class="headerDetailsKey"></td>
+          <td class="headerDetailsValue">AMAZON</td>
+        </tr>
+        <tr>
+          <td width="110px" class="headerDetailsKey"></td>
+          <td class="headerDetailsValue">CHRISTOPHER LOOK</td>
+        </tr>
+        <tr>
+          <td class="headerDetailsSpacer"> </td>
+        </tr>
+        <tr>
+          <td width="110px" class="headerDetailsKey">Customer Number</td>
+          <td class="headerDetailsValue">MZC</td>
+        </tr>
+        <tr>
+          <td class="headerDetailsSpacer"> </td>
+        </tr>
+        <tr>
+          <td width="110px" class="headerDetailsKey">Agent</td>
+          <td class="headerDetailsValue">A4</td>
+        </tr>
+        <tr>
+          <td class="headerDetailsSpacer"> </td>
+        </tr>
+      </table>
+      <div style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000000; padding-bottom: 6px;"></div>
+      <div id="HeaderRemarksSection">
+        <table style="margin: 0px 0px 6px 0px; width:100%;" cellspacing="0px" cellpadding="0px">
+          <tr>
+            <td class="headerNormal">*FULLCXL**FULLCXL*</td>
+          </tr>
+          <tr>
+            <td class="headerNormal">--------------------------------------</td>
+          </tr>
+          <tr>
+            <td class="headerNormal">COMPANY CODE-2D LOCATION CODE-6033 COST CENTER-7782</td>
+          </tr>
+          <tr>
+            <td class="headerNormal">FOP IS VI............9610</td>
+          </tr>
+        </table>
+        <div style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000000; padding-bottom: 6px;"></div>
+      </div>
+    </div>
+    <!--AIR SEGMENT-->
+    <div style="padding: 0px; margin: 0px; width: 600px;">
+      <table style="border-style: solid; border-width: 0px 0px 1px 0px; border-color: #000000; width:100%;" cellspacing="0">
+        <tr>
+          <td class="segmentHeaderLargeStrong" style="padding: 3px 0px 3px 6px">Saturday, January 16, 2021</td>
+          <td width="100px" align="right" class="segmentHeaderLight">Confirmation:</td>
+          <td width="180px" class="segmentHeaderStrong" style="padding-left: 6px">AEEPVS</td>
+        </tr>
+      </table>
+      <table style="padding: 6px 0px 6px 0px; width:100%;" cellpadding="0px" cellspacing="0px" class="segmentHeader">
+        <tr>
+          <td style="padding: 8px 6px 0px 3px; width:40px; vertical-align: top; text-align: center;">
+            <img alt="" src="http://extranet.carlsonwagonlit.com/AQUA/AirSegment.png" />
+          </td>
+          <td>
+            <table cellpadding="0px" cellspacing="0px" class="segmentHeader">
+              <tr>
+                <td class="segmentHeaderLargeStrong" colspan="2" style="padding: 3px 0px 6px 0px">Flight Alaska Airlines 1085</td>
+              </tr>
+              <tr>
+                <td class="segmentHeader" width="270px" style="padding: 0px 0px 0px 0px">DEPARTURE</td>
+                <td class="segmentHeader" style="padding: 0px 0px 0px 0px">ARRIVAL</td>
+              </tr>
+              <tr>
+                <td class="segmentHeaderStrong" width="270px" style="padding: 0px 0px 0px 0px">IAD - Washington Dulles, DC</td>
+                <td class="segmentHeaderStrong" style="padding: 0px 0px 0px 0px">SEA - Seattle/Tacoma, WA</td>
+              </tr>
+              <tr>
+                <td class="segmentHeaderStrong" width="270px" style="padding: 0px 0px 0px 0px">5:05 PM, Jan 16, 2021</td>
+                <td class="segmentHeaderStrong" style="padding: 0px 0px 0px 0px">7:53 PM, Jan 16, 2021</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+      <table style="margin: 6px 0px 12px 0px; width:100%;" cellspacing="0px" cellpadding="0px">
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Status</td>
+          <td class="segmentDetailsValue">Confirmed</td>
+        </tr>
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Class</td>
+          <td class="segmentDetailsValue">Coach Class - T</td>
+        </tr>
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Duration</td>
+          <td class="segmentDetailsValue">05:48 (Non-stop)</td>
+        </tr>
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Equipment</td>
+          <td class="segmentDetailsValue">Boeing 737</td>
+        </tr>
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Meal Service</td>
+          <td class="segmentDetailsValue">None</td>
+        </tr>
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Reserved Seats</td>
+          <td class="segmentDetailsValue">10A (Window)</td>
+        </tr>
+        <tr id="AirSegmentDetailsSpacerRow">
+          <td class="segmentDetailsSpacer"> </td>
+        </tr>
+        <tr>
+          <td width="110px" class="segmentDetailsKey">Notes</td>
+          <td class="segmentDetailsValue">CABIN-ECONOMY</td>
+        </tr>
+      </table>
+      <div style="padding-bottom: 6px;"></div>
+    </div>
+    <!--CAR SEGMENT-->
+    <!--HOTEL SEGMENT-->
+    <!--RAIL SEGMENT-->
+    <!--MISC SEGMENT-->
+    <!--MIDDLE AD-->
+    <!--FOOTER-->
+    <div id="FooterSection" style="padding: 0px; margin: 0px; width: 600px;">
+      <div style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000000; padding-bottom: 6px;"></div>
+      <table style="margin: 6px 0px 6px 0px; width:100%;" cellspacing="0px" cellpadding="0px">
+        <tr>
+          <td class="headerStrong">GENERAL INFORMATION</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">PLEASE REVIEW YOUR ITINERARY AND CONTACT CWT</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">IMMEDIATELY IF CHANGES ARE REQUIRED</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FOR TRAVEL ASSISTANCE CALL 866 746-4647</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">AFTER HOURS EMERGENCY MEMBERSHIP NUMBER 9QII</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">INTL TRAVELERS IF UNABLE TO REACH US USING OUR TOLL</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FREE NUMBERS PLEASE CALL COLLECT AT 206-336-6487</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">AND IF CALLING FROM BRAZIL PLEASE CALL 0800-8920286</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">****************************************************</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">IN CASE YOU ARE TRAVELING TO AN AMAZON OFFICE IN EMEA AND</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">REQUIRE BADGE ACCESS, PLEASE VISIT -</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">HTTPS//ACS-RIGHTCROWD-EMEA-PROD.CORP.AMAZON.COM/RIGHTCROWD/ALR</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FOR THE AMERICAS AND APAC OFFICE,PLEASE USE THIS QUICK LINK</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">HHTPS//TT.AMAZON.COM/QUICKLINK/Q001021814</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">****************************************************</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">AMAZON 24 HOUR BUSINESS ASSURANCE CENTER</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">206-740-7233 AND 800-929-1896</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">******************************************************</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">****VISIT AMAZON COVID-19 TRAVEL WIKI/RETURNTOTRAVEL******</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">****FOR BUSINESS ESSENTIAL TRAVEL GUIDANCE***************</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">IN THE EVENT OF A MEDICAL OR SECURITY EMERGENCY</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">PLEASE CONTACT INTERNATIONAL SOS OR VISIT THE WEBSITE</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">WWW.INTERNATIONALSOS.COM</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">TOLL FREE IN U.S 1-800-523-6586 COLLECT 215-942-8226</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">SINGAPORE 65 6338 7800 LONDON 44 020 8762 8008</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">PHILADELPHIA 1-215-942-8226</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">DOWNLOAD THE INTERNATIONAL SOS ASSISTANCE APP</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FROM THE APP STORE AND USE</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">AMAZON.COM MEMBER NUMBER - 11BCPA000001</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">****** INTERNATIONAL TRAVEL INFO ******</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">PLEASE VISIT AMAZON IMMIGRATION INSIDE PAGE</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FOR YOUR PASSPORT AND VISA NEEDS</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">BE SURE TO CONSIDER TRANSIT VISAS FOR ANY</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">CONNECTIONS OR LAYOVERS. MOST COUNTRIES REQUIRE</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">A MINIMUM PASSPORT VALIDITY OF 6 MOS BEYOND RETURN DATE</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">******************************************************</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FOR US PASSPORT AND INTERNATIONAL INFORMATION</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">WWW.TRAVEL.STATE.GOV</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FOR US PASSPORT AGENCY IN SEATTLE</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">WWW.US-PASSPORT-SERVICE-GUIDE.COM</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">******************************************************</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">.</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">THIS TICKET AND ANY CHANGES MAY BE SUBJECT TO PENALTIES OR</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FARE INCREASE UP TO AND INCLUDING THE TOTAL COST OF THE TICKET</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">FAILURE TO CANCEL MAY FORFEIT THE TOTAL VALUE OF TICKET</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">.</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">UNITED STATES FEDERAL LAW FORBIDS THE CARRIAGE OF</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">CERTAIN HAZARDOUS MATERIALS SUCH AS AEROSOLS FIREWORKS</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">AND FLAMMABLE LIQUIDS ABOARD THE AIRCRAFT. TO LEARN</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">MORE ABOUT THESE RESTRICTIONS CONTACT YOUR AIRLINE OR</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">GO TO WWW.FAA.GOV/ABOUT/INITIATIVES</td>
+        </tr>
+        <tr>
+          <td class="headerNormal">AND CLICK ON PACK SAFE UNDER INITIATIVES.</td>
+        </tr>
+      </table>
+      <div style="padding-bottom: 6px;"></div>
+    </div>
+    <!--INVOICE-->
+    <div id="InvoiceSection" style="padding: 0px; margin: 0px; width: 600px;">
+      <div style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000000; padding-bottom: 6px;"></div>
+      <table style="margin: 6px 0px 6px 0px; width:100%;" cellspacing="0px" cellpadding="0px">
+        <tr id="InvoiceHeaderRow">
+          <td class="invoiceHeader" style="text-align: left">Name</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td width="158px" class="invoiceHeader">Invoice / Ticket / Date</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td width="75px" class="invoiceHeader">Base</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td width="65px" class="invoiceHeader">Tax 1</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td width="65px" class="invoiceHeader">Tax 2</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td width="65px" class="invoiceHeader">Tax 3</td>
+          <td width="75px" class="invoiceHeader">Total</td>
+        </tr>
+        <tr>
+          <td class="invoiceDetails" style="text-align: left">CHRISTOPHER LOOK</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails">39961/000SFCTRF/28DEC20</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails">6.00</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails"></td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails"></td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails"></td>
+          <td class="invoiceDetails">6.00</td>
+        </tr>
+        <tr>
+          <td class="invoiceDetails" style="text-align: left">LOOK CHRISTOPHER</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails">39961/0277541284104/28DEC20</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails">USD 190.08</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails">5.60AY</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails">4.50XF</td>
+          <td width="3px" class="invoiceHeader"></td>
+          <td class="invoiceDetails"></td>
+          <td class="invoiceDetails">200.18</td>
+        </tr>
+      </table>
+      <table style="width:100%;" cellspacing="0px">
+        <tr>
+          <td width="520px" class="invoiceDetailsStrong">Total Amount</td>
+          <td class="invoiceDetailsStrong">206.18</td>
+        </tr>
+      </table>
+      <table style="margin: 6px 0px 6px 0px; width:100%;" cellspacing="0px">
+        <tr id="InvoiceFopRow">
+          <td style="text-align: left" class="invoiceDetails">Form of Payment: VIXXXXXXXXXXXX9610</td>
+        </tr>
+      </table>
+      <div style="padding-bottom: 6px;"></div>
+    </div>
+    <!--BOTTOM AD-->
+    <!--BOTTOM FOOTER-->
+    <div id="BottomFooterSection" style="padding: 0px; margin: 0px; width: 600px;">
+      <div style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000000; padding-bottom: 6px;"></div>
+      <!--<table style="width:100%;" cellpadding="0px" cellspacing="0px">
+                <tr>
+                    <td id="BottomFooterText" class="bottomFooter">Please note that the security laws of many countries (such as the US and Canada) require airlines to give security, customs and immigration authorities access to passenger data. Should you be traveling to one of these countries, this means that your personal data and your travel arrangements may be disclosed to the relevant authorities in these countries.</td>
+                </tr>
+            </table>
+            <div style="padding-bottom: 6px;"></div>
+            <div style="border-style: solid; border-width: 1px 0px 0px 0px; border-color: #000000; padding-bottom: 6px;"></div>-->
+      <table style="width:100%;" cellpadding="0px" cellspacing="0px">
+        <tr>
+          <td class="bottomFooterCopyright">
+            <a href="https://www.mycwt.com/travel-management/risk-management/business-traveler-care/" target="_blank">Traveler Resources</a>
+          </td>
+          <!--<td class="bottomFooterCopyrightSpacer">|</td>  //RS 7/31/17 commented out for DE623
+                    <td class="bottomFooterCopyright">
+                        <a id="BottomFooterSavvyTravelerLink" href="" target="_blank">The Savvy Traveler blog</a>
+                    </td>-->
+          <td class="bottomFooterCopyrightSpacer">|</td>
+          <td class="bottomFooterCopyright">
+            <a href="https://www.mycwt.com/legal/global-privacy-policy" target="_blank">Data Protection Policy</a>
+          </td>
+          <td class="bottomFooterCopyright" width="50%" />
+        </tr>
+      </table>
+      <table style="width:100%;" cellpadding="0px" cellspacing="0px">
+        <tr>
+          <td class="bottomFooterCopyright">Copyright © 2009-2019 CWT</td>
+        </tr>
+      </table>
+    </div>
+    <!--OMNITURE-->
+  </body>
+</html>
